@@ -1,0 +1,98 @@
+<dom-module id="steem-get-account"></dom-module>
+
+<script src="./src/steem.min.js"></script>
+
+<script>
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-account',
+
+            properties: {
+
+                /*
+                 * Account name.
+                 * f.e. "you"
+                 * Component will query account data with this name.
+                 */
+                accountName:  {
+                    type: String,
+                    observer: '_accountNameChanged'
+                },
+
+                /*
+                 * Account object.
+                 * Component will provide account data in this object.
+                 */
+                account: {
+                    type: Object,
+                    notify: true
+                }
+            },
+
+            ready: function() {
+
+                // Set default value
+                if(typeof this.accountName === 'undefined') { this.accountName = '';}
+                if(typeof this.account === 'undefined') { this.account = {};}
+
+                // Set account object
+                if(this.account === {} && this.accountName !== '') {
+
+                    this._accountNameChanged();
+                }
+            },
+
+            // Query Steem network to provide account data
+            _accountNameChanged: function() {
+
+                if(this.accountName === ''){
+
+                    // set account empty if accountName empty
+                    this.account = {};
+                }else {
+
+                    var thisElement = this;
+                    var name = this.accountName;
+
+                    // Query account data
+                    this.async(function() {
+
+                        // Query basic information
+                        steem.api.getAccounts([name], function(err, result) {
+
+                            if(!err && result !== null){
+
+                                // Load json
+                                var objectFromJson = JSON.parse(result[0].json_metadata) || {};
+
+                                // Set profile image
+                                if(typeof objectFromJson.profile.profile_image === 'undefined'){
+
+                                    thisElement.set('account.profileImage', '');
+                                }else {
+
+                                    thisElement.set('account.profileImage', objectFromJson.profile.profile_image);
+                                }
+
+
+                                // Set cover image
+                                if(typeof objectFromJson.profile.cover_image === 'undefined'){
+
+                                    thisElement.set('account.coverImage', '');
+                                }else {
+
+                                    thisElement.set('account.coverImage', objectFromJson.profile.cover_image);
+                                }
+                            }else {
+
+                                thisElement.set('account', {});
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    })();
+</script>

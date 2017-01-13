@@ -1,0 +1,170 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<!-- APP Elements -->
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/drawer-content.html">
+
+<dom-module id="page-support">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                height: 100%;
+                width: 100%;
+                display: block;
+                position: absolute;
+            }
+
+            app-drawer {
+                z-index: 2;
+            }
+
+            /* SUPPORT CARDS */
+            .supportCards {
+                max-width: 400px;
+                padding-top: 66px;
+                padding-bottom: 16px;
+                margin-left: auto;
+                margin-right: auto;
+                background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+            }
+
+            .supportCards paper-card {
+                margin-top: 16px;
+                width: 100%;
+                display: block;
+            }
+
+            paper-card h2 {
+                color: var(--app-secondary-color);
+                padding: 16px;
+                margin: 0;
+            }
+
+            paper-card a {
+                line-height: 32px;
+                color: #222;
+                text-decoration: none;
+            }
+
+            .card-content div {
+                width: 100%;
+                height: 48px;
+            }
+
+            #timeDonation {
+                color: #000;
+            }
+
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_toggleDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    Support us
+                </span>
+            </div>
+
+            <a href="/trending">
+                <paper-icon-button id="exploreButton" icon="my-icons:explore"></paper-icon-button>
+            </a>
+
+        </paper-toolbar>
+
+            <!-- SUPPORT CARDS -->
+            <div class="supportCards">
+
+                <paper-card>
+
+                    <h2>Share with your friends</h2>
+                    <div class="card-content">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//esteem8.com">Share on Facebook</a>
+                        <br>
+                        <a href="https://plus.google.com/share?url=https%3A//esteem8.com">Share on Google+</a>
+                        <br>
+                        <a href="https://twitter.com/home?status=%0A%0Ahttps%3A//esteem8.com">Share on Twitter</a>
+                        <br>
+                        <a href="mailto:?&subject=Hey bro check this !&body=This%20is%20social%20media%20web%20application%20that%20let%20you%20earn%20money%20by%20using%20it.%0AAnd%20it's%20community%20driven%20!%0Ahttps%3A//esteem8.com">Share by Email</a>
+                    </div>
+                </paper-card>
+
+                <paper-card>
+
+                    <h2>Interact with publications</h2>
+                    <div class="card-content">
+                        <a href="/created/esteem8">#esteem8</a>
+                    </div>
+                </paper-card>
+
+                <paper-card>
+
+                    <h2>Give us something</h2>
+                    <div class="card-content">
+                        <a href="">Steem donation</a>
+                        <br>
+                        <a href="">Paypal donation</a>
+                        <br>
+                        <a href="">Bitcoin donation</a>
+                        <br>
+                        <a id="timeDonation" href="/created/esteem8">Time donation</a>
+                    </div>
+                </paper-card>
+            </div>
+
+        </div>
+
+        <!-- DRAWER -->
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
+    </template>
+    <script>
+
+        Polymer({
+            is: 'page-support',
+
+            properties: {
+
+                settings: {
+                    type: Object,
+                    notify: true
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+            },
+
+            _toggleDrawer: function() {
+
+                this.$.drawer.toggle();
+            }
+        });
+    </script>
+</dom-module>

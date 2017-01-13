@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="sign-up-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            :host {
+                padding: 16px;
+            }
+
+        </style>
+
+        <paper-dialog id="selectTagDialog"
+                      opened="{{isOpen}}">
+
+            <h1>Sign up</h1>
+
+            <p>Please sign up on <a href="https://steemit.com/enter_email" target="_blank">steemit</a> and go back to login.</p>
+            <p>To make this application support this features, you can support us at <a href="/support">/support</a></p>
+
+        </paper-dialog>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'sign-up-dialog',
+
+            properties: {
+
+                isOpen: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
+
+            openDialog: function() {
+
+                this.isOpen = true;
+            }
+
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,487 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<!-- Paper Elements -->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../components/post-card.html">
+<link rel="import" href="../components/reply-card.html">
+<link rel="import" href="../components/event-card.html">
+<link rel="import" href="../components/user-card.html">
+<link rel="import" href="../api/steemjs/steem-get-state.html">
+<link rel="import" href="../api/steemjs/steem-get-account.html">
+<link rel="import" href="../api/steemjs/steem-get-followers.html">
+<link rel="import" href="../api/steemjs/steem-get-following.html">
+<link rel="import" href="../api/steemjs/steem-get-replies.html">
+<link rel="import" href="../api/steemjs/steem-get-history.html">
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="page-profile">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+            }
+
+            app-drawer {
+                z-index: 2;
+            }
+
+            /* TOOLBAR */
+            #toggleFavoriteUserButton {
+                float: right;
+            }
+
+            /* HEADER */
+            #profileheader {
+                background-color: var(--app-primary-color);
+                background-size: cover;
+                color: var(--app-primary-text-color);
+                width: 100%;
+                padding-top: 16px;
+                margin-top: 50px;
+            }
+
+            .profileRepresentation {
+                width: 124px;
+                height: 124px;
+                border-radius: 124px;
+            }
+
+            .topHeader {
+                margin: 16px auto;
+                max-width: 600px;
+            }
+
+            .headerLeftPart {
+                display: inline-block;
+                height: 124px;
+                margin: 16px;
+            }
+
+            @media screen and (max-width: 400px) {
+                .headerRightPart {
+                    margin-left: 0 !important;
+                }
+            }
+
+            .headerRightPart {
+                display: inline-block;
+                position: absolute;
+                height: 124px;
+                margin: 8px;
+                font-size: 16px;
+            }
+
+            .followed, .followers {
+                margin-left: 32px;
+                padding: 4px;
+                display: inline-block;
+                transition: all .2s;
+            }
+
+            .followed:active, .followers:active {
+                background-color: rgba(255, 255, 255, .2);
+                transition: all .2s;
+            }
+
+            .number {
+                font-size: 32px;
+                font-weight: bold;
+                display: block;
+            }
+
+            /* TABS */
+            #profileTabs {
+                @apply(--shadow-elevation-2dp);
+                background-color: var(--app-dark-primary-color);
+                --paper-tabs-selection-bar-color: var(--app-secondary-color);
+            }
+
+            #profileTabs paper-tab {
+                --paper-tab-ink: var(--app-secondary-color);
+            }
+
+            /* AFTER TABS CONTENT */
+            #replies-list, #posts-list, #events-list, #followers-list, #following-list {
+                max-width: 600px;
+                margin: 12px auto;
+            }
+
+            .nothingText {
+                display: table;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 100px;
+            }
+
+        </style>
+
+        <steem-get-account account-name="[[username]]"
+                           account="{{account}}">
+        </steem-get-account>
+
+        <steem-get-followers account-name="[[username]]"
+                             followers="{{account.followers}}">
+        </steem-get-followers>
+
+        <steem-get-following account-name="[[username]]"
+                             following="{{account.following}}">
+        </steem-get-following>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_toggleDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    [[user]]
+                    <span></span>
+                    <paper-icon-button id="toggleFavoriteUserButton"
+                                       icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]"
+                                       on-tap="_toggleFavoriteUser()">
+                    </paper-icon-button>
+                </span>
+            </div>
+
+            <a href="/hot">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+
+        </paper-toolbar>
+
+        <div id="profileheader">
+
+            <div class="topHeader">
+
+                <div class="headerLeftPart">
+                    <template is="dom-if" if="[[account.profileImage]]">
+                        <iron-image class="profileRepresentation"
+                                    sizing="cover"
+                                    src="https://img1.steemit.com/124x124/[[account.profileImage]]">
+                        </iron-image>
+                    </template>
+                    <template is="dom-if" if="[[!account.profileImage]]">
+                        <iron-icon class="profileRepresentation"
+                                   icon="my-icons:person-circle">
+                        </iron-icon>
+                    </template>
+                </div>
+
+                <div class="headerRightPart">
+                    <div id="followersButton"
+                         class="followers"
+                         on-tap="_setCurrentViewFollowers">
+                        <span class="number">
+                            <template is="dom-if" if="[[account.followers.length]]">
+                                [[account.followers.length]]
+                            </template>
+                            <template is="dom-if" if="[[!account.followers.length]]">
+                                0
+                            </template>
+                        </span>
+                        <span class="texte">
+                            Followers
+                        </span>
+                    </div>
+                    <div id="followingButton"
+                         class="followed"
+                         on-tap="_setCurrentViewFollowers">
+                        <span class="number">
+                            <template is="dom-if" if="[[account.following.length]]">
+                                [[account.following.length]]
+                            </template>
+                            <template is="dom-if" if="[[!account.following.length]]">
+                                0
+                            </template>
+                        </span>
+                        <span class="texte">
+                            Following
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <paper-tabs id="profileTabs"
+                        selected="{{currentView}}"
+                        attr-for-selected="name"
+                        fit-container
+                        scrollable
+                        no-slide>
+                <paper-tab name="posts">Posts</paper-tab>
+                <!-- Will be released when API permit it -->
+                <!--paper-tab name="comments">Comments</paper-tab-->
+                <paper-tab name="replies">Replies</paper-tab>
+                <paper-tab name="history">History</paper-tab>
+            </paper-tabs>
+
+        </div>
+
+        <!-- CONTENT -->
+        <iron-pages selected="[[currentView]]"
+                    attr-for-selected="name">
+
+            <div name="posts">
+                <steem-get-state path="[[user]]" posts="{{posts}}"></steem-get-state>
+                <div id="posts-list">
+
+                    <template is="dom-if" if="[[!posts.length]]">
+                        <h1 class="nothingText">[[user]] has not posted anything</h1>
+                    </template>
+
+                    <template is="dom-if" if="[[posts.length]]">
+                        <template is="dom-repeat" items="[[posts]]">
+                            <post-card post="[[item]]"
+                                       settings="[[settings]]"
+                                       favorite-posts="{{favoritePosts}}">
+                            </post-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            <div name="replies">
+                <steem-get-replies user-name="[[username]]"
+                                          replies="{{replies}}">
+                </steem-get-replies>
+                <div id="replies-list">
+
+                    <template is="dom-if" if="[[!replies.length]]">
+                        <h1 class="nothingText">[[user]] has no replies</h1>
+                    </template>
+
+                    <template is="dom-if" if="[[replies.length]]">
+                        <template is="dom-repeat" items="[[replies]]">
+                            <reply-card reply="[[item]]"></reply-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            <div name="history">
+                <steem-get-history user-name="[[username]]"
+                                   events="{{events}}">
+                </steem-get-history>
+                <div id="events-list">
+
+                    <template is="dom-if" if="[[!events.length]]">
+                        <h1 class="nothingText">[[user]] has no history</h1>
+                    </template>
+
+                    <template is="dom-if" if="[[events.length]]">
+                        <template is="dom-repeat" items="[[events]]">
+                            <event-card event="[[item]]"></event-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            <div name="followers">
+                <div id="followers-list">
+
+                    <template is="dom-if" if="[[!account.followers.length]]">
+                        <h1 class="nothingText">[[user]] has no follower</h1>
+                    </template>
+
+                    <template is="dom-if" if="[[account.followers.length]]">
+                        <template is="dom-repeat" items="[[account.followers]]">
+                            <user-card user="[[item]]"></user-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            <div name="following">
+                <div id="following-list">
+
+                    <template is="dom-if" if="[[!account.following.length]]">
+                        <h1 class="nothingText">[[user]] is not following anyone</h1>
+                    </template>
+
+                    <template is="dom-if" if="[[account.following.length]]">
+                        <template is="dom-repeat" items="[[account.following]]">
+                            <user-card user="[[item]]"></user-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+        </iron-pages>
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
+    </template>
+
+    <script>
+        Polymer({
+            is: 'page-profile',
+
+            properties: {
+
+                settings: {
+                    type: Object,
+                    notify: true
+                },
+
+                posts: {
+                    type: Array,
+                    observer: '_postsChanged'
+                },
+
+                user: {
+                    type: String
+                },
+
+                username: {
+                    type: String,
+                    observer: '_usernameChanged'
+                },
+
+                account: {
+                    type: Object,
+                    observer: '_accountChanged'
+                },
+
+                currentView: {
+                    type: String
+                },
+
+                favoritePosts: {
+                    type: Array
+                },
+
+                favoriteUsers: {
+                    type: Array
+                },
+
+                replies: {
+                    type: Array
+                },
+
+                events: {
+                    type: Array
+                },
+                _isUserInFavorite: {
+                    type: Boolean
+                }
+            },
+
+            observers: [
+                    '_updateCoverImage(account.coverImage)',
+                    '_userChanged(user)'
+            ],
+
+            ready: function() {
+                // Set variables
+                this.account = this.account || {};
+                this.currentView = "posts";
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.followersButton.addEventListener('tap', this._setCurrentViewFollowers.bind(this));
+                this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
+                this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
+
+                // Launch function
+                this._userChanged();
+            },
+
+            _userChanged: function(user) {
+
+                // Remove '@' at user and put it into username
+                var user = user || this.user;
+                this.username = user.substring(1);
+                this._refreshIsFavoriteUser();
+            },
+
+            _toggleDrawer: function() {
+                this.$.drawer.toggle();
+            },
+
+            _accountChanged: function () {
+                console.log("account="+this.account);
+            },
+
+            _postsChanged: function() {
+                console.log("profile posts changed "+this.posts)
+            },
+
+            _updateCoverImage: function(url) {
+
+                if(url !== ''){
+                    this.$.profileheader.style.backgroundImage = "url('" + url + "')";
+                }else {
+                    this.$.profileheader.style.backgroundImage = "";
+                }
+
+            },
+
+            _setCurrentViewFollowers: function() {
+                this.set('currentView', 'followers');
+            },
+
+            _setCurrentViewFollowing: function() {
+                this.set('currentView', 'following')
+            },
+
+            _refreshIsFavoriteUser: function() {
+
+                    this._isUserInFavorite = !(this.favoriteUsers.indexOf(this.username) === -1);
+            },
+
+            _toggleFavoriteUser: function() {
+
+                if(this._isUserInFavorite) {
+
+                    // Remove user from favourite
+                    var index = this.favoriteUsers.indexOf(this.username);
+                    this.splice('favoriteUsers', index, 1);
+                }else {
+
+                    // Add user to favourite
+                    this.push('favoriteUsers', this.username);
+                }
+
+                // Invert favorite state of user
+                this._isUserInFavorite = !this._isUserInFavorite;
+            },
+
+            _computeFavoriteUserIcon: function(userIsInFavorite) {
+
+                if(userIsInFavorite) {
+
+                    return 'favorite';
+                }else {
+
+                    return 'favorite-border';
+                }
+            }
+
+        });
+    </script>
+</dom-module>

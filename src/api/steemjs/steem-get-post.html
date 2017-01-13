@@ -1,0 +1,178 @@
+<dom-module id="steem-get-post"></dom-module>
+
+<script src="./src/to-markdown.js"></script>
+<script src="./src/steem.min.js"></script>
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-post',
+
+            properties: {
+
+                /*
+                 * Steem path to be loaded
+                 * f.e "/sorting/tag
+                 */
+                path: {
+                    type: String,
+                    observer: '_pathChanged'
+                },
+
+                /*
+                * Post to be returned after being queried
+                */
+                post: {
+                    type: Object,
+                    notify: true
+                },
+
+                /*
+                 * Boolean set to true if there is a query error
+                 */
+                queryError: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
+
+            ready: function() {
+
+                // Set default value
+                if(typeof this.queryError === 'undefined') {
+                    this.queryError = false;
+                }
+            },
+
+            // Update posts list when path changed
+            _pathChanged: function() {
+
+                if(this.path !== ''){
+
+                    var thisElement = this;
+
+                    this.async(function() {
+                        steem.api.getState(this.path, function(err, result) {
+                            if(result !== 'undefined' && !err){
+                                thisElement._computePost(result.content);
+                            }else {
+                                thisElement.queryError = true;
+                            }
+                        });
+                    });
+                }
+            },
+
+            _computePostBody: function(body) {
+
+                // HTML -> markdown & HTML
+                var markdownAndHtml = String(toMarkdown(body));
+                // HTML -> string
+                var markdownContent = markdownAndHtml;
+                        /*.replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;');*/
+
+                // Image url -> image markdown
+                markdownContent.replace(/https?:\/\/.*\.(?:png|jpg)/g, function(url){
+                    return '[](' + url + ')';
+                });
+
+                return markdownContent;
+
+            },
+
+            _computePost: function(content) {
+
+                var post = {
+                    comments: []
+                };
+
+                var counter = 0;
+
+                // First object properties is post, others are comment
+                for (var key in content) {
+                    // skip loop if the property is from prototype
+                    if (!content.hasOwnProperty(key)) continue;
+
+                    var contentReceived = content[key];
+
+
+                    if(counter === 0){ // This object is the post -> Compute post
+
+                        // Add images & tags
+                        if(typeof contentReceived.json_metadata !== 'undefined'){
+
+                            var objectFromJson = JSON.parse(contentReceived.json_metadata) || {};
+
+                            if(typeof objectFromJson.image !== 'undefined'){
+                                post.images = objectFromJson.image;
+                            }
+
+                            if(typeof objectFromJson.tags !== 'undefined'){
+                                post.tags = objectFromJson.tags;
+                            }
+                        }
+
+                        // Set images empty if null
+                        if(typeof post.images === 'undefined'){
+                            post.images = [];
+                        }
+
+                        // Set tags empty if null
+                        if(typeof post.tags === 'undefined'){
+                            post.tags = [];
+                        }
+
+                        post.markdownContent = this._computePostBody(contentReceived.body);
+
+                        post.category = contentReceived.category;
+                        post.title = contentReceived.title;
+                        post.author = contentReceived.author;
+                        post.dollarValue =  parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) + parseFloat(contentReceived.total_payout_value.split(" ")[0]);
+                        post.net_votes = contentReceived.net_votes;
+                        post.children = contentReceived.children;
+                        post.activeVotes = contentReceived.active_votes;
+                        post.created = contentReceived.created;
+                        post.commentsLength = 0;
+
+                    }else { // ADD COMMENT
+
+                        post.commentsLength++;
+
+                        if(contentReceived.depth == 1) { // Only take first depth comment (No comment replies)
+
+                            var comment = {};
+
+                            // These are used to load replies
+                            comment.parent_author = contentReceived.parent_author;
+                            comment.parent_permlink = contentReceived.parent_permlink;
+                            comment.permlink = contentReceived.permlink;
+
+                            // Used data
+                            comment.author = contentReceived.author;
+                            comment.created = contentReceived.created;
+                            comment.votes = contentReceived.net_votes;
+                            comment.replies = contentReceived.children;
+                            comment.dollarValue =   parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) +
+                                    parseFloat(contentReceived.total_payout_value.split(" ")[0]);
+
+                            comment.markdownContent = this._computePostBody(contentReceived.body);
+
+                            post.comments.push(comment);
+                        }
+                    }
+
+                    counter++;
+                }
+
+                this.set('post', post);
+            }
+
+        });
+    })();
+</script>
+

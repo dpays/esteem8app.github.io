@@ -1,0 +1,19 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/steemone-shell.html",
+  "fragments": [
+    "src/page/page-explore.html",
+    "src/page/page-post.html",
+    "src/page/page-profile.html",
+    "src/page/page-404.html"
+  ],
+  "sourceGlobs": [
+    "src/**/*",
+    "images/**/*",
+    "bower.json"
+  ],
+  "includeDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/webcomponents-lite.min.js"
+  ]
+}

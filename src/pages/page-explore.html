@@ -1,0 +1,402 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+
+<!-- CUSTOMS Elements -->
+<link rel="import" href="../api/steemjs/steem-get-tags.html">
+<link rel="import" href="../api/steemjs/steem-get-state.html">
+<link rel="import" href="../dialogs/select-tag-dialog.html">
+<link rel="import" href="../components/post-card.html">
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="page-explore">
+    <template>
+        <style include="shared-styles">
+
+            :host {
+                display: block;
+            }
+
+            .middle {
+                vertical-align: middle;
+            }
+
+            .space {
+                width: 100%;
+            }
+
+            #drawer {
+                z-index: 4;
+            }
+
+            #progress-bar  {
+                width: 100%;
+                position: absolute;
+                left: 0;
+                bottom: -4px;
+                --paper-progress-active-color: var(--app-secondary-color);
+            }
+
+            #posts-list {
+                margin-top: 134px;
+                margin-right: auto;
+                margin-left: auto
+            }
+
+            .textIsEsteem8Tag {
+                padding-top: 8px;
+                padding-bottom: 16px;
+                padding-left: 16px;
+                padding-right: 16px;
+                text-align: center;
+            }
+
+            #toggleFavoriteTagButton {
+                float: right;
+            }
+
+        </style>
+
+        <!-- TOAST NO POST(S) FOUND -->
+        <paper-toast id="toastPostNotFound"
+                     class="fit-bottom"
+                     text="Can not load publications :/">
+        </paper-toast>
+
+        <!-- SELECT CATEGORY DIALOG -->
+        <select-tag-dialog
+                id="selectCategoryDialog"
+                opened="{{_isSelectCategoryOpened}}"
+                favorite-tags="{{favoriteTags}}"
+                selected-tag="{{currentTag}}"
+        ></select-tag-dialog>
+
+        <!-- POST SOMETHING DIALOG -->
+        <post-something-dialog id="postSomethingDialog"
+                               opened="{{isPostSomethingDialogOpened}}">
+        </post-something-dialog>
+
+        <!-- Toolbar -->
+        <paper-toolbar class="mainToolbar">
+
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_toggleDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+
+            <div class="floatingToolbar">
+                <span id="floatingTitle"
+                      on-tap="_openSelectCategoryDialog()">
+                    <!-- current category -->
+                    <span class="middle floatingToolbarTitle"
+                          id="selectOtherCategoryButton"
+                          hidden$="[[!currentTag.length]]">
+                      #{{currentTag}}
+                    </span>
+                    <!-- explore button -->
+                    <span class="middle floatingToolbarTitle"
+                          hidden$="[[currentTag.length]]">
+                        EXPLORE
+                    </span>
+                </span>
+                <paper-icon-button id="toggleFavoriteTagButton"
+                                   icon="my-icons:[[_computeFavoriteTagIcon(_isCurrentTagInFavorite)]]"
+                                   on-tap="_toggleFavoriteTag()">
+                </paper-icon-button>
+            </div>
+
+            <template is="dom-if" if="[[settings.user.name]]">
+                <a href="/@[[settings.user.name]]">
+                    <paper-icon-button id="account-button"
+                                       icon="my-icons:person-circle">
+                    </paper-icon-button>
+                </a>
+            </template>
+            <template is="dom-if" if="[[!settings.user.name]]">
+                <a href="/login">
+                    <paper-icon-button id="account-button"
+                                       icon="my-icons:person-circle">
+                    </paper-icon-button>
+                </a>
+            </template>
+        </paper-toolbar>
+
+        <!-- SORTING POST (Second bar) -->
+        <div class="secondBar">
+            <paper-tabs selected="{{currentSorting}}"
+                        attr-for-selected="name"
+                        autoselect-delay="0"
+                        fit-container
+                        no-slide>
+                <paper-tab name="created">
+                    <iron-icon icon="my-icons:new"></iron-icon>
+                </paper-tab>
+                <paper-tab name="hot">
+                    <iron-icon icon="my-icons:hot"></iron-icon>
+                </paper-tab>
+                <paper-tab name="trending">
+                    <iron-icon icon="my-icons:trending-up"></iron-icon>
+                </paper-tab>
+                <paper-tab name="active">
+                    <iron-icon icon="my-icons:active"></iron-icon>
+                </paper-tab>
+            </paper-tabs>
+            <paper-progress id="progress-bar"
+                            indeterminate
+                            hidden="[[_posts.length]]">
+            </paper-progress>
+        </div>
+
+        <div id="content-page">
+
+            <!-- Publications lists -->
+            <div id="posts-list">
+
+                <template is="dom-if" if="[[_isEsteem8Tag]]">
+                    <p class="textIsEsteem8Tag">This is the application tag, you can upvote our publications to support us.</p>
+                </template>
+
+                <template is="dom-if" if="[[_posts.length]]">
+                    <template is="dom-repeat" items="[[_posts]]">
+                        <post-card post="[[item]]"
+                                   settings="[[settings]]"
+                                   favorite-posts="{{favoritePosts}}"
+                                   selected-post="{{selectedPost}}">
+                        </post-card>
+                    </template>
+                </template>
+            </div>
+        </div>
+
+        <!-- DRAWER -->
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
+        <!-- GET POSTS -->
+        <steem-get-state
+                path="[[_steemPath]]"
+                posts="{{_posts}}"
+                query-error="{{_queryError}}">
+        </steem-get-state>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'page-explore',
+
+            properties: {
+                
+                // current sorting mode (hot, new, trending, created)
+                currentSorting: {
+                    type: String,
+                    notify: true,
+                    observer: '_updateSteemPath'
+                },
+
+                // Current filter tag (esteem8, ...)
+                currentTag: {
+                    type: String,
+                    notify: true,
+                    observer: '_updateSteemPath'
+                },
+
+                settings: {
+                    type: Object
+                },
+
+                favoriteTags: {
+                    type: Array,
+                    notify: true
+                },
+
+                favoritePosts: {
+                    type: Array,
+                    notify: true
+                },
+
+                _steemPath: {
+                    type: String,
+                    observer: '_steemPathChanged'
+                },
+
+                _posts: {
+                    type: Array,
+                    observer: '_showProgress'
+                },
+
+                _isSelectCategoryOpened: {
+                    type: Boolean,
+                    notify: true
+                },
+
+                _queryError: {
+                    type: Boolean,
+                    observer: '_showToast'
+                },
+
+                _showProgress: {
+                    type: Boolean
+                },
+
+                _isEsteem8Tag: {
+                    type: Boolean
+                },
+
+                _isCurrentTagInFavorite: {
+                    type: Boolean
+                }
+            },
+
+            observers: [
+                '_updateSteemPath(currentSorting, currentTag)'
+            ],
+
+            ready: function() {
+
+                // List events
+                this.$.floatingTitle.addEventListener('tap',this._openSelectCategoryDialog.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleFavoriteTagButton.addEventListener('tap', this._toggleFavoriteTag.bind(this));
+
+                // Default variables value
+                this._isSelectCategoryOpened = false;
+                this._showProgress = true;
+
+            },
+
+            _openSelectCategoryDialog: function() {
+
+                this._isSelectCategoryOpened = true;
+            },
+
+            _updateSteemPath: function() {
+
+                // Check if this is the app tag
+                this._computeIsEsteem8Tag();
+
+                // Check if tag is in favorite
+                this._refreshIsCurrentTagInFavorite();
+
+                // Set posts empty for new path
+                //this._posts = [];
+                var steemPath = '';
+                var currentTag = '';
+                var currentSorting = 'trending';
+
+                if(typeof this.currentTag !== 'undefined') {
+                    currentTag = this.currentTag;
+                }
+
+                if(typeof this.currentSorting !== 'undefined') {
+                    currentSorting = this.currentSorting || 'trending';
+                }
+
+                // '/sorting' or '/sorting/tag'
+                if(currentTag == '') {
+
+                    steemPath =  '/' + currentSorting;
+                }else {
+
+                    steemPath = '/' + currentSorting + '/' + currentTag;
+                }
+
+                // Set path
+                this._steemPath = steemPath;
+            },
+
+            _steemPathChanged: function() {
+                console.log("steem path="+this._steemPath);
+                // Scroll to top after new posts loaded
+                window.scrollTo(0, 0);
+            },
+
+            _toggleDrawer: function() {
+
+                this.$.drawer.toggle();
+            },
+
+            _showProgress: function() {
+
+                // Show progress bar or not
+                if(!this._posts.length){
+
+                    this._showProgress = true;
+                }else {
+
+                    this._showProgress = false;
+                }
+            },
+
+            _showToast: function () {
+
+                // If there is a query error -> show a toast & reset error statement
+                if(this._queryError == true){
+                    this.$.toastPostNotFound.show();
+                    this._queryError = false;
+                }
+            },
+
+            _computeIsEsteem8Tag: function() {
+
+                if(this.currentTag == 'esteem8') {
+
+                    this._isEsteem8Tag = true;
+                }else {
+
+                    this._isEsteem8Tag = false;
+                }
+            },
+
+            _refreshIsCurrentTagInFavorite: function () {
+
+                this._isCurrentTagInFavorite = !(this.favoriteTags.indexOf(this.currentTag) === -1);
+            },
+
+            _computeFavoriteTagIcon: function(tagIsInFavorite) {
+
+                if(typeof this.currentTag === 'undefined') { // Display no favorite icon if no tag
+
+                    return 'star';
+                }
+
+                if(tagIsInFavorite) {
+
+                    return 'star';
+                }else {
+
+                    return 'star-border';
+                }
+            },
+
+            _toggleFavoriteTag: function() {
+
+                if(this._isCurrentTagInFavorite) {
+
+                    // Remove tag from favourite
+                    var index = this.favoriteTags.indexOf(this.currentTag);
+                    this.splice('favoriteTags', index, 1);
+                }else {
+
+                    // Add tag to favourite
+                    this.push('favoriteTags', this.currentTag);
+                }
+
+                // Refresh actual state of user
+                this._isCurrentTagInFavorite = !this._isCurrentTagInFavorite;
+            }
+
+        });
+    </script>
+</dom-module>

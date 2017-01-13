@@ -1,0 +1,286 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<!-- APP Elements -->
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../components/color-select.html">
+
+
+<dom-module id="page-settings">
+    <template>
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+            }
+
+            app-drawer {
+                z-index: 2;
+            }
+
+            /* CARDS */
+            .settingsCards {
+                max-width: 400px;
+                margin-top: 80px;
+                margin-bottom: 50px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .settingsCards paper-card {
+                margin-top: 16px;
+                width: 100%;
+                display: block;
+            }
+
+            paper-card h2 {
+                color: var(--app-secondary-color);
+                padding: 16px;
+                margin: 0;
+            }
+
+            .card-content div {
+                width: 100%;
+                height: 68px;
+            }
+
+            paper-input-container {
+                height: 48px;
+            }
+
+            paper-checkbox {
+                --paper-checkbox-checked-color:  var(--app-secondary-color);
+                --paper-checkbox-checked-ink-color:  var(--app-secondary-color);
+            }
+
+            paper-input {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+            }
+
+            color-select {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+            }
+
+            #imageResolutionDropdown {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+            }
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_toggleDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    Settings
+                </span>
+            </div>
+            <a href="/trending">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+        </paper-toolbar>
+
+        <!-- CARDS -->
+        <div class="settingsCards">
+
+            <paper-card>
+                <h2>User</h2>
+                <div class="card-content">
+                    <paper-input
+                            label="Username"
+                            value="{{settings.user.name}}">
+                    </paper-input>
+                    <!--paper-input
+                            label="Password"
+                            value="{{settings.user.password}}">
+                    </paper-input-->
+                </div>
+            </paper-card>
+
+            <paper-card>
+                <h2>Theme</h2>
+                <div class="card-content">
+                    <div>
+                        <color-select label="Primary color"
+                                      color="{{_primaryColor}}"
+                                      text-color="{{_primaryTextColor}}">
+                        </color-select>
+                    </div>
+                    <div>
+                        <color-select label="Secondary color"
+                                      color="{{_secondaryColor}}"
+                                      text-color="{{_secondaryTextColor}}">
+                        </color-select>
+                    </div>
+                </div>
+            </paper-card>
+
+            <paper-card>
+                <h2>Publications</h2>
+                <div class="card-content">
+                    <div>
+                        <paper-checkbox checked="{{settings.display.showCardContent}}"></paper-checkbox>
+                        <span>Show card content</span>
+                    </div>
+                    <div>
+                        <paper-checkbox checked="{{settings.display.showCardTags}}"></paper-checkbox>
+                        <span>Show card tags</span>
+                    </div>
+                    <div>
+                        <paper-checkbox checked="{{settings.display.showCardImage}}"></paper-checkbox>
+                        <span>Show card image</span>
+                    </div>
+                    <div>
+                        <paper-dropdown-menu id="imageResolutionDropdown"
+                                             label="Image resolution">
+                            <paper-listbox class="dropdown-content"
+                                           selected="{{settings.display.imageResolution}}"
+                                           attr-for-selected="value">
+                                <paper-item value="low">Low</paper-item>
+                                <paper-item value="medium">Medium</paper-item>
+                                <paper-item value="high">High</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                </div>
+            </paper-card>
+        </div>
+
+        <!-- DRAWER -->
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'page-settings',
+
+            properties: {
+
+                settings: {
+                    type: Object,
+                    notify: true
+                },
+
+                _primaryColor: {
+                    type: String,
+                    observer: '_themeChanged'
+                },
+
+                _primaryTextColor: {
+                    type: String
+                },
+
+                _secondaryColor: {
+                    type: String,
+                    observer: '_themeChanged'
+                },
+
+                _secondaryTextColor: {
+                    type: String
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+
+                // Set colors variables
+                this._primaryColor = this.settings.theme.primaryColor;
+                this._secondaryColor = this.settings.theme.secondaryColor || '#E91E63'; // Why do i have to do this ?
+                this._primaryTextColor = this.settings.theme.primaryTextColor;
+                this._secondaryTextColor = this.settings.theme.secondaryTextColor;
+
+            },
+
+            _toggleDrawer: function() {
+
+                this.$.drawer.toggle();
+            },
+
+            // Change theme colors in setting
+            _themeChanged: function() {
+
+                if(typeof this._primaryColor !== 'undefined' && typeof this._secondaryColor !== 'undefined'){
+
+                    // Set main colors
+                    this.set('settings.theme.primaryColor', this._primaryColor);
+                    this.set('settings.theme.secondaryColor', this._secondaryColor);
+
+                    // Set darker and lighter main colors
+                    this.set('settings.theme.ultraDarkPrimaryColor', this._getColorluminance(this._primaryColor, -0.5));
+                    this.set('settings.theme.darkPrimaryColor', this._getColorluminance(this._primaryColor, -0.2));
+                    this.set('settings.theme.lightPrimaryColor', this._getColorluminance(this._primaryColor, 0.2));
+
+                    // Get ideal text color based on background color
+                    this._primaryTextColor = this._getTextColor(this._primaryColor);
+                    this._secondaryTextColor = this._getTextColor(this._secondaryColor);
+
+                    // Set main text colors
+                    this.set('settings.theme.primaryTextColor', this._primaryTextColor);
+                    this.set('settings.theme.secondaryTextColor', this._secondaryTextColor);
+                }
+            },
+
+            // Return the same color given with a different luminance
+            _getColorluminance: function(hex, lum) {
+
+                // Validate hexadecimal color string
+                hex = String(hex).replace(/[^0-9a-f]/gi, '');
+
+                // Set hex string on 6 characters
+                if (hex.length < 6) {
+                    hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+                }
+
+                // Set luminance
+                lum = lum || 0;
+
+                // Convert to decimal and change luminosity
+                var rgb = "#", c, i;
+                for (i = 0; i < 3; i++) {
+                    c = parseInt(hex.substr(i*2,2), 16);
+                    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+                    rgb += ("00"+c).substr(c.length);
+                }
+
+                return rgb;
+            },
+
+            _getTextColor: function(color){
+
+                // return best text color from a given color
+                var hexcolor = color.substr(1);
+                var r = parseInt(hexcolor.substr(0,2),16);
+                var g = parseInt(hexcolor.substr(2,2),16);
+                var b = parseInt(hexcolor.substr(4,2),16);
+                var yiq = ((r*299)+(g*587)+(b*114))/1000;
+
+                return (yiq >= 128+20) ? '#111111' : '#eeeeee';
+            }
+        });
+    </script>
+</dom-module>

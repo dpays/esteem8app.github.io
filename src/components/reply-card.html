@@ -1,0 +1,168 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<!-- OTHER Elements -->
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../shared-styles.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../api/steemjs/steem-get-comment-replies.html">
+<link rel="import" href="../components/comment-content.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="reply-card">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            * {
+                font-weight: 300;
+            }
+
+            #replyCard {
+                display: block;
+                width: 100%;
+                margin-top: 0;
+                margin-bottom: 0;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 0px;
+                border-bottom: solid 1px #eee;
+            }
+
+            #replyCard .top {
+                color: #222;
+
+                padding-top: 16px;
+                padding-right: 16px;
+                padding-left: 16px;
+            }
+
+            .inPost {
+                font-weight: 600;
+                margin-top: 4px;
+                display: block;
+            }
+
+            .authorIcon {
+                color: var(--app-dark-primary-color);
+            }
+
+            .author {
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 14px;
+                color: var(--app-secondary-color);
+            }
+
+            #replyCard .body {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            #replyCard .bottom {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .dollarValue {
+                color: #333;
+                font-size: 12px;
+            }
+
+            .date {
+                top: 20px;
+                right: 16px;
+                position: absolute;
+                font-size: 12px;
+                color: #666;
+            }
+
+            .replies {
+                padding-left: 16px;
+            }
+
+        </style>
+
+        <!-- reply cards -->
+        <paper-card id="replyCard">
+            <div class="top">
+                <iron-icon class="authorIcon" icon="my-icons:person-circle"></iron-icon>
+                <a class="author" href="[[reply.author]]">[[reply.author]]</a>
+                <span class="inPost">on [[reply.title]]</span>
+                <span class="date">[[timeFromNow(reply.created)]]</span>
+            </div>
+            <div class="body">
+                <marked-element markdown="[[reply.body]]">
+                    <div class="markdown-html"></div>
+                </marked-element>
+            </div>
+            <div class="bottom">
+                <span class="votes">[[reply.votes]]</span>
+                <paper-icon-button icon="my-icons:arrow-up"></paper-icon-button>
+                <span class="dollarValue">[[reply.dollarValue]] $</span>
+                <paper-icon-button icon="my-icons:comment"
+                                   style="float: right;">
+                </paper-icon-button>
+                <span class="replies"
+                      style="float: right;margin-top: 8px;">
+                    [[reply.replies]]
+                </span>
+            </div>
+            <div class="replies">
+                <steem-get-comment-replies parent-author="[[reply.authorName]]"
+                                           parent-permlink="[[reply.permlink]]"
+                                           comments="{{reply.comments}}">
+                </steem-get-comment-replies>
+
+                <template is="dom-if" if="[[reply.comments.length]]">
+                    <template is="dom-repeat" items="[[reply.comments]]">
+                        <comment-content comment="[[item]]"></comment-content>
+                    </template>
+                </template>
+
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'reply-card',
+
+            behaviors: [
+                Polymer.AppLocalizeBehavior
+            ],
+
+            properties: {
+
+                reply: {
+                    type: Object
+                }
+
+            },
+
+            ready: function() {
+
+                // Set default variables
+                if(typeof this.reply.comments === 'undefined') {
+                    this.reply.comments = [];
+                }
+            },
+
+            timeFromNow: function(date) {
+                return new IntlRelativeFormat('en-us').format(new Date(date));
+            }
+
+        });
+
+    </script>
+</dom-module>

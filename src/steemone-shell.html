@@ -1,0 +1,357 @@
+<link rel="import" href="./../bower_components/polymer/polymer.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="./../bower_components/iron-pages/iron-pages.html">
+
+<!-- APP Elements -->
+<link rel="import" href="./../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="./../bower_components/app-route/app-location.html">
+<link rel="import" href="./../bower_components/app-route/app-route.html">
+
+<!-- CUSTOMS Elements -->
+<link rel="import" href="api/steemjs/steem-get-account.html">
+
+<script src="scripts/intl-relativeformat-with-locales.min.js"></script>
+
+<dom-module id="steemone-shell">
+    <template>
+        <style>
+
+            :host {
+                --app-primary-color: #F44336;
+                --app-light-primary-color: #ff5041;
+                --app-dark-primary-color: #c3362b;
+                --app-ultra-dark-primary-color: #7a221b;
+                --app-primary-text-color: #eeeeee;
+
+                --app-secondary-color: #3F51B5;
+                --app-secondary-text-color: #eeeeee;
+
+                --app-icon-color: #FFFFFF;
+                --app-divider-color: #BDBDBD;
+
+                display: block;
+            }
+        </style>
+
+        <!-- LOCAL STORAGE -->
+        <app-localstorage-document key="settings" data="{{settings}}"></app-localstorage-document>
+        <app-localstorage-document key="favoritePosts" data="{{favoritePosts}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteUsers" data="{{favoriteUsers}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteTags" data="{{favoriteTags}}"></app-localstorage-document>
+
+        <!-- GET ACCOUNT -->
+        <steem-get-account account-name="[[settings.user.name]]"
+                           account="{{settings.user.account}}">
+        </steem-get-account>
+
+        <!-- ROUTER -->
+        <app-location route="{{route}}"></app-location>
+
+        <!-- URL level 1 -->
+        <app-route
+                route="{{route}}"
+                pattern="/:data"
+                data="{{dataUrl1}}"
+                tail="{{subRoute}}">
+        </app-route>
+
+        <!-- URL level 2 -->
+        <app-route
+                route="{{subRoute}}"
+                pattern="/:data"
+                data="{{dataUrl2}}"
+                tail="{{subSubRoute}}">
+        </app-route>
+
+        <!-- URL level 3 -->
+        <app-route
+                route="{{subSubRoute}}"
+                pattern="/:data"
+                data="{{dataUrl3}}"
+                tail="{{subSubSubRoute}}">
+        </app-route>
+
+        <!-- PAGES -->
+        <iron-pages id="pages"
+                selected="[[selectedPage]]"
+                attr-for-selected="name"
+                fallback-selection="404"
+                role="main">
+
+            <page-home name="home"
+                       route="{{route}}"
+                       page="{{selectedPage}}"
+                       path-one="{{dataUrl1.data}}"
+                       path-two="{{dataUrl2.data}}"
+                       settings="[[settings]]">
+            </page-home>
+
+            <page-explore name="explore"
+                          favorite-posts="{{favoritePosts}}"
+                          favorite-tags="{{favoriteTags}}"
+                          id="explorePage"
+                          current-sorting="{{dataUrl1.data}}"
+                          current-tag="{{dataUrl2.data}}"
+                          settings="[[settings]]">
+            </page-explore>
+
+            <page-post name="post"
+                       category="[[dataUrl1.data]]"
+                       author="[[dataUrl2.data]]"
+                       post-name="[[dataUrl3.data]]"
+                       favorite-posts="{{favoritePosts}}"
+                       favorite-tags="{{favoriteTags}}"
+                       favorite-users="{{favoriteUsers}}">
+            </page-post>
+
+            <page-favorites name="favorites"
+                            settings="[[settings]]"
+                            favorite-posts="{{favoritePosts}}"
+                            favorite-tags="{{favoriteTags}}"
+                            favorite-users="{{favoriteUsers}}">
+            </page-favorites>
+
+            <page-profile name="profile"
+                          settings="[[settings]]"
+                          user="[[dataUrl1.data]]"
+                          favorite-posts="{{favoritePosts}}"
+                          favorite-users="{{favoriteUsers}}">
+            </page-profile>
+
+            <page-settings name="settings"
+                           settings="{{settings}}">
+            </page-settings>
+
+            <page-support name="support"
+                          settings="{{settings}}">
+            </page-support>
+
+            <page-login name="login"
+                        settings="{{settings}}">
+            </page-login>
+
+            <page-404 name="404"
+                      settings="[[settings]]">
+            </page-404>
+        </iron-pages>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'steemone-shell',
+
+            properties: {
+
+                /*
+                 * Current page selected to display.
+                 */
+                selectedPage: {
+                    type: String,
+                    reflectToAttribute: true,
+                    observer: '_selectedPageChanged'
+                },
+
+                /*
+                 * Current url after domain name.
+                 */
+                route: {
+                    type: Object,
+                    observer: '_routeChanged'
+                },
+
+                /*
+                 * Application settings object.
+                 * Stored in browser.
+                 */
+                settings: {
+                    type: Object
+                },
+
+                /*
+                 * Favorite posts array.
+                 * Stored in browser.
+                 */
+                favoritePosts: {
+                    type: Array
+                },
+
+                /*
+                 * Favorite users array.
+                 * Stored in browser.
+                 */
+                favoriteUsers: {
+                    type: Array
+                },
+
+                /*
+                 * Favorite tags array.
+                 * Stored in browser.
+                 */
+                favoriteTags: {
+                    type: Array
+                }
+
+            },
+
+            observers: [
+
+                '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
+                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor)',
+                '_accountChanged(settings.user.account)'
+            ],
+
+            ready: function() {
+
+                // Set default variables value
+                this.account = {};
+
+                // Set default browser stored value
+                if(typeof this.favoritePosts == 'undefined') { this.favoritePosts = [];}
+                if(typeof this.favoriteUsers == 'undefined') { this.favoriteUsers = ['esteem8'];}
+                if(typeof this.favoriteTags == 'undefined') { this.favoriteTags = ['esteem8'];}
+
+                if(typeof this.settings == 'undefined') {
+
+                    this.settings = {
+
+                        user: {
+                            name: '',
+                            password: '',
+                            account: {
+                                profileImage: '',
+                                coverImage: '',
+                                followers: [],
+                                following: []
+                            }
+                        },
+
+                        theme: {
+                            primaryColor: '#F44336',
+                            secondaryColor: '#3F51B5',
+                            darkPrimaryColor: '#c3362b',
+                            lightPrimaryColor: '#ff5041',
+                            ultraDarkPrimaryColor: '#7a221b',
+                            primaryTextColor: '#eeeeee',
+                            secondaryTextColor: '#eeeeee',
+                            dividerColor: '#BDBDBD'
+                        },
+
+                        display: {
+                            showCardContent: false,
+                            showCardTags: true,
+                            showCardImage: true,
+                            imageResolution: 'medium'
+                        },
+
+                        support: {
+                            enableSupportApplication: false,
+                            enableSupportUpdates: false
+                        }
+                    };
+                }
+
+                // Select default page
+                this._routePageChanged();
+            },
+
+            // URL has changed
+            _routeChanged: function() {
+
+                // Get url and put these in variables
+                var dataUrl1 = this.dataUrl1 ? this.dataUrl1.data : '';
+                var dataUrl2 = this.dataUrl2 ? this.dataUrl2.data : '';
+                var dataUrl3 = this.dataUrl3 ? this.dataUrl3.data : '';
+
+                // Transmit them to function that choose page
+                this._routePageChanged(dataUrl1, dataUrl2, dataUrl3);
+            },
+
+            // Function that choose page
+            _routePageChanged: function(dataUrl1, dataUrl2, dataUrl3) {
+
+                // SET /dataUrl1/dataUrl2/dataUrl3 in variables
+                dataUrl1 = dataUrl1 || '';
+                dataUrl2 = dataUrl2 || '';
+                dataUrl3 = dataUrl3 || '';
+
+                // Choose page
+                if(dataUrl1 == ''){
+
+                    this.selectedPage ='home';// HOME
+                }else if(dataUrl1 == 'login'){
+
+                    this.selectedPage = 'login'; // LOGIN
+                }else if(dataUrl1 == 'favorites') {
+
+                    this.selectedPage = 'favorites'; //FAVORITES
+                }else if(dataUrl1 == 'settings') {
+
+
+                    this.selectedPage = 'settings'; // SETTINGS
+                }else if(dataUrl1 == 'support') {
+
+
+                    this.selectedPage = 'support'; // SUPPORT
+                }else if(dataUrl1.charAt(0) == '@'){
+
+
+                    this.selectedPage = 'profile'; // PROFILE
+                }else if(dataUrl1 == 'created' || dataUrl1 == 'hot' || dataUrl1 == 'trending' || dataUrl1 == 'active') {
+
+
+                    this.selectedPage = 'explore'; // EXPLORE
+                }else if(dataUrl2.charAt(0) ==  '@'){
+
+
+                    this.selectedPage = 'post'; // SINGLE PUBLICATION
+                }else {
+
+                    this.selectedPage = '404'; // PAGE 404
+                }
+            },
+
+            // Load and display page
+            _selectedPageChanged: function(page) {
+
+                // Get page name
+                var page = page || this.selectedPage;
+
+                // Load page import on demand. Show 404 page if fails
+                var resolvedPageUrl = this.resolveUrl('pages/page-' + page + '.html');
+                this.importHref(resolvedPageUrl, null, this._showPage404, true);
+            },
+
+            // Load and display 404 page
+            _showPage404: function() {
+
+                this.selectedPage = '404';
+            },
+
+            // Change theme color
+            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor) {
+
+                // Set style
+                this.customStyle['--app-primary-color'] = primaryColor;
+                this.customStyle['--app-secondary-color'] = secondaryColor;
+                this.customStyle['--app-dark-primary-color'] = darkPrimaryColor;
+                this.customStyle['--app-light-primary-color'] = lightPrimaryColor;
+                this.customStyle['--app-primary-text-color'] = primaryTextColor;
+                this.customStyle['--app-secondary-text-color'] = secondaryTextColor;
+                this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor;
+
+                console.log("--app-primary-color" + "= " + primaryColor);
+                console.log("--app-secondary-color" + "= " + secondaryColor);
+                console.log("--app-dark-primary-color" + "= " + darkPrimaryColor);
+                console.log("--app-light-primary-color" + "= " + lightPrimaryColor);
+                console.log("--app-primary-text-color" + "= " + primaryTextColor);
+                console.log("--app-secondary-text-color" + "= " + secondaryTextColor);
+                console.log("--app-ultra-dark-primary-color" + "= " + ultraDarkPrimaryColor);
+
+                // Render
+                Polymer.updateStyles();
+            }
+        });
+    </script>
+</dom-module>

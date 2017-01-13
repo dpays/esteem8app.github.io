@@ -1,0 +1,35 @@
+<dom-module id="html-echo">
+    <style>
+        :host {
+            display: block;
+        }
+    </style>
+    <template>
+        <div id="content"></div>
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+        Polymer({
+            is: 'html-echo',
+            properties: {
+                html: {
+                    type: String,
+                    observer: '_htmlChanged'
+                }
+            },
+
+            ready: function() {
+              this._htmlChanged;
+            },
+
+            _htmlChanged: function (neo) {
+                // WARNING: potential XSS vulnerability if `html` comes from an untrusted source
+                this.async(function() {
+                    this.$.content.innerHTML = neo || this.html;
+                })
+            }
+        });
+    })();
+</script>

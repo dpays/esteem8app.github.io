@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="my-icons.html">
+
+<dom-module id="user-card">
+    <template>
+        <style include="shared-styles">
+            /* GENERAL */
+            * {
+                font-weight: 300;
+            }
+
+            #userCard {
+                display: block;
+                width: 100%;
+                margin-top: 0;
+                margin-bottom: 0;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 12px;
+                border-bottom: solid 1px #eee;
+            }
+
+            .authorIcon {
+                color: var(--app-dark-primary-color);
+            }
+
+            .author {
+                color: var(--app-secondary-color);
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .followBackButton {
+                float: right;
+                margin-top: -8px;
+            }
+
+
+        </style>
+
+        <!-- follower cards -->
+        <paper-card id="userCard">
+
+            <iron-icon class="authorIcon"
+                       icon="my-icons:person-circle">
+            </iron-icon>
+            <a class="author" href="@[[user]]">
+                @[[user]]
+            </a>
+            <paper-icon-button class="followBackButton"
+                               icon="my-icons:person-add">
+            </paper-icon-button>
+
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'user-card',
+
+            properties: {
+
+                user: {
+                    type: String
+                }
+
+            },
+
+            ready: function() {
+
+            }
+
+        });
+
+    </script>
+</dom-module>

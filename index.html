@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>ESTEEM8 Application</title>
+    <meta name="description" content="Easy to use web application to access to the world first blockchain based social media that reward you to use it. Discover your favorite content now.">
+    <link rel="icon" href="./images/favicon.ico">
+
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#f44336">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="My App">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="My App">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="./images/manifest/icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./images/manifest/icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="./images/manifest/icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./images/manifest/icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="./images/manifest/icon-192x192.png">
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="./images/manifest/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#f44336">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Load must have script -->
+    <script src="./index.js"></script> <!-- web compoment -->
+
+    <!-- Main compoment -->
+    <link rel="import" href="./src/steemone-shell.html">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato|Open+Sans');
+        body {
+            margin: 0;
+            font-family: 'Roboto', 'Open Sans', 'Lato', sans-serif;
+            font-weight: 500;
+            min-height: 100%;
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+    <steemone-shell></steemone-shell>
+</body>
+</html>

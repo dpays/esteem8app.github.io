@@ -1,0 +1,100 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="page-404">
+  <template>
+    <style include="shared-style">
+
+      :host {
+        display: block;
+        height: 100%;
+        width: 100%;
+        color: #fff;
+        padding: 0;
+        margin: 0;
+      }
+
+      a {
+        color: #eee;
+      }
+
+      .content {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        margin: 0;
+        text-align: center;
+        background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+      }
+
+      h1 {
+        margin-top: 100px;
+      }
+
+      .mainToolbar {
+        background-color: var(--app-primary-color);
+      }
+
+      paper-button {
+        background-color: var(--app-secondary-color);
+      }
+
+      paper-button a {
+        text-decoration: none;
+        color: var(--app-secondary-text-color);
+      }
+
+    </style>
+
+    <paper-toolbar class="mainToolbar">
+      <paper-icon-button id="toggleDrawerMenu" on-tap="_toggleDrawer()" icon="my-icons:menu"></paper-icon-button>
+      <div main-title>ETSEEM8</div>
+    </paper-toolbar>
+
+    <div class="content">
+      <h1>
+        Page not found<br>
+      </h1>
+      <paper-button raised>
+        <a href="/">HOME</a>
+      </paper-button>
+    </div>
+
+    <app-drawer id="drawer">
+      <drawer-content settings="[[settings]]"></drawer-content>
+    </app-drawer>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'page-404',
+
+      properties: {
+
+        settings: {
+
+          type: Object
+        }
+      },
+
+      ready: function() {
+
+        this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+      },
+
+      _toggleDrawer: function() {
+
+        this.$.drawer.toggle();
+      }
+
+    });
+  </script>
+</dom-module>

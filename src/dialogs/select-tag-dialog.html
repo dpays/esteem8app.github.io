@@ -1,0 +1,328 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<!--PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../api/steemjs/steem-get-tags.html">
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="select-tag-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+            }
+
+            .noMargin {
+                margin: 0 !important;
+            }
+
+            /* UP TOOLBAR */
+            #selectTagDialog {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                width: 90%;
+                max-width: 408px;
+                margin: 12px auto 20% auto;
+                background-color: transparent;
+                text-align: center;
+            }
+
+            @media screen and (max-width: 600px) {
+                #selectTagDialog {
+                    margin-top: 8px;
+                }
+
+                #enterTagToolbar {
+                    padding-top: 4px !important;
+                }
+
+            }
+
+            #closeDialogButton {
+                margin-left: -12px;
+                margin-top: -24px;
+            }
+
+            #selectInputedTagButton {
+                margin-top: -2px;
+                margin-right: -10px;
+            }
+
+            #enterTagToolbar {
+                height: 40px;
+                padding: 0;
+                border-top-left-radius: 2px;
+                border-top-right-radius: 2px;
+                background-color: var(--app-light-primary-color);
+                color: var(--app-primary-text-color);
+                @apply(--shadow-elevation-2dp);
+                --paper-input-container-color: #fff;
+            }
+
+            #enterTagToolbar paper-icon-button {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            #enterTagInputContainer {
+                width: 100%;
+                margin-top: 4px;
+            }
+
+            #insertTagInput {
+                margin-top: -24px;
+                width: 100%;
+                text-align: left;
+                --paper-input-container-color: transparent;
+                --paper-input-container-input-color: var(--app-primary-text-color);
+                --paper-input-container-focus-color: transparent;
+            }
+
+            /* SORTING TABS */
+            #sortingTagsTabs {
+                border-radius: 2px;
+                margin-top: 0;
+                background-color: var(--app-dark-primary-color);
+                color: var(--app-primary-text-color);
+                --paper-tabs-selection-bar-color: var(--app-secondary-color);
+            }
+
+            #sortingTagsTabs paper-tab {
+                --paper-tab-ink: var(--app-secondary-color);
+            }
+
+            /* BODY */
+            paper-item-body {
+                text-align: left;
+            }
+
+            paper-dialog-scrollable {
+                background-color: white;
+            }
+
+            #myFavorites {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            #myFavorites a {
+                text-decoration: none;
+                color: var(--app-secondary-color);
+            }
+
+        </style>
+
+        <paper-dialog id="selectTagDialog"
+                      opened="{{opened}}">
+            <!-- UP TOOLBAR -->
+            <paper-toolbar id="enterTagToolbar"
+                         class="noMargin">
+                <paper-icon-button id="closeDialogButton"
+                                   icon="my-icons:close"
+                                   dialog-dismiss>
+                </paper-icon-button>
+
+                <div id="enterTagInputContainer">
+                    <paper-input-container id="insertTagInput"
+                                           no-label-float>
+                        <span prefix># </span>
+
+                        <input is="iron-input"
+                               value="{{selectedTag::input}}">
+
+                        <paper-icon-button
+                                suffix
+                                id="selectInputedTagButton"
+                                on-tap="_selectInputedTag()"
+                                icon="my-icons:[[icon]]">
+                        </paper-icon-button>
+                    </paper-input-container>
+                </div>
+            </paper-toolbar>
+
+            <!-- SORTING TABS -->
+            <paper-tabs id="sortingTagsTabs"
+                        selected="{{currentSortingTags}}"
+                        attr-for-selected="name"
+                        fit-container
+                        scrollable
+                        fit-container
+                        no-slide>
+
+                <paper-tab name="trending">
+                    <iron-icon icon="my-icons:trending-up"></iron-icon>
+                </paper-tab>
+
+                <paper-tab name="favorites">
+                    <iron-icon icon="my-icons:star"></iron-icon>
+                </paper-tab>
+            </paper-tabs>
+
+            <!-- BODY -->
+            <paper-dialog-scrollable class="noMargin">
+                <iron-pages selected="[[currentSortingTags]]"
+                            attr-for-selected="name">
+
+                    <!-- BEST TAGS -->
+                    <div role="listbox"
+                         name="trending"
+                         id="trendingTags">
+
+                        <template is="dom-repeat"
+                                  items="[[tags]]">
+
+                            <paper-item>
+                                <paper-item-body two-line class="selectCategoryButton"
+                                                 on-tap="_selectThisTag()">
+                                    <div>#{{item.name}}</div>
+                                    <div secondary>[[item.discussions]] discussions</div>
+                                </paper-item-body>
+                            </paper-item>
+                        </template>
+                    </div>
+
+                    <!-- FAVOURITES TAGS -->
+                    <div role="listbox"
+                         name="favorites">
+
+                        <template is="dom-repeat"
+                                  items="[[favoriteTags]]">
+
+                            <paper-item>
+                                <paper-item-body class="selectCategoryButton"
+                                                 on-tap="_selectThisTag()">
+                                    <div>#[[item]]</div>
+                                </paper-item-body>
+                            </paper-item>
+                        </template>
+
+                        <div id="myFavorites">
+                            <a href="/favorites">My favorites</a>
+                        </div>
+
+                    </div>
+                </iron-pages>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+
+        <!-- QUERY TAGS -->
+        <steem-get-tags tags="{{tags}}"
+                        number="50">
+        </steem-get-tags>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'select-tag-dialog',
+
+            listeners: {
+                'tap': '_selectThisTag'
+            },
+
+            properties: {
+
+                opened: {
+                    type: Boolean,
+                    notify: true,
+                    observer: '_openedChanged'
+                },
+
+                icon: {
+                  type: String
+                },
+
+                selectedTag: {
+                    type: Object,
+                    notify: true
+                },
+
+                currentSortingTags: {
+                    type: String,
+                    observer: '_currentSortingTagsChanged'
+                },
+
+                tags: {
+                    type: Array
+                },
+
+                favoriteTags: {
+                    type: Array
+                }
+            },
+
+            ready: function() {
+
+                // List the event that close the select category dialog
+                this.$.selectInputedTagButton.addEventListener('tap', this._selectInputedTag.bind(this));
+
+                // Set default value for icon and tabs
+                this.icon = 'done';
+                this.currentSortingTags = 'trending';
+
+            },
+
+            _selectInputedTag: function() {
+
+                // Select tag that is in input or push it in favorite
+                if(this.currentSortingTags == 'trending'){
+                    this.opened = false;
+                }else if(this.currentSortingTags == 'favorites') {
+                    this.push('favoriteTags', this.selectedTag);
+                }
+
+            },
+
+            _selectThisTag: function(e) {
+
+                // Select tag in list and close dialog
+                if(typeof e.model.item.name !== 'undefined') {
+                    this.selectedTag = e.model.item.name;
+                }else {
+                    this.selectedTag = e.model.item;
+                }
+                this.opened = false;
+
+            },
+
+            _currentSortingTagsChanged: function() {
+
+                // Change icon when tabs change
+                if(this.currentSortingTags == 'trending'){
+                    this.icon = 'done';
+                }else {
+                    this.icon = 'add';
+                }
+            },
+
+            _checkForEnterOnTagInput: function(e) {
+
+                // check if 'enter' was pressed
+                if (e.keyCode === 13) {
+                    this._selectThisTag();
+                }
+            }
+
+        });
+    </script>
+</dom-module>

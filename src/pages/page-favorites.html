@@ -1,0 +1,395 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<!-- IRON Elements -->
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+
+<!-- APP Elements -->
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../components/post-card.html">
+
+<dom-module id="page-favorites">
+    <template>
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+            }
+
+            app-drawer {
+                z-index: 2;
+            }
+
+            iron-pages {
+                margin-top: 128px;
+            }
+
+            a {
+                display: inline;
+                color: #222222;
+            }
+
+            /* BODY */
+            #posts-list {
+                padding-top: 12px;
+            }
+
+            h1 {
+                margin-top: 100px;
+                padding: 24px;
+                text-align: center;
+                color: #222;
+            }
+
+            paper-input {
+                margin: auto;
+                padding-left: 16px;
+                padding-right: 16px;
+                --paper-input-container-focus-color: var(--app-secondary-color);
+            }
+
+            #favoriteTagsList, #favoriteUsersList {
+                overflow-y: scroll;
+                height: calc(100vh - 250px);
+            }
+
+            #users, #tags {
+                max-width: 600px;
+                margin: auto;
+            }
+
+            @media screen and (max-width: 600px) {
+                iron-pages {
+                    margin-top: 108px;
+                }
+
+                #favoriteTagsList, #favoriteUsersList {
+                    overflow-y: scroll;
+                    height: calc(100vh - 230px);
+                }
+
+            }
+
+            /* TOAST */
+            .cancel-button {
+                color: var(--app-secondary-color);
+                float: right;
+                vertical-align: middle;
+            }
+
+
+        </style>
+
+        <!-- TOAST -->
+        <paper-toast id="toastDeleteTag"
+                     text="Tag #[[deletedTag]] deleted"
+                     class="fit-bottom">
+            <paper-button id="cancelDeleteTagButton"
+                          on-tap="_cancelDeleteTag()"
+                          class="cancel-button">
+                Cancel
+            </paper-button>
+        </paper-toast>
+        <paper-toast id="toastDeleteUser"
+                     text="User @[[deletedUser]] deleted"
+                     class="fit-bottom">
+            <paper-button id="cancelDeleteUserButton"
+                          on-tap="_cancelDeleteUser()"
+                          class="cancel-button">
+                Cancel
+            </paper-button>
+        </paper-toast>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_toggleDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    Favorite [[currentView]]
+                </span>
+            </div>
+            <a href="/trending">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+        </paper-toolbar>
+
+        <!-- SECOND TOOLBAR -->
+        <div class="secondBar">
+            <paper-tabs selected="{{currentView}}"
+                        attr-for-selected="name"
+                        fit-container
+                        no-slide>
+                <paper-tab name="publications">
+                    <iron-icon icon="my-icons:book"></iron-icon>
+                    [[favoritePosts.length]]
+                </paper-tab>
+                <paper-tab name="users">
+                    <iron-icon icon="my-icons:person"></iron-icon>
+                    [[favoriteUsers.length]]
+                </paper-tab>
+                <paper-tab name="tags">
+                    <iron-icon icon="my-icons:label"></iron-icon>
+                    [[favoriteTags.length]]
+                </paper-tab>
+            </paper-tabs>
+        </div>
+
+        <!-- CONTENT -->
+        <iron-pages selected="[[currentView]]"
+                    attr-for-selected="name">
+
+            <div name="publications">
+
+                <template is="dom-if" if="[[!favoritePosts.length]]">
+                    <h1>You don't have any favorites publications</h1>
+                </template>
+
+                <div id="posts-list">
+
+                    <template is="dom-if" if="[[favoritePosts.length]]">
+                        <template is="dom-repeat" items="[[favoritePosts]]">
+                            <post-card post="[[item]]"
+                                       settings="[[settings]]"
+                                       favorite-posts="{{favoritePosts}}">
+                            </post-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            <div name="users" id="users">
+
+                <paper-input label="Add a user"
+                             value="{{addUserInput}}"
+                             on-keydown="_checkForEnterOnUserInput">
+                    <span prefix>@</span>
+                    <paper-icon-button id="addUserButton"
+                                       icon="my-icons:add"
+                                       on-tap="_addUser()"
+                                       suffix>
+                    </paper-icon-button>
+                </paper-input>
+                <div role="listbox"
+                     id="favoriteUsersList">
+                    <template is="dom-repeat"
+                              items="[[favoriteUsers]]">
+                        <paper-item>
+                            <paper-item-body>
+                                <a href="/@[[item]]">@[[item]]</a>
+                            </paper-item-body>
+                            <paper-icon-button icon="my-icons:delete"
+                                               id="deleteUsers"
+                                               on-tap="_deleteUser()">
+                            </paper-icon-button>
+                        </paper-item>
+
+                    </template>
+                </div>
+            </div>
+
+            <div name="tags" id="tags">
+
+                <paper-input label="Add a tag"
+                             value="{{addTagInput}}"
+                             on-keydown="_checkForEnterOnTagInput">
+                    <span prefix>#</span>
+                    <paper-icon-button id="addTagButton"
+                                       icon="my-icons:add"
+                                       on-tap="_addTag()"
+                                       suffix>
+                    </paper-icon-button>
+                </paper-input>
+                <div role="listbox"
+                     id="favoriteTagsList">
+                    <template is="dom-repeat"
+                              items="[[favoriteTags]]">
+                        <paper-item>
+                            <paper-item-body>
+                                <a href="/hot/[[item]]">#[[item]]</a>
+                            </paper-item-body>
+                            <paper-icon-button icon="my-icons:delete"
+                                               id="deleteTags"
+                                               on-tap="_deleteTag()">
+                            </paper-icon-button>
+                        </paper-item>
+                    </template>
+                </div>
+            </div>
+
+        </iron-pages>
+
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+    </template>
+
+    <script>
+        Polymer({
+
+            is: 'page-favorites',
+
+            listeners: {
+                'tags.tap': '_deleteTag',
+                'users.tap': '_deleteUser'
+            },
+
+            properties: {
+
+                favoritePosts: {
+                    type: Array,
+                    notify: true
+                },
+
+                favoriteUsers: {
+                    type: Array,
+                    notify: true
+                },
+
+                favoriteTags: {
+                    type: Array,
+                    notify: true
+                },
+
+                currentView: {
+                    type: String
+                },
+
+                addTagInput: {
+                    type: String
+                },
+
+                addUserInput: {
+                    type: String
+                },
+
+                deletedUser: {
+                    type: String
+                },
+
+                deletedTag: {
+                    type: String
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.addTagButton.addEventListener('tap', this._addTag.bind(this));
+                this.$.addUserButton.addEventListener('tap', this._addUser.bind(this));
+                this.$.cancelDeleteUserButton.addEventListener('tap', this._cancelDeleteUser.bind(this));
+                this.$.cancelDeleteTagButton.addEventListener('tap', this._cancelDeleteTag.bind(this));
+
+                // Default view
+                this.currentView = 'publications';
+
+                // Sort user A -> Z
+
+                // Sort tag A -> Z
+
+            },
+
+            _toggleDrawer: function() {
+
+                this.$.drawer.toggle();
+            },
+
+            _addUser: function() {
+
+                this.push('favoriteUsers', this.addUserInput.toLowerCase());
+                this.addUserInput = '';
+            },
+
+            _addTag: function() {
+
+                this.push('favoriteTags', this.addTagInput.toLowerCase());
+                this.addTagInput = '';
+            },
+
+            _deleteUser: function(e) {
+
+                // Get USER to delete
+                var user = e.model.item;
+                this.deletedUser = user;
+
+                // Open toast
+                this.$.toastDeleteUser.open();
+
+                // Delete USER
+                if(typeof e.model !== 'undefined') {
+                    var index = this.favoriteUsers.indexOf(user);
+                    if (index > -1) {
+                        this.splice('favoriteUsers', index, 1);
+                    }
+                }
+            },
+
+            _deleteTag: function(e) {
+
+                // Get TAG to delete
+                var tag = e.model.item;
+
+                // Open toast
+                this.deletedTag = tag;
+                this.$.toastDeleteTag.open();
+
+                // Delete TAG
+                if(typeof e.model !== 'undefined') {
+                    var index = this.favoriteTags.indexOf(tag);
+                    if (index > -1) {
+                        this.splice('favoriteTags', index, 1);
+                    }
+                }
+            },
+
+            _cancelDeleteUser: function() {
+
+                this.push('favoriteUsers', this.deletedUser);
+                this.$.toastDeleteUser.close();
+            },
+
+            _cancelDeleteTag: function() {
+
+                this.push('favoriteTags', this.deletedTag);
+                this.$.toastDeleteTag.close();
+            },
+
+            _checkForEnterOnUserInput: function(e) {
+                // check if 'enter' was pressed
+                if (e.keyCode === 13) {
+                    this._addUser();
+                }
+            },
+
+            _checkForEnterOnTagInput: function(e) {
+
+                // check if 'enter' was pressed
+                if (e.keyCode === 13) {
+                    this._addTag();
+                }
+            }
+
+        });
+    </script>
+</dom-module>

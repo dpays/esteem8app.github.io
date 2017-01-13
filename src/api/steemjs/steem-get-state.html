@@ -1,0 +1,151 @@
+<dom-module id="steem-get-state"></dom-module>
+
+<script src="./src/to-markdown.js"></script>
+<script src="./src/steem.min.js"></script>
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-state',
+
+            properties: {
+
+                /*
+                 * Steem path to be loaded
+                 * f.e "/sorting/tag
+                 */
+                path: {
+                    type: String,
+                    observer: '_pathChanged'
+                },
+
+                /*
+                 * Steem posts list array to be returned
+                 */
+                posts: {
+                    type: Array,
+                    notify: true
+                },
+
+                /*
+                 * Boolean set to true if there is a query error
+                 */
+                queryError: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
+
+            ready: function() {
+
+                // Set default value
+                if(typeof this.queryError === 'undefined') {
+                    this.queryError = false;
+                }
+
+                if(typeof this.path === 'undefined'){
+                    this.path = '';
+                }
+            },
+
+            // Update posts list when path changed
+            _pathChanged: function() {
+
+                var thisElement = this;
+
+                steem.api.getState(this.path, function(err, result) {
+
+                    if(result !== 'undefined' && !err){
+
+                        thisElement._computePosts(result.content);
+                    }else {
+
+                        thisElement.queryError = true;
+                    }
+                });
+
+            },
+
+            _computePostBody: function(body) {
+
+                // HTML -> markdown & HTML
+                var markdownAndHtml = String(toMarkdown(body));
+                // HTML -> string
+                var markdownContent = markdownAndHtml
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;');
+
+                // Image url -> image markdown
+                markdownContent.replace(/https?:\/\/.*\.(?:png|jpg)/g, function(url){
+                    return '[](' + url + ')';
+                });
+
+                return markdownContent;
+
+            },
+
+            _computePosts: function(content) {
+
+                var posts = [];
+                // Add each post to an array because post are object's properties
+                for (var key in content) {
+                    // skip loop if the property is from prototype
+                    if (!content.hasOwnProperty(key)) continue;
+
+                    var postRecived = content[key];
+                    var post = {};
+
+                    // Add images & tags
+                    if(typeof postRecived.json_metadata !== 'undefined'){
+
+                        var objectFromJson = JSON.parse(postRecived.json_metadata) || {};
+
+                        if(typeof objectFromJson.image !== 'undefined'){
+                            post.images = objectFromJson.image;
+                        }
+
+                        if(typeof objectFromJson.tags !== 'undefined'){
+                            post.tags = objectFromJson.tags;
+                        }
+                    }
+
+                    // Set images empty if null
+                    if(typeof post.images === 'undefined'){
+                        post.images = [];
+                    }
+
+                    // Set tags empty if null
+                    if(typeof post.tags === 'undefined'){
+                        post.tags = [];
+                    }
+
+                    post.markdownContent = this._computePostBody(postRecived.body);
+
+                    post.category = postRecived.category;
+                    post.title = postRecived.title;
+                    post.author = postRecived.author;
+                    post.dollarValue = parseFloat(postRecived.total_pending_payout_value.split(" ")[0]) + parseFloat(postRecived.total_payout_value.split(" ")[0]);
+                    post.net_votes = postRecived.net_votes;
+                    post.children = postRecived.children;
+                    post.activeVotes = postRecived.active_votes;
+                    post.created = postRecived.created;
+                    post.url = postRecived.url;
+
+                    // Push post in array
+                    posts.push(post);
+                }
+
+                this._setPosts(posts);
+            },
+
+            _setPosts: function(posts) {
+                this.posts = posts;
+            }
+
+        });
+    })();
+</script>

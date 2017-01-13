@@ -1,0 +1,204 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<!-- NEON Animation -->
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<!-- IRON elements -->
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="my-icons.html">
+
+<dom-module id="images-slider">
+
+    <style>
+
+        :host {
+            display: block;
+        }
+
+        #imageBox {
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            cursor: zoom-in;
+            height: 200px;
+            line-height: 200px;
+            width: 100%;
+        }
+
+        paper-icon-button {
+            height: 64px;
+            width: 64px;
+        }
+
+        #navInfo {
+            right: 0;
+            height: 175px;
+            line-height: 175px;
+            position: absolute;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, .6);
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #imageDialog {
+            overflow-x: scroll;
+            margin: 48px;
+        }
+
+        #imageInDialog {
+            margin-top: 0;
+            margin-bottom: -5px;
+            padding: 0;
+        }
+
+        #closeDialog {
+            position: fixed;
+            color: white;
+            z-index: 1;
+            right: 0;
+            top: 0;
+            margin: 0;
+            padding: 18px;
+        }
+
+        @media screen and (max-width: 600px) {
+
+            #imageDialog {
+                margin: 24px;
+            }
+        }
+
+    </style>
+
+    <template>
+        <div id="navInfo"
+             on-tap="_next()">
+            [[_computeCurrent(current)]]/[[images.length]]
+        </div>
+
+        <div id="imageBox"
+             on-tap="_openImageDialog()"
+             tabindex="-1">
+            <div id="image2"></div>
+        </div>
+
+        <paper-dialog id="imageDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+            <paper-icon-button id="closeDialog"
+                               icon="my-icons:close"
+                               dialog-dismiss>
+            </paper-icon-button>
+            <iron-image id="imageInDialog"
+                        src="[[currentImage]]">
+            </iron-image>
+        </paper-dialog>
+
+    </template>
+
+</dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+            is: 'images-slider',
+
+            properties: {
+
+                images: {
+                    type: Array,
+                    observer: '_currentChanged'
+                },
+
+                currentImage: {
+                    type: String
+                },
+
+                imageResolution: {
+                    type: String
+                },
+
+                current: {
+                    type: Number,
+                    observer: '_currentChanged'
+                }
+            },
+
+            ready: function() {
+
+                // Event listeners
+                this.$.navInfo.addEventListener('tap', this._next.bind(this));
+                this.$.imageBox.addEventListener('tap', this._openImageDialog.bind(this));
+
+                // Set current if not set
+                this.current = this.current || 0;
+            },
+
+            _currentChanged: function () {
+
+                // Select size of image
+                var imageShortenerUrl = "https://img1.steemit.com/300x200/";
+
+                if(this.imageResolution == 'medium'){
+
+                    imageShortenerUrl = "https://img1.steemit.com/450x200/";
+                }else if(this.imageResolution == 'high') {
+
+                    imageShortenerUrl = "https://img1.steemit.com/600x200/";
+                }
+
+                // Display image + preload next image + set in a var in component
+                if(typeof this.images !== 'undefined'){
+
+                    var image = this.images[this.current];
+                    var image2 = this.images[(this.current+1) % this.images.length];
+
+                    this.async(function() {
+                        this.$.imageBox.style = 'background-image: url("' + imageShortenerUrl + image + '");';
+                        this.$.image2.style = 'background-image: url("' + imageShortenerUrl + image2 + '");';
+                    });
+
+                    this.currentImage = image;
+                }
+            },
+
+            _next: function() {
+
+                this.current = this._computeCurrent(this.current) % this.images.length;
+            },
+
+            _previous: function() {
+
+                if(this.current == 0){ // If first
+                    this.current = this.images.length-1; // Display last
+                }else { // Else
+                    this.current = (this.current-1) % this.images.length; // Display previous
+                }
+            },
+
+            _computeCurrent: function(current) {
+
+                return current + 1;
+            },
+
+            _openImageDialog: function() {
+
+                this.$.imageDialog.open();
+            }
+
+
+        });
+    })();
+</script>

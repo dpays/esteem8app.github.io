@@ -1,0 +1,523 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- APP Elements -->
+<link rel="import" href="../../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+
+<!-- IRON Icons -->
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<!-- Downloaded Elements -->
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../../bower_components/awesome-button/awesome-button.html">
+
+<!-- CUSTOM Elements -->
+<link rel="import" href="../components/comment-content.html">
+<link rel="import" href="../api/steemjs/steem-get-post.html">
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="page-post">
+
+    <template>
+
+        <style include="shared-styles">
+
+            :host {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                --header-background: '';
+            }
+
+            /* HEADER */
+            app-header {
+                position: fixed;
+                z-index: 2;
+                top: 0;
+                left: 0;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100%;
+                height: 440px;
+                color: #fff;
+
+                background-image: var(--header-background);
+                background-position: center;
+                background-size: cover;
+
+                --app-header-background-front-layer: {
+                    background: -webkit-linear-gradient(top, transparent 0%, transparent 50%, rgba(0,0,0,0.5) 100%);
+                };
+
+                --app-header-background-rear-layer: {
+                    background-color: var(--app-primary-color);
+                };
+            }
+
+            app-toolbar paper-icon-button {
+                --paper-icon-button-ink-color: var(--app-primary-text-color);
+            }
+
+            app-toolbar.tall {
+                height: 400px;
+                color: var(--app-primary-text-color);
+            }
+
+            sample-content {
+                padding-top: 440px;
+            }
+
+            [main-title] {
+                font-weight: 300;
+                position: absolute;
+                bottom: 40px;
+                left: 84px;
+                margin: 0;
+            }
+
+            [condensed-title] {
+                font-weight: lighter;
+                margin-left: 16px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                color: var(--app-primary-text-color);
+            }
+
+            [condensed-title] i {
+                font-weight: 100;
+                font-style: normal;
+            }
+
+            @media (max-width: 639px) {
+                [main-title] {
+                    left: 85px;
+                }
+            }
+
+            /* POST */
+            #post {
+                background-color: white;
+                margin-top: -16px;
+            }
+
+            /* CONTENT */
+
+            #bodyContent {
+                margin-top: 456px;
+            }
+
+            #bodyContent, #metadataContent, #commentsContent {
+                max-width: 800px;
+                padding: 16px;
+                margin-left: auto;
+                margin-right: auto;
+                border-bottom: 1px solid #eee;
+            }
+
+            #bodyContent img {
+                max-width: 100%;
+                display: block;
+                margin: auto;
+            }
+
+            /* TAGS */
+            .tags {
+                margin-top: 16px;
+                margin-bottom: 8px;
+            }
+
+            .tags .tag {
+                padding: 4px 8px;
+                margin-right: 4px;
+                border-radius: 4px;
+                background-color: #efefef;
+                text-decoration: none;
+                color: #656565;
+            }
+
+            /* METADATA section */
+            #metadataContent .section {
+                height: 42px;
+                line-height: 42px;
+            }
+
+            #metadataContent .section iron-icon, #metadataContent .section span paper-icon-button {
+                vertical-align: text-bottom;
+            }
+
+            .author, .category {
+               text-decoration: none;
+                font-size: 125%;
+            }
+
+            .author, .authorIcon, .authorFavoriteIcon {
+                color: var(--app-secondary-color);
+            }
+
+            .category, .categoryIcon, .categoryFavoriteIcon {
+                color: #222;
+            }
+
+            #metadataContent .section span paper-icon-button {
+                float: right;
+            }
+
+            #shareButtons {
+                position: absolute;
+                z-index: 1;
+                margin-top: 4px;
+            }
+
+            /* COMMENTS Content */
+
+            .commentsNumber {
+                margin-top: 0;
+                color: #222;
+            }
+
+
+        </style>
+
+        <steem-get-post path="[[category]]/[[author]]/[[postName]]"
+                        post="{{post}}">
+        </steem-get-post>
+
+        <!-- Confirmation remove from favorite -->
+        <paper-dialog id="confirmationRemovePost">
+
+            <h2>Confirmation</h2>
+            <p>Remove this publication from favorite ?</p>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="removeFavoriteButton"
+                              on-tap="_removeFavoritePost()">
+                    Yes
+                </paper-button>
+            </div>
+        </paper-dialog>
+
+        <template is="dom-if" if="[[post]]">
+
+            <div id="post">
+
+                <app-header condenses fixed
+                            effects="waterfall resize-snapped-title fade-background"
+                            effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'>
+                    <app-toolbar>
+                        <paper-icon-button icon="my-icons:arrow-back"
+                                           id="previousUrlButton"
+                                           on-tap="_previousUrl()">
+                        </paper-icon-button>
+                        <h4 condensed-title>[[post.title]]</h4>
+                        </paper-icon-button>
+                        <span hidden="[[_isInFavoritePost]]">
+                            <paper-icon-button id="addFavoritePostButton"
+                                               icon="my-icons:bookmark-border"
+                                               on-tap="_addFavoritePost()">
+                            </paper-icon-button>
+                        </span>
+                        <span hidden="[[!_isInFavoritePost]]">
+                            <paper-icon-button id="openConfirmationRemovePostButton"
+                                               icon="my-icons:bookmark"
+                                               on-tap="_openConfirmationRemovePost()">
+                            </paper-icon-button>
+                        </span>
+                    </app-toolbar>
+                    <h1 main-title>[[post.title]]</h1>
+                </app-header>
+
+                <div id="bodyContent">
+
+                    <marked-element markdown="[[post.markdownContent]]">
+                        <div class="markdown-html"></div>
+                    </marked-element>
+
+                    <div class="tags">
+                        <template is="dom-repeat"
+                                  items="[[post.tags]]">
+                            <a href="/created/[[item]]"
+                               class="tag">
+                                #[[item]]
+                            </a>
+                        </template>
+                    </div>
+
+                </div>
+
+                <div id="metadataContent">
+
+                    <div class="section">
+                        <a class="author" href="/[[author]]">
+                            <iron-icon class="authorIcon"
+                                       icon="my-icons:person">
+                            </iron-icon>
+                            [[author]]
+                        </a>
+
+                        <span hidden="[[_isInFavoriteUser]]">
+                                <paper-icon-button id="addFavoriteUserButton"
+                                                   class="authorFavoriteIcon"
+                                                   icon="my-icons:favorite-border"
+                                                   on-tap="_addFavoriteUser()">
+                                </paper-icon-button>
+                            </span>
+                        <span hidden="[[!_isInFavoriteUser]]">
+                                <paper-icon-button id="removeFavoriteUserButton"
+                                                   class="authorFavoriteIcon"
+                                                   icon="my-icons:favorite"
+                                                   on-tap="_removeFavoriteUser()">
+                                </paper-icon-button>
+                        </span>
+
+                    </div>
+
+                    <div class="section">
+                        <a class="category" href="/trending/[[category]]">
+                            <iron-icon class="categoryIcon"
+                                       icon="my-icons:label">
+                            </iron-icon>
+                            #[[category]]
+                        </a>
+
+                        <span hidden="[[_isInFavoriteTag]]">
+                                <paper-icon-button id="addFavoriteTagButton"
+                                                   class="categoryFavoriteIcon"
+                                                   icon="my-icons:star-border"
+                                                   on-tap="_addFavoriteTag()">
+                                </paper-icon-button>
+                            </span>
+                        <span hidden="[[!_isInFavoriteTag]]">
+                                <paper-icon-button id="removeFavoriteTagButton"
+                                                   class="categoryFavoriteIcon"
+                                                   icon="my-icons:star"
+                                                   on-tap="_removeFavoriteTag()">
+                                </paper-icon-button>
+                        </span>
+
+                    </div>
+
+                    <div class="section">
+                        <div id="shareButtons">
+                            <awesome-button type="facebook" sharer></awesome-button>
+                            <awesome-button type="twitter" sharer></awesome-button>
+                            <awesome-button type="plus" sharer></awesome-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="commentsContent">
+
+                    <h3 class="commentsNumber">[[post.commentsLength]] comments</h3>
+                    <template is="dom-repeat" items="[[post.comments]]">
+                        <comment-content comment="[[item]]"></comment-content>
+                    </template>
+                </div>
+
+            </div>
+        </template>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'page-post',
+
+            properties: {
+
+                category: {
+                    type: String
+                },
+
+                author: {
+                    type: String,
+                    observer: '_authorChanged'
+                },
+
+                username: {
+                    type: String
+                },
+
+                postName: {
+                    type: String
+                },
+
+                post: {
+                    type: Object,
+                    observer: '_notifyPost'
+                },
+
+                favoritePosts: {
+                    type: Array
+                },
+
+                favoriteUsers: {
+                    type: Array
+                },
+
+                favoriteTags: {
+                    type: Array
+                },
+
+                _isInFavoritePost: {
+                    type: Boolean
+                },
+
+                _isInFavoriteUser: {
+                    type: Boolean
+                },
+
+                _isInFavoriteTag: {
+                    type: Boolean
+                }
+            },
+
+            observers: [
+                '_updateImageBackground(post.images)'
+            ],
+
+            ready: function() {
+
+                // List events
+                /* Why these event listeners don't work ? -> TODO repair this */
+                //this.$.previousUrlButton.addEventListener('tap', this._previousUrl.bind(this));
+
+                //this.$.addFavoritePostButton.addEventListener('tap', this._addFavoritePost.bind(this));
+                //this.$.openConfirmationRemovePostButton.addEventListener('tap', this._openConfirmationRemovePost.bind(this));
+                //this.$.removeFavoritePostButton.addEventListener('tap', this._removeFavoritePost.bind(this));
+
+                //this.$.addFavoritePostButton.addEventListener('tap', this._addFavoritePost.bind(this));
+                //this.$.removeFavoritePostButton.addEventListener('tap', this._removeFavoritePost.bind(this));
+
+                //this.$.addFavoriteUserButton.addEventListener('tap', this._addFavoriteUser.bind(this));
+                //this.$.removeFavoriteUserButton.addEventListener('tap', this._removeFavoriteUser.bind(this));
+
+                //this.$.addFavoriteTagButton.addEventListener('tap', this._addFavoriteTag.bind(this));
+                //this.$.removeFavoriteTagButton.addEventListener('tap', this._removeFavoriteTag.bind(this));
+
+                // Set default value
+                this._refreshIsFavoritePost();
+                this._refreshIsFavoriteUser();
+                this._refreshIsFavoriteTag();
+            },
+
+            _authorChanged: function() {
+
+                // Remove the '@' to the author
+                this.username = this.author.substring(1, this.author.length);
+            },
+
+            _updateImageBackground: function(images) {
+
+                if(typeof images !== 'undefined') {
+
+                    this.customStyle['--header-background'] = 'url('+images[0]+')';
+                    this.updateStyles();
+                }
+            },
+
+            _notifyPost: function() {
+                console.log(this.post);
+            },
+
+            _previousUrl: function() {
+
+                // Back to previous URL
+                window.history.back();
+            },
+
+            _openConfirmationRemovePost: function() {
+
+                this.$.confirmationRemovePost.open();
+            },
+
+            _refreshIsFavoritePost: function() {
+
+                // Refresh favorite post state
+                this._isInFavoritePost = (this.favoritePosts.indexOf(this.post) != -1);
+            },
+
+            _refreshIsFavoriteUser: function() {
+
+                // Refresh favorite user state
+                this._isInFavoriteUser = (this.favoriteUsers.indexOf(this.username) != -1);
+            },
+
+            _refreshIsFavoriteTag: function() {
+
+                // Refresh favorite tag state
+                this._isInFavoriteTag = (this.favoriteTags.indexOf(this.category) != -1);
+            },
+
+            _addFavoritePost: function() {
+
+                // Add post to favorite
+                this.push('favoritePosts', this.post);
+
+                // Refresh favorite post state
+                this._refreshIsFavoritePost();
+            },
+
+            _addFavoriteUser: function() {
+
+                // Add user to favorite
+                this.push('favoriteUser', this.username);
+
+                // Refresh favorite user state
+                this._refreshIsFavoriteUser();
+            },
+
+            _addFavoriteTag: function() {
+
+                // Add tag to favorite
+                this.push('favoriteTags', this.category);
+
+                // Refresh favorite tag state
+                this._refreshIsFavoriteTag();
+            },
+
+            _removeFavoritePost: function() {
+
+                // remove post from favorite
+                var index = this.favoritePosts.indexOf(this.post); // index to delete
+                this.splice('favoritePosts', index, 1); // Delete index found
+
+                // Refresh favorite post state
+                this._refreshIsFavoritePost();
+            },
+
+            _removeFavoriteUser: function() {
+
+                // remove user from favorite
+                var index = this.favoritePosts.indexOf(this.username); // index to delete
+                this.splice('favoriteUsers', index, 1); // Delete index found
+
+                // Refresh favorite user state
+                this._refreshIsFavoriteUser();
+            },
+
+            _removeFavoriteTag: function() {
+
+                // remove tag from favorite
+                var index = this.favoritePosts.indexOf(this.category); // index to delete
+                this.splice('favoriteTags', index, 1); // Delete index found
+
+                // Refresh favorite tag state
+                this._refreshIsFavoriteTag();
+            }
+
+        });
+    </script>
+</dom-module>

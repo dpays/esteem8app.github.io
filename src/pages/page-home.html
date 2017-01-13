@@ -1,0 +1,260 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<!-- APP Elements -->
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+
+<!-- CUSTOMS Elements -->
+<link rel="import" href="../../bower_components/awesome-button/awesome-button.html">
+
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../api/steemjs/steem-get-tags.html">
+
+<dom-module id="page-home">
+    <template>
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                min-height: 100%;
+                width: 100%;
+                position: absolute;
+                background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+            }
+
+            @media screen and (max-width: 400px) {
+
+                #header-section {
+                    padding-top: 6px;
+                }
+
+                #header-section h1 {
+                    margin-top: 0;
+                }
+
+                #shareButtons {
+                    position: relative !important;
+                    padding-top: 32px;
+                    width: 100%;
+                    text-align: center;
+                    right: 0 !important;
+                }
+
+            }
+
+            #loginButton {
+                position:absolute;
+                right: 12px;
+                --paper-button-ink-color: var(--app-primary-text-color);
+            }
+
+            #loginButton a {
+                color: var(--app-primary-text-color);
+            }
+
+            app-drawer {
+                z-index: 2;
+            }
+
+            paper-button a {
+                text-decoration: none;
+            }
+
+            /* HEADER SECTION */
+            #header-section {
+                margin-top: 56px;
+                padding: 32px;
+                color: var(--app-primary-text-color);
+            }
+
+            #presentation-center, #presentation-cards {
+                max-width: 950px;
+                margin: auto;
+            }
+
+            #exploreButton {
+                background-color: var(--app-secondary-color);
+                --paper-button-ink-color: var(--app-secondary-text-color);
+            }
+
+            #exploreButton a {
+                color: var(--app-secondary-text-color);
+            }
+
+            #presentation-button {
+                text-align: center;
+            }
+
+            #presentation-button a {
+                color: var(--app-primary-text-color);
+            }
+
+            /* PRESENTATION CARDS */
+            #presentation-cards {
+                margin-top: 32px;
+                text-align: center;
+            }
+
+            #presentation-cards h2 {
+                margin-top: 0;
+                color: #222;
+            }
+
+            #presentation-cards a {
+                color: var(--app-secondary-color);
+            }
+
+            #presentation-cards paper-card {
+                width: 280px;
+                height: 400px;
+                margin: 10px;
+                padding: 0;
+                text-align: left;
+                display: inline-table;
+            }
+
+            #presentation-cards .card-content {
+                font-family: 'Lato', sans-serif;
+            }
+
+            #best-tags .card-content paper-listbox {
+                overflow-y: scroll;
+                max-height: 290px;
+                margin-top: 0;
+            }
+
+            #best-tags .card-content paper-listbox {
+                margin-top: 0;
+            }
+
+            #shareButtons {
+                position: fixed;
+                right: 16px;
+                bottom: 16px;
+            }
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_toggleDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+            <div main-title>ESTEEM8</div>
+            <paper-button id="loginButton">
+                <a href="/login">Login</a>
+            </paper-button>
+        </paper-toolbar>
+
+        <!-- HEADER SECTION -->
+        <div id="header-section">
+            <div id="presentation-center">
+                <h1>Access now to the world first blockchain based social media platform.</h1>
+                <h2>It's like any other social media platform but you earn money !</h2>
+                <div id="presentation-button">
+                    <paper-button>
+                        <a href="https://youtu.be/xZmpCAqD7hs"
+                           target="_blank">
+                            play video
+                        </a>
+                    </paper-button>
+                    <paper-button id="exploreButton" raised>
+                        <a href="/trending">Explore</a>
+                    </paper-button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRESENTAIONS CARDS -->
+        <div id="presentation-cards">
+
+            <paper-card id="best-tags">
+                <div class="card-content">
+                    <h2>Trending tags</h2>
+                    <paper-listbox>
+                        <template is="dom-if" if="[[_tags.length]]">
+                            <template is="dom-repeat" items="[[_tags]]">
+                                <paper-item><a href="/hot/[[item.name]]">#[[item.name]]</a></paper-item>
+                            </template>
+                        </template>
+                    </paper-listbox>
+                </div>
+            </paper-card>
+
+            <paper-card>
+                <div class="card-content">
+                    <h2>What's that shit ?</h2>
+                    <p>Steem is a social network based on a currency that reward you for using it.</p>
+                    <p>This free web application let you browse the steem network without taking your data.</p>
+                    <p>You can add it to your homescreen with chrome or safari by going into page's option.</p>
+                    <p>You can change colors in <a href="/settings">settings</a> or get more information at <a href="/created/esteem8">#esteem8</a>.</p>
+                </div>
+            </paper-card>
+
+            <paper-card>
+                <div class="card-content">
+                    <h2>Join the movement</h2>
+                    <p><a target="_blank" href="http://steemtools.com/">More tools</a></p>
+                    <p><a target="_blank" href="https://steem.io/SteemWhitePaper.pdf">White paper</a></p>
+                    <p><a href="/support">Support this application</a></p>
+                </div>
+            </paper-card>
+
+        </div>
+
+        <div id="shareButtons">
+            <awesome-button type="facebook" sharer></awesome-button>
+            <awesome-button type="twitter" sharer></awesome-button>
+            <awesome-button type="plus" sharer></awesome-button>
+        </div>
+
+        <!-- DRAWER -->
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
+        <!-- QUERY TAGS -->
+        <steem-get-tags tags="{{_tags}}"></steem-get-tags>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'page-home',
+
+            properties: {
+
+                settings: {
+                  type: Object
+                },
+
+                _tags: {
+                    type: Array
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+
+                // Default tags
+                this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
+            },
+
+            _toggleDrawer: function() {
+
+                this.$.drawer.toggle();
+            }
+
+        });
+    </script>
+</dom-module>
