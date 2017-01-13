@@ -1,9 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<!-- IRON Elements -->
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
-<!-- PAPER Elements -->
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
@@ -11,9 +9,9 @@
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
-<!-- CUSTOMS Elements -->
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
 <link rel="import" href="../api/steemjs/steem-get-state.html">
+
 <link rel="import" href="../dialogs/select-tag-dialog.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/my-icons.html">
@@ -21,7 +19,9 @@
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-explore">
+
     <template>
+
         <style include="shared-styles">
 
             :host {
@@ -193,7 +193,9 @@
     </template>
 
     <script>
+
         Polymer({
+
             is: 'page-explore',
 
             properties: {
@@ -317,7 +319,7 @@
             },
 
             _steemPathChanged: function() {
-                console.log("steem path="+this._steemPath);
+
                 // Scroll to top after new posts loaded
                 window.scrollTo(0, 0);
             },

@@ -1,30 +1,30 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../shared-styles.html">
 
-<!-- IRON Elements -->
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 
-<!-- Paper Elements -->
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 
-<!-- CUSTOM Elements -->
 <link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/reply-card.html">
 <link rel="import" href="../components/event-card.html">
 <link rel="import" href="../components/user-card.html">
+
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../api/steemjs/steem-get-followers.html">
 <link rel="import" href="../api/steemjs/steem-get-following.html">
 <link rel="import" href="../api/steemjs/steem-get-replies.html">
 <link rel="import" href="../api/steemjs/steem-get-history.html">
+
 <link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-profile">
 
@@ -280,7 +280,8 @@
             </div>
 
             <div name="history">
-                <steem-get-history user-name="[[username]]"
+                <steem-get-history id="steemGetHistory"
+                                   user-name="[[username]]"
                                    events="{{events}}">
                 </steem-get-history>
                 <div id="events-list">
@@ -290,9 +291,11 @@
                     </template>
 
                     <template is="dom-if" if="[[events.length]]">
-                        <template is="dom-repeat" items="[[events]]">
-                            <event-card event="[[item]]"></event-card>
-                        </template>
+                        <!--iron-scroll-threshold  on-lower-threshold="_loadMoreHistoryEvents"> This is triggered before events are loaded :/-->
+                            <template is="dom-repeat" items="[[events]]">
+                                <event-card event="[[item]]"></event-card>
+                            </template>
+                        <!--/iron-scroll-threshold-->
                     </template>
 
                 </div>
@@ -331,6 +334,7 @@
             </div>
 
         </iron-pages>
+
         <app-drawer id="drawer">
             <drawer-content settings="[[settings]]"></drawer-content>
         </app-drawer>
@@ -338,7 +342,9 @@
     </template>
 
     <script>
+
         Polymer({
+
             is: 'page-profile',
 
             properties: {
@@ -420,14 +426,17 @@
             },
 
             _toggleDrawer: function() {
+
                 this.$.drawer.toggle();
             },
 
             _accountChanged: function () {
+
                 console.log("account="+this.account);
             },
 
             _postsChanged: function() {
+
                 console.log("profile posts changed "+this.posts)
             },
 
@@ -442,10 +451,12 @@
             },
 
             _setCurrentViewFollowers: function() {
+
                 this.set('currentView', 'followers');
             },
 
             _setCurrentViewFollowing: function() {
+
                 this.set('currentView', 'following')
             },
 
@@ -480,6 +491,11 @@
 
                     return 'favorite-border';
                 }
+            },
+
+            _loadMoreHistoryEvents: function() {
+
+                this.$.steemGetHistory.loadMoreData();
             }
 
         });

@@ -1,6 +1,3 @@
-/**
- * Created by matias on 10/11/16.
- */
 // Polymer options
 window.Polymer = {
     dom: 'shadow',

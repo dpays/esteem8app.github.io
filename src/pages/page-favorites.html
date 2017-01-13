@@ -1,11 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../shared-styles.html">
 
-<!-- IRON Elements -->
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
-<!-- PAPER Elements -->
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
@@ -16,16 +13,17 @@
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 
-<!-- APP Elements -->
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
-<!-- CUSTOM Elements -->
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../components/post-card.html">
+<link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-favorites">
+
     <template>
+
         <style include="shared-styles">
 
             /* GENERAL */
@@ -236,7 +234,6 @@
                     </template>
                 </div>
             </div>
-
         </iron-pages>
 
         <app-drawer id="drawer">
@@ -389,7 +386,6 @@
                     this._addTag();
                 }
             }
-
         });
     </script>
 </dom-module>

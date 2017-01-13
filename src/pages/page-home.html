@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<!-- PAPER Elements -->
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
@@ -8,10 +7,8 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
-<!-- APP Elements -->
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
-<!-- CUSTOMS Elements -->
 <link rel="import" href="../../bower_components/awesome-button/awesome-button.html">
 
 <link rel="import" href="../shared-styles.html">
@@ -19,7 +16,9 @@
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
 
 <dom-module id="page-home">
+
     <template>
+
         <style include="shared-styles">
 
             /* GENERAL */
@@ -140,7 +139,6 @@
                 right: 16px;
                 bottom: 16px;
             }
-
         </style>
 
         <!-- TOOLBAR -->
@@ -227,7 +225,9 @@
     </template>
 
     <script>
+
         Polymer({
+
             is: 'page-home',
 
             properties: {
@@ -254,7 +254,6 @@
 
                 this.$.drawer.toggle();
             }
-
         });
     </script>
 </dom-module>

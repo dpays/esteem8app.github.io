@@ -1,18 +1,14 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../shared-styles.html">
 
-<!-- IRON Elements -->
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 
-<!-- PAPER Elements -->
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
-<!-- OTHER Elements -->
 <link rel="import" href="../../bower_components/marked-element/marked-element.html">
 
-<!-- CUSTOM Elements -->
 <link rel="import" href="my-icons.html">
 <link rel="import" href="comment-content.html">
+<link rel="import" href="../shared-styles.html">
 <link rel="import" href="../api/steemjs/steem-get-comment-replies.html">
 
 <dom-module id="comment-content">
@@ -20,6 +16,7 @@
     <template>
 
         <style include="shared-styles">
+
             /* GENERAL */
             * {
                 font-weight: 300;
@@ -110,7 +107,6 @@
             </div>
 
             <div class="replies">
-
                 <steem-get-comment-replies parent-author="[[comment.author]]"
                                            parent-permlink="[[comment.permlink]]"
                                            comments="{{comment.replies}}">
@@ -120,13 +116,15 @@
                         <comment-content comment="[[item]]"></comment-content>
                     </template>
                 </template>
-
             </div>
+
         </div>
     </template>
 
     <script>
+
         Polymer({
+
             is: 'comment-content',
 
             behaviors: [
@@ -149,8 +147,6 @@
             timeFromNow: function(date) {
                 return new IntlRelativeFormat('en-us').format(new Date(date));
             }
-
         });
-
     </script>
 </dom-module>

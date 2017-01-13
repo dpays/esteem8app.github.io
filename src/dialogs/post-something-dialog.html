@@ -1,5 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../shared-styles.html">
+
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
@@ -29,9 +29,12 @@
 <link rel="import" href="../../bower_components/wysiwyg-e/tools/undo.html">
 <link rel="import" href="../../bower_components/wysiwyg-e/tools/redo.html">
 
+<link rel="import" href="../shared-styles.html">
+
 <dom-module id="post-something-dialog">
 
     <template>
+
         <style include="shared-styles">
 
             #selectTagDialog {
@@ -72,6 +75,7 @@
             }
 
         </style>
+
         <paper-dialog id="selectTagDialog"
                       opened="{{opened}}">
             <!-- TOOLBAR -->
@@ -111,7 +115,9 @@
     </template>
 
     <script>
+
         Polymer({
+
             is: 'post-something-dialog',
 
             properties: {
@@ -131,7 +137,6 @@
             openDialog: function() {
                 this.opened = true;
             }
-
         });
     </script>
 </dom-module>

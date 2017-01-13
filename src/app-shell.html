@@ -1,20 +1,19 @@
 <link rel="import" href="./../bower_components/polymer/polymer.html">
 
-<!-- IRON Elements -->
 <link rel="import" href="./../bower_components/iron-pages/iron-pages.html">
 
-<!-- APP Elements -->
 <link rel="import" href="./../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="./../bower_components/app-route/app-location.html">
 <link rel="import" href="./../bower_components/app-route/app-route.html">
 
-<!-- CUSTOMS Elements -->
 <link rel="import" href="api/steemjs/steem-get-account.html">
 
 <script src="scripts/intl-relativeformat-with-locales.min.js"></script>
 
-<dom-module id="steemone-shell">
+<dom-module id="app-shell">
+
     <template>
+
         <style>
 
             :host {
@@ -140,7 +139,7 @@
     <script>
         Polymer({
 
-            is: 'steemone-shell',
+            is: 'app-shell',
 
             properties: {
 
@@ -191,6 +190,10 @@
                  */
                 favoriteTags: {
                     type: Array
+                },
+
+                _isDrawerOpen: {
+                    type: Boolean
                 }
 
             },
@@ -340,14 +343,6 @@
                 this.customStyle['--app-primary-text-color'] = primaryTextColor;
                 this.customStyle['--app-secondary-text-color'] = secondaryTextColor;
                 this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor;
-
-                console.log("--app-primary-color" + "= " + primaryColor);
-                console.log("--app-secondary-color" + "= " + secondaryColor);
-                console.log("--app-dark-primary-color" + "= " + darkPrimaryColor);
-                console.log("--app-light-primary-color" + "= " + lightPrimaryColor);
-                console.log("--app-primary-text-color" + "= " + primaryTextColor);
-                console.log("--app-secondary-text-color" + "= " + secondaryTextColor);
-                console.log("--app-ultra-dark-primary-color" + "= " + ultraDarkPrimaryColor);
 
                 // Render
                 Polymer.updateStyles();

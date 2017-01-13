@@ -1,17 +1,13 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<!-- PAPER Elements -->
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 
-<!-- NEON Animation -->
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
 
-<!-- IRON elements -->
-<link rel="import" href="../../bower_components/iron-image/iron-image.html">
-
-<!-- CUSTOM Elements -->
 <link rel="import" href="my-icons.html">
 
 <dom-module id="images-slider">
@@ -80,6 +76,7 @@
     </style>
 
     <template>
+
         <div id="navInfo"
              on-tap="_next()">
             [[_computeCurrent(current)]]/[[images.length]]
@@ -113,6 +110,7 @@
     (function () {
 
         Polymer({
+
             is: 'images-slider',
 
             properties: {
@@ -166,6 +164,7 @@
                     var image2 = this.images[(this.current+1) % this.images.length];
 
                     this.async(function() {
+
                         this.$.imageBox.style = 'background-image: url("' + imageShortenerUrl + image + '");';
                         this.$.image2.style = 'background-image: url("' + imageShortenerUrl + image2 + '");';
                     });
@@ -181,9 +180,11 @@
 
             _previous: function() {
 
-                if(this.current == 0){ // If first
+                if(this.current == 0){
+
                     this.current = this.images.length-1; // Display last
-                }else { // Else
+                }else {
+
                     this.current = (this.current-1) % this.images.length; // Display previous
                 }
             },

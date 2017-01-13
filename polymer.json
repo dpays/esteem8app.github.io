@@ -1,10 +1,15 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/steemone-shell.html",
+  "shell": "src/esteem8-shell.html",
   "fragments": [
     "src/page/page-explore.html",
+    "src/page/page-favorite.html",
+    "src/page/page-home.html",
+    "src/page/page-login.html",
     "src/page/page-post.html",
     "src/page/page-profile.html",
+    "src/page/page-setting.html",
+    "src/page/page-support.html",
     "src/page/page-404.html"
   ],
   "sourceGlobs": [

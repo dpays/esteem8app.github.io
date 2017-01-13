@@ -2,15 +2,18 @@
 
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+
 <link rel="import" href="../api/steemjs/steem-get-account.html">
-<link rel="import" href="my-icons.html">
 <link rel="import" href="images-slider.html">
+<link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="post-card">
@@ -36,6 +39,12 @@
                 #postCard {
                     min-width: 100%;
                 }
+            }
+
+            /* SHARE DIALOG */
+            #shareDialog paper-listbox a {
+                text-decoration: none;
+                color: var(--app-secondary-color);
             }
 
             /* TOP DATA */
@@ -145,6 +154,7 @@
             }
 
         </style>
+
         <!-- Confirmation remove from favorite -->
         <paper-dialog id="confirmationRemove">
 
@@ -162,6 +172,21 @@
                     Yes
                 </paper-button>
             </div>
+        </paper-dialog>
+
+        <!-- Share dialog -->
+        <paper-dialog id="shareDialog" with-backdrop>
+            <paper-listbox>
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=[[_domainName]][[post.url]]">
+                    <paper-item>Share on Facebook</paper-item>
+                </a>
+                <a target="_blank" href="https://twitter.com/home?status=[[_domainName]][[post.url]]">
+                    <paper-item>Share on Twitter</paper-item>
+                </a>
+                <a target="_blank" href="https://plus.google.com/share?url=[[_domainName]][[post.url]]">
+                    <paper-item>Share on Google+</paper-item>
+                </a>
+            </paper-listbox>
         </paper-dialog>
 
         <!-- posts cards -->
@@ -268,7 +293,7 @@
                 <span class="dollar-value">[[_roundPostValue(post.dollarValue)]]$</span>
 
                 <div style="float: right; margin-right: 10px;">
-                    <paper-icon-button icon="my-icons:share"></paper-icon-button>
+                    <paper-icon-button id="openShareDialogButton" icon="my-icons:share"></paper-icon-button>
                     <paper-icon-button icon="my-icons:comment"></paper-icon-button>
                     [[post.children]]
                 </div>
@@ -282,7 +307,9 @@
     </template>
 
     <script>
+
         Polymer({
+
             is: 'post-card',
 
             behaviors: [
@@ -320,6 +347,10 @@
                 account: {
                     type: Object,
                     observer: '_accountChanged'
+                },
+
+                _domainName: {
+                    type: String
                 }
             },
 
@@ -330,21 +361,25 @@
                 this.$.addFavoriteButton.addEventListener('tap', this._addFavorite.bind(this));
                 this.$.openConfirmationButton.addEventListener('tap', this._openConfirmationRemove.bind(this));
                 this.$.removeFavoriteButton.addEventListener('tap', this._removeFavorite.bind(this));
-                this.$.postTitle.addEventListener('tap', this._selectThisPost.bind(this));
+                this.$.openShareDialogButton.addEventListener('tap', this._openShareDialog.bind(this));
 
 
                 this.rf = new IntlRelativeFormat('en-us');
                 this.contentToggled = false;
+                this._domainName = window.location.hostname;
                 this._refreshIsFavorite();
             },
 
             _toggleContentDataHeight: function() {
 
                 if(!this.contentToggled){
+
                     this.$.toggleContentData.style = "height: 250px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
                 }else {
+
                     this.$.toggleContentData.style = "";
                 }
+
                 this.contentToggled = !this.contentToggled;
             },
 
@@ -357,7 +392,9 @@
             _showImage: function(imagesLength, showImage) {
 
                 if (showImage) {
+
                     if(imagesLength){
+
                         return true;
                     }
                 }
@@ -411,11 +448,6 @@
                 return '@'+author;
             },
 
-            _selectThisPost: function() {
-
-                this.selectedPost = this.post;
-            },
-
             _refreshIsFavoriteUser: function() {
 
                 if(this.favoriteUsers.indexOf(this.username) === -1) {
@@ -453,6 +485,11 @@
 
                     return 'favorite-border';
                 }
+            },
+
+            _openShareDialog: function() {
+
+                this.$.shareDialog.open();
             }
 
         });
