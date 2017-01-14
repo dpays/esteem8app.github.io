@@ -1,8 +1,6 @@
 #Contributing to Esteem8 application
 
-##Existing features
-
-###Suggestions
+##Suggestions
 
 The Esteem8 application project is meant to evolve with feedback.
 
@@ -13,14 +11,14 @@ To purpose any thoughts:
 * For application features -> Use [Google forms](https://goo.gl/6a99QQ).
 * For application new features -> Use the official Esteem8 new features steem publication.
 
-###Bugs
+###Bugs reporting
 
 As with all pieces of software, you may end up running into bugs. Please submit bugs as regular issues on GitHub.
 Esteem8 developpers are regularly monitoring issues and will try to fix open bugs quickly.
 The best bug reports include a detailed way to predictably reproduce the issue, and an example that demonstrates the issue.
 
 
-##Next features
+##Development
 
 The Esteem8 project greatly appreciates contributions.
 
