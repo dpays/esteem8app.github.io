@@ -8,20 +8,21 @@ This application is server less and can be accessed trough any recent browser an
 Feel free to copy code, contribute, correct bugs or purpose a new feature.
 
 ## Technical details
+
 ### Documentation
 
-**app-shell.html** -> the entry of the app, it provide the router to the different pages and stored favorites data.
+**app-shell.html**      -> the entry of the app, it provide the router to the different pages and stored favorites data.
 
-**shared-styles.html** -> often used css style.
+**shared-styles.html**  -> often used css style.
 
-**/pages** -> different application pages.
+**/pages**              -> different application pages.
 
-**/api** -> a set of components that provide steem API functions.
+**/api**                -> a set of components that provide steem API functions.
 
-**/components** -> a set of re-used components.
+**/components**         -> a set of re-used components.
 
-**/dialogs** is a set of dialog components.
+**/dialogs**            -> a set of dialog components.
 
-**/scripts** is a set of scripts used by components.
+**/scripts**            -> a set of scripts used by components.
 
-Components documentation is include in form of comments in component code.
+Each components documentation is include in itself.
