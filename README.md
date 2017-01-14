@@ -23,4 +23,4 @@ See [contribution document](https://github.com/esteem8app/esteem8app.github.io/b
 
 ## Documentation
 
-See [documentation document]() for more informations.
+See [documentation document](https://github.com/esteem8app/esteem8app.github.io/blob/master/DOCUMENTATION.md) for more informations.
