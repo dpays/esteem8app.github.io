@@ -3,6 +3,6 @@
 ## Introduction
 This web application is built using polymer and material compoments providing a user friendly interface.
 
-It provide functionalities to browse publications on the steem network.
+Application is server indepedent,user data is private and it provide functionalities to browse publications on the steem network.
 
-Application is server indepedent so user data is private.
+Feel free to copy code, contribute, correct bug or purpose a new features. 
