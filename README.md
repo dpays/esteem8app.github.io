@@ -13,7 +13,7 @@ Feel free to copy code, contribute, correct bugs or purpose a new feature.
 
 *app-shell.html* is the entry of the app, it provide the router to the different pages and stored favorites data.
 
-*shared-styles.html" is a set of often used css style.
+*shared-styles.html* is a set of often used css style.
 
 */pages* is the different pages used by the application.
 
