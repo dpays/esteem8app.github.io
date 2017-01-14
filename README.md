@@ -5,7 +5,7 @@ This web application is built using [polymer](https://www.polymer-project.org/1.
 
 This application is server less and can be accessed trough any recent browser and provide functionalities to browse steem network publications.
 
-Feel free to copy code, contribute, correct bugs or purpose a new feature.
+Feel free to read code, contribute, post something, correct bugs or purpose a new feature.
 
 ##License
 
