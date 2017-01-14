@@ -38,7 +38,7 @@ Contributions can be rewarded using the steem network by publishing your contrib
 * [Basic material design guidline](https://material.io/guidelines/)
 
 ##### Application understanding
-* [Esteem8 documentation](Will be added)
+* [Esteem8 documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/DOCUMENTATION.md)
 
 #### Development ressources
 
