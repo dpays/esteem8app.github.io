@@ -1,5 +1,4 @@
 # ESTEEM8 Application
-
 ## Introduction
 This web application is built using [polymer](https://www.polymer-project.org/1.0/), [polymer elements](https://elements.polymer-project.org/) and [material guidlines](https://material.io/guidelines/) in order to provide a friendly user interface.
 
@@ -8,7 +7,6 @@ This application is server less and can be accessed trough any recent browser an
 Feel free to copy code, contribute, correct bugs or purpose a new feature.
 
 ## Technical details
-
 ### Documentation
 
 **app-shell.html**      -> the entry of the app, it provide the router to the different pages and stored favorites data.
