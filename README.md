@@ -10,7 +10,7 @@ Feel free to copy code, contribute, correct bugs or purpose a new feature.
 ## Technical details
 ### Documentation
 
-**app-shell.html** is the entry of the app, it provide the router to the different pages and stored favorites data.
+**app-shell.html** -> the entry of the app, it provide the router to the different pages and stored favorites data.
 
 **shared-styles.html** -> often used css style.
 
