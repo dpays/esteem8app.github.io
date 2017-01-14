@@ -29,7 +29,8 @@ Contributions can be rewarded using the steem network by publishing your contrib
 #### Required knowledge
 
 ##### Code skills
-* Basic languages (HTML 5, CSS, JS, GIT)
+* Basic languages (HTML 5, CSS, JS)
+* Basic github knowledge
 * [Polymer framework](https://www.polymer-project.org/1.0/docs/devguide/feature-overview)
 
 ##### Guidelines
