@@ -1,6 +1,6 @@
 #Contributing to Esteem8 application
 
-##Filing Issues
+##Existing features
 
 ###Suggestions
 
@@ -20,7 +20,7 @@ Esteem8 developpers are regularly monitoring issues and will try to fix open bug
 The best bug reports include a detailed way to predictably reproduce the issue, and an example that demonstrates the issue.
 
 
-##Contributing Code
+##Next features
 
 The Esteem8 project greatly appreciates contributions.
 
