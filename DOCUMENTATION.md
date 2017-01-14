@@ -1,17 +1,42 @@
-## Documentation
+# Documentation
 
-**app-shell.html** -> the entry of the app, it provide the router to the different pages and stored favorites data.
+## Introduction
+Esteem8 application use the polymer framework and is composed of web components.
 
-**shared-styles.html** -> often used css style.
+## Main components explanation
 
-**/pages** -> different application pages.
+#### app-shell.html
+The entry point of the app after index.html.
 
-**/api** -> a set of components that provide steem API functions.
+It provide:
+* A router
+* Local stored data
+ * Settings
+ * Favorites posts
+ * Favorites users
+ * favorites tags
 
-**/components** -> a set of re-used components.
+#### shared-styles.html
+Shared css style across application's components.
 
-**/dialogs** -> a set of dialog components.
+## Components folder explanation
 
-**/scripts** -> a set of scripts used by components.
+#### "/pages" folder
+All application pages.
 
-Each components documentation is include in itself.
+#### "/api" folder
+Set of steem API components wrapper to get steem network data.
+
+It use [SteemJS](https://github.com/adcpm/steem) project.
+
+#### "/components" folder
+Set of shared components across application.
+
+#### "/dialogs" folder
+Set of dialog components.
+
+#### "/scripts" folder
+set of scripts used by components.
+
+## Single components explanation
+Single components documentation is include in itself in form of comments.
