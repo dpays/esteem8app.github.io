@@ -48,4 +48,4 @@ Contributions can be rewarded using the steem network by publishing your contrib
 
 ## Useful links
 
-* [Slack](https://esteem8.slack.com)
+* [esteem8.slack.com](https://esteem8.slack.com)
