@@ -20,7 +20,7 @@ The best bug reports include a detailed way to predictably reproduce the issue, 
 
 ## Development
 
-The Esteem8 project greatly appreciates contributions.
+Esteem8 project greatly appreciates contributions.
 
 When contributing code, please follow the same comment and coding style as the rest of the project.
 
