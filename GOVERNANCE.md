@@ -1,6 +1,4 @@
-# ESTEEM8 open source governance
-
-## Model
+# ESTEEM8 open source governance model
 
 * **Owners** [Owners]
  * They are themselves elected or chosen by admins, for now they are themselves elected.
