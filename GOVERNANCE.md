@@ -15,4 +15,3 @@
  * Can take descisions.
 
 * **Outside people** [Other Github account]
- * Can purpose content.
