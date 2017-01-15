@@ -46,6 +46,6 @@ Contributions can be rewarded using the steem network by publishing your contrib
 * [Custom elements](https://customelements.io/)
 * [Google material icons](https://material.io/icons/)
 
-## Usefullinks
+## Useful links
 
 * [Slack](https://esteem8.slack.com)
