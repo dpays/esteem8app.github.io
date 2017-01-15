@@ -3,7 +3,7 @@
 ## Introduction
 This web application is built using [polymer](https://www.polymer-project.org/1.0/), [polymer elements](https://elements.polymer-project.org/) and following [material guidlines](https://material.io/guidelines/) in order to provide a good and easy-to-use user interface.
 
-The main objective of Esteem8 application is to provide a server less **light, friendly and private web application** to browse the next generation social media plateform called "[Steem](https://steem.io/SteemWhitePaper.pdf)".
+The main objective of Esteem8 application is to provide a server less **light, friendly and private web application** to browse the next generation social media plateform called "[Steem](https://steem.io)".
 
 Feel free to read or copy code, contribute, correct bugs or purpose a new feature.
 
