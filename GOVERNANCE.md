@@ -13,3 +13,6 @@
  
 * **Members** [Members that are not team maintainer]
  * Can take descisions.
+
+* **Outside people** [Other github accounts]
+ * Can purpose content or modifications.
