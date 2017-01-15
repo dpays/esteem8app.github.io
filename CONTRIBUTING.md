@@ -2,7 +2,7 @@
 
 ## Suggestions
 
-The Esteem8 application project is meant to evolve with feedback.
+Esteem8 application project is meant to evolve with feedback.
 
 #### Feed-back
 The project team and users will greatly appreciate any thoughts on ways to improve the design or features.
