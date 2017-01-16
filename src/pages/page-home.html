@@ -138,6 +138,20 @@
                 right: 16px;
                 bottom: 16px;
             }
+            
+            #githubButton {
+                padding: 8px 16px;
+                min-width: 0;
+                min-height: 0;
+                background-color: #333;
+            }
+            
+            #githubButton iron-icon {
+                color: #eee;
+                --iron-icon-height: 18px;
+                --iron-icon-width: 18px;   
+            }
+            
         </style>
 
         <!-- TOOLBAR -->
@@ -209,6 +223,9 @@
         </div>
 
         <div id="shareButtons">
+            <paper-button id="githubButton" on-tap="_openGithub()">
+                <iron-icon icon="my-icons:github" ></iron-icon>
+            </paper-button>
             <share-button share-website="facebook"></share-button>
             <share-button share-website="twitter"></share-button>
             <share-button share-website="plus"></share-button>
@@ -244,6 +261,7 @@
 
                 // List event
                 this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.githubButton('tap', this._openGithub.bind(this));
 
                 // Default tags
                 this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
@@ -252,6 +270,11 @@
             _toggleDrawer: function() {
 
                 this.$.drawer.toggle();
+            },
+            
+            _openGithub: function() {
+                
+                window.open('https://github.com/esteem8app/esteem8app.github.io');  
             }
         });
     </script>
