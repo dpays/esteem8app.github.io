@@ -16,7 +16,6 @@ The project team and users will greatly appreciate any thoughts on ways to impro
 Please submit bugs as regular issues on the [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues).
 
 Esteem8 developpers are regularly monitoring issues and will try to fix open bugs quickly.
-The best bug reports include a detailed way to predictably reproduce the issue, and an example that demonstrates the issue.
 
 ## Development
 
