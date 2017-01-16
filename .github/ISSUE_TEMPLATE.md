@@ -6,11 +6,11 @@
 
 ### Browsers Affected
 - [ ] All
-- [ ] Chrome
-- [ ] Firefox
-- [ ] Safari 9
-- [ ] Safari 8
-- [ ] Safari 7
-- [ ] Edge
-- [ ] IE 11
-- [ ] IE 10
+ - [ ] Chrome
+ - [ ] Firefox
+ - [ ] Safari 9
+ - [ ] Safari 8
+ - [ ] Safari 7
+ - [ ] Edge
+ - [ ] IE 11
+ - [ ] IE 10
