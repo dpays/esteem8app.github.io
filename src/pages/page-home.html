@@ -261,7 +261,7 @@
 
                 // List event
                 this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
-                this.$.githubButton('tap', this._openGithub.bind(this));
+                this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
 
                 // Default tags
                 this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
