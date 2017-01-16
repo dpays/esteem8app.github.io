@@ -6,7 +6,6 @@
 
 ### Browsers Affected
 - [ ] All
-
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Safari 9
