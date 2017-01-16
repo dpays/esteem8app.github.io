@@ -11,9 +11,9 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../../bower_components/marked-element/marked-element.html">
-<link rel="import" href="../../bower_components/awesome-button/awesome-button.html">
 
 <link rel="import" href="../components/comment-content.html">
+<link rel="import" href="../components/share-button.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -203,10 +203,12 @@
             </div>
         </paper-dialog>
 
+        <!-- POST -->
         <template is="dom-if" if="[[post]]">
 
             <div id="post">
 
+                <!-- HEADER -->
                 <app-header condenses fixed
                             effects="waterfall resize-snapped-title fade-background"
                             effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'>
@@ -233,6 +235,7 @@
                     <h1 main-title>[[post.title]]</h1>
                 </app-header>
 
+                <!-- BODY content -->
                 <div id="bodyContent">
 
                     <marked-element markdown="[[post.markdownContent]]">
@@ -251,6 +254,7 @@
 
                 </div>
 
+                <!-- METADATA + SHARE content -->
                 <div id="metadataContent">
 
                     <div class="section">
@@ -305,13 +309,14 @@
 
                     <div class="section">
                         <div id="shareButtons">
-                            <awesome-button type="facebook" sharer></awesome-button>
-                            <awesome-button type="twitter" sharer></awesome-button>
-                            <awesome-button type="plus" sharer></awesome-button>
+                            <share-button share-website="facebook"></share-button>
+                            <share-button share-website="twitter"></share-button>
+                            <share-button share-website="plus"></share-button>
                         </div>
                     </div>
                 </div>
 
+                <!-- COMMMENTS Content -->
                 <div id="commentsContent">
 
                     <h3 class="commentsNumber">[[post.commentsLength]] comments</h3>
