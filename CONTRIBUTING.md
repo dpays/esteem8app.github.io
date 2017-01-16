@@ -43,7 +43,7 @@ Contributions can be rewarded using the steem network by publishing your contrib
 #### Development ressources
 
 * [SteemJS API](https://github.com/adcpm/steem)
-* [Custom elements](https://customelements.io/)
+* [Custom HTML elements](https://customelements.io/)
 * [Material design icons](https://materialdesignicons.com/)
 
 ## Useful links
