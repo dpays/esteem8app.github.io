@@ -9,10 +9,9 @@
 
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
-<link rel="import" href="../../bower_components/awesome-button/awesome-button.html">
-
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../components/drawer-content.html">
+<link rel="import" href="../components/share-button.html">
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
 
 <dom-module id="page-home">
@@ -210,9 +209,9 @@
         </div>
 
         <div id="shareButtons">
-            <awesome-button type="facebook" sharer></awesome-button>
-            <awesome-button type="twitter" sharer></awesome-button>
-            <awesome-button type="plus" sharer></awesome-button>
+            <share-button share-website="facebook">A</share-button>
+            <share-button share-website="twitter">B</share-button>
+            <share-button share-website="plus">C</share-button>
         </div>
 
         <!-- DRAWER -->
