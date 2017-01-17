@@ -127,6 +127,20 @@
             margin-right: 24px;
             vertical-align: text-bottom;
         }
+        
+        #githubButton {
+            padding: 8px 16px;
+            float: right;
+            min-width: 0;
+            min-height: 0;
+            background-color: #333;
+        }
+
+        #githubButton iron-icon {
+            color: #eee;
+            --iron-icon-height: 18px;
+            --iron-icon-width: 18px;   
+        }
 
         #appVersion {
             position: fixed;
@@ -220,6 +234,9 @@
                 <paper-item>
                     <iron-icon icon="my-icons:done"></iron-icon>
                     <span>Support us</span>
+                    <paper-button id="githubButton" on-tap="_openGithub()" raised>
+                        <iron-icon icon="my-icons:github" ></iron-icon>
+                    </paper-button>
                 </paper-item>
             </a>
         </div>
@@ -245,7 +262,10 @@
             ],
 
             ready: function() {
-
+                
+                // List events
+                this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
+                
                 this._updateCoverImage();
             },
 
@@ -260,7 +280,13 @@
 
                     this.$.topPart.style.backgroundImage = "";
                 }
+            },
+            
+            _openGithub: function() {
+                
+                window.open('https://github.com/esteem8app/esteem8app.github.io');  
             }
+         
         });
     })();
 </script>
