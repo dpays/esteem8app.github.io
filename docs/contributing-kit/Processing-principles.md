@@ -1,5 +1,5 @@
 # Processing principles
-This is a tool to improve your your effiency, it is optional, use it only if you like it.
+This is an optional tool to improve your your effiency, use it only if you like it.
 ## Introduction
 This document is a personal framework to **day-to-day** optimally transform strategy into actions.
 
