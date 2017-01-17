@@ -1,4 +1,4 @@
-# ESTEEM8 open source governance
+# ESTEEM8 Operating governance
 ## Model
 
 * **Owners** [Owners]
