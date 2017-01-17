@@ -8,8 +8,6 @@ This web application built using Polymer and material design.
 
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
-[Application release 0.0.4](http://esteem8app.github.io)
-
 ## Contributions
 
 Contributions can get rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
