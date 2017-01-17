@@ -14,4 +14,4 @@ Purpose the highest quality steem network application available by providing a l
  * Amazing look-and-feel visual and experience.
  * User need to say “Ho ! It’s simple, it looks good and I like to use it”.
 
-[Strategies to reach them](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/strategies).
+[Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/strategies) to reach objectives.
