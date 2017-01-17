@@ -30,6 +30,6 @@ Please read first the project [Strategic objective](https://github.com/esteem8ap
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Guidlines.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
 * [Processing principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Processing-principles.md) (optional personal framework)
-
+---
 * Application [issues](https://github.com/esteem8app/esteem8app.github.io/issues)
 * Application [todo](https://github.com/esteem8app/esteem8app.github.io/projects/7)
