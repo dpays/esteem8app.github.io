@@ -1,4 +1,4 @@
-# ESTEEM8 Strategic objective
+# Objective
 
 ## Main objective
 
