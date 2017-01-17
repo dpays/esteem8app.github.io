@@ -26,3 +26,4 @@ Contributions can be rewarded using the steem network by publishing your contrib
 
 * [Ressource kit](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Ressource-kit.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
+* [Processing principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Processing-principles.md) (optional personal framework)
