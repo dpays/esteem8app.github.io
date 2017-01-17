@@ -1,4 +1,4 @@
-# Objective
+# Strategic objective
 
 ## Main objective
 
