@@ -9,9 +9,9 @@ Purpose the highest quality steem network application available by providing a l
  * All device with a recent browser support even shitty phone.
  * Native like quality and performance application in web technologies.
  * Possibility to add application to home screen and access it offline.
-* Provide the best [user experience design][1] by material design style.
+* Provide the best user experience design by material design style.
  * Logical and intuitive architecture.
  * Amazing look-and-feel visual and experience.
  * User need to say “Ho ! It’s simple, it looks good and I like to use it”.
 
-[1]:https://en.wikipedia.org/wiki/User_experience_design#Elements
+[Strategies to reach them](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/strategies).
