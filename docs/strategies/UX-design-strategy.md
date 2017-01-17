@@ -5,7 +5,7 @@ This strategy concern the application user experience design [(wikipedia)](https
 This is a continuous improvement strategy that match the [Development strategy](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/strategies/Developement-strategy.md).
 
 ### Visual design
-* Optimize look-and-feel.
+* Optimize look-and-feel (General user application appreciation).
  * Optimize graphic design.
  * Optimize user interface design.
  * Optimize viusal communication.
