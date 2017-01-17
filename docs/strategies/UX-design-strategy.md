@@ -18,8 +18,8 @@ This is a continuous improvement strategy that match the [Development strategy](
 ### Interaction design
 * Making the interface intuitive.
 * Incorporating user needs collected.
- * Users can purpose and upvote features ideas and improvements on the steem network.
- * Developers choose up-voted features and improvments they want to implement.
+ * Users can purpose and up-vote features, ideas and improvements on the steem network.
+ * Developers choose up-voted features, ideas and improvments they want to implement.
  * Members accept or not features.
  * Members and developers define the best suited implementation in the context.
 
