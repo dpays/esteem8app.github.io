@@ -1,4 +1,4 @@
-# DEVELOPMENT strategy
+# Developement strategy
 
 This strategy concern application code development.
 
