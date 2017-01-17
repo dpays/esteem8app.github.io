@@ -1,4 +1,5 @@
-# Strategy planner
+# ESTEEM8 Strategy planner
+
 ## Introduction
 
 An optimal strategy is a strategy that take less effort accomplish an objective.
