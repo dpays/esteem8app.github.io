@@ -1,5 +1,4 @@
-# ESTEEM8 Operating governance
-## Model
+# Governance model
 
 * **Owners** [Owners]
  * They are themselves elected or chosen by admins, for now they are themselves elected.
