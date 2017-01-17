@@ -6,7 +6,7 @@ Purpose the highest quality steem network application available by providing a l
 
 ## Sub objectives
 * Provide the best platform support by web technologies.
- * All device with a recent browser support even shitty phone.
+ * Support all device with a recent browser even shitty phone.
  * Native like quality and performance application in web technologies.
  * Possibility to add application to home screen and access it offline.
 * Provide the best user experience design by material design style.
