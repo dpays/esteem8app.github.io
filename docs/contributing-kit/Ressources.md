@@ -1,4 +1,4 @@
-# Ressource kit
+# Ressources
 
 ## Development skills
 (A) **Code skills**
