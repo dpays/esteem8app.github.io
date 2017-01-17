@@ -11,4 +11,4 @@ This document describe the document set needed to get a good team organization.
 * **Committing principles** [Principles to commit something].
 * **[Operating principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/OPERATING-PRINCIPLES.md)** [Principle to contribute to this project].
 * **Operating resources** [Resources to contribute to this project].
-* **Operating starter** [Starting point to contribute to this project].
+* **[Operating starter](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Operating-starter.md)** [Starting point to contribute to this project].
