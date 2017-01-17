@@ -1,12 +1,11 @@
 # Processing principles
+This is a tool to improve your your effiency, it is optional, use it only if you like it.
 ## Introduction
-This document is a personal framework to **day-to-day** optimally transform strategy procedures into process.
+This document is a personal framework to **day-to-day** optimally transform strategy into actions.
 
-It is optional, use it if you like it.
+Before starting to work **choose optimal strategies parts** you want to work on and transform them into sub-process (tasks).
 
-Before starting to work **choose optimal strategies parts** you want to work on and transform them into efficient sub-process.
-
-During the work time **process sub-process chosen efficiently** by being in optimal body and mind conditions.
+During the work time **process sub-process chosen efficiently** by being in good body and mind conditions.
 
 ## Organization principles
 * Choose directive parts that is optimal to work on for the workday.
