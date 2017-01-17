@@ -23,4 +23,4 @@ Principles are tools to efficiently define strategies.
 ## Words explanation
 
  * Optimally allocated = not too much directives to loose effort re-planning because of unknown events and too less to loose effort asking too much what to do.
- * Optimal = Get suitable output with minimal input.
+ * Optimal = get suitable output with minimal input.
