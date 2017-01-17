@@ -22,9 +22,7 @@ Esteem8 developpers are regularly monitoring issues and will try to fix open bug
 
 Esteem8 project will greatly appreciates your contributions.
 
-When contributing code, please follow the same comment and coding style as the rest of the project.
-
-Contributions can be rewarded using the steem network by publishing your contributions in the Esteem8 features tag once it has been accepted.
+**Contributions can be rewarded** using the steem network by publishing your contributions in form of a publication in the steem network.
 
 * [Ressources](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Ressources.md)
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Guidlines.md)
