@@ -1,7 +1,7 @@
 # Organization model
 
 ## Introduction
-This model represent the open source organization architecture used by ESTEEM8.
+This model represent the open source organization architecture used.
 
 ## Model
 * **Owners** [Owners]
