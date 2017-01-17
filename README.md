@@ -1,11 +1,10 @@
 # ESTEEM8 Application
 
 ## Introduction
-This web application is built using [Polymer](https://www.polymer-project.org/1.0/) and following [material guidlines](https://material.io/guidelines/).
 
-The main objective of Esteem8 application is to provide the highest quality steem network application available by providing a **light, design and private web application** to browse the next generation social media plateform called [Steem](https://steem.io).
+This web application built using Polymer and material design.
 
-See more about hte goal in the ESTEEM8 [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md).
+[Esteem8 goal](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) is to provide a **light, design and private application** to browse the next generation blockchain based social media plateform called <a target="_blank" href="https://steem.io"> Steem</a>.
 
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
