@@ -30,18 +30,14 @@ This is a continuous improvement strategy that match the [Development strategy](
 
 Application need to be fast and working even on shitty device.
 
-### Usability
+### Usability & Accessibility
 * Optimize easiness to understand and use.
+ * Shorten the user learning curve.
  * Optimize design details.
  * Optimize animations and transitions.
  * Optimize application data architecture.
  
 It need to be beautiful and very easy to use and understand.
-
-### Accessibility
- * Optimize ease of use.
- * Optimize ease of understanding.
- * Shorten the user learning curve.
  
 ### Human-interface interaction
 * Optmize the way that the application give informations to a user.
