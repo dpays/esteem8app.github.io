@@ -24,7 +24,7 @@ Esteem8 project will greatly appreciates your contributions.
 
 **Contributions can be rewarded using the steem network by publishing your contributions in form of a publication on the steem network**.
 
-Please read first the project [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md), if it is already done, you can use tools above.
+Please read first the project [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md).
 
 * [Skills](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Skills.md)
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Guidlines.md)
