@@ -2,7 +2,7 @@
 
 This strategy concern application code development.
 
-Development must conform to [UX Design strategy]().
+Development must conform to [UX Design strategy](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/strategies/UX-design-strategy.md).
 
 ## Launch Alpha release application
 * Remove bugs.
