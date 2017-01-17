@@ -25,3 +25,5 @@ During the work time **process sub-process chosen efficiently** by being in opti
  * Be happy for quick wins and slightly positive.
 * Focus on actual process and make effort.
 * Do your best, you are the last efficiency parameter.
+
+See [Work my system](https://github.com/Primerz/Work-my-system) project for more informations.
