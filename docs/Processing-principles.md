@@ -1,4 +1,4 @@
-# Operating principles
+# Processing principles
 ## Introduction
 This document provide a set of principles to **day-to-day** optimally transform strategy procedures into process.
 
