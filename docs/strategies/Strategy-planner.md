@@ -1,4 +1,4 @@
-# ESTEEM8 Strategy planner
+# Strategy planner
 
 ## Introduction
 
