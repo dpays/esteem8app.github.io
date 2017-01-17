@@ -8,8 +8,8 @@ Esteem8 application project is meant to evolve with feedback and suggestions.
 
 The project team and users will greatly appreciate any thoughts on ways to improve design or features.
 
-* For general application feedback  -> Use [Google forms](https://goo.gl/6a99QQ).
-* For specific application feedback -> Use [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
+* For general feature feedback  -> Use [Google forms](https://goo.gl/6a99QQ).
+* For specific feature feedback -> Use [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
 * To purpose a new feature -> Use the "Esteem8 features proposal" steem publication.
 
 **Bugs reporting**
