@@ -12,6 +12,12 @@ Feel free to read code, copy code, contribute, correct bugs or purpose a new fea
 
 Contributions can get rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
 
+## Screenshots
+
+![alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/screenshots/explore.png "Explore page")
+![alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/screenshots/profile.png "Profile page")
+
+
 ## License
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
