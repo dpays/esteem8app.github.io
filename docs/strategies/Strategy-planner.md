@@ -2,10 +2,10 @@
 
 ## Introduction
 
-An optimal strategy is a strategy that take less effort to accomplish an objective.
+An optimal strategy is a strategy that take less efforts to accomplish an objective.
 
 * Strategy must be realist and composed of directives that can be nested.
-* Directives must be optimally allocated within the path to achieve an objective.
+* Directives must be optimally allocated along the path to achieve an objective.
 
 ## Principles
 
@@ -22,5 +22,5 @@ Principles are tools to efficiently define strategies.
 
 ## Words explanation
 
- * Optimally allocated = not too much directives to loose effort re-planning because of unknown events and too less to loose effort asking too much what to do.
+ * Optimally allocated = not too much to loose effort re-planning because of unknown events and not too less to loose effort asking too much "what is that fuck ?".
  * Optimal = get suitable output with minimal input.
