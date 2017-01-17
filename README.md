@@ -7,7 +7,7 @@ The main objective of Esteem8 application is to provide the highest quality stee
 
 See more in the ESTEEM8 [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md).
 
-Feel free to read or copy code, contribute, correct bugs or purpose a new feature. Contributions can be rewarded.
+Feel free to read or copy code, contribute, correct bugs or purpose a new feature.
 
 ## Contributions
 
