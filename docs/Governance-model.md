@@ -1,5 +1,9 @@
-# ESTEEM8 Governance model
+# Organization model
 
+## Introduction
+This model represent the open source organization architecture used by ESTEEM8.
+
+## Model
 * **Owners** [Owners]
  * They are themselves elected or chosen by admins, for now they are themselves elected.
  * Can take final descisions.
