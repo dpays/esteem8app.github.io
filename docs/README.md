@@ -2,7 +2,7 @@
 ## Index
 
 * **[Governance model](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Governance-model.md)**
-* **[Objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Objective.md)**
+* **[Strategic objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md)**
 * **[Strategy planner](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategy-planner.md)** 
 * **[Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/strategies)**
 * **[Committing principles]**
