@@ -2,7 +2,7 @@
 
 This strategy concern the application [user experience design](https://en.wikipedia.org/wiki/User_experience_design#Elements).
 
-This is a continuous improvement strategy that match the [Development strategy](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/strategies/DEVELOPMENT-STRATEGY.md).
+This is a continuous improvement strategy that match the [Development strategy](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/strategies/Developement-strategy.md).
 
 ### Visual design
 * Optimize look-and-feel.
