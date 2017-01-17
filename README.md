@@ -4,13 +4,13 @@
 
 This web application built using Polymer and material design.
 
-[Esteem8 goal](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) is to provide a **light, design and private application** to browse the next generation blockchain based social media plateform called <a target="_blank" href="https://steem.io"> Steem</a>.
+[Esteem8 goal](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) is to provide the best **light, design and private application** to browse the next generation blockchain based social media plateform called <a target="_blank" href="https://steem.io">Steem</a>.
 
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
 ## Contributions
 
-See [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) to quick start contributing and get rewarded.
+Contributions can get rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
 
 ## License
 
