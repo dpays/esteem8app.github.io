@@ -22,7 +22,7 @@ Esteem8 developpers are regularly monitoring issues and will try to fix open bug
 
 Esteem8 project will greatly appreciates your contributions.
 
-**Contributions can be rewarded** using the steem network by publishing your contributions in form of a publication in the steem network.
+**Contributions can be rewarded using the steem network by publishing your contributions in form of a publication on the steem network**.
 
 Please read first the project [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md), if it is already done, you can use tools above.
 
@@ -30,3 +30,6 @@ Please read first the project [Strategic objective](https://github.com/esteem8ap
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Guidlines.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
 * [Processing principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Processing-principles.md) (optional personal framework)
+
+* Application [issues](https://github.com/esteem8app/esteem8app.github.io/issues)
+* Application [todo](https://github.com/esteem8app/esteem8app.github.io/projects/7)
