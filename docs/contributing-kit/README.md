@@ -24,5 +24,5 @@ When contributing code, please follow the same comment and coding style as the r
 
 Contributions can be rewarded using the steem network by publishing your contributions in the Esteem8 features tag once it has been accepted.
 
-* [Ressource-kit](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Ressource-kit.md)
+* [Ressource kit](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Ressource-kit.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
