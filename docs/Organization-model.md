@@ -8,7 +8,7 @@ It is composed by two models described above.
 
 ## Top level model
 
-Top level organization is semi-autonomous and descrbed above.
+Top level organization is semi-autonomous and described above.
 
 * **Owners** [Owners]
  * They are themselves elected or chosen by admins, for now they are themselves elected.
@@ -27,7 +27,7 @@ Top level organization is semi-autonomous and descrbed above.
 
 ## Low level model
 
-Low level organization is autonomous and descrbed above.
+Low level organization is autonomous and described above.
 
 1. Users purpose features they want to have in steem.
 * Outside developpers implement features purposed on steem they want to develop.
