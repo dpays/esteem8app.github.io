@@ -15,7 +15,6 @@
 <link rel="import" href="../dialogs/select-tag-dialog.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/my-icons.html">
-<link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-explore">
@@ -34,10 +33,6 @@
 
             .space {
                 width: 100%;
-            }
-
-            #drawer {
-                z-index: 4;
             }
 
             #progress-bar  {
@@ -91,7 +86,7 @@
         <paper-toolbar class="mainToolbar">
 
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
 
@@ -102,7 +97,7 @@
                     <span class="middle floatingToolbarTitle"
                           id="selectOtherCategoryButton"
                           hidden$="[[!currentTag.length]]">
-                      #{{currentTag}}
+                      #[[currentTag]]
                     </span>
                     <!-- explore button -->
                     <span class="middle floatingToolbarTitle"
@@ -178,11 +173,6 @@
                 </template>
             </div>
         </div>
-
-        <!-- DRAWER -->
-        <app-drawer id="drawer">
-            <drawer-content settings="[[settings]]"></drawer-content>
-        </app-drawer>
 
         <!-- GET POSTS -->
         <steem-get-state
@@ -269,7 +259,7 @@
 
                 // List events
                 this.$.floatingTitle.addEventListener('tap',this._openSelectCategoryDialog.bind(this));
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
                 this.$.toggleFavoriteTagButton.addEventListener('tap', this._toggleFavoriteTag.bind(this));
 
                 // Default variables value
@@ -324,9 +314,9 @@
                 window.scrollTo(0, 0);
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             },
 
             _showProgress: function() {
@@ -362,6 +352,11 @@
             },
 
             _refreshIsCurrentTagInFavorite: function () {
+
+                if(typeof this.favoriteTags === 'undefined') {
+
+                    return false;
+                }
 
                 this._isCurrentTagInFavorite = !(this.favoriteTags.indexOf(this.currentTag) === -1);
             },

@@ -144,7 +144,7 @@
 
         #appVersion {
             position: fixed;
-            bottom: 170px;
+            bottom: 182px;
             left: 16px;
             font-size: 12px;
             color: #646464;
@@ -271,7 +271,12 @@
 
             _updateCoverImage: function(coverImage) {
 
-                var coverImage = coverImage || this.settings.user.account.coverImage;
+                var coverImage = coverImage || '';
+
+                if(typeof this.settings !== 'undefined'){
+
+                    coverImage = this.settings.user.account.coverImage;
+                }
 
                 if(coverImage !== ''){
 

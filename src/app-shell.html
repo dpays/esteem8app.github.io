@@ -2,11 +2,13 @@
 
 <link rel="import" href="./../bower_components/iron-pages/iron-pages.html">
 
+<link rel="import" href="./../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="./../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="./../bower_components/app-route/app-location.html">
 <link rel="import" href="./../bower_components/app-route/app-route.html">
 
 <link rel="import" href="api/steemjs/steem-get-account.html">
+<link rel="import" href="components/drawer-content.html">
 
 <script src="scripts/intl-relativeformat-with-locales.min.js"></script>
 
@@ -30,6 +32,10 @@
                 --app-divider-color: #BDBDBD;
 
                 display: block;
+            }
+
+            #drawer {
+                z-index: 2;
             }
         </style>
 
@@ -71,12 +77,17 @@
                 tail="{{subSubSubRoute}}">
         </app-route>
 
+        <!-- DRAWER -->
+        <app-drawer id="drawer" opened="{{_isDrawerOpen}}" swipe-open>
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
         <!-- PAGES -->
         <iron-pages id="pages"
-                selected="[[selectedPage]]"
-                attr-for-selected="name"
-                fallback-selection="404"
-                role="main">
+                    selected="[[selectedPage]]"
+                    attr-for-selected="name"
+                    fallback-selection="404"
+                    role="main">
 
             <page-home name="home"
                        route="{{route}}"
@@ -209,6 +220,7 @@
 
                 // Set default variables value
                 this.account = {};
+                this._isDrawerOpen = false;
 
                 // Set default browser stored value
                 if(typeof this.favoritePosts == 'undefined') { this.favoritePosts = [];}
@@ -346,6 +358,11 @@
 
                 // Render
                 Polymer.updateStyles();
+            },
+
+            _openDrawer: function() {
+
+                this._isDrawerOpen = true;
             }
         });
     </script>

@@ -30,10 +30,6 @@
                 background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
             }
 
-            app-drawer {
-                z-index: 2;
-            }
-
             paper-input {
                 --paper-input-container-focus-color: var(--app-secondary-color);
             }
@@ -105,7 +101,7 @@
         <paper-toolbar class="mainToolbar">
 
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
 
@@ -151,11 +147,6 @@
             </paper-card>
         </div>
 
-        <!-- DRAWER -->
-        <app-drawer id="drawer">
-            <drawer-content settings="[[settings]]"></drawer-content>
-        </app-drawer>
-
         <!-- SIGN UP DIALOG -->
         <sign-up-dialog is-open="{{isSignUpOpen}}"></sign-up-dialog>
 
@@ -182,15 +173,15 @@
             ready: function() {
 
                 // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
                 this.$.signUpButton.addEventListener('tap', this._openSignUpDialog.bind(this));
 
                 this.isSignUpOpen = false;
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             },
 
             _openSignUpDialog: function() {

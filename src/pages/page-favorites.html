@@ -16,7 +16,6 @@
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
 <link rel="import" href="../components/my-icons.html">
-<link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -29,10 +28,6 @@
             /* GENERAL */
             :host {
                 display: block;
-            }
-
-            app-drawer {
-                z-index: 2;
             }
 
             iron-pages {
@@ -118,7 +113,7 @@
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
             <div class="floatingToolbar">
@@ -292,7 +287,7 @@
             ready: function() {
 
                 // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
                 this.$.addTagButton.addEventListener('tap', this._addTag.bind(this));
                 this.$.addUserButton.addEventListener('tap', this._addUser.bind(this));
                 this.$.cancelDeleteUserButton.addEventListener('tap', this._cancelDeleteUser.bind(this));
@@ -307,9 +302,9 @@
 
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             },
 
             _addUser: function() {

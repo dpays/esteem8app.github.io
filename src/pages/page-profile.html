@@ -10,7 +10,6 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 
-<link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/reply-card.html">
 <link rel="import" href="../components/event-card.html">
@@ -35,10 +34,6 @@
             /* GENERAL */
             :host {
                 display: block;
-            }
-
-            app-drawer {
-                z-index: 2;
             }
 
             /* TOOLBAR */
@@ -131,15 +126,15 @@
 
         </style>
 
-        <steem-get-account account-name="[[username]]"
+        <steem-get-account account-name="[[_userName]]"
                            account="{{account}}">
         </steem-get-account>
 
-        <steem-get-followers account-name="[[username]]"
+        <steem-get-followers account-name="[[_userName]]"
                              followers="{{account.followers}}">
         </steem-get-followers>
 
-        <steem-get-following account-name="[[username]]"
+        <steem-get-following account-name="[[_userName]]"
                              following="{{account.following}}">
         </steem-get-following>
 
@@ -147,7 +142,7 @@
         <paper-toolbar class="mainToolbar">
 
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
 
@@ -261,7 +256,7 @@
             </div>
 
             <div name="replies">
-                <steem-get-replies user-name="[[username]]"
+                <steem-get-replies user-name="[[_userName]]"
                                           replies="{{replies}}">
                 </steem-get-replies>
                 <div id="replies-list">
@@ -281,18 +276,18 @@
 
             <div name="history">
                 <steem-get-history id="steemGetHistory"
-                                   user-name="[[username]]"
-                                   events="{{events}}">
+                                   user-name="[[_userName]]"
+                                   events="{{_events}}">
                 </steem-get-history>
                 <div id="events-list">
 
-                    <template is="dom-if" if="[[!events.length]]">
+                    <template is="dom-if" if="[[!_events.length]]">
                         <h1 class="nothingText">[[user]] has no history</h1>
                     </template>
 
-                    <template is="dom-if" if="[[events.length]]">
-                        <!--iron-scroll-threshold  on-lower-threshold="_loadMoreHistoryEvents"> This is triggered before events are loaded :/-->
-                            <template is="dom-repeat" items="[[events]]">
+                    <template is="dom-if" if="[[_events.length]]">
+                        <!--iron-scroll-threshold  on-lower-threshold="_loadMoreHistoryEvents"> This is triggered before _events are loaded :/-->
+                            <template is="dom-repeat" items="[[_events]]">
                                 <event-card event="[[item]]"></event-card>
                             </template>
                         <!--/iron-scroll-threshold-->
@@ -332,13 +327,7 @@
 
                 </div>
             </div>
-
         </iron-pages>
-
-        <app-drawer id="drawer">
-            <drawer-content settings="[[settings]]"></drawer-content>
-        </app-drawer>
-
     </template>
 
     <script>
@@ -363,9 +352,8 @@
                     type: String
                 },
 
-                username: {
-                    type: String,
-                    observer: '_usernameChanged'
+                _userName: {
+                    type: String
                 },
 
                 account: {
@@ -389,9 +377,10 @@
                     type: Array
                 },
 
-                events: {
+                _events: {
                     type: Array
                 },
+
                 _isUserInFavorite: {
                     type: Boolean
                 }
@@ -408,7 +397,7 @@
                 this.currentView = "posts";
 
                 // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
                 this.$.followersButton.addEventListener('tap', this._setCurrentViewFollowers.bind(this));
                 this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
                 this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
@@ -419,25 +408,20 @@
 
             _userChanged: function(user) {
 
-                // Remove '@' at user and put it into username
+                // Remove '@' at user and put it into _userName
                 var user = user || this.user;
-                this.username = user.substring(1);
+                this._userName = user.substring(1);
                 this._refreshIsFavoriteUser();
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             },
 
             _accountChanged: function () {
 
                 console.log("account="+this.account);
-            },
-
-            _postsChanged: function() {
-
-                console.log("profile posts changed "+this.posts)
             },
 
             _updateCoverImage: function(url) {
@@ -462,7 +446,7 @@
 
             _refreshIsFavoriteUser: function() {
 
-                    this._isUserInFavorite = !(this.favoriteUsers.indexOf(this.username) === -1);
+                    this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._userName) === -1);
             },
 
             _toggleFavoriteUser: function() {
@@ -470,12 +454,12 @@
                 if(this._isUserInFavorite) {
 
                     // Remove user from favourite
-                    var index = this.favoriteUsers.indexOf(this.username);
+                    var index = this.favoriteUsers.indexOf(this._userName);
                     this.splice('favoriteUsers', index, 1);
                 }else {
 
                     // Add user to favourite
-                    this.push('favoriteUsers', this.username);
+                    this.push('favoriteUsers', this._userName);
                 }
 
                 // Invert favorite state of user
@@ -497,7 +481,6 @@
 
                 this.$.steemGetHistory.loadMoreData();
             }
-
         });
     </script>
 </dom-module>

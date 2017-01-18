@@ -14,7 +14,6 @@
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
 <link rel="import" href="../components/my-icons.html">
-<link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../components/color-select.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -27,10 +26,6 @@
             /* GENERAL */
             :host {
                 display: block;
-            }
-
-            app-drawer {
-                z-index: 2;
             }
 
             /* CARDS */
@@ -85,7 +80,7 @@
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
             <div class="floatingToolbar">
@@ -164,10 +159,6 @@
             </paper-card>
         </div>
 
-        <!-- DRAWER -->
-        <app-drawer id="drawer">
-            <drawer-content settings="[[settings]]"></drawer-content>
-        </app-drawer>
     </template>
 
     <script>
@@ -205,7 +196,7 @@
             ready: function() {
 
                 // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
 
                 // Set colors variables
                 this._primaryColor = this.settings.theme.primaryColor;
@@ -215,9 +206,9 @@
 
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             },
 
             // Change theme colors in setting

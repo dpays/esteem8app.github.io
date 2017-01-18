@@ -6,10 +6,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 
-<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
-
 <link rel="import" href="../components/my-icons.html">
-<link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-support">
@@ -25,10 +22,6 @@
                 display: block;
                 position: absolute;
                 background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
-            }
-
-            app-drawer {
-                z-index: 2;
             }
 
             /* SUPPORT CARDS */
@@ -73,7 +66,7 @@
         <paper-toolbar class="mainToolbar">
 
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
 
@@ -128,14 +121,7 @@
                     </div>
                 </paper-card>
             </div>
-
         </div>
-
-        <!-- DRAWER -->
-        <app-drawer id="drawer">
-            <drawer-content settings="[[settings]]"></drawer-content>
-        </app-drawer>
-
     </template>
 
     <script>
@@ -155,12 +141,12 @@
             ready: function() {
 
                 // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             }
         });
     </script>

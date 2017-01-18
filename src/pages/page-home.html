@@ -7,10 +7,7 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
-<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
-
 <link rel="import" href="../shared-styles.html">
-<link rel="import" href="../components/drawer-content.html">
 <link rel="import" href="../components/share-button.html">
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
 
@@ -56,10 +53,6 @@
 
             #loginButton a {
                 color: var(--app-primary-text-color);
-            }
-
-            app-drawer {
-                z-index: 2;
             }
 
             paper-button a {
@@ -157,7 +150,7 @@
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
             <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_toggleDrawer()"
+                               on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
             <div main-title>ESTEEM8</div>
@@ -231,11 +224,6 @@
             </paper-button>
         </div>
 
-        <!-- DRAWER -->
-        <app-drawer id="drawer">
-            <drawer-content settings="[[settings]]"></drawer-content>
-        </app-drawer>
-
         <!-- QUERY TAGS -->
         <steem-get-tags tags="{{_tags}}"></steem-get-tags>
     </template>
@@ -260,16 +248,16 @@
             ready: function() {
 
                 // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._toggleDrawer.bind(this));
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
                 this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
 
                 // Default tags
                 this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
             },
 
-            _toggleDrawer: function() {
+            _openDrawer: function() {
 
-                this.$.drawer.toggle();
+                document.getElementById('appshell')._openDrawer();
             },
             
             _openGithub: function() {

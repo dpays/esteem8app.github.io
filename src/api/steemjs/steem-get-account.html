@@ -32,6 +32,8 @@
                 }
             },
 
+            observers: ['_accountNameChanged(accountName)'],
+
             ready: function() {
 
                 // Set default value
@@ -46,7 +48,7 @@
             },
 
             // Query Steem network to provide account data
-            _accountNameChanged: function() {
+            _accountNameChanged: function(accountName) {
 
                 if(this.accountName === ''){
 
@@ -55,7 +57,7 @@
                 }else {
 
                     var thisElement = this;
-                    var name = this.accountName;
+                    var name = accountName || this.accountName;
 
                     // Query account data
                     this.async(function() {
@@ -63,10 +65,13 @@
                         // Query basic information
                         steem.api.getAccounts([name], function(err, result) {
 
-                            if(!err && result !== null){
+                            if(!err && typeof result[0] !== 'undefined' && result[0] !== null){
 
                                 // Load json
                                 var objectFromJson = JSON.parse(result[0].json_metadata) || {};
+
+                                var account = {};
+
 
                                 // Set profile image
                                 if(typeof objectFromJson.profile.profile_image === 'undefined'){
