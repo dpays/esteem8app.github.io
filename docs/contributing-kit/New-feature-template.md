@@ -1,11 +1,10 @@
 # ESTEEM8 New feature [{Feature.title}]
-
-[ESTEEM8](esteem8.com) is a light, design and private web application to browse Steem.
+[ESTEEM8](esteem8.com) is a light, design and private web application.
 
 <center>
 ![Alt texte](https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center%20128x128.png?raw=true "ESTEEM8 Logo")
 
-This feature was developped by {Auhtor.name}.
+This new feature was developped by {Auhtor.name}.
 
 </center>
 
@@ -13,7 +12,7 @@ This feature was developped by {Auhtor.name}.
 
 {Feature.introduction}
 
-## Description
+## What's new ?
 
 {Feature.description}
 
@@ -33,7 +32,6 @@ Any contributions will be greatly appreciate, start with the [contributing-kit](
 
 ## Thank you for reading
 
-ESTEEM8 Team enjoy trying provide you what you may like.
+ESTEEM8 Team enjoy trying provide what you may like.
 
-Help us provide you what you want by up-voting or wrinting your thinking.
-
+Help us provide what you want by up-voting or wrinting your thinking.
