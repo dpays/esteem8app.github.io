@@ -34,4 +34,4 @@ Low level organization is autonomous and descrbed above.
 * Inside developpers choose outside developpers features they want to implement in project.
 * Outside developpers are rewarded by posting they feature in Steem.
 
-If a new features is greatly appreciate by users but not accepted by inside developpers, the project can be forked to compose a new starting point.
+If an outside developper new feature is greatly appreciate by users but not accepted by the project, the project can be forked to compose a new starting point.
