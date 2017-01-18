@@ -34,4 +34,4 @@ Low level organization is autonomous and described above.
 * Inside developpers choose outside developpers features they want to implement in project.
 * Outside developpers are rewarded by posting they feature in Steem.
 
-If a fork is greatly appreciate but not merged with the project, the project can be separated in order to compose a new starting point.
+If an outside fork is greatly appreciate but not merged with the project, the fork can be separated in order to compose a new starting point.
