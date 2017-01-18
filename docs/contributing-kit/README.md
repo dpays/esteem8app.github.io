@@ -22,7 +22,7 @@ Esteem8 developpers are regularly monitoring issues and will try to fix open bug
 
 Esteem8 project will greatly appreciates your contributions.
 
-**Contributions can be rewarded using the steem network by publishing your contributions in form of a publication on the steem network**.
+**Contributions can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/New-feature-template.md) on the Steem network.
 
 Please read first the project [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md).
 
