@@ -1,6 +1,8 @@
-# Processing principles
+# Process strategy principles
 This is an optional tool to improve your your effiency, use it only if you like it.
+
 ## Introduction
+
 This document is a personal framework to **day-to-day** optimally transform strategy into actions.
 
 Before starting to work **choose optimal strategies parts** you want to work on and transform them into sub-process (tasks).
