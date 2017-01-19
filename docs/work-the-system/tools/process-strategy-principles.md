@@ -1,9 +1,8 @@
 # Process strategy principles
-This is an optional tool to improve your your effiency, use it only if you like it.
+
+This is a tool to optimally transform mixed strategy parts into process (actions or tasks).
 
 ## Introduction
-
-This document is a personal framework to **day-to-day** optimally transform strategy into actions.
 
 Before starting to work **choose optimal strategies parts** you want to work on and transform them into sub-process (tasks).
 
