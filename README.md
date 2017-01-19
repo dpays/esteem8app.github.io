@@ -8,6 +8,8 @@ This web application built using Polymer and material design.
 
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
+ESTEEM8 Organization is [decentralized](https://en.wikipedia.org/wiki/Distributed_economy#/media/File:Centralised-decentralised-distributed.png) and autonomous.
+
 ## Contributions
 
 Contributions can get rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
