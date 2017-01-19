@@ -21,6 +21,6 @@ This document describe the document set used to work the **primary ESTEEM8 syste
  
 ### With ?
  
- * [Tools](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/tools) = how to work the strategies ?
-  * [make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md)
-  * [process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md)
+ * [/tools](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/tools) = how to work the strategies ?
+  * [Make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md)
+  * [Process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md)
