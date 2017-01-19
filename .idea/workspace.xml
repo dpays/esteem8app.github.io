@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/strategies/ESTEEM8 System overview" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/strategies/ESTEEM8 System overview.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" afterPath="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -95,13 +94,30 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1299">
               <caret line="92" column="33" selection-start-line="92" selection-start-column="33" selection-end-line="92" selection-end-column="33" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ESTEEM8 System overview" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="8018" selection-start-line="0" selection-start-column="8018" selection-end-line="0" selection-end-column="8018" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ESTEEM8 System overview.png" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -130,6 +146,7 @@
         <option value="$PROJECT_DIR$/src/pages/page-home.html" />
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
         <option value="$PROJECT_DIR$/docs/strategies/ESTEEM8 System overview" />
+        <option value="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" />
       </list>
     </option>
   </component>
@@ -415,12 +432,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484707110304</updated>
-      <workItem from="1484707112352" duration="18626000" />
+      <workItem from="1484707112352" duration="19332000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18626000" />
+    <option name="totallyTimeSpent" value="19332000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -678,6 +695,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/docs/strategies/ESTEEM8 System overview.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8018" selection-start-line="0" selection-start-column="8018" selection-end-line="0" selection-end-column="8018" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
