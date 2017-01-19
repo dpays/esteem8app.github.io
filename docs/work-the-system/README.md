@@ -1,10 +1,10 @@
 # Work the system (methodology)
 
-This document describe the document set used to work the **ESTEEM8 system**.
+This document describe the document set used to **work the ESTEEM8 system**.
 
 ### What ?
 * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
- * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) what is the system ?
+ * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-definition.md) what is the system ?
  * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) what is it's objectives ?
 
 ---
