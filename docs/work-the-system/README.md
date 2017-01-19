@@ -1,6 +1,6 @@
 # Work the system (methodology)
 
-This document describe the document set used to work the **primary ESTEEM8 system**.
+This document describe the document set used to work the **ESTEEM8 system**.
 
 ### What ?
 * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
