@@ -1,6 +1,7 @@
-# Strategy planner
-
+# Make strategy principles
 ## Introduction
+
+This is a tool to plan optimal strategies.
 
 An optimal strategy is a strategy that take less efforts to accomplish an objective.
 
