@@ -1,6 +1,6 @@
 # Work the system (methodology)
 
-This document describe the document set used to **work the ESTEEM8 system**.
+This document describe the document set used to work the Esteem8 system.
 
 ### What ?
 
