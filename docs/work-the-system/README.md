@@ -1,6 +1,6 @@
 # Work the system (methodology)
 
-This document describe the document set used to work the Esteem8 system.
+This document describe the document set used to work the **ESTEEM8 system**.
 
 ### What ?
 
@@ -24,8 +24,8 @@ This document describe the document set used to work the Esteem8 system.
   
 ## More explanation
 
-System definition is used to plan strategies to improve it.
+System definition -> plan strategies to improve the system.
 
-System objectives is used to plan strategies to reach objectives.
+System objectives -> plan strategies to reach objectives.
 
-Tools are used to plan and use strategies.
+Tools are used to plan and use strategies efficiently.
