@@ -2,8 +2,6 @@
 
 This document describe the document set used to work the **primary ESTEEM8 system**.
 
-## Index
-
 ### What ?
 * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) = what is the system and it's objectives?
  * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
