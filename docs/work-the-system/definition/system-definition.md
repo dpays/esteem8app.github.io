@@ -6,7 +6,7 @@ A more organized set of shemas will come soon with a less detailed system overvi
 
 ![Alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/schema/system-overview.png "ESTEEM8 System composition")
 
-The schema was made on [draw.io](https://www.draw.io/).
+The schema was made on [draw.io](https://www.draw.io/), use the image to edit the shema.
 
 Shemas are composed of systems and interactions.
 
