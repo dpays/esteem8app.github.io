@@ -5,7 +5,7 @@ This document describe the document set used to work the **primary ESTEEM8 syste
 ## Index
 
 ### What ?
-* [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
+* [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) = what is the system and it's objectives?
  * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
  * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md)
 
@@ -13,9 +13,9 @@ This document describe the document set used to work the **primary ESTEEM8 syste
 
 ### How ?
 
- * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) = how the system will reach objectives
-  * [optimization-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) = actual system optimization
-  * [development-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) = actual system developement
+ * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) = how the system will reach it's objectives ?
+  * [optimization-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) = system optimization
+  * [development-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) = system developement
  
 ---
  
