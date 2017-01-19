@@ -2,11 +2,10 @@
 
 ## Index
 
-* **[Organization model](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Organization-model.md)**
-* **[Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md)**
-* **[Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/strategies)**
+* **[Work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system)**
 * **[Contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit)**
+* **[Todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo)**
 
 ## Quick start
 
-Start by knowing the project [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md).
+Start by knowing what is the project at [work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system).
