@@ -1,27 +1,26 @@
 # Work the system (methodology)
 
-This document describe the **primary strategy to work the ESTEEM8 system**.
+This document describe the document set used to work the **primary ESTEEM8 system**.
 
 ## Index
 
 ### What ?
-
- * [System definition]() Exact system definition
- * [System goal]() Exact system goal
+* [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
+ * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
+ * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md)
 
 ---
 
 ### How ?
 
- * [strategies]() = **How** the system will reach the goal
-  * [strategies-tools]() = **Strategy tools**
-    * [strategy planner]() = Tools to **make strategies**
-    * [strategy processor]() = Tools to **transform strategies into actions**
-  * [optimization-strategies]() = System **optimization**
-  * [development-strategies]() = System **goal developement**
+ * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) = how the system will reach objectives
+  * [optimization-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) = actual system optimization
+  * [development-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) = actual system developement
  
 ---
  
-### Tools
+### With what ?
  
- * [Processing principles]() = Processing **strategies tools**
+ * [Tools](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/tools) = tools to work the system
+  * [Make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md)
+  * [Process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md)
