@@ -10,7 +10,7 @@ This is a strategy to optimizing the Esteem8 system.
 
 ![Alt texte](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/strategies/system-optimization/ESTEEM8%20System%20overview.png?raw=true "Esteem8 system overview")
 
-Schema made on [draw.io](https://www.draw.io/).
+The schema was made on [draw.io](https://www.draw.io/).
 
 **2. For each systems and interactions, define a low-level strategy to optimize it.**
 
