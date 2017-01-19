@@ -8,4 +8,4 @@
 
 ## Quick start
 
-Start by knowing more about the project at [work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system).
+Start by knowing what is the project at [work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system).
