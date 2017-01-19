@@ -2,8 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/contributing-kit/ressources.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/todo/task-list/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/todo/task-list/code/tasks.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/todo/task-tools.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/definition/system-definition.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/Organization-model.md" afterPath="$PROJECT_DIR$/docs/organization-model.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/Strategic-objective.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/definition/system-objective.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/contributing-kit/Documentation.md" afterPath="$PROJECT_DIR$/docs/contributing-kit/documentation.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/contributing-kit/Guidlines.md" afterPath="$PROJECT_DIR$/docs/contributing-kit/guidlines.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/contributing-kit/New-feature-template.md" afterPath="$PROJECT_DIR$/docs/contributing-kit/publications-template/new-feature-template.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/contributing-kit/Processing-principles.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/tools/Processing-principles.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/contributing-kit/Skills.md" afterPath="$PROJECT_DIR$/docs/contributing-kit/skills.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/strategies/Developement-strategy.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/strategies/development-strategies/Developement-strategy.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/strategies/README.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/strategies/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/strategies/Strategy-planner.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/tools/Strategy-planner.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/strategies/UX-design-strategy.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/strategies/development-strategies/UX-design-strategy.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview.png" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/definition/schema/system-overview.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/strategies/system-optimization/readme.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/strategies/optimization-strategies/readme.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/docs/work-the-system/README.md" afterPath="$PROJECT_DIR$/docs/work-the-system-kit/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" afterPath="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,51 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7020">
-              <caret line="390" column="40" selection-start-line="390" selection-start-column="40" selection-end-line="390" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="page-settings.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-settings.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1404">
-              <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="page-support.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-support.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2106">
-              <caret line="117" column="31" selection-start-line="117" selection-start-column="31" selection-end-line="117" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="shared-styles.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/shared-styles.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
               <caret line="11" column="40" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="page-post.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4554">
-              <caret line="253" column="0" selection-start-line="253" selection-start-column="0" selection-end-line="254" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -104,20 +83,75 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ESTEEM8 System overview" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="9126" selection-start-line="0" selection-start-column="9126" selection-end-line="0" selection-end-column="9126" />
-              <folding />
+      <file leaf-file-name="system-overview.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/work-the-system-kit/definition/schema/system-overview.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ressources.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/contributing-kit/ressources.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ESTEEM8 System overview.png" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
+      <file leaf-file-name="system-definition.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/work-the-system-kit/definition/system-definition.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/docs/todo/task-list/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="72">
+                <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="task-tools.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/todo/task-tools.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tasks.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/todo/task-list/code/tasks.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="0">
+                <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
           </provider>
         </entry>
       </file>
@@ -147,6 +181,10 @@
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
         <option value="$PROJECT_DIR$/docs/strategies/ESTEEM8 System overview" />
         <option value="$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview" />
+        <option value="$PROJECT_DIR$/docs/todo/todo-list/README.md" />
+        <option value="$PROJECT_DIR$/docs/todo/todo-list/code/todo.md" />
+        <option value="$PROJECT_DIR$/docs/todo/task-list/code/tasks.md" />
+        <option value="$PROJECT_DIR$/docs/todo/task-list/README.md" />
       </list>
     </option>
   </component>
@@ -340,7 +378,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="strategies" />
+              <option name="myItemId" value="todo" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -358,11 +396,37 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="strategies" />
+              <option name="myItemId" value="todo" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="system-optimization" />
+              <option name="myItemId" value="task-list" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="todo" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="task-list" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="code" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -376,6 +440,15 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js-jscs-nodeInterpreter" value="/usr/bin/node" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../POS software/happy-mode-pos-0.0.5" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/todo/todo-list" />
+      <recent name="$PROJECT_DIR$/docs/work-the-system-kit/definition/schema" />
+      <recent name="$PROJECT_DIR$/docs/work-the-system-kit/definition" />
+      <recent name="$PROJECT_DIR$/docs/work-the-system-kit" />
+      <recent name="$PROJECT_DIR$/docs/contributing-kit/publications-template" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -432,18 +505,18 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1484707110304</updated>
-      <workItem from="1484707112352" duration="20520000" />
+      <workItem from="1484707112352" duration="25664000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20520000" />
+    <option name="totallyTimeSpent" value="25664000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21179885" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23597679" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -493,7 +566,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/contributing-kit/Documentation.md">
+    <entry file="file://$PROJECT_DIR$/docs/contributing-kit/documentation.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
@@ -571,7 +644,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/Organization-model.md">
+    <entry file="file://$PROJECT_DIR$/docs/organization-model.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="666">
@@ -699,7 +772,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview">
+    <entry file="file://$PROJECT_DIR$/docs/work-the-system-kit/definition/System-overview">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="9126" selection-start-line="0" selection-start-column="9126" selection-end-line="0" selection-end-column="9126" />
@@ -707,9 +780,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/strategies/system-optimization/ESTEEM8 System overview.png">
+    <entry file="file://$PROJECT_DIR$/docs/work-the-system-kit/definition/schema/system-overview.png">
       <provider selected="true" editor-type-id="images">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/contributing-kit/ressources.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/work-the-system-kit/definition/system-definition.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/todo/task-tools.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/todo/task-list/code/tasks.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/todo/task-list/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="72">
+            <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
       </provider>
     </entry>
   </component>
