@@ -24,8 +24,8 @@ This document describe the document set used to work the **ESTEEM8 system**.
   
 ## More explanation
 
-System definition -> plan optimization strategies to improve the system.
+System definition is used to plan optimization strategies in order to improve the system.
 
-System objectives -> plan development strategies to reach system's objectives.
+System objectives is used plan development strategies in order reach system's objectives.
 
-Tools -> plan efficient strategies and transform them into tasks.
+Tools are used to plan efficient strategies and efficiently transform them into tasks.
