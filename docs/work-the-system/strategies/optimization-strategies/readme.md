@@ -2,16 +2,12 @@
 
 ## Introduction
 
-This is a strategy to optimizing the Esteem8 system.
+This is a strategy for optimizing the Esteem8 system.
 
 ## Strategy
 
-**1. Continuously optimize the Esteem8 System overview.**
+ * Continuously optimize the [Esteem8 system definition](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-definition.md).
 
-![Alt texte](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/strategies/system-optimization/ESTEEM8%20System%20overview.png?raw=true "Esteem8 system overview")
+ * For each systems and interactions, define a strategy to optimize it.
 
-The schema was made on [draw.io](https://www.draw.io/).
-
-**2. For each systems and interactions, define a low-level strategy to optimize it.**
-
-**3. Implement these low-level strategies as TODO by urgency and then importance.**
+ * Implement these strategies in [/todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo) by urgency and then importance.
