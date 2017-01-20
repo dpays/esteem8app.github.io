@@ -1,6 +1,6 @@
 # Contributing kit
 
-ESTEEM8 Project team and users will greatly appreciate any kind of contribution.
+ESTEEM8 Project greatly appreciate any kind of contribution.
 
 ## Suggestions
 
@@ -27,8 +27,11 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 * [Ressources](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/ressources.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
 
-### What to develop ?
+### What to do ?
 
 * Fix [issues](https://github.com/esteem8app/esteem8app.github.io/issues).
-* Develop planned features from [task-list/code](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/task-list/code).
+* Develop planned features from [task-list](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/task-list).
+
+or
+
 * Purpose and develop your own feature.
