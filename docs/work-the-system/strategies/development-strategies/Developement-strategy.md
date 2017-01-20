@@ -31,6 +31,7 @@ Development must conform to [UX Design strategy](https://github.com/esteem8app/e
   * "esteem8-new-features" (new features channel for developpers)
   * Other tag (channel) can be open as needed
 * Open ESTEEM8 publications in-app used (Native publications integration where comments are by exemple a feature proposal and also purpose to up-vote the publication in question. Interactions on these they will add value to application on the steem network.)
+  * "ESTEEM8 Tags proposal" (This is a publication where comments are first content type (Image, Video, ...) Then second level comment that are posted represent the tag proposed, they will be sorted by value and displayed in a third tabs in "select-tag-dialog")
   * "ESTEEM8 Features proposal"
   * "ESTEEM8 Discussions"
   * "ESTEEM8 Feedbacks"
