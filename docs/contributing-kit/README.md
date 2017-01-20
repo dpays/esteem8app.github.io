@@ -6,13 +6,13 @@ ESTEEM8 Project, team and users greatly appreciate any kind of contribution.
 
 **Feedback**
 
-* General feedback  -> Use [Google forms](https://goo.gl/6a99QQ).
+* General feedback -> Use [Google forms](https://goo.gl/6a99QQ).
 * Specific feedback -> Use [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
 * New feature proposal -> Use our "Esteem8 features proposal" Steem publication.
 
 **Bugs reporting**
 
-Please submit bugs as regular issues on the [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues).
+Please submit bugs as regular issues on the [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues). We'll try to resolve it as quickly as possible.
 
 ## Development
 
@@ -34,4 +34,4 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 
 or
 
-* Purpose and develop your dreamed feature.
+* Purpose and develop your own feature.
