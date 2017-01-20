@@ -1,6 +1,6 @@
 # Contributing kit
 
-ESTEEM8 Project greatly appreciate any kind of contribution.
+ESTEEM8 Project, team and users greatly appreciate any kind of contribution.
 
 ## Suggestions
 
