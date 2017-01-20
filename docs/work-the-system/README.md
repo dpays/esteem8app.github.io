@@ -1,6 +1,6 @@
 # Work the system (methodology)
 
-This document describe the document set used to optimally work the **ESTEEM8 system**.
+This document describe the document set used to optimally work the primary **ESTEEM8 system**.
 
 ### What ?
 
@@ -24,7 +24,7 @@ This document describe the document set used to optimally work the **ESTEEM8 sys
   
 ## What the fuck ?
 
-[Make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md) is used to plan optimal [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
+[Make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md) is used to plan [optimal strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
 
  [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-definition.md) is used to plan [optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) in order to improve the system.
 
