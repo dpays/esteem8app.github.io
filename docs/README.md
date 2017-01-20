@@ -2,9 +2,9 @@
 
 ## Index
 
-* **[Work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system)** what is Esteem8, it's goal and the strategies to reach it ?
-* **[Contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit)** how to contribute?
-* **[Todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo)** what to to ?
+* **[Work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system)** ESTEEM8 definition, objectives and strategies.
+* **[Contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit)** Kit to contribute.
+* **[Todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo)** Things to do.
 
 ## Quick start
 
