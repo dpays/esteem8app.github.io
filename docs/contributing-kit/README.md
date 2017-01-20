@@ -37,5 +37,4 @@ Enjoy ;)
 
 * Fix [issues](https://github.com/esteem8app/esteem8app.github.io/issues).
 * Develop planned features from [task-list/code](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/task-list/code).
-* Make some general code improvements.
 * Purpose and develop your own feature.
