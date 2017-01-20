@@ -24,6 +24,20 @@ Development must conform to [UX Design strategy](https://github.com/esteem8app/e
  * Comment.
  * Edit profile.
  * Post something.
+ * More (Nearly all features that steemit purpose)
+* Open ESTEEM8 tag channel ("esteem8.channel" or "esteem8-channel")
+  * "esteem8-blog"
+  * "esteem8-news" (maybe)
+  * "esteem8-new-features" (new features channel for developpers)
+  * Other tag (channel) can be open as needed
+* Open ESTEEM8 publications in-app used (Native publications integration where comments are by exemple a feature proposal and also purpose to up-vote the publication in question. Interactions on these they will add value to application on the steem network.)
+  * "ESTEEM8 Features proposal"
+  * "ESTEEM8 Discussions"
+  * "ESTEEM8 Feedbacks"
+  * "ESTEEM8 Questions"
+  * "ESTEEM8 Ideas"
+  * "ESTEEM8 Bugs"
+  * Other publications can be posted as needed
 * Continue development.
- * Purpose new features on steem.
- * Timely develop features based on features proposal value on steem.
+ * Purpose new features on steem or take the features purposed by users in "ESTEEM8 Features proposal" publication.
+ * Timely develop these features based on value on steem and more parameters.
