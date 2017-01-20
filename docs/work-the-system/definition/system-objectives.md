@@ -15,4 +15,4 @@ Purpose the highest quality steem network application available by providing a l
  * Best features avaible.
  * User need to say “Ho ! It’s simple, it looks good and I like to use it”.
 
-Access to [Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) to reach objectives.
+[Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) are used to reach objectives.
