@@ -2,9 +2,9 @@
 
 ## Index
 
-* **[Work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system)** ESTEEM8 definition, objectives and strategies.
-* **[Contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit)** Kit to contribute.
-* **[Todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo)** Things to do.
+* **[Work the system](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system)** = ESTEEM8 definition, objectives and strategies.
+* **[Contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit)** = Kit to contribute.
+* **[Todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo)** = Things to do.
 
 ## Quick start
 
