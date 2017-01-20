@@ -20,7 +20,7 @@ Please submit bugs as regular issues on the [github issues page](https://github.
 
 **Links above will provide you all you need to start developping.**
 
-Please read first the project [work the system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) methodology.
+Please read first the project [work the system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) methodology to know the way we work.
 
 * [Skills](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/skills.md)
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/guidlines.md)
