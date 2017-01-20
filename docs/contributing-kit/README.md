@@ -1,16 +1,16 @@
 # Contributing kit
 
-## Suggestions
+ESTEEM8 Project greatly appreciate any kind of contribution.
 
-Esteem8 application project is meant to evolve with feedback and suggestions.
+## Suggestions
 
 **Feedback**
 
-The project team and users will greatly appreciate any thoughts on ways to improve design or features.
+The project, the team and users will greatly appreciate any thoughts on ways to improve design or features.
 
-* For general feature feedback  -> Use [Google forms](https://goo.gl/6a99QQ).
-* For specific feature feedback -> Use [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
-* To purpose a new feature -> Use the "Esteem8 features proposal" steem publication.
+* General feedback  -> Use [Google forms](https://goo.gl/6a99QQ).
+* Specific feedback -> Use [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
+* New feature proposal -> Use our "Esteem8 features proposal" Steem publication.
 
 **Bugs reporting**
 
@@ -20,18 +20,22 @@ Esteem8 developpers are regularly monitoring issues and will try to fix open bug
 
 ## Development
 
-Esteem8 project will greatly appreciates your contributions.
+**Development can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/publications-template/new-feature.md) on the Steem network using the tag "esteem8-new-features".
 
-**Contributions can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/New-feature-template.md) on the Steem network.
+Please read first the project [work the system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) methodology.
 
-Please read first the project [Strategic objective](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md).
+**Links above will provide you all you need to start developping.**
 
-* [Skills](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Skills.md)
-* [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Guidlines.md)
+* [Skills](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/skills.md)
+* [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/guidlines.md)
+* [Ressources](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/ressources.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
-* [Processing principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Processing-principles.md) (optional personal framework)
 
----
-Application [issues](https://github.com/esteem8app/esteem8app.github.io/issues)
+Enjoy ;)
 
-Application [todo](https://github.com/esteem8app/esteem8app.github.io/projects/7)
+### What to develop ?
+
+* Fix [issues](https://github.com/esteem8app/esteem8app.github.io/issues).
+* Develop planned features from [task-list/code](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/task-list/code).
+* Make some general code improvements.
+* Purpose and develop your own feature.
