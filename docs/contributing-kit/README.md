@@ -1,6 +1,6 @@
 # Contributing kit
 
-ESTEEM8 Project greatly appreciate any kind of contribution.
+ESTEEM8 Project team and users will greatly appreciate any kind of contribution.
 
 ## Suggestions
 
@@ -18,9 +18,9 @@ Please submit bugs as regular issues on the [github issues page](https://github.
 
 **Development can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/publications-template/new-feature.md) on the Steem network using the tag "esteem8-new-features".
 
-Please read first the project [work the system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) methodology.
-
 **Links above will provide you all you need to start developping.**
+
+Please read first the project [work the system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) methodology.
 
 * [Skills](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/skills.md)
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/guidlines.md)
