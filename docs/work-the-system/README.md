@@ -22,7 +22,7 @@ This document describe the document set used to optimally work the **ESTEEM8 sys
   
 --- 
   
-## More explanation
+## What the fuck ?
 
 [Make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md) is used to plan optimal [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
 
