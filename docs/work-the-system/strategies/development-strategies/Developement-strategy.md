@@ -38,7 +38,7 @@ Development must conform to [UX Design strategy](https://github.com/esteem8app/e
   * "ESTEEM8 Questions"
   * "ESTEEM8 Ideas"
   * "ESTEEM8 Bugs"
-  * Other publications can be posted as needed
+  * Post other publications as needed
 * Continue development.
  * Purpose new features on steem or take the features purposed by users in "ESTEEM8 Features proposal" publication.
  * Timely develop these features based on value on steem and more parameters.
