@@ -4,7 +4,7 @@
 * Do whatever it takes to ensure the best efficiency.
  * Don’t let something take the control, have it.
  * Don’t stay in comfort zone, persist in front of obstacles.
- * See each little malfunction like something to improve.
+ * See each little malfunction and things like something to improve.
  * Be happy for quick wins and slightly positive.
 * Focus on actual process and make effort.
 * Do your best, you are the last efficiency parameter.
