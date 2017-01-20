@@ -23,7 +23,7 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 * [Skills](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/skills.md)
 * [Guidlines](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/guidlines.md)
 * [Ressources](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/ressources.md)
-* [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/Documentation.md)
+* [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/documentation.md)
 
 **Development can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/publications-template/new-feature.md) on the Steem network using the "esteem8-new-features" tag.
 
