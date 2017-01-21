@@ -1,5 +1,5 @@
 # Code tasks
 
-* [ ] Remove important bugs.
+* [ ] Remove last important bugs.
 * [ ] Make some performance improvement.
-* [ ] Write alpha release Steem publications.
+* [ ] Write ALPHA release Steem publications.
