@@ -7,7 +7,7 @@ Esteem8 application use the polymer framework and is composed of web components.
 ## Main components
 
 #### app-shell.html
-The starting point of the application after index.html.
+Application starting point after index.html.
 
 It provide:
 * Page router
@@ -28,10 +28,10 @@ Set of steem API components wrapper to get steem network data.
 It use [SteemJS](https://github.com/adcpm/steem) project.
 
 #### /components
-Set of shared components across application.
+Set of shared components across application used in /pages.
 
 #### /dialogs
-Set of dialog components.
+Set of dialog components across application used in /pages.
 
 #### /scripts
 set of scripts used by components.
