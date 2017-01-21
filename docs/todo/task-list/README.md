@@ -1,5 +1,3 @@
-# To do
+# Task list
 
-Todo are tasks generated using mixed strategy parts.
-
-They are chosen by urgency then importance and then classed by skills.
+Here are tasks to process, they are classed by skills need.
