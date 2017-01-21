@@ -2,4 +2,4 @@
 
 * [ ] Remove important bugs.
 * [ ] Make some performance improvement.
-* [ ] Write ALPHA release Steem publications.
+* [ ] Write alpha release Steem publications.
