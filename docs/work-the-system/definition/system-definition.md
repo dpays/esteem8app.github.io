@@ -18,7 +18,7 @@ For exemple for "Add app users" systems and interactions a strategy will be made
 Add app user [1] -> Optimze convertion rate between STEEM users and the APP users :
  * Optimize the way that publications are posted : STEEM publications visitor -> APP STEEM publications visitor.
  * Optimize the content of publications : APP STEEM publications visitor -> APP visitor.
- * Optmize the content of the APP : APP visitor -> APP users
+ * Optmize the content of the APP : APP visitor -> APP users.
  * Optmize the application quality: APP users -> APP active users.
  * Get feedback and analysis about these systems and optmize it again and again.
  
