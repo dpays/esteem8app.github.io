@@ -4,7 +4,7 @@ This is an overview of it's detailed composition.
 
 A more organized set of shemas will come soon with a less detailed system overview and some more-detailed sub-system overview.
 
-![Alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/schema/system-overview.png "ESTEEM8 System composition")
+![Alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/ESTEEM8%20System%20overview.png?raw=true "ESTEEM8 System composition")
 
 The schema was made on [draw.io](https://www.draw.io/).
 
