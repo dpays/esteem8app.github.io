@@ -13,7 +13,7 @@ For each of these systems and interactions a specific strategy will be made in o
 
 Theses strategy will be placed into the "optimization-strategies" folder.
 
-For exemple for "Add app user" interactions a strategy will be made this way above:
+For exemple for "Add app user" system and interactions a strategy will be made this way above:
 
 Add app user [1] -> Optimze convertion rate between steem and the application :
  * Optimize the way that publications are posted : STEEM publications visitor -> APP STEEM publications visitor.
