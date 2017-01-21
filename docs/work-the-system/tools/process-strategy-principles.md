@@ -18,6 +18,8 @@ During the work time **process sub-process chosen efficiently** by being in good
 * Directive parts chosen must be optimally transformed into sub-process that can be called tasks.
 * Tasks can be time planned, prioritized and sequenced or not.
 
+The project has already some strategy parts detailed and timely organized into [todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo).
+
 ## Efficiency principles
 * Processing perfectly a task mean with the best exchange rate.
 * Do whatever it takes to ensure the best efficiency.
