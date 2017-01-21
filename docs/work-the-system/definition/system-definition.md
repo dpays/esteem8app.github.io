@@ -9,7 +9,7 @@ The schema was made on [draw.io](https://www.draw.io/).
 
 Shemas are composed of unlimited nested systems and interactions.
 
-For each of these systems and interactions a specific strategy will be made in order to seperately optimize each systems and interactions that compose the primary system called "ESTEEM8".
+For each of these systems and interactions, a specific strategy will be made in order to seperately optimize each systems and interactions that compose the primary system called "ESTEEM8".
 
 Theses strategy will be placed into the "optimization-strategies" folder.
 
@@ -20,7 +20,7 @@ Add app user [1] -> Optimze convertion rate between steem and the application :
  * Optimize the content of publications : APP STEEM publications visitor -> APP visitor.
  * Optmize the content of the APP : APP visitor -> APP users
  * Optmize the application quality: APP users -> APP active users.
- * Get feedback and analysis about this system and optmize it again and again.
+ * Get feedback and analysis about these systems and optmize it again and again.
  
 Add app user [2] -> ...
 
