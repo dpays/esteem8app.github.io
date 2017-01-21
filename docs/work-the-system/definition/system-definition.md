@@ -15,7 +15,7 @@ Theses strategy will be placed into the "optimization-strategies" folder.
 
 For exemple for "Add app users" systems and interactions a strategy will be made this way above:
 
-Add app user [1] -> Optimze convertion rate between steem users and the application users :
+Add app user [1] -> Optimze convertion rate between STEEM users and the APP users :
  * Optimize the way that publications are posted : STEEM publications visitor -> APP STEEM publications visitor.
  * Optimize the content of publications : APP STEEM publications visitor -> APP visitor.
  * Optmize the content of the APP : APP visitor -> APP users
@@ -25,4 +25,3 @@ Add app user [1] -> Optimze convertion rate between steem users and the applicat
 Add app user [2] -> ...
 
 "->" = optimaly tranform = get the best convertion rate.
- 
