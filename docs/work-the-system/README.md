@@ -31,5 +31,3 @@ This document describe the document set used to optimally work the primary **EST
  [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) is used plan [development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) in order reach system's objectives.
 
 [Process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md) is used to efficiently transform [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) into [tasks](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo).
-
-System developement is contained into system optimization but seperated to better work the system.
