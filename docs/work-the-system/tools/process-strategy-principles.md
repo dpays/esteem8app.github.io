@@ -4,7 +4,7 @@ This is a tool to optimally transform mixed strategy parts into process (actions
 
 ## Introduction
 
-Before starting to work **choose optimal strategy parts** you want to work on and transform them into sub-process (tasks). This globaly means choose the best strategy parts, details them then timely organize them by urgency and then importance.
+Before starting to work **choose optimal (best) strategy parts** you want to work on, detail them into sub-process (tasks) and then timely organize them.
 
 During the work time **process sub-process chosen efficiently** by being in good body and mind conditions.
 
