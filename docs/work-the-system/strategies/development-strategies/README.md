@@ -1,4 +1,4 @@
-# Developement strategies
+# Development strategies
 
 System developement concern new systems added to the primary system.
 
