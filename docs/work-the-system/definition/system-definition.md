@@ -9,7 +9,7 @@ The schema was made on [draw.io](https://www.draw.io/).
 
 Shemas are composed of unlimited nested systems and interactions.
 
-For each of these systems and interactions a specific strategy will be made in order to seperately optimize each systems and interactions that compose the whole system called "ESTEEM8".
+For each of these systems and interactions a specific strategy will be made in order to seperately optimize each systems and interactions that compose the primary system called "ESTEEM8".
 
 Theses strategy will be placed into the "optimization-strategies" folder.
 
