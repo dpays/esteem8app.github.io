@@ -147,14 +147,17 @@
             _currentChanged: function () {
 
                 // Select size of image
-                var imageShortenerUrl = "https://img1.steemit.com/300x200/";
+                var imageShortenerUrl = 'https://steemitimages.com/';
 
-                if(this.imageResolution == 'medium'){
+                if(this.imageResolution == 'low') {
 
-                    imageShortenerUrl = "https://img1.steemit.com/450x200/";
+                    imageShortenerUrl += "300x200/";
+                }else if(this.imageResolution == 'medium'){
+
+                    imageShortenerUrl += "450x200/";
                 }else if(this.imageResolution == 'high') {
 
-                    imageShortenerUrl = "https://img1.steemit.com/600x200/";
+                    imageShortenerUrl += "600x200/";
                 }
 
                 // Display image + preload next image + set in a var in component
