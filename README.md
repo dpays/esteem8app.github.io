@@ -1,18 +1,16 @@
 # ESTEEM8 Application
-
 ## Introduction
+* Esteem8 is a [decentralized](https://en.wikipedia.org/wiki/Distributed_economy#/media/File:Centralised-decentralised-distributed.png), autonomous and community driven organization.
+* Esteem8 application is an open-source **light, design, and private** web application to browse Steem.
+* Steem is the first blockchain based social media platform where you earn money by using it.
 
-This web application built using Polymer and material design.
-
-[Esteem8 goal](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) is to provide the best **light, design and private application** to browse the next generation blockchain based social media plateform called <a target="_blank" href="https://steem.io">Steem</a>.
+See [/docs](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs) for more informations about the project and [system objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) to see it's goal.
 
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
-ESTEEM8 Organization is [decentralized](https://en.wikipedia.org/wiki/Distributed_economy#/media/File:Centralised-decentralised-distributed.png) and autonomous.
-
 ## Contributions
 
-Contributions can get rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
+Contributions are greatly appreciated and can be rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
 
 ## Screenshots
 
