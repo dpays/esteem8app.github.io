@@ -2,7 +2,7 @@
 ## Introduction
 * Esteem8 is a [decentralized](https://en.wikipedia.org/wiki/Distributed_economy#/media/File:Centralised-decentralised-distributed.png), autonomous and community driven organization.
 * Esteem8 application is an open-source **light, design, and private** web application to browse Steem.
-* Steem is the first blockchain based social media platform where you earn money by using it.
+* Steem is the world first blockchain based social media platform where you earn money by using it.
 
 See [/docs](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs) for more informations about the project and [system objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) to see it's goal.
 
