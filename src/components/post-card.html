@@ -9,9 +9,8 @@
 
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 
-<link rel="import" href="../../bower_components/marked-element/marked-element.html">
-
 <link rel="import" href="../api/steemjs/steem-get-account.html">
+<link rel="import" href="../components/html-echo.html">
 <link rel="import" href="images-slider.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -117,6 +116,7 @@
 
             .card-content .content-data img {
                 max-width: 100%;
+                margin: auto;
             }
 
             /* CARD TAGS */
@@ -257,9 +257,7 @@
                          hidden="[[!settings.display.showCardContent]]"
                          id="toggleContentData"
                          on-tap="_toggleContentDataHeight()">
-                        <marked-element markdown="[[post.markdownContent]]">
-                            <div class="markdown-html"></div>
-                        </marked-element>
+                        <html-echo html="[[post.body]]"></html-echo>
                     </div>
 
                     <!-- TAGS -->

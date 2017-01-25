@@ -1,6 +1,7 @@
 # Code tasks
 
 * [ ] Remove last important bugs
+* [ ] Complete html-echo
 * [ ] Make some performance improvement
 * [ ] Write ALPHA release Steem publications
 * [ ] Add image rendering when a link to an image is in a content in application 

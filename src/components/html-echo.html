@@ -4,6 +4,7 @@
     <style>
         :host {
             display: block;
+            white-space: pre-wrap;
         }
     </style>
     <template>
@@ -29,10 +30,16 @@
 
             ready: function() {
 
-              this._htmlChanged;
+              this._htmlChanged();
             },
 
             _htmlChanged: function (neo) {
+
+                /* TODO
+                 * [ ] Render markdown as HTML
+                 * [ ] Render links as HTML
+                 * [ ] Sanitize HTML
+                 */
 
                 // WARNING: potential XSS vulnerability if `html` comes from an untrusted source
                 this.async(function() {

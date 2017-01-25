@@ -15,6 +15,7 @@
 <link rel="import" href="../components/comment-content.html">
 <link rel="import" href="../components/share-button.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
+<link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../shared-styles.html">
 
@@ -238,9 +239,7 @@
                 <!-- BODY content -->
                 <div id="bodyContent">
 
-                    <marked-element markdown="[[post.markdownContent]]">
-                        <div class="markdown-html"></div>
-                    </marked-element>
+                    <html-echo html="[[post.body]]"></html-echo>
 
                     <div class="tags">
                         <template is="dom-repeat"
@@ -355,8 +354,7 @@
                 },
 
                 post: {
-                    type: Object,
-                    observer: '_notifyPost'
+                    type: Object
                 },
 
                 favoritePosts: {
@@ -426,10 +424,6 @@
                     this.customStyle['--header-background'] = 'url('+images[0]+')';
                     this.updateStyles();
                 }
-            },
-
-            _notifyPost: function() {
-                console.log(this.post);
             },
 
             _previousUrl: function() {

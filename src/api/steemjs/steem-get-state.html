@@ -71,21 +71,7 @@
 
             _computePostBody: function(body) {
 
-                // HTML -> markdown & HTML
-                var markdownAndHtml = String(toMarkdown(body));
-                // HTML -> string
-                var markdownContent = markdownAndHtml
-                        .replace(/&/g, '&amp;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;')
-                        .replace(/"/g, '&quot;');
-
-                // Image url -> image markdown
-                markdownContent.replace(/https?:\/\/.*\.(?:png|jpg)/g, function(url){
-                    return '[](' + url + ')';
-                });
-
-                return markdownContent;
+                return body;
 
             },
 
@@ -106,11 +92,16 @@
                         var objectFromJson = JSON.parse(postRecived.json_metadata) || {};
 
                         if(typeof objectFromJson.image !== 'undefined'){
+
                             post.images = objectFromJson.image;
                         }
 
                         if(typeof objectFromJson.tags !== 'undefined'){
-                            post.tags = objectFromJson.tags;
+
+                            var tags = objectFromJson.tags;
+                            // Remove the first tag because it's displayed as category
+                            tags.shift();
+                            post.tags = tags;
                         }
                     }
 
@@ -124,7 +115,7 @@
                         post.tags = [];
                     }
 
-                    post.markdownContent = this._computePostBody(postRecived.body);
+                    post.body = postRecived.body;
 
                     post.category = postRecived.category;
                     post.title = postRecived.title;

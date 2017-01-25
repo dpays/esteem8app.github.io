@@ -55,10 +55,14 @@
                     var thisElement = this;
 
                     this.async(function() {
+
                         steem.api.getState(this.path, function(err, result) {
+
                             if(result !== 'undefined' && !err){
+
                                 thisElement._computePost(result.content);
                             }else {
+
                                 thisElement.queryError = true;
                             }
                         });
@@ -66,29 +70,10 @@
                 }
             },
 
-            _computePostBody: function(body) {
-
-                // HTML -> markdown & HTML
-                var markdownAndHtml = String(toMarkdown(body));
-                // HTML -> string
-                var markdownContent = markdownAndHtml;
-                        /*.replace(/&/g, '&amp;')
-                        .replace(/</g, '&lt;')
-                        .replace(/>/g, '&gt;')
-                        .replace(/"/g, '&quot;');*/
-
-                // Image url -> image markdown
-                markdownContent.replace(/https?:\/\/.*\.(?:png|jpg)/g, function(url){
-                    return '[](' + url + ')';
-                });
-
-                return markdownContent;
-
-            },
-
             _computePost: function(content) {
 
                 var post = {
+
                     comments: []
                 };
 
@@ -96,13 +81,13 @@
 
                 // First object properties is post, others are comment
                 for (var key in content) {
+
                     // skip loop if the property is from prototype
                     if (!content.hasOwnProperty(key)) continue;
 
                     var contentReceived = content[key];
 
-
-                    if(counter === 0){ // This object is the post -> Compute post
+                    if(contentReceived.url === ('/'+this.path)){ // This object is the post -> Compute post
 
                         // Add images & tags
                         if(typeof contentReceived.json_metadata !== 'undefined'){
@@ -128,8 +113,7 @@
                             post.tags = [];
                         }
 
-                        post.markdownContent = this._computePostBody(contentReceived.body);
-
+                        post.body = contentReceived.body;
                         post.category = contentReceived.category;
                         post.title = contentReceived.title;
                         post.author = contentReceived.author;
@@ -144,7 +128,7 @@
 
                         post.commentsLength++;
 
-                        if(contentReceived.depth == 1) { // Only take first depth comment (No comment replies)
+                        if(contentReceived.depth === 1) { // Only take first depth comment (No comment replies)
 
                             var comment = {};
 
@@ -161,7 +145,7 @@
                             comment.dollarValue =   parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) +
                                     parseFloat(contentReceived.total_payout_value.split(" ")[0]);
 
-                            comment.markdownContent = this._computePostBody(contentReceived.body);
+                            comment.markdownContent = contentReceived.body;
 
                             post.comments.push(comment);
                         }
