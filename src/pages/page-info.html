@@ -1,0 +1,117 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="page-info">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+                background-image: url(https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg);
+                min-height: 100%;
+                position: absolute;
+                width: 100%;
+                background-position: center;
+            }
+
+            /* CARD */
+            .mainCard {
+                max-width: 400px;
+                margin-top: 80px;
+                margin-bottom: 50px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .mainCard paper-card {
+                margin-top: 16px;
+                width: 100%;
+                display: block;
+            }
+
+            paper-card h2 {
+                color: var(--app-secondary-color);
+                padding: 16px;
+                margin: 0;
+            }
+
+            paper-card p {
+                font-family: 'Open sans', 'Roboto', sans-serif;
+            }
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_openDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    More info
+                </span>
+            </div>
+            <a href="/trending">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+        </paper-toolbar>
+
+        <!-- CARDS -->
+        <div class="mainCard">
+
+            <paper-card>
+                <div class="card-content">
+                    <h2>What is this ?</h2>
+                    <p>This is a web app, you can access it like a website and use it like an application.</p>
+                    <p>If you are on mobile, you can add it to your home screen by going into your browser options, it's free and instantaneous.</p>
+
+                    <h2>What is Steem ?</h2>
+                    <p>Steem is a network composed of multiple nodes that is called a <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+blockchain+database">blockchain</a>, <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+crypto+currency">cryptocurrencies</a> work the same way but Steem is a bit different, it embed a social network function that this app let you freely browse and interact.</p>
+
+                    <h2>Why it's cool ?</h2>
+                    <p>Because it's free, there is no ads and the network is <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+decentralized+network">decentralized</a>, it means that it is unbreakable, unstoppable and incorruptible. And more than that, the blockchain reward you for using it.</p>
+                </div>
+            </paper-card>
+        </div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'page-info',
+
+            properties: {
+
+                settings: {
+                    type: Object,
+                    notify: true
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            },
+
+            _openDrawer: function() {
+
+                document.getElementById('appshell')._openDrawer();
+            }
+        });
+    </script>
+</dom-module>

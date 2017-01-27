@@ -90,7 +90,10 @@
                     // !!! Need api to provide load more than 100 followers to load full list
                     steem.api.getFollowers(thisElement.accountName, thisElement._lastFollowerLoaded, null, 100, function (err, result) {
 
-                        var followers = [];
+                        /*if(typeof thisElement.followers === 'undefined') {
+                            console.log("Reset follower");
+                            thisElement.followers = [];
+                        }*/
 
                         if (!err) {
 
@@ -100,20 +103,14 @@
                                 var user = result[i].follower;
 
                                 // Push received user in followers
-                                followers.push(user);
+                                thisElement.push('followers', user);
 
                             }
                         }
 
-                        if(typeof thisElement.followers === 'undefined') {
-                            console.log("Reset follower");
-                            thisElement.followers = [];
-                        }
 
                         // Get the last follower of the list for the next query
                         thisElement.set('_lastFollowerLoaded', followers[followers.length -1]);
-                        // Add followers queried
-                        thisElement.set('followers', thisElement.followers.concat(followers));
                     });
 
                 });

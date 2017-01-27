@@ -125,11 +125,11 @@
             }
 
             #whatsThat {
-                background-image: url("https://steemitimages.com/280x280/http://media.coindesk.com/uploads/2014/11/Zennet-e1417244262314.jpg");
+                /*background-image: url("https://steemitimages.com/280x280/http://media.coindesk.com/uploads/2014/11/Zennet-e1417244262314.jpg");*/
                 /*background-image: url("https://steemitimages.com/280x280/https://blockchain.info/wallet/img/blockchain-ad-placeholder-d232c25892a75ec148e9bb02c7df86cf8824876c.jpg");*/
 
-                /*box-shadow: inset 0px 320px 70px -18px rgb(255, 255, 255);
-                background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");*/
+                box-shadow: inset 0px 320px 80px -18px rgb(255, 255, 255);
+                background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");
 
                 background-size: contain;
                 background-repeat: no-repeat;
@@ -171,6 +171,13 @@
                 --iron-icon-height: 18px;
                 --iron-icon-width: 18px;   
             }
+
+            #contributors {
+                position: absolute;
+                bottom: 8px;
+                left: 16px;
+                color: var(--app-secondary-text-color);
+            }
             
         </style>
 
@@ -190,7 +197,7 @@
         <div id="header-section">
             <div id="presentation-center">
                 <h1>Access now to the world first blockchain based social media platform.</h1>
-                <h2>A social media platform where everyone gets paid to post ＾∇＾</h2>
+                <h2>It's like any other social network but you get rewarded to use it ＾∇＾</h2>
                 <div id="presentation-button">
                     <paper-button>
                         <a href="https://youtu.be/xZmpCAqD7hs"
@@ -227,7 +234,8 @@
                     <p>Steem is a social network based on a currency that give you money to use it.</p>
                     <p>ESTEEM8 is a web application that let you see what's on the Steem blockchain.</p>
                     <p>You can add it to your homescreen with chrome or safari by going into page's option.</p>
-                    <!--p>You can change colors in <a href="/settings">settings</a> or get more information at <a href="/created/esteem8">#esteem8</a>.</p-->
+                    <p><a href="/info">More info</a></p>
+                    <!--p>You can change colors in <a href="/settings">settings</a>.</-->
                 </div>
             </paper-card>
 
@@ -251,6 +259,15 @@
             </paper-button>
         </div>
 
+        <div id="contributors">
+            <template is="dom-if" if="[[_contributors.length]]">
+                Worked by:&nbsp;
+                <template is="dom-repeat" items="[[_contributors]]">
+                    <span>[[item]]</span>
+                </template>
+            </template>
+        </div>
+
         <!-- QUERY TAGS -->
         <steem-get-tags tags="{{_tags}}"></steem-get-tags>
     </template>
@@ -269,7 +286,13 @@
 
                 _tags: {
                     type: Array
+                },
+
+                _contributors: {
+                    type: Array,
+                    notify: true
                 }
+
             },
 
             ready: function() {
@@ -280,6 +303,10 @@
 
                 // Default tags
                 this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
+                this._contributors = [];
+
+                // Load contributors
+                this._loadContributors();
             },
 
             _openDrawer: function() {
@@ -290,7 +317,50 @@
             _openGithub: function() {
                 
                 window.open('https://github.com/esteem8app/esteem8app.github.io');  
+            },
+
+            _loadContributors: function() {
+
+                // Request file
+                var fileRequest = new XMLHttpRequest();
+                    fileRequest.open('GET', '/CONTRIBUTORS.md');
+
+                var thisElement = this;
+
+                // When file is recieved
+                fileRequest.onreadystatechange = function() {
+                    var regex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
+                    var text = fileRequest.responseText;
+                    var m;
+
+                    // extract each contributor from file
+                    do {
+                        m = regex.exec(text);
+                        if(m) {
+
+                            // Add contributor
+                            thisElement._addContributor(m[1]);
+                        }
+                    } while (m);
+                };
+
+                // Lunch the request
+                fileRequest.send();
+            },
+
+            _addContributor: function(contributor) {
+
+                // test if we can put the contributor in array
+                if(typeof contributor !== 'undefined') {
+
+                    if(this._contributors.indexOf(contributor) == -1) {
+
+                        // Push contributor
+                        this.push('_contributors', contributor);
+                    }
+                }
             }
+
         });
     </script>
 </dom-module>

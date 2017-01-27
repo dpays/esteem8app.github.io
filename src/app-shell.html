@@ -133,6 +133,10 @@
                            settings="{{settings}}">
             </page-settings>
 
+            <page-info name="info"
+                       settings="{{settings}}">
+            </page-info>
+
             <page-support name="support"
                           settings="{{settings}}">
             </page-support>
@@ -305,6 +309,10 @@
 
 
                     this.selectedPage = 'settings'; // SETTINGS
+                }else if(dataUrl1 == 'info') {
+
+
+                    this.selectedPage = 'info'; // SETTINGS
                 }else if(dataUrl1 == 'support') {
 
 

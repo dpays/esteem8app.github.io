@@ -126,15 +126,15 @@
 
         </style>
 
-        <steem-get-account account-name="[[_userName]]"
+        <steem-get-account account-name="[[_username]]"
                            account="{{account}}">
         </steem-get-account>
 
-        <steem-get-followers account-name="[[_userName]]"
+        <steem-get-followers account-name="[[_username]]"
                              followers="{{account.followers}}">
         </steem-get-followers>
 
-        <steem-get-following account-name="[[_userName]]"
+        <steem-get-following account-name="[[_username]]"
                              following="{{account.following}}">
         </steem-get-following>
 
@@ -256,7 +256,7 @@
             </div>
 
             <div name="replies">
-                <steem-get-replies user-name="[[_userName]]"
+                <steem-get-replies user-name="[[_username]]"
                                           replies="{{replies}}">
                 </steem-get-replies>
                 <div id="replies-list">
@@ -276,7 +276,7 @@
 
             <div name="history">
                 <steem-get-history id="steemGetHistory"
-                                   user-name="[[_userName]]"
+                                   user-name="[[_username]]"
                                    events="{{_events}}">
                 </steem-get-history>
                 <div id="events-list">
@@ -352,8 +352,9 @@
                     type: String
                 },
 
-                _userName: {
-                    type: String
+                _username: {
+                    type: String,
+                    notify: true
                 },
 
                 account: {
@@ -408,9 +409,9 @@
 
             _userChanged: function(user) {
 
-                // Remove '@' at user and put it into _userName
+                // Remove '@' at user and put it into _username
                 var user = user || this.user;
-                this._userName = user.substring(1);
+                this._username = user.substring(1);
                 this._refreshIsFavoriteUser();
             },
 
@@ -446,7 +447,7 @@
 
             _refreshIsFavoriteUser: function() {
 
-                    this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._userName) === -1);
+                    this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._username) === -1);
             },
 
             _toggleFavoriteUser: function() {
@@ -454,12 +455,12 @@
                 if(this._isUserInFavorite) {
 
                     // Remove user from favourite
-                    var index = this.favoriteUsers.indexOf(this._userName);
+                    var index = this.favoriteUsers.indexOf(this._username);
                     this.splice('favoriteUsers', index, 1);
                 }else {
 
                     // Add user to favourite
-                    this.push('favoriteUsers', this._userName);
+                    this.push('favoriteUsers', this._username);
                 }
 
                 // Invert favorite state of user
