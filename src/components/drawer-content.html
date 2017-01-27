@@ -123,6 +123,7 @@
         }
 
         .supportButton iron-icon {
+            margin-top: 4px;
             color: #eee;
             margin-right: 24px;
             vertical-align: text-bottom;
@@ -130,6 +131,7 @@
         
         #githubButton {
             padding: 8px 16px;
+            margin-right: 8px;
             float: right;
             min-width: 0;
             min-height: 0;
@@ -144,8 +146,10 @@
 
         #appVersion {
             position: fixed;
-            bottom: 182px;
-            left: 16px;
+            left: 0px;
+            bottom: 170px;
+            margin-left: 16px;
+            margin-bottom: 8px;
             font-size: 12px;
             color: #646464;
         }
@@ -234,7 +238,7 @@
                 <paper-item>
                     <iron-icon icon="my-icons:done"></iron-icon>
                     <span>Support us</span>
-                    <paper-button id="githubButton" on-tap="_openGithub()" raised>
+                    <paper-button id="githubButton" on-tap="_openGithub()">
                         <iron-icon icon="my-icons:github" ></iron-icon>
                     </paper-button>
                 </paper-item>

@@ -38,6 +38,7 @@
                 #shareButtons {
                     position: relative !important;
                     padding-top: 32px;
+                    padding-bottom: 48px;
                     width: 100%;
                     text-align: center;
                     right: 0 !important;
@@ -109,6 +110,7 @@
 
             #presentation-cards a {
                 color: var(--app-secondary-color);
+                text-decoration: none;
             }
 
             #presentation-cards paper-card {
@@ -174,9 +176,11 @@
 
             #contributors {
                 position: absolute;
-                bottom: 8px;
+                bottom: 16px;
                 left: 16px;
+                font-size: 12px;
                 color: var(--app-secondary-text-color);
+
             }
             
         </style>
@@ -261,7 +265,7 @@
 
         <div id="contributors">
             <template is="dom-if" if="[[_contributors.length]]">
-                Worked by:&nbsp;
+                GitHub contributors:&nbsp;
                 <template is="dom-repeat" items="[[_contributors]]">
                     <span>[[item]]</span>
                 </template>
