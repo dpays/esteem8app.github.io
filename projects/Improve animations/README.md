@@ -3,8 +3,8 @@
 [Very low priority]
 
 ## Strategy
-* Look for animations inspirations
-* Implement animations that do not decrease performances
+* [ ] Look for animations inspirations
+* [ ] Implement animations that do not decrease performances
 
 ## Comments
 @Primerz think that the select tag dialog can be simulated tranformed from the dark toolbar in page explore. (With the polymer neon animation component)
