@@ -11,4 +11,4 @@
 [low priority]
 
 4. [ ] Make a website from docs with [mkdocs-material](http://squidfunk.github.io/mkdocs-material/)
-* Review, refine and optimize.
+* [ ] Review, refine and optimize.
