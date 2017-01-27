@@ -8,6 +8,10 @@ See [/docs](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs)
 
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
+## Interactions
+* [CHAT](https://discord.gg/5nqRwbf) no login required
+* [@ESTEEM8](https://steemit.com/@esteem8) account on steemit
+
 ## Contributions
 
 Contributions are greatly appreciated and can be rewarded, see the [contributing kit](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit) for more informations.
