@@ -27,16 +27,33 @@
 
             /* GENERAL */
             :host {
+                min-height: calc(100% - 16px);
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                margin-top: -16px;
+                padding-top: 16px;
+                padding-bottom: 16px;
                 display: block;
+                background-color: var(--app-background-color);
+            }
+
+            paper-toolbar paper-icon-button {
+                color: var(--app-primary-text-color);
+            }
+
+            paper-tab iron-icon {
+                color: var(--app-primary-text-color);
             }
 
             iron-pages {
                 margin-top: 128px;
+                min-height: 100%;
             }
 
             a {
                 display: inline;
-                color: #222222;
+                color: var(--app-background-text-color);
             }
 
             /* BODY */
@@ -48,10 +65,17 @@
                 margin-top: 100px;
                 padding: 24px;
                 text-align: center;
-                color: #222;
+                color: var(--app-background-text-color);
             }
 
+            iron-icon, paper-icon-button {
+                color: var(--app-background-text-color);
+            }
+
+
             paper-input {
+                --paper-input-container-color: var(--app-background-text-color);
+                color: var(--app-background-text-color);
                 margin: auto;
                 padding-left: 16px;
                 padding-right: 16px;

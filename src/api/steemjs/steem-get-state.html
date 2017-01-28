@@ -58,9 +58,14 @@
 
                 steem.api.getState(this.path, function(err, result) {
 
-                    if(result !== 'undefined' && !err){
+                    if(typeof result !== 'undefined' && !err){
 
-                        thisElement._computePosts(result.content);
+                        if(typeof result.content !== 'undefined') {
+
+                            thisElement._computePosts(result.content);
+                        }else {
+                            thisElement.queryError = true;
+                        }
                     }else {
 
                         thisElement.queryError = true;

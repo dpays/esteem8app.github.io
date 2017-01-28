@@ -23,7 +23,15 @@
 
             /* GENERAL */
             :host {
+                min-height: calc(100% - 16px);
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                margin-top: -16px;
+                padding-top: 16px;
+                padding-bottom: 16px;
                 display: block;
+                background-color: var(--app-background-color);
             }
 
             /* CARDS */
@@ -50,6 +58,10 @@
             .card-content div {
                 width: 100%;
                 height: 68px;
+            }
+
+            .vertical-middle {
+                line-height: 68px;
             }
 
             paper-input-container {
@@ -123,6 +135,10 @@
                                       text-color="{{_secondaryTextColor}}">
                         </color-select>
                     </div>
+                    <div class="vertical-middle">
+                        <paper-checkbox checked="{{_darkBackground}}"></paper-checkbox>
+                        <span>Dark background</span>
+                    </div>
                 </div>
             </paper-card>
 
@@ -188,6 +204,11 @@
 
                 _secondaryTextColor: {
                     type: String
+                },
+
+                _darkBackground: {
+                    type: Boolean,
+                    observer: '_darkBackgroundChanged'
                 }
             },
 
@@ -202,11 +223,32 @@
                 this._primaryTextColor = this.settings.theme.primaryTextColor;
                 this._secondaryTextColor = this.settings.theme.secondaryTextColor;
 
+                if(this.settings.theme.backgroundColor == '#282828') {
+
+                    this._darkBackground = true;
+                }else {
+
+                    this._darkBackground = false;
+                }
+
             },
 
             _openDrawer: function() {
 
                 document.getElementById('appshell')._openDrawer();
+            },
+
+            _darkBackgroundChanged: function() {
+
+                if(this._darkBackground){
+
+                    this.set('settings.theme.backgroundColor', '#282828');
+                    this.set('settings.theme.backgroundTextColor', '#dddddd');
+                }else {
+
+                    this.set('settings.theme.backgroundColor', '#eeeeee');
+                    this.set('settings.theme.backgroundTextColor', '#282828');
+                }
             },
 
             // Change theme colors in setting

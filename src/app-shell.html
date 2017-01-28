@@ -31,6 +31,9 @@
                 --app-icon-color: #FFFFFF;
                 --app-divider-color: #BDBDBD;
 
+                --app-background-color: #282828;
+                --app-background-text-color: #eeeeee;
+
                 display: block;
             }
 
@@ -216,7 +219,7 @@
             observers: [
 
                 '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
-                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor)',
+                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.backgroundColor, settings.theme.backgroundTextColor)',
                 '_accountChanged(settings.user.account)'
             ],
 
@@ -254,7 +257,9 @@
                             ultraDarkPrimaryColor: '#7a221b',
                             primaryTextColor: '#eeeeee',
                             secondaryTextColor: '#eeeeee',
-                            dividerColor: '#BDBDBD'
+                            dividerColor: '#BDBDBD',
+                            backgroundColor: '#282828',
+                            backgroundTextColor: '#dddddd'
                         },
 
                         display: {
@@ -273,6 +278,11 @@
 
                 // Select default page
                 this._routePageChanged();
+            },
+
+            attached: function() {
+
+                this._themeChanged();
             },
 
             // URL has changed
@@ -353,16 +363,18 @@
             },
 
             // Change theme color
-            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor) {
+            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, backgroundColor, backgroundTextColor) {
 
                 // Set style
-                this.customStyle['--app-primary-color'] = primaryColor;
-                this.customStyle['--app-secondary-color'] = secondaryColor;
-                this.customStyle['--app-dark-primary-color'] = darkPrimaryColor;
-                this.customStyle['--app-light-primary-color'] = lightPrimaryColor;
-                this.customStyle['--app-primary-text-color'] = primaryTextColor;
-                this.customStyle['--app-secondary-text-color'] = secondaryTextColor;
-                this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor;
+                this.customStyle['--app-primary-color'] = primaryColor || this.settings.theme.primaryColor;
+                this.customStyle['--app-secondary-color'] = secondaryColor || this.settings.theme.secondaryColor;
+                this.customStyle['--app-dark-primary-color'] = darkPrimaryColor || this.settings.theme.darkPrimaryColor;
+                this.customStyle['--app-light-primary-color'] = lightPrimaryColor || this.settings.theme.lightPrimaryColor;
+                this.customStyle['--app-primary-text-color'] = primaryTextColor || this.settings.theme.primaryTextColor;
+                this.customStyle['--app-secondary-text-color'] = secondaryTextColor || this.settings.theme.secondaryTextColor;
+                this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor || this.settings.theme.ultraDarkPrimaryColor;
+                this.customStyle['--app-background-color'] = backgroundColor || this.settings.theme.backgroundColor;
+                this.customStyle['--app-background-text-color'] = backgroundTextColor || this.settings.theme.backgroundTextColor;
 
                 // Render
                 Polymer.updateStyles();

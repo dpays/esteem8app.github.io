@@ -22,7 +22,15 @@
                 min-height: 100%;
                 position: absolute;
                 width: 100%;
-                background-position: center;
+            }
+
+            a {
+                color: var(--app-secondary-color);
+                text-decoration: none;
+            }
+
+            a paper-icon-button {
+                color: var(--app-primary-text-color);
             }
 
             /* CARD */
@@ -54,10 +62,9 @@
 
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
-            <paper-icon-button id="toggleDrawerMenu"
-                               on-tap="_openDrawer()"
-                               icon="my-icons:menu">
-            </paper-icon-button>
+            <a href="/">
+                <paper-icon-button icon="my-icons:arrow-back"></paper-icon-button>
+            </a>
             <div class="floatingToolbar">
                 <span class="floatingToolbarTitle">
                     More info
@@ -74,11 +81,12 @@
             <paper-card>
                 <div class="card-content">
                     <h2>What is this ?</h2>
-                    <p>This is a web app, you can access it like a website and use it like an application.</p>
-                    <p>If you are on mobile, you can add it to your home screen by going into your browser options, it's free and instantaneous.</p>
+                    <p>This is a web app that you can access it like a website and use like an application.</p>
+                    <p>If you are on mobile, you can add it to your home screen by going into your browser options, it's free and instantaneous. (It works on desktop too)</p>
 
                     <h2>What is Steem ?</h2>
-                    <p>Steem is a network composed of multiple nodes that is called a <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+blockchain+database">blockchain</a>, <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+crypto+currency">cryptocurrencies</a> work the same way but Steem is a bit different, it embed a social network function that this app let you freely browse and interact.</p>
+                    <p>Steem is a community network composed of multiple nodes that is called a <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+blockchain+database">blockchain</a>, <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+crypto+currency">cryptocurrencies</a> are similar but Steem embed a social network feature.
+                        <br>This app let you freely use Steem without taking any of your data and get rewarded by the blockchain.</p>
 
                     <h2>Why it's cool ?</h2>
                     <p>Because it's free, there is no ads and the network is <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+decentralized+network">decentralized</a>, it means that it is unbreakable, unstoppable and incorruptible. And more than that, the blockchain reward you for using it.</p>
@@ -100,17 +108,6 @@
                     type: Object,
                     notify: true
                 }
-            },
-
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-            },
-
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
             }
         });
     </script>

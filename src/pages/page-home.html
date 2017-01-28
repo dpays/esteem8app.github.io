@@ -23,6 +23,8 @@
                 width: 100%;
                 position: absolute;
                 background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+                background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");
+                background-position: top;
             }
 
             @media screen and (max-width: 400px) {
@@ -65,7 +67,7 @@
                 font-size: 28px;
                 text-decoration: underline;
                 color: var(--app-primary-text-color);
-                font-weight: 500;
+                font-weight: 800;
                 cursor: pointer;
             }
 
@@ -74,7 +76,7 @@
             #header-section {
                 margin-top: 56px;
                 padding: 32px;
-                color: var(--app-primary-text-color);
+                color: #ddd;
             }
 
             #presentation-center, #presentation-cards {
@@ -96,7 +98,7 @@
             }
 
             #presentation-button a {
-                color: var(--app-primary-text-color);
+                color: #fff;
             }
 
             /* PRESENTATION CARDS */
@@ -129,11 +131,11 @@
             }
 
             #whatsThat {
-                /*background-image: url("https://steemitimages.com/280x280/http://media.coindesk.com/uploads/2014/11/Zennet-e1417244262314.jpg");*/
+                background-image: url("https://steemitimages.com/280x280/http://media.coindesk.com/uploads/2014/11/Zennet-e1417244262314.jpg");
                 /*background-image: url("https://steemitimages.com/280x280/https://blockchain.info/wallet/img/blockchain-ad-placeholder-d232c25892a75ec148e9bb02c7df86cf8824876c.jpg");*/
 
-                box-shadow: inset 0px 320px 80px -18px rgb(255, 255, 255);
-                background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");
+                /*box-shadow: inset 0px 320px 80px -18px rgb(255, 255, 255);*/
+                /*background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");*/
 
                 background-size: contain;
                 background-repeat: no-repeat;
@@ -181,11 +183,15 @@
                 bottom: 16px;
                 left: 16px;
                 font-size: 12px;
-                color: var(--app-secondary-text-color);
+                color: #eee;
             }
 
             #contributors span::after {
                 content: ",";
+            }
+
+            #contributors a {
+                color: #eee;
             }
             
         </style>
@@ -206,7 +212,7 @@
         <div id="header-section">
             <div id="presentation-center">
                 <h1>Access now to the world first blockchain based social media platform.</h1>
-                <h2>It's like any other social network but you get rewarded to use it ＾∇＾</h2>
+                <h2>The next generation social media platform, <br> where everyone get rewarded to use it ＾∇＾</h2>
                 <div id="presentation-button">
                     <paper-button>
                         <a href="https://youtu.be/xZmpCAqD7hs"
@@ -240,9 +246,9 @@
             <paper-card id="whatsThat">
                 <div class="card-content">
                     <h2>What's that ?</h2>
-                    <p>Steem is a social network based on a currency that give you money to use it.</p>
-                    <p>ESTEEM8 is a web application that let you see what's on the Steem blockchain.</p>
-                    <p>You can add it to your homescreen with chrome or safari by going into page's option.</p>
+                    <p>Steem is a social network based on a currency where everyone is rewarded to use it.</p>
+                    <p>ESTEEM8 is a free web application that let you see what's up on the blockchain.</p>
+                    <p>You can add this app to your homescreen on any device by going into your browser page options.</p>
                     <p><a href="/info">More info</a></p>
                     <!--p>You can change colors in <a href="/settings">settings</a>.</-->
                 </div>
@@ -251,8 +257,8 @@
             <paper-card id="joinTheMovement">
                 <div class="card-content">
                     <h2>Join the movement</h2>
-                    <p><a target="_blank" href="http://steemtools.com/">More tools</a></p>
-                    <p><a target="_blank" href="https://steem.io/SteemWhitePaper.pdf">White paper</a></p>
+                    <p><a target="_blank" href="http://steemtools.com/">More Steem tools</a></p>
+                    <p><a target="_blank" href="https://steem.io/SteemWhitePaper.pdf">Steem White paper</a></p>
                     <p><a href="/support">Support this application</a></p>
                 </div>
             </paper-card>
@@ -270,7 +276,7 @@
 
         <div id="contributors">
             <template is="dom-if" if="[[_contributors.length]]">
-                GitHub contributors:&nbsp;
+                <a target="_blank" href="https://github.com/esteem8app/esteem8app.github.io/blob/master/CONTRIBUTORS.md">GitHub contributors:&nbsp;</a>
                 <template is="dom-repeat" items="[[_contributors]]">
                     <span>[[item]]</span>
                 </template>

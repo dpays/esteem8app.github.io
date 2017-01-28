@@ -24,7 +24,15 @@
         <style include="shared-styles">
 
             :host {
+                min-height: calc(100% - 16px);
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                margin-top: -16px;
+                padding-top: 16px;
+                padding-bottom: 16px;
                 display: block;
+                background-color: var(--app-background-color);
             }
 
             .middle {
@@ -41,6 +49,7 @@
                 left: 0;
                 bottom: -4px;
                 --paper-progress-active-color: var(--app-secondary-color);
+                --paper-progress-container-color: var(--app-background-color);
             }
 
             #floatingTitle {
@@ -48,6 +57,7 @@
             }
 
             #posts-list {
+                min-height: 100%;
                 margin-top: 134px;
                 margin-right: auto;
                 margin-left: auto
@@ -59,6 +69,7 @@
                 padding-left: 16px;
                 padding-right: 16px;
                 text-align: center;
+                color: var(--app-background-text-color);
             }
 
             #toggleFavoriteTagButton {
@@ -71,7 +82,7 @@
         <!-- TOAST NO POST(S) FOUND -->
         <paper-toast id="toastPostNotFound"
                      class="fit-bottom"
-                     text="Can not load publications :/">
+                     text="Sorry bro :/ we didn't found anything">
         </paper-toast>
 
         <!-- SELECT CATEGORY DIALOG -->

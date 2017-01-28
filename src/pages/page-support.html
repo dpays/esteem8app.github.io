@@ -22,6 +22,8 @@
                 display: block;
                 position: absolute;
                 background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+                background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");
+
             }
 
             /* SUPPORT CARDS */
@@ -40,13 +42,15 @@
 
             paper-card h2 {
                 color: var(--app-secondary-color);
-                padding: 16px;
+                padding-top: 16px;
+                padding-left: 16px;
+                padding-right: 16px;
                 margin: 0;
             }
 
             paper-card a {
                 line-height: 32px;
-                color: #222;
+                color: var(--app-secondary-color);
                 text-decoration: none;
             }
 
@@ -55,8 +59,8 @@
                 height: 48px;
             }
 
-            #timeDonation {
-                color: #000;
+            .card-content span {
+                color: #222;
             }
 
 
@@ -87,8 +91,11 @@
 
                 <paper-card>
 
-                    <h2>Share with your friends</h2>
+                    <h2>Invite your friends</h2>
                     <div class="card-content">
+                        <span>The app is community-driven and you are part of it.<br>If you want to support the team and users you can share it with your friends, we'll be very grateful.</span>
+                        <br>
+                        <br>
                         <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//esteem8.com">Share on Facebook</a>
                         <br>
                         <a href="https://plus.google.com/share?url=https%3A//esteem8.com">Share on Google+</a>
@@ -102,15 +109,20 @@
 
                 <paper-card>
 
-                    <h2>Interact with publications</h2>
+                    <h2>Interact with us</h2>
                     <div class="card-content">
+                        <span>You can reward contributors by up-voting publications within these tags.</span>
+                        <br>
+                        <br>
                         <a href="/created/esteem8">#esteem8</a>
+                        <br>
+                        <a href="/created/esteem8">#esteem8-features</a>
                     </div>
                 </paper-card>
 
                 <paper-card>
 
-                    <h2>Give us something</h2>
+                    <h2>Make a donation</h2>
                     <div class="card-content">
                         <a href="">Steem donation</a>
                         <br>
