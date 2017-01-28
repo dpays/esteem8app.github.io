@@ -2,6 +2,8 @@
 
 [high priority]
 
+Concern the interaction that keep user using the app.
+
 ## strategy
 1. [ ] Make some screenshots on how to add to homescreen for
  * [ ] Desktop [Chrome, Firefox, Edge, Safari]

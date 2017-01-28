@@ -1,0 +1,136 @@
+<dom-module id="query-steem"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'query-steem',
+
+            properties: {
+
+                /*
+                 * Query
+                 */
+                searchQuery:  {
+                    type: String,
+                    observer: '_computeQueryUrl'
+                },
+
+                /*
+                 * Results found
+                 */
+                results: {
+                    type: Object,
+                    notify: true
+                },
+
+                /*
+                 * Load from a number
+                 */
+                loadFrom: {
+                    type: String,
+                    observer: '_computeQueryUrl'
+                },
+
+                // Like steemit.com
+                _steemWebsite: {
+                    type: String,
+                    observer: '_computeQueryUrl'
+                },
+
+                // Like https://www.google.com/search?q={searchQuery}&start={loadFrom}0
+                _queryProviderUrl: {
+                    type: String,
+                    observer: '_computeQueryUrl'
+                },
+
+                // Computed one (do not set)
+                _queryUrl: {
+                    type: String,
+                    observer: '_queryQueryUrl'
+                }
+
+            },
+
+            ready: function() {
+
+                // Set default value
+                if(typeof this._steemWebsite === 'undefined') {
+
+                    this._steemWebsite = 'steemit.com';
+                }
+
+                if(typeof this._queryProviderUrl === 'undefined') {
+
+                    this._queryProviderUrl = 'https://www.google.com/search?q=site:{_steemWebsite}+{searchQuery}&start={loadFrom}0';
+                }
+
+                if(typeof this.loadFrom === 'undefined') {
+
+                    this.loadFrom = '0';
+                }
+
+                if(typeof this.results === 'undefined') {
+
+                    this.results = {};
+                }
+
+            },
+
+            _computeQueryUrl: function() {
+
+                // Compute query url
+                var searchQuery = this.searchQuery.replace(/ /g, '+');
+                this.queryUrl = this._queryProviderUrl
+                        .replace('{searchQuery}', searchQuery)
+                        .replace('{_steemWebsite}', this._steemWebsite)
+                        .replace('{loadFrom}', this.loadFrom);
+
+            },
+
+            _queryQueryUrl: function() {
+
+                var url = this._queryUrl;
+
+                if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+
+                        xmlhttp=new XMLHttpRequest();
+                    } else {// code for IE6, IE5
+
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+
+                    xmlhttp.onreadystatechange=function()
+                    {
+                        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+
+                            this._computeResults(xmlhttp.responseText);
+                        }
+                    }
+
+                    xmlhttp.open("GET", url, false );
+                    xmlhttp.send();
+
+            },
+
+            _computeResults: function(response) {
+                // TODO
+                /*
+                 * 1. Extract url in 'response' that are from 'this._steemWebsite'
+                 * 2. Check if not already in 'this.results' and push it if not.
+                 * 3. Test and remove bugs
+                 */
+
+
+                //var startLink = this._steemWebsite;
+                //var regex = 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
+
+
+
+            }
+
+        });
+    })();
+</script>

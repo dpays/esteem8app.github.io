@@ -2,6 +2,8 @@
 
 [high priority]
 
+Concern the interaction that facilitate the way that contributors contribute to the application. 
+
 ## Strategy
 
 1. [ ] Link the folder "projects" with documentation

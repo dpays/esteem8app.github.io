@@ -2,6 +2,8 @@
 
 [Very low priority]
 
+Concern interaction that make application giving more efficiently informations and user transmitting intentions to the application.
+
 ## Strategy
 * [ ] Look for animations inspirations
 * [ ] Implement animations that do not decrease performances
