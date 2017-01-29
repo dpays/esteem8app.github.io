@@ -8,3 +8,4 @@ These are tools to provide an efficient collaboration and easy future developeme
 * Code must be easy and simple.
 * Code must be enough commented.
 * Code must be well working and tested.
+* It is prohibited to illuminati to contribute to the application.

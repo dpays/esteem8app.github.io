@@ -12,7 +12,7 @@
     * [x] Display body as HTML
 * FULL POST
  * [X] API → Load body correctly
- * [ ] !List events
+ * [X] !List events
  * [X] Resolve image in header
 * PROFILE
  * [ ] !Change data on name change
