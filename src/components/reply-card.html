@@ -31,11 +31,13 @@
                 margin-left: auto;
                 margin-right: auto;
                 padding: 0px;
-                border-bottom: solid 1px #eee;
+                border-bottom: solid 1px var(--app-background-secondary-text-color);
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-primary-text-color);
             }
 
             #replyCard .top {
-                color: #222;
+                color: var(--app-background-primary-text-color);
 
                 padding-top: 16px;
                 padding-right: 16px;
@@ -84,12 +86,12 @@
                 padding-left: 16px;
             }
 
-            #replyCard, iron-icon, paper-icon-button {
-                color: var(--app-background-text-color);
+            iron-icon, paper-icon-button {
+                color: var(--app-background-secondary-text-color);
             }
 
             .dollarValue, .date, #replyButton {
-                color: var(--app-background-second-text-color);
+                color: var(--app-background-secondary-text-color);
             }
 
         </style>

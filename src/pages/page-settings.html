@@ -31,7 +31,7 @@
                 padding-top: 16px;
                 padding-bottom: 16px;
                 display: block;
-                background-color: var(--app-background-color);
+                background-color: var(--app-primary-background-color);
             }
 
             /* CARDS */
@@ -47,6 +47,8 @@
                 margin-top: 16px;
                 width: 100%;
                 display: block;
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-primary-text-color);
             }
 
             paper-card h2 {
@@ -234,7 +236,7 @@
                 this._primaryTextColor = this.settings.theme.primaryTextColor;
                 this._secondaryTextColor = this.settings.theme.secondaryTextColor;
                 this._isReady = true;
-                this._darkBackground = (this.settings.theme.backgroundColor == '#282828');
+                this._darkBackground = (this.settings.theme.primaryBackgroundColor == '#282828');
 
             },
 
@@ -249,14 +251,16 @@
 
                     if(this._darkBackground){
 
-                        this.set('settings.theme.backgroundColor', '#282828');
-                        this.set('settings.theme.backgroundTextColor', '#dddddd');
-                        this.set('settings.theme.backgroundSecondTextColor', '#888888');
+                        this.set('settings.theme.primaryBackgroundColor', '#282828');
+                        this.set('settings.theme.secondaryBackgroundColor', '#383838');
+                        this.set('settings.theme.backgroundPrimaryTextColor', '#dddddd');
+                        this.set('settings.theme.backgroundSecondaryTextColor', '#888888');
                     }else {
 
-                        this.set('settings.theme.backgroundColor', '#eeeeee');
-                        this.set('settings.theme.backgroundTextColor', '#282828');
-                        this.set('settings.theme.backgroundSecondTextColor', '#666666');
+                        this.set('settings.theme.primaryBackgroundColor', '#eeeeee');
+                        this.set('settings.theme.secondaryBackgroundColor', '#ffffff');
+                        this.set('settings.theme.backgroundPrimaryTextColor', '#282828');
+                        this.set('settings.theme.backgroundSecondaryTextColor', '#666666');
                     }
                 }
             },

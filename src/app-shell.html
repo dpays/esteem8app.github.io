@@ -31,9 +31,10 @@
                 --app-icon-color: #FFFFFF;
                 --app-divider-color: #BDBDBD;
 
-                --app-background-color: #eeeeee;
-                --app-background-text-color: #282828;
-                --app-background-second-text-color: #666666;
+                --app-primary-background-color: #eeeeee;
+                --app-secondary-background-color: #ffffff;
+                --app-background-primary-text-color: #282828;
+                --app-background-secondary-text-color: #666666;
 
                 display: block;
             }
@@ -42,6 +43,8 @@
                 z-index: 2;
             }
         </style>
+
+        <meta name="theme-color" content="[[settings.theme.darkPrimaryColor]]">
 
         <!-- LOCAL STORAGE -->
         <app-localstorage-document key="settings" data="{{settings}}"></app-localstorage-document>
@@ -220,7 +223,7 @@
             observers: [
 
                 '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
-                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.backgroundColor, settings.theme.backgroundTextColor, settings.theme.backgroundSecondTextColor)',
+                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)',
                 '_accountChanged(settings.user.account)'
             ],
 
@@ -259,9 +262,10 @@
                             primaryTextColor: '#eeeeee',
                             secondaryTextColor: '#eeeeee',
                             dividerColor: '#BDBDBD',
-                            backgroundColor: '#eeeeee',
-                            backgroundTextColor: '#282828',
-                            backgroundSecondTextColor: '#666666'
+                            primaryBackgroundColor: '#eeeeee',
+                            secondaryBackgroundColor: '#ffffff',
+                            backgroundPrimaryTextColor: '#282828',
+                            backgroundSecondaryTextColor: '#666666'
                         },
 
                         display: {
@@ -365,7 +369,7 @@
             },
 
             // Change theme color
-            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, backgroundColor, backgroundTextColor, backgroundSecondTextColor) {
+            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, primaryBackgroundColor, secondaryBackgroundColor, backgroundPrimaryTextColor, backgroundSecondaryTextColor) {
 
                 // Set style
                 this.customStyle['--app-primary-color'] = primaryColor || this.settings.theme.primaryColor;
@@ -375,9 +379,10 @@
                 this.customStyle['--app-primary-text-color'] = primaryTextColor || this.settings.theme.primaryTextColor;
                 this.customStyle['--app-secondary-text-color'] = secondaryTextColor || this.settings.theme.secondaryTextColor;
                 this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor || this.settings.theme.ultraDarkPrimaryColor;
-                this.customStyle['--app-background-color'] = backgroundColor || this.settings.theme.backgroundColor;
-                this.customStyle['--app-background-text-color'] = backgroundTextColor || this.settings.theme.backgroundTextColor;
-                this.customStyle['--app-background-second-text-color'] = backgroundSecondTextColor || this.settings.theme.backgroundSecondTextColor;
+                this.customStyle['--app-primary-background-color'] = primaryBackgroundColor || this.settings.theme.primaryBackgroundColor;
+                this.customStyle['--app-secondary-background-color'] = secondaryBackgroundColor || this.settings.theme.secondaryBackgroundColor;
+                this.customStyle['--app-background-primary-text-color'] = backgroundPrimaryTextColor || this.settings.theme.backgroundPrimaryTextColor;
+                this.customStyle['--app-background-secondary-text-color'] = backgroundSecondaryTextColor || this.settings.theme.backgroundSecondaryTextColor;
 
 
                 // Render

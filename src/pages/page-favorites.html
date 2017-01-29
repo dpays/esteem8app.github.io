@@ -35,14 +35,14 @@
                 padding-top: 16px;
                 padding-bottom: 16px;
                 display: block;
-                background-color: var(--app-background-color);
+                background-color: var(--app-primary-background-color);
             }
 
-            paper-toolbar paper-icon-button {
-                color: var(--app-primary-text-color);
+            a, h1, iron-icon, paper-icon-button, paper-input {
+                color: var(--app-background-primary-text-color);
             }
 
-            paper-tab iron-icon {
+            paper-toolbar paper-icon-button, paper-tab iron-icon {
                 color: var(--app-primary-text-color);
             }
 
@@ -53,7 +53,6 @@
 
             a {
                 display: inline;
-                color: var(--app-background-text-color);
             }
 
             /* BODY */
@@ -65,17 +64,10 @@
                 margin-top: 100px;
                 padding: 24px;
                 text-align: center;
-                color: var(--app-background-text-color);
             }
-
-            iron-icon, paper-icon-button {
-                color: var(--app-background-text-color);
-            }
-
 
             paper-input {
-                --paper-input-container-color: var(--app-background-text-color);
-                color: var(--app-background-text-color);
+                --paper-input-container-color: var(--app-background-primary-text-color);
                 margin: auto;
                 padding-left: 16px;
                 padding-right: 16px;
