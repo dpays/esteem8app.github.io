@@ -5,7 +5,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
@@ -64,13 +64,19 @@
                 line-height: 68px;
             }
 
+            .vertical-middle paper-toggle-button {
+                margin-top: 24px;
+            }
+
             paper-input-container {
                 height: 48px;
             }
 
-            paper-checkbox {
-                --paper-checkbox-checked-color:  var(--app-secondary-color);
-                --paper-checkbox-checked-ink-color:  var(--app-secondary-color);
+            paper-toggle-button {
+                float: right;
+                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
+                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
+                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
             }
 
             paper-input {
@@ -136,8 +142,8 @@
                         </color-select>
                     </div>
                     <div class="vertical-middle">
-                        <paper-checkbox checked="{{_darkBackground}}"></paper-checkbox>
                         <span>Dark background</span>
+                        <paper-toggle-button checked="{{_darkBackground}}"></paper-toggle-button>
                     </div>
                 </div>
             </paper-card>
@@ -146,16 +152,16 @@
                 <h2>Publications</h2>
                 <div class="card-content">
                     <div>
-                        <paper-checkbox checked="{{settings.display.showCardContent}}"></paper-checkbox>
                         <span>Show card content</span>
+                        <paper-toggle-button checked="{{settings.display.showCardContent}}"></paper-toggle-button>
                     </div>
                     <div>
-                        <paper-checkbox checked="{{settings.display.showCardTags}}"></paper-checkbox>
                         <span>Show card tags</span>
+                        <paper-toggle-button checked="{{settings.display.showCardTags}}"></paper-toggle-button>
                     </div>
                     <div>
-                        <paper-checkbox checked="{{settings.display.showCardImage}}"></paper-checkbox>
                         <span>Show card image</span>
+                        <paper-toggle-button checked="{{settings.display.showCardImage}}"></paper-toggle-button>
                     </div>
                     <div>
                         <paper-dropdown-menu id="imageResolutionDropdown"
@@ -209,6 +215,11 @@
                 _darkBackground: {
                     type: Boolean,
                     observer: '_darkBackgroundChanged'
+                },
+
+                _isReady: {
+                    type: Boolean,
+                    value: false
                 }
             },
 
@@ -222,14 +233,8 @@
                 this._secondaryColor = this.settings.theme.secondaryColor || '#E91E63'; // Why do i have to do this ?
                 this._primaryTextColor = this.settings.theme.primaryTextColor;
                 this._secondaryTextColor = this.settings.theme.secondaryTextColor;
-
-                if(this.settings.theme.backgroundColor == '#282828') {
-
-                    this._darkBackground = true;
-                }else {
-
-                    this._darkBackground = false;
-                }
+                this._isReady = true;
+                this._darkBackground = (this.settings.theme.backgroundColor == '#282828');
 
             },
 
@@ -240,14 +245,19 @@
 
             _darkBackgroundChanged: function() {
 
-                if(this._darkBackground){
+                if(this._isReady){
 
-                    this.set('settings.theme.backgroundColor', '#282828');
-                    this.set('settings.theme.backgroundTextColor', '#dddddd');
-                }else {
+                    if(this._darkBackground){
 
-                    this.set('settings.theme.backgroundColor', '#eeeeee');
-                    this.set('settings.theme.backgroundTextColor', '#282828');
+                        this.set('settings.theme.backgroundColor', '#282828');
+                        this.set('settings.theme.backgroundTextColor', '#dddddd');
+                        this.set('settings.theme.backgroundSecondTextColor', '#888888');
+                    }else {
+
+                        this.set('settings.theme.backgroundColor', '#eeeeee');
+                        this.set('settings.theme.backgroundTextColor', '#282828');
+                        this.set('settings.theme.backgroundSecondTextColor', '#666666');
+                    }
                 }
             },
 

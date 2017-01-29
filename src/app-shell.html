@@ -31,8 +31,9 @@
                 --app-icon-color: #FFFFFF;
                 --app-divider-color: #BDBDBD;
 
-                --app-background-color: #282828;
-                --app-background-text-color: #eeeeee;
+                --app-background-color: #eeeeee;
+                --app-background-text-color: #282828;
+                --app-background-second-text-color: #666666;
 
                 display: block;
             }
@@ -219,7 +220,7 @@
             observers: [
 
                 '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
-                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.backgroundColor, settings.theme.backgroundTextColor)',
+                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.backgroundColor, settings.theme.backgroundTextColor, settings.theme.backgroundSecondTextColor)',
                 '_accountChanged(settings.user.account)'
             ],
 
@@ -258,8 +259,9 @@
                             primaryTextColor: '#eeeeee',
                             secondaryTextColor: '#eeeeee',
                             dividerColor: '#BDBDBD',
-                            backgroundColor: '#282828',
-                            backgroundTextColor: '#dddddd'
+                            backgroundColor: '#eeeeee',
+                            backgroundTextColor: '#282828',
+                            backgroundSecondTextColor: '#666666'
                         },
 
                         display: {
@@ -363,7 +365,7 @@
             },
 
             // Change theme color
-            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, backgroundColor, backgroundTextColor) {
+            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, backgroundColor, backgroundTextColor, backgroundSecondTextColor) {
 
                 // Set style
                 this.customStyle['--app-primary-color'] = primaryColor || this.settings.theme.primaryColor;
@@ -375,6 +377,8 @@
                 this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor || this.settings.theme.ultraDarkPrimaryColor;
                 this.customStyle['--app-background-color'] = backgroundColor || this.settings.theme.backgroundColor;
                 this.customStyle['--app-background-text-color'] = backgroundTextColor || this.settings.theme.backgroundTextColor;
+                this.customStyle['--app-background-second-text-color'] = backgroundSecondTextColor || this.settings.theme.backgroundSecondTextColor;
+
 
                 // Render
                 Polymer.updateStyles();

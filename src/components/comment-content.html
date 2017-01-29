@@ -63,7 +63,6 @@
             }
 
             .dollarValue {
-                color: #333;
                 font-size: 12px;
             }
 
@@ -71,46 +70,60 @@
                 float: right;
                 margin-right: 16px;
                 font-size: 12px;
-                color: #888;
             }
 
-            .replies {
+            .repliesNumber {
                 margin-left: 12px;
                 padding-left: 4px;
             }
+
+            #comment, iron-icon, paper-icon-button {
+                color: var(--app-background-text-color);
+            }
+
+            .dollarValue, .date, #replyButton {
+                color: var(--app-background-second-text-color);
+            }
+
 
         </style>
 
         <!-- comment cards -->
         <div id="comment">
+
             <div class="top">
                 <iron-icon class="authorIcon" icon="my-icons:person-circle"></iron-icon>
                 <a class="author" href="/@[[comment.author]]">@[[comment.author]]</a>
                 <span class="date">[[timeFromNow(comment.created)]]</span>
             </div>
+
             <div class="body">
                 <marked-element markdown="[[comment.markdownContent]]">
                     <div class="markdown-html"></div>
                 </marked-element>
             </div>
+
             <div class="bottom">
                 <span class="votes">[[comment.votes]]</span>
                 <paper-icon-button icon="my-icons:arrow-up"></paper-icon-button>
                 <span class="dollarValue">[[comment.dollarValue]] $</span>
-                <paper-icon-button icon="my-icons:comment"
-                                   style="float: right; color: #888;">
+                <paper-icon-button  class="replyButton"
+                                    icon="my-icons:comment"
+                                    style="float: right">
                 </paper-icon-button>
-                <span class="replies"
+                <span class="repliesNumber"
                       style="float: right;margin-top: 8px;">
                     [[comment.replies.length]]
                 </span>
             </div>
 
             <div class="replies">
+                <!-- GET REPLIES -->
                 <steem-get-comment-replies parent-author="[[comment.author]]"
                                            parent-permlink="[[comment.permlink]]"
                                            comments="{{comment.replies}}">
                 </steem-get-comment-replies>
+                <!-- RENDER REPLIES -->
                 <template is="dom-if" if="[[comment.replies.length]]">
                     <template is="dom-repeat" items="[[comment.replies]]">
                         <comment-content comment="[[item]]"></comment-content>

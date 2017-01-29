@@ -58,7 +58,7 @@
                 };
             }
 
-            app-toolbar paper-icon-button {
+            app-toolbar paper-icon-button, app-header paper-icon-button {
                 --paper-icon-button-ink-color: var(--app-primary-text-color);
             }
 
@@ -132,6 +132,8 @@
             .tags {
                 margin-top: 16px;
                 margin-bottom: 8px;
+                display: flex;
+                overflow: scroll;
             }
 
             .tags .tag {
@@ -140,7 +142,7 @@
                 border-radius: 4px;
                 background-color: #ddd;
                 text-decoration: none;
-                color: #838383;
+                color: #282828;
             }
 
             /* METADATA section */
@@ -311,13 +313,13 @@
 
                     </div>
 
-                    <div class="section">
+                    <!--div class="section">
                         <div id="shareButtons">
                             <share-button share-website="facebook"></share-button>
                             <share-button share-website="twitter"></share-button>
                             <share-button share-website="plus"></share-button>
                         </div>
-                    </div>
+                    </div-->
                 </div>
 
                 <!-- COMMMENTS Content -->
