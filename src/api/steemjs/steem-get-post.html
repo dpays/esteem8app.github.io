@@ -145,7 +145,7 @@
                             comment.dollarValue =   parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) +
                                     parseFloat(contentReceived.total_payout_value.split(" ")[0]);
 
-                            comment.markdownContent = contentReceived.body;
+                            comment.body = contentReceived.body;
 
                             post.comments.push(comment);
                         }

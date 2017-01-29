@@ -78,26 +78,6 @@
                 }
             },
 
-            _computeCommentBody: function(body) {
-
-                // HTML -> markdown & HTML
-                var markdownAndHtml = String(toMarkdown(body));
-                // HTML -> string
-                var markdownContent = markdownAndHtml;
-                /*.replace(/&/g, '&amp;')
-                 .replace(/</g, '&lt;')
-                 .replace(/>/g, '&gt;')
-                 .replace(/"/g, '&quot;');*/
-
-                // Image url -> image markdown
-                markdownContent.replace(/https?:\/\/.*\.(?:png|jpg)/g, function(url){
-                    return '[](' + url + ')';
-                });
-
-                return markdownContent;
-
-            },
-
             _computeComments: function(result) {
 
                 var comments = [];
@@ -121,7 +101,7 @@
                     comment.replies = commentReceived.children;
                     comment.dollarValue = parseFloat(commentReceived.total_pending_payout_value.split(" ")[0]) + parseFloat(commentReceived.total_payout_value.split(" ")[0]);
 
-                    comment.markdownContent = this._computeCommentBody(commentReceived.body);
+                    comment.body = commentReceived.body;
 
                     comments.push(comment);
 

@@ -4,10 +4,9 @@
 
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
-<link rel="import" href="../../bower_components/marked-element/marked-element.html">
-
 <link rel="import" href="my-icons.html">
 <link rel="import" href="comment-content.html">
+<link rel="import" href="html-echo.html">
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../api/steemjs/steem-get-comment-replies.html">
 
@@ -98,9 +97,7 @@
             </div>
 
             <div class="body">
-                <marked-element markdown="[[comment.markdownContent]]">
-                    <div class="markdown-html"></div>
-                </marked-element>
+                <html-echo html="[[comment.body]]"></html-echo>
             </div>
 
             <div class="bottom">
@@ -124,11 +121,11 @@
                                            comments="{{comment.replies}}">
                 </steem-get-comment-replies>
                 <!-- RENDER REPLIES -->
-                <template is="dom-if" if="[[comment.replies.length]]">
+
                     <template is="dom-repeat" items="[[comment.replies]]">
                         <comment-content comment="[[item]]"></comment-content>
                     </template>
-                </template>
+
             </div>
 
         </div>

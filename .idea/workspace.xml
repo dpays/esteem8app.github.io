@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-post.html" afterPath="$PROJECT_DIR$/src/pages/page-post.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-settings.html" afterPath="$PROJECT_DIR$/src/pages/page-settings.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-comment-replies.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-comment-replies.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/comment-content.html" afterPath="$PROJECT_DIR$/src/components/comment-content.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,19 +39,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reply-card.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/reply-card.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1476">
-              <caret line="88" column="12" selection-start-line="88" selection-start-column="12" selection-end-line="88" selection-end-column="12" />
-              <folding>
-                <element signature="n#style#0;n#paper-icon-button#1;n#div#2;n#paper-card#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#2;n#div#2;n#paper-card#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="page-post.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -70,21 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shared-styles.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared-styles.html">
+      <file leaf-file-name="html-echo.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1152">
-              <caret line="82" column="13" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="event-card.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/event-card.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="33" column="64" selection-start-line="33" selection-start-column="64" selection-end-line="33" selection-end-column="64" />
+            <state relative-caret-position="180">
+              <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -93,12 +72,32 @@
       <file leaf-file-name="comment-content.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/comment-content.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="774">
-              <caret line="83" column="34" selection-start-line="83" selection-start-column="34" selection-end-line="83" selection-end-column="34" />
+            <state relative-caret-position="526">
+              <caret line="119" column="78" selection-start-line="119" selection-start-column="70" selection-end-line="119" selection-end-column="78" />
               <folding>
                 <element signature="n#style#0;n#paper-icon-button#1;n#div#2;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#2;n#div#2;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="steem-get-comment-replies.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-comment-replies.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="886">
+              <caret line="94" column="36" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="steem-get-post.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="854">
+              <caret line="132" column="45" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -123,10 +122,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-settings.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="page-settings.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/page-settings.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="828">
+            <state relative-caret-position="1152">
               <caret line="91" column="92" selection-start-line="91" selection-start-column="92" selection-end-line="91" selection-end-column="92" />
               <folding />
             </state>
@@ -158,7 +157,6 @@
         <option value="$PROJECT_DIR$/docs/todo/task-list/README.md" />
         <option value="$PROJECT_DIR$/404.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/src/steem.min.js" />
-        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
         <option value="$PROJECT_DIR$/src/components/images-slider.html" />
         <option value="$PROJECT_DIR$/docs/todo/task-list/code/README.md" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html" />
@@ -179,7 +177,6 @@
         <option value="$PROJECT_DIR$/docs/todo/task-list/code/DEV.md" />
         <option value="$PROJECT_DIR$/src/components/drawer-content.html" />
         <option value="$PROJECT_DIR$/src/pages/page-support.html" />
-        <option value="$PROJECT_DIR$/src/components/html-echo.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/components/color-select.html" />
         <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
@@ -190,12 +187,15 @@
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
         <option value="$PROJECT_DIR$/src/components/reply-card.html" />
         <option value="$PROJECT_DIR$/src/components/post-card.html" />
-        <option value="$PROJECT_DIR$/src/components/comment-content.html" />
         <option value="$PROJECT_DIR$/src/pages/page-login.html" />
         <option value="$PROJECT_DIR$/src/pages/page-home.html" />
         <option value="$PROJECT_DIR$/src/app-shell.html" />
         <option value="$PROJECT_DIR$/src/pages/page-post.html" />
         <option value="$PROJECT_DIR$/src/pages/page-settings.html" />
+        <option value="$PROJECT_DIR$/src/components/html-echo.html" />
+        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
+        <option value="$PROJECT_DIR$/src/components/comment-content.html" />
+        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-comment-replies.html" />
       </list>
     </option>
   </component>
@@ -596,12 +596,12 @@
       <workItem from="1484707112352" duration="25664000" />
       <workItem from="1485019666154" duration="4495000" />
       <workItem from="1485286548964" duration="57177000" />
-      <workItem from="1485549851954" duration="48132000" />
+      <workItem from="1485549851954" duration="48784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="135468000" />
+    <option name="totallyTimeSpent" value="136120000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -642,11 +642,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/images/manifest/icon-96x96.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/images/manifest/icon-144x144.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -682,14 +677,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -928,14 +915,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-359">
-          <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1027,17 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/comment-content.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="774">
-          <caret line="83" column="34" selection-start-line="83" selection-start-column="34" selection-end-line="83" selection-end-column="34" />
-          <folding>
-            <element signature="n#style#0;n#paper-icon-button#1;n#div#2;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#2;n#div#2;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="846">
@@ -1074,8 +1042,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-settings.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="828">
+        <state relative-caret-position="1152">
           <caret line="91" column="92" selection-start-line="91" selection-start-column="92" selection-end-line="91" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/comment-content.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="526">
+          <caret line="119" column="78" selection-start-line="119" selection-start-column="70" selection-end-line="119" selection-end-column="78" />
+          <folding>
+            <element signature="n#style#0;n#paper-icon-button#1;n#div#2;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#2;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-comment-replies.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="886">
+          <caret line="94" column="36" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="854">
+          <caret line="132" column="45" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
           <folding />
         </state>
       </provider>
