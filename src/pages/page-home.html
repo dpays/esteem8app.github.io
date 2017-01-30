@@ -19,21 +19,27 @@
 
             /* GENERAL */
             :host {
+                --home-background-image: url('https://s28.postimg.org/vhmxzavsb/mdcontract.jpg');
+
                 min-height: 100%;
                 width: 100%;
                 position: absolute;
                 background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
-                background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");
-                background-position: top;
+                /*background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
+                background-position: center;
+                background-attachment: fixed;
+                background-image: var(--home-background-image);
+                background-size: cover;
+
             }
 
             @media screen and (max-width: 400px) {
 
-                #header-section {
+                #headersection {
                     padding-top: 6px;
                 }
 
-                #header-section h1 {
+                #headersection h1 {
                     margin-top: 0;
                 }
 
@@ -78,10 +84,10 @@
 
 
             /* HEADER SECTION */
-            #header-section {
+            #headersection {
                 margin-top: 56px;
                 padding: 32px;
-                color: #ddd;
+                color: #333;
             }
 
             #presentation-center, #presentation-cards {
@@ -214,7 +220,7 @@
         </paper-toolbar>
 
         <!-- HEADER SECTION -->
-        <div id="header-section">
+        <div id="headersection">
             <div id="presentation-center">
                 <h1>Access now to the world first blockchain based social media platform.</h1>
                 <h2>The next generation social media platform where <br>everyone get rewarded to use it ＾∇＾</h2>
@@ -290,7 +296,7 @@
         </div>
 
         <!-- QUERY TAGS -->
-        <steem-get-tags tags="{{_tags}}"></steem-get-tags>
+        <steem-get-tags tags="{{_tags}}" number="25"></steem-get-tags>
     </template>
 
     <script>
@@ -328,6 +334,9 @@
 
                 // Load contributors
                 this._loadContributors();
+
+                // Change background
+                this._computeBackground();
             },
 
             _openDrawer: function() {
@@ -379,6 +388,15 @@
                         // Push contributor
                         this.push('_contributors', contributor);
                     }
+                }
+            },
+
+            _computeBackground: function () {
+                if(document.referrer.match('github')){
+
+                    this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
+                    this.$.headersection.style.color = '#eee';
+                    this.updateStyles();
                 }
             }
 

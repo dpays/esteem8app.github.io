@@ -9,7 +9,10 @@
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 
+<link rel="import" href="../components/post-card-light.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/reply-card.html">
 <link rel="import" href="../components/event-card.html">
@@ -23,6 +26,7 @@
 <link rel="import" href="../api/steemjs/steem-get-history.html">
 
 <link rel="import" href="../components/my-icons.html">
+
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-profile">
@@ -47,6 +51,14 @@
                 float: right;
             }
 
+            .reputation {
+                font-size: 12px;
+                padding: 4px;
+                border-radius: 33px;
+                background-color: var(--app-primary-text-color);
+                color: var(--app-primary-color);
+            }
+
             /* HEADER */
             #profileheader {
                 background-color: var(--app-primary-color);
@@ -54,7 +66,13 @@
                 color: var(--app-primary-text-color);
                 width: 100%;
                 padding-top: 16px;
-                margin-top: 50px;
+                margin-top: 48px;
+            }
+
+            @media (max-width: 600px) {
+                #profileheader {
+                    margin-top: 40px;
+                }
             }
 
             .profileRepresentation {
@@ -63,9 +81,10 @@
                 border-radius: 124px;
             }
 
-            .topHeader {
+            #topheader {
                 margin: 16px auto;
                 max-width: 600px;
+                max-height: 600px;
             }
 
             .headerLeftPart {
@@ -118,7 +137,7 @@
             }
 
             /* AFTER TABS CONTENT */
-            #replies-list, #posts-list, #events-list, #followers-list, #following-list {
+            div[name="posts"], div[name="replies"], div[name="history"], div[name="followers"], div[name="following"] {
                 max-width: 600px;
                 margin: 12px auto;
             }
@@ -129,6 +148,50 @@
                 margin-right: auto;
                 margin-top: 100px;
                 color: var(--app-background-primary-text-color);
+            }
+
+            /* ABOUT */
+            div[name="about"], div[name="about"] a {
+                color: var(--app-background-primary-text-color);
+            }
+
+            #AboutJsonData {
+                margin: auto;
+            }
+
+            #votingPower {
+                display: inline-flex;
+                vertical-align: middle;
+                width: 100%;
+            }
+
+            #votingPowerBar {
+                width: 100%;
+                --paper-slider-disabled-knob-color: var(--app-primary-color);
+                --paper-slider-disabled-secondary-color: var(--app-background-secondary-text-color);
+                --paper-slider-disabled-active-color: var(--app-background-primary-text-color);
+            }
+
+            .aboutContainer {
+                max-width: 600px;
+                padding-left: 16px;
+                padding-right: 16px;
+                margin: auto;
+            }
+
+            .sectionTitleAbout {
+                font-size: 18px;
+                margin-top: 12px;
+                text-transform: uppercase;
+                font-family: 'Roboto', 'Open Sans', sans-serif;
+                color: var(--app-background-primary-text-color);
+            }
+
+            #lastPostList {
+                overflow: auto;
+                display: inline-flex;
+                max-width: 600px;
+                margin: auto;
             }
 
         </style>
@@ -145,6 +208,8 @@
                              following="{{account.following}}">
         </steem-get-following>
 
+        <!-- IDEA: Clip a post permlink in profile json that is display in a tabs added + clip a post dedicated to be rendered in profile about tabs -->
+
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
 
@@ -155,7 +220,10 @@
 
             <div class="floatingToolbar">
                 <span class="floatingToolbarTitle">
-                    [[user]]
+                    <span>
+                        [[user]]
+                        <span class="reputation">[[account.reputation]]</span>
+                    </span>
                     <span></span>
                     <paper-icon-button id="toggleFavoriteUserButton"
                                        icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]"
@@ -172,7 +240,7 @@
 
         <div id="profileheader">
 
-            <div class="topHeader">
+            <div id="topheader">
 
                 <div class="headerLeftPart">
                     <template is="dom-if" if="[[account.profileImage]]">
@@ -229,6 +297,7 @@
                         fit-container
                         scrollable
                         no-slide>
+                <paper-tab name="about">About</paper-tab>
                 <paper-tab name="posts">Posts</paper-tab>
                 <!-- Will be released when API permit it -->
                 <!--paper-tab name="comments">Comments</paper-tab-->
@@ -241,6 +310,58 @@
         <!-- CONTENT -->
         <iron-pages selected="[[currentView]]"
                     attr-for-selected="name">
+
+            <div name="about">
+                <div id="AboutJsonData" class="aboutContainer">
+
+                    <h2 class="sectionTitleAbout">Presentation</h2>
+
+                    <template is="dom-if" if="[[account.about.length]]">
+                        <div class="about">
+                            <p>[[account.about]]</p>
+                        </div>
+                    </template>
+
+                    <template is="dom-if" if="[[account.location.length]]">
+                        <div class="location">
+                            <iron-icon icon="my-icons:map"></iron-icon>
+                            <span>[[account.location]]</span>
+                        </div>
+                    </template>
+
+                    <template is="dom-if" if="[[account.website.length]]">
+                        <div class="website">
+                            <iron-icon icon="my-icons:web"></iron-icon>
+                            <a target="_blank" href="[[[account.website]]">[[account.website]]</a>
+                        </div>
+                    </template>
+
+                </div>
+
+                <!-- PINED RENDERED POST (Full presentation) -->
+
+                <!-- LAST POST -->
+                <div class="aboutContainer">
+
+                    <h2 class="sectionTitleAbout">Voting</h2>
+
+                    <div id="votingPower">
+                        <paper-slider id="votingPowerBar" disabled value="[[account.votingPower]]"></paper-slider>
+                        [[account.votingPower]]%
+                    </div>
+
+                    <template is="dom-if" if="[[posts.length]]">
+
+                        <h2 class="sectionTitleAbout">Last posts</h2>
+
+                        <div id="lastPostList">
+                            <template is="dom-repeat" items="[[posts]]">
+                                <post-card-light post="[[item]]" settings="[[settings]]"></post-card-light>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
 
             <div name="posts">
                 <steem-get-state path="[[user]]" posts="{{posts}}"></steem-get-state>
@@ -264,7 +385,7 @@
 
             <div name="replies">
                 <steem-get-replies user-name="[[_username]]"
-                                          replies="{{replies}}">
+                                   replies="{{replies}}">
                 </steem-get-replies>
                 <div id="replies-list">
 
@@ -294,9 +415,9 @@
 
                     <template is="dom-if" if="[[_events.length]]">
                         <!--iron-scroll-threshold  on-lower-threshold="_loadMoreHistoryEvents"> This is triggered before _events are loaded :/-->
-                            <template is="dom-repeat" items="[[_events]]">
-                                <event-card event="[[item]]"></event-card>
-                            </template>
+                        <template is="dom-repeat" items="[[_events]]">
+                            <event-card event="[[item]]"></event-card>
+                        </template>
                         <!--/iron-scroll-threshold-->
                     </template>
 
@@ -370,7 +491,8 @@
                 },
 
                 currentView: {
-                    type: String
+                    type: String,
+                    observer: '_refreshIsTabAbout'
                 },
 
                 favoritePosts: {
@@ -391,18 +513,23 @@
 
                 _isUserInFavorite: {
                     type: Boolean
+                },
+
+                _isTabAbout: {
+                    type: Boolean,
+                    observer: '_refreshIsTopheaderShowed'
                 }
             },
 
             observers: [
-                    '_updateCoverImage(account.coverImage)',
-                    '_userChanged(user)'
+                '_updateCoverImage(account.coverImage)',
+                '_userChanged(user)'
             ],
 
             ready: function() {
                 // Set variables
                 this.account = this.account || {};
-                this.currentView = "posts";
+                this.currentView = "about";
 
                 // List event
                 this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -454,7 +581,7 @@
 
             _refreshIsFavoriteUser: function() {
 
-                    this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._username) === -1);
+                this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._username) === -1);
             },
 
             _toggleFavoriteUser: function() {
@@ -488,7 +615,26 @@
             _loadMoreHistoryEvents: function() {
 
                 this.$.steemGetHistory.loadMoreData();
+            },
+
+            _refreshIsTabAbout: function() {
+
+                this._isTabAbout = (this.currentView == 'about');
+            },
+
+            _refreshIsTopheaderShowed: function() {
+
+                if(this._isTabAbout) {
+
+                    this.$.topheader.style = "";//"height: auto;"//+this.$.topheader.clientHeight+";";
+                }else {
+
+                    this.$.topheader.style = "margin-top:-2px;margin-bottom:-1px;max-height: 0;display:none;transition: all 0.6s ease-out;";//transform: translateY(-600px)"; //"height: 0;margin:-1px;visibility:hidden;opacity: 0";
+                }
+
+
             }
+
         });
     </script>
 </dom-module>

@@ -40,8 +40,9 @@
     <!-- Load must have script -->
     <script src="./index.js"></script> <!-- web compoment -->
 
-    <!-- Main compoment -->
+    <!-- Main components -->
     <link rel="import" href="src/app-shell.html">
+    <link rel="import" href="bower_components/paper-spinner/paper-spinner-lite.html">
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Lato|Open+Sans');
@@ -50,11 +51,18 @@
             font-family: 'Roboto', 'Open Sans', 'Lato', sans-serif;
             font-weight: 500;
             min-height: 100%;
-            background-color: #282828;
+            background-color: #eee;
         }
+
+        paper-spinner-lite {
+            --paper-spinner-layer-1-color: #222;
+        }
+
     </style>
 </head>
 <body>
-    <app-shell id="appshell"></app-shell>
+    <app-shell id="appshell">
+        <paper-spinner-lite active></paper-spinner-lite>
+    </app-shell>
 </body>
 </html>

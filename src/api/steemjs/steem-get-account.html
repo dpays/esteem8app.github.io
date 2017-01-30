@@ -57,6 +57,7 @@
                 }else {
 
                     var thisElement = this;
+                    var steemFormatter = steem.formatter;
                     var name = accountName || this.accountName;
 
                     // Query account data
@@ -67,11 +68,30 @@
 
                             if(!err && typeof result[0] !== 'undefined' && result[0] !== null){
 
-                                // Load json
-                                var objectFromJson = JSON.parse(result[0].json_metadata) || {};
+                                var account = result[0];
+                                var objectFromJson = JSON.parse(account.json_metadata) || {};
 
-                                var account = {};
+                                // Reputation on 100
+                                thisElement.set('account.reputation', steemFormatter.reputation(account.reputation));
 
+                                // Set account created date
+                                thisElement.set('account.created', account.created);
+
+                                // Post number
+                                thisElement.set('account.postCount', account.post_count);
+
+                                // Voting power on 100
+                                thisElement.set('account.votingPower', account.voting_power/100);
+
+                                // last post
+                                thisElement.set('account.lastPostTime', account.last_post);
+
+                                // last vote
+                                thisElement.set('account.lastVoteTime', account.last_vote_time);
+
+
+                                // last interaction
+                                thisElement.set('account.lastInteraction', account.last_bandwidth_update);
 
                                 // Set profile image
                                 if(typeof objectFromJson.profile.profile_image === 'undefined'){
@@ -91,6 +111,35 @@
 
                                     thisElement.set('account.coverImage', objectFromJson.profile.cover_image);
                                 }
+
+                                // Set website
+                                if(typeof objectFromJson.profile.website === 'undefined'){
+
+                                    thisElement.set('account.website', '');
+                                }else {
+
+                                    thisElement.set('account.website', objectFromJson.profile.website);
+                                }
+
+                                // Set location
+                                if(typeof objectFromJson.profile.location === 'undefined'){
+
+                                    thisElement.set('account.location', '');
+                                }else {
+
+                                    thisElement.set('account.location', objectFromJson.profile.location);
+                                }
+
+                                // Set about
+                                if(typeof objectFromJson.profile.about === 'undefined'){
+
+                                    thisElement.set('account.about', '');
+                                }else {
+
+                                    thisElement.set('account.about', objectFromJson.profile.about);
+                                }
+
+
                             }else {
 
                                 thisElement.set('account', {});
