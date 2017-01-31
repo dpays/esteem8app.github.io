@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/post-card-light.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-tags.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-tags.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/event-card.html" afterPath="$PROJECT_DIR$/src/components/event-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/my-icons.html" afterPath="$PROJECT_DIR$/src/components/my-icons.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" afterPath="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-explore.html" afterPath="$PROJECT_DIR$/src/pages/page-explore.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-favorites.html" afterPath="$PROJECT_DIR$/src/pages/page-favorites.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-home.html" afterPath="$PROJECT_DIR$/src/pages/page-home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-info.html" afterPath="$PROJECT_DIR$/src/pages/page-info.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-profile.html" afterPath="$PROJECT_DIR$/src/pages/page-profile.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
@@ -36,41 +27,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file leaf-file-name="page-home.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1062">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+            <state relative-caret-position="1382">
+              <caret line="394" column="51" selection-start-line="394" selection-start-column="51" selection-end-line="394" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
+      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="732">
-              <caret line="79" column="46" selection-start-line="79" selection-start-column="46" selection-end-line="79" selection-end-column="46" />
+            <state relative-caret-position="1018">
+              <caret line="327" column="21" selection-start-line="327" selection-start-column="21" selection-end-line="327" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event-card.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/event-card.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="45" column="35" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
-              <folding />
+      <file leaf-file-name="process-strategy-principles.md" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/docs/work-the-system/tools/process-strategy-principles.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="594">
+                <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+                <folding />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-support.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-support.html">
+      <file leaf-file-name="page-post.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2196">
-              <caret line="122" column="28" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
+            <state relative-caret-position="1562">
+              <caret line="415" column="45" selection-start-line="415" selection-start-column="45" selection-end-line="415" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -86,31 +80,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app-shell.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/app-shell.html">
+      <file leaf-file-name="post-card.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="813">
+              <caret line="299" column="16" selection-start-line="299" selection-start-column="16" selection-end-line="301" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-info.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-info.html">
+      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1512">
-              <caret line="84" column="169" selection-start-line="84" selection-start-column="169" selection-end-line="84" selection-end-column="169" />
+            <state relative-caret-position="-4">
+              <caret line="101" column="120" selection-start-line="101" selection-start-column="120" selection-end-line="101" selection-end-column="120" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-explore.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-explore.html">
+      <file leaf-file-name="steem-get-followers.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2160">
-              <caret line="120" column="33" selection-start-line="120" selection-start-column="33" selection-end-line="120" selection-end-column="33" />
+            <state relative-caret-position="2052">
+              <caret line="114" column="44" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="steem-get-post.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="756">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -119,18 +123,8 @@
       <file leaf-file-name="my-icons.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/my-icons.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2700">
-              <caret line="150" column="350" selection-start-line="150" selection-start-column="350" selection-end-line="150" selection-end-column="350" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shared-styles.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/shared-styles.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="31" column="27" selection-start-line="31" selection-start-column="27" selection-end-line="31" selection-end-column="27" />
+            <state relative-caret-position="615">
+              <caret line="155" column="13" selection-start-line="155" selection-start-column="13" selection-end-line="155" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -178,12 +172,10 @@
         <option value="$PROJECT_DIR$/src/components/reply-card.html" />
         <option value="$PROJECT_DIR$/src/pages/page-login.html" />
         <option value="$PROJECT_DIR$/src/pages/page-settings.html" />
-        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
         <option value="$PROJECT_DIR$/src/components/comment-content.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-comment-replies.html" />
         <option value="$PROJECT_DIR$/src/components/html-echo.html" />
         <option value="$PROJECT_DIR$/src/components/post-card.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-post.html" />
         <option value="$PROJECT_DIR$/docs/todo/task-list/code/README.md" />
         <option value="$PROJECT_DIR$/docs/todo/task-list/code/BUGS.md" />
         <option value="$PROJECT_DIR$/docs/todo/task-list/code/DEV.md" />
@@ -192,16 +184,18 @@
         <option value="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-tags.html" />
         <option value="$PROJECT_DIR$/src/pages/page-favorites.html" />
-        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
         <option value="$PROJECT_DIR$/src/components/post-card-light.html" />
         <option value="$PROJECT_DIR$/src/app-shell.html" />
         <option value="$PROJECT_DIR$/src/pages/page-home.html" />
         <option value="$PROJECT_DIR$/src/pages/page-info.html" />
         <option value="$PROJECT_DIR$/src/pages/page-explore.html" />
-        <option value="$PROJECT_DIR$/src/components/my-icons.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/components/event-card.html" />
+        <option value="$PROJECT_DIR$/src/components/my-icons.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-post.html" />
+        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
+        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
       </list>
     </option>
   </component>
@@ -417,6 +411,28 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="work-the-system" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="todo" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -547,12 +563,12 @@
       <workItem from="1485019666154" duration="4495000" />
       <workItem from="1485286548964" duration="57177000" />
       <workItem from="1485549851954" duration="87920000" />
-      <workItem from="1485807269645" duration="348000" />
+      <workItem from="1485807269645" duration="6243000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175604000" />
+    <option name="totallyTimeSpent" value="181499000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -593,13 +609,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/api/other/query-steem.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="122" column="42" selection-start-line="122" selection-start-column="42" selection-end-line="122" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/projects/Improve doc/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -660,13 +669,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-state.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="793">
-          <caret line="66" column="58" selection-start-line="66" selection-start-column="58" selection-end-line="66" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/work-the-system/strategies/development-strategies/Developement-strategy.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -695,6 +697,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -710,6 +713,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
           <caret line="45" column="65" selection-start-line="45" selection-start-column="65" selection-end-line="45" selection-end-column="65" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -740,13 +744,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="886">
           <caret line="94" column="36" selection-start-line="94" selection-start-column="36" selection-end-line="94" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="854">
-          <caret line="132" column="45" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -761,6 +759,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="954">
           <caret line="53" column="34" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -844,13 +843,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1052">
-          <caret line="114" column="44" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/contributing-kit/guidlines.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -873,6 +865,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="30" column="33" selection-start-line="30" selection-start-column="33" selection-end-line="30" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -896,13 +889,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2214">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="579">
-          <caret line="482" column="0" selection-start-line="482" selection-start-column="0" selection-end-line="482" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -911,31 +897,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1315">
           <caret line="88" column="12" selection-start-line="88" selection-start-column="12" selection-end-line="88" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="885">
-          <caret line="264" column="24" selection-start-line="264" selection-start-column="24" selection-end-line="264" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7092">
-          <caret line="394" column="51" selection-start-line="394" selection-start-column="51" selection-end-line="394" selection-end-column="51" />
           <folding>
-            <element signature="e#10343#10349#0" expanded="false" />
+            <element signature="n#style#0;n#paper-icon-button#1;n#div#2;n#paper-card#0;n#template#0;n#dom-module#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#span#2;n#div#2;n#paper-card#0;n#template#0;n#dom-module#0;n#!!top" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5688">
-          <caret line="316" column="23" selection-start-line="316" selection-start-column="23" selection-end-line="316" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -951,14 +916,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2196">
           <caret line="122" column="28" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/post-card-light.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1062">
-          <caret line="59" column="12" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -987,14 +944,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/my-icons.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2700">
-          <caret line="150" column="350" selection-start-line="150" selection-start-column="350" selection-end-line="150" selection-end-column="350" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/shared-styles.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="558">
@@ -1003,18 +952,101 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
+    <entry file="file://$PROJECT_DIR$/src/components/event-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="79" column="46" selection-start-line="79" selection-start-column="46" selection-end-line="79" selection-end-column="46" />
+        <state relative-caret-position="-202">
+          <caret line="45" column="35" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/event-card.html">
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-state.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="950">
+          <caret line="132" column="47" selection-start-line="132" selection-start-column="47" selection-end-line="132" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/work-the-system/tools/process-strategy-principles.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="594">
+            <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1382">
+          <caret line="394" column="51" selection-start-line="394" selection-start-column="51" selection-end-line="394" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/my-icons.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="155" column="13" selection-start-line="155" selection-start-column="13" selection-end-line="155" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2052">
+          <caret line="114" column="44" selection-start-line="114" selection-start-column="44" selection-end-line="114" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="813">
+          <caret line="299" column="16" selection-start-line="299" selection-start-column="16" selection-end-line="301" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/post-card-light.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1062">
+          <caret line="59" column="12" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1562">
+          <caret line="415" column="45" selection-start-line="415" selection-start-column="45" selection-end-line="415" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
-          <caret line="45" column="35" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4">
+          <caret line="101" column="120" selection-start-line="101" selection-start-column="120" selection-end-line="101" selection-end-column="120" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1018">
+          <caret line="327" column="21" selection-start-line="327" selection-start-column="21" selection-end-line="327" selection-end-column="21" />
           <folding />
         </state>
       </provider>

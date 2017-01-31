@@ -17,8 +17,10 @@
 <link rel="import" href="../components/reply-card.html">
 <link rel="import" href="../components/event-card.html">
 <link rel="import" href="../components/user-card.html">
+<link rel="import" href="../components/html-echo.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
+<link rel="import" href="../api/steemjs/steem-get-post.html">
 <link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../api/steemjs/steem-get-followers.html">
 <link rel="import" href="../api/steemjs/steem-get-following.html">
@@ -34,6 +36,8 @@
     <template>
 
         <style include="shared-styles">
+
+            /* Inspiration from https://www.uplabs.com/collections/profile-fd2d2339-bc35-44ae-822a-983aa31fa15a */
 
             /* GENERAL */
             :host {
@@ -151,6 +155,10 @@
             }
 
             /* ABOUT */
+            div[name="about"] {
+                padding-top: 12px;
+            }
+
             div[name="about"], div[name="about"] a {
                 color: var(--app-background-primary-text-color);
             }
@@ -297,12 +305,28 @@
                         fit-container
                         scrollable
                         no-slide>
-                <paper-tab name="about">About</paper-tab>
-                <paper-tab name="posts">Posts</paper-tab>
+                <paper-tab name="about">
+                    <iron-icon icon="my-icons:account-about"></iron-icon>
+                </paper-tab>
+                <paper-tab name="posts">
+                    <iron-icon icon="my-icons:account-post"></iron-icon>
+                </paper-tab>
                 <!-- Will be released when API permit it -->
                 <!--paper-tab name="comments">Comments</paper-tab-->
-                <paper-tab name="replies">Replies</paper-tab>
-                <paper-tab name="history">History</paper-tab>
+                <paper-tab name="replies">
+                    <iron-icon icon="my-icons:message-reply-text"></iron-icon>
+                </paper-tab>
+                <paper-tab name="history">
+                    <iron-icon icon="my-icons:history"></iron-icon>
+                </paper-tab>
+                <paper-tab name="followers">
+                    >
+                    <iron-icon icon="my-icons:user"></iron-icon>
+                </paper-tab>
+                <paper-tab name="following">
+                    <iron-icon icon="my-icons:user"></iron-icon>
+                    >
+                </paper-tab>
             </paper-tabs>
 
         </div>
@@ -338,12 +362,10 @@
 
                 </div>
 
-                <!-- PINED RENDERED POST (Full presentation) -->
-
                 <!-- LAST POST -->
                 <div class="aboutContainer">
 
-                    <h2 class="sectionTitleAbout">Voting</h2>
+                    <h2 class="sectionTitleAbout">Voting power</h2>
 
                     <div id="votingPower">
                         <paper-slider id="votingPowerBar" disabled value="[[account.votingPower]]"></paper-slider>
@@ -361,6 +383,23 @@
                         </div>
                     </template>
                 </div>
+
+                <!-- PINED RENDERED POST (Full presentation) -->
+
+                <template is="dom-if" if="[[account.pinnedPost]]">
+                    <steem-get-post path="[[account.pinnedPost]]"
+                                    post="{{_pinnedPost}}">
+                    </steem-get-post>
+                    <div class="aboutContainer">
+                        <html-echo html="[[_pinnedPost.body]]"></html-echo>
+                        <div class="pinnedPostVotes">
+                            <paper-icon-button icon="my-icons:arrow-up"
+                                               class="upvote">
+                            </paper-icon-button>[[post.net_votes]]
+                        </div>
+                    </div>
+                </template>
+
             </div>
 
             <div name="posts">
@@ -518,6 +557,10 @@
                 _isTabAbout: {
                     type: Boolean,
                     observer: '_refreshIsTopheaderShowed'
+                },
+
+                _pinnedPost: {
+                    type: Object
                 }
             },
 

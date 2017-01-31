@@ -68,6 +68,8 @@
 
                             if(!err && typeof result[0] !== 'undefined' && result[0] !== null){
 
+                                thisElement.set('account', {});
+
                                 var account = result[0];
                                 var objectFromJson = JSON.parse(account.json_metadata) || {};
 
@@ -92,6 +94,20 @@
 
                                 // last interaction
                                 thisElement.set('account.lastInteraction', account.last_bandwidth_update);
+
+                                // Set pinned post
+                                if(typeof objectFromJson.profile.pinned_post === 'undefined'){
+
+                                    if(name == 'esteem8') {
+                                        thisElement.set('account.pinnedPost', 'esteem8/@esteem8/what-the-esteem8-is-fuck');
+                                    }else {
+                                        thisElement.set('account.pinnedPost', '');
+                                    }
+
+                                }else {
+
+                                    thisElement.set('account.pinnedPost', objectFromJson.profile.pinnedPost);
+                                }
 
                                 // Set profile image
                                 if(typeof objectFromJson.profile.profile_image === 'undefined'){
