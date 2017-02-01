@@ -1,62 +1,71 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+
 <dom-module id="html-echo">
     <style>
         :host {
             display: block;
-            white-space: pre-wrap;
         }
 
-        a {
+        ::selection {
+            background: var(--app-light-primary-color);
+            color: var(--app-primary-text-color);
+        }
+
+        .markdown-html a {
             color: var(--app-secondary-color) !important;
         }
 
-        * {
+        .markdown-html * {
             font-family: 'Open Sans', 'Roboto', sans-serif;
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        .markdown-html h1, .markdown-html h2, .markdown-html h3, .markdown-html h4, .markdown-html h5, .markdown-html h6 {
+            color: var(--app-background-primary-text-color);
             font-family: 'Roboto', 'Open Sans', sans-serif;
         }
 
-        img {
+        .markdown-html img {
             max-width: 100%;
         }
 
         /* TABLES */
-        table {
+        .markdown-html table {
             width: 100%;
             border-collapse: collapse;
             overflow: scroll;
         }
 
-        table, th, td {
+        .markdown-html table, .markdown-html th, .markdown-html td {
             border: 1px solid #ddd;
         }
 
-        th, td {
+        .markdown-html th, .markdown-html td {
             padding: 8px;
         }
 
-        th a, td a {
+        .markdown-html th a, .markdown-html td a {
             text-decoration: none;
         }
 
-        th:hover, td:hover {
+        .markdown-html th:hover, .markdown-html td:hover {
             background-color: #888;
         }
 
-        th {
+        .markdown-html th {
             font-weight: bold;
         }
 
-        tr:hover {
+        .markdown-html tr:hover {
             background-color: #777;
         }
 
     </style>
     <template>
-        <div id="content"></div>
+        <marked-element markdown="[[html]]">
+            <div class="markdown-html"></div>
+        </marked-element>
     </template>
 </dom-module>
 
@@ -84,15 +93,15 @@
             _htmlChanged: function (neo) {
 
                 /* TODO
-                 * [ ] Render markdown as HTML
+                 * [X] Render markdown as HTML
                  * [ ] Render links as HTML
                  * [ ] Sanitize HTML
                  */
 
                 // WARNING: potential XSS vulnerability if `html` comes from an untrusted source
-                this.async(function() {
+                /*this.async(function() {
                     this.$.content.innerHTML = neo || this.html;
-                })
+                })*/
             }
         });
     })();

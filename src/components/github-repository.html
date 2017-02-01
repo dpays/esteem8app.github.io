@@ -1,0 +1,112 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+
+<link rel="import" href="../components/github-file-list.html">
+<link rel="import" href="../components/github-file-view.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="github-repository">
+
+    <style include="shared-styles">
+
+        :host {
+            width: 100%;
+        }
+
+        #fileList {
+            max-height: 300px;
+            overflow: auto;
+        }
+
+        paper-tabs {
+            --paper-tabs-selection-bar-color: var(--app-background-primary-text-color);
+            border-bottom: 1px solid var(--app-background-secondary-text-color);
+        }
+
+        paper-tab {
+            --paper-tab-ink: var(--app-background-secondary-text-color);
+        }
+
+    </style>
+
+    <template>
+
+        <paper-tabs selected="{{_currentView}}"
+                    attr-for-selected="name"
+                    fit-container
+                    scrollable
+                    no-slide>
+
+            <paper-tab name="code">Code</paper-tab>
+            <paper-tab name="issues">Issues</paper-tab>
+
+        </paper-tabs>
+
+        <iron-pages selected="[[_currentView]]"
+                    attr-for-selected="name">
+
+            <div name="code">
+
+                <div id="fileList">
+                    <github-file-list repository="[[repository]]"
+                                      selected-file="{{_selectedFile}}">
+                    </github-file-list>
+                </div>
+                <div id="fileView">
+                    <github-file-view file="[[_selectedFile]]"></github-file-view>
+                </div>
+
+            </div>
+
+            <div name="issues">
+
+            </div>
+
+        </iron-pages>
+
+    </template>
+
+    <script>
+
+        (function() {
+
+            'use strict';
+
+            Polymer({
+
+                is: 'github-repository',
+
+                properties: {
+
+                    /*
+                     * repository url
+                     */
+                    repository: {
+                        type: Object
+                    },
+
+                    _currentView: {
+                        type: String
+                    },
+
+                    _selectedFile: {
+                        type: Object,
+                        observer: '_selectedFileChanged'
+                    }
+                },
+
+                ready: function() {
+
+                    this._currentView = 'code';
+                },
+
+                _selectedFileChanged: function() {
+
+                }
+            });
+        })();
+    </script>
+</dom-module>

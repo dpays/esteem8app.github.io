@@ -95,18 +95,33 @@
                                 // last interaction
                                 thisElement.set('account.lastInteraction', account.last_bandwidth_update);
 
-                                // Set pinned post
-                                if(typeof objectFromJson.profile.pinned_post === 'undefined'){
+
+                                // Set pinned post array
+                                if(typeof objectFromJson.profile.pinned_posts === 'undefined'){
 
                                     if(name == 'esteem8') {
-                                        thisElement.set('account.pinnedPost', 'esteem8/@esteem8/what-the-esteem8-is-fuck');
+                                        thisElement.set('account.pinnedPosts', '["esteem8/@esteem8/what-the-esteem8-is-fuck"]');
                                     }else {
-                                        thisElement.set('account.pinnedPost', '');
+                                        thisElement.set('account.pinnedPosts', '');
                                     }
 
                                 }else {
 
-                                    thisElement.set('account.pinnedPost', objectFromJson.profile.pinnedPost);
+                                    thisElement.set('account.pinnedPosts', objectFromJson.profile.pinned_posts);
+                                }
+
+                                // Set pinned paths array
+                                if(typeof objectFromJson.profile.pinned_paths === 'undefined'){
+
+                                    if(name == 'esteem8') {
+                                        thisElement.set('account.pinnedPaths', '["created/esteem8-features", "created/esteem8"]');
+                                    }else {
+                                        thisElement.set('account.pinnedPaths', '');
+                                    }
+
+                                }else {
+
+                                    thisElement.set('account.pinnedPaths', objectFromJson.profile.pinned_paths);
                                 }
 
                                 // Set profile image
@@ -135,6 +150,24 @@
                                 }else {
 
                                     thisElement.set('account.website', objectFromJson.profile.website);
+                                }
+
+                                // Set GitHub
+                                if(typeof objectFromJson.profile.github === 'undefined'){
+
+                                    if(name == 'esteem8') {
+
+                                        thisElement.set('account.githubLink', 'https://github.com/esteem8app/esteem8app.github.io');
+                                        thisElement.set('account.githubText', 'esteem8app/esteem8app.github.io');
+                                    }else {
+
+                                        thisElement.set('account.githubLink', '');
+                                        thisElement.set('account.githubText', objectFromJson.profile.github.replace('https://github.com/', ''));
+                                    }
+                                }else {
+
+                                    thisElement.set('account.githubLink', objectFromJson.profile.github);
+                                    thisElement.set('account.githubText', objectFromJson.profile.github.replace('https://github.com/', ''));
                                 }
 
                                 // Set location

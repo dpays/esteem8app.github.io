@@ -10,6 +10,7 @@
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../components/share-button.html">
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
+<link rel="import" href="../api/other/url-get-file.html">
 
 <dom-module id="page-home">
 
@@ -150,7 +151,7 @@
 
                 background-size: contain;
                 background-repeat: no-repeat;
-                background-position: bottom;
+                background-position: center;
             }
 
             #joinTheMovement {
@@ -297,6 +298,11 @@
 
         <!-- QUERY TAGS -->
         <steem-get-tags tags="{{_tags}}" number="25"></steem-get-tags>
+
+        <!-- GET CONTRUBTORS FILE -->
+        <url-get-file url="https://raw.githubusercontent.com/esteem8app/esteem8app.github.io/master/CONTRIBUTORS.md"
+                      response-text="{{_contributorsFileText}}">
+        </url-get-file>
     </template>
 
     <script>
@@ -313,6 +319,11 @@
 
                 _tags: {
                     type: Array
+                },
+
+                _contributorsFileText: {
+                    type: Object,
+                    observer: '_computeContributorsFileText'
                 },
 
                 _contributors: {
@@ -332,9 +343,6 @@
                 this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
                 this._contributors = [];
 
-                // Load contributors
-                this._loadContributors();
-
                 // Change background
                 this._computeBackground();
             },
@@ -349,46 +357,33 @@
                 window.open('https://github.com/esteem8app/esteem8app.github.io');  
             },
 
-            _loadContributors: function() {
+            _computeContributorsFileText: function() {
 
-                // Request file
-                var fileRequest = new XMLHttpRequest();
-                    fileRequest.open('GET', '/CONTRIBUTORS.md');
+                var regex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
+                var m;
 
-                var thisElement = this;
+                var text = this._contributorsFileText;
 
-                // When file is recieved
-                fileRequest.onreadystatechange = function() {
-                    var regex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
-                    var text = fileRequest.responseText;
-                    var m;
+                // extract each contributor from file
+                do {
+                    m = regex.exec(text);
+                    if(m) {
 
-                    // extract each contributor from file
-                    do {
-                        m = regex.exec(text);
-                        if(m) {
+                        // Add contributor
+                        var contributor = m[1];
 
-                            // Add contributor
-                            thisElement._addContributor(m[1]);
+                        if(typeof contributor !== 'undefined') {
+
+                            if(this._contributors.indexOf(contributor) == -1) {
+
+                                // Push contributor
+                                this.push('_contributors', contributor);
+                            }
                         }
-                    } while (m);
-                };
 
-                // Lunch the request
-                fileRequest.send();
-            },
-
-            _addContributor: function(contributor) {
-
-                // test if we can put the contributor in array
-                if(typeof contributor !== 'undefined') {
-
-                    if(this._contributors.indexOf(contributor) == -1) {
-
-                        // Push contributor
-                        this.push('_contributors', contributor);
                     }
-                }
+                } while (m);
+
             },
 
             _computeBackground: function () {

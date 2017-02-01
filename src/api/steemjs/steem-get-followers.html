@@ -38,19 +38,13 @@
                 }
             },
 
-            ready: function() {
-
-                // Set default value
-                if(typeof this.accountName === 'undefined') { this.accountName = '';}
-                this._lastFollowerLoaded = '';
-
-            },
-
             _accountNameChanged: function() { // When account change
 
-                if(this.accountName !== ''){
 
-                    this.followers = []; // Reset followers
+                if(this.accountName != ''){
+
+                    //this.followers = []; // Reset followers
+                    this._lastFollowerLoaded = '';
                     this._loadFollower(); // Start loading
 
                 }
@@ -82,7 +76,6 @@
                 console.log("Start loading");
 
                 var thisElement = this;
-                var actualFollowers = this.followers || [];
 
                 // Query followers
                 this.async(function () {

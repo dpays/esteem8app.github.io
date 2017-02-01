@@ -1,0 +1,69 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+
+<link rel="import" href="my-icons.html">
+
+<link rel="import" href="../api/steemjs/steem-get-post.html">
+<link rel="import" href="../components/html-echo.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="pinned-post-content">
+
+    <template>
+
+        <style include="shared-styles">
+
+
+            .card-content {
+                padding-top: 0;
+                padding-left: 16px;
+                padding-right: 16px;
+                padding-bottom: 16px;
+            }
+
+            h1 a {
+                color: var(--app-secondary-color);
+                text-decoration: none;
+            }
+
+        </style>
+
+        <div class="card-content">
+            <steem-get-post path="[[pinnedPostLink]]"
+                            post="{{_pinnedPost}}">
+            </steem-get-post>
+            <h1 id="pinnedPostTitle">
+                <a href="[[_pinnedPost.url]]">[[_pinnedPost.title]]</a>
+            </h1>
+
+            <html-echo html="[[_pinnedPost.body]]"></html-echo>
+            <div class="pinnedPostVotes">
+                <paper-icon-button icon="my-icons:arrow-up"
+                                   class="upvote">
+                </paper-icon-button>[[_pinnedPost.net_votes]]
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'pinned-post-content',
+
+            properties: {
+
+                pinnedPostLink: {
+                    type: String
+                }
+            }
+
+        });
+
+    </script>
+</dom-module>

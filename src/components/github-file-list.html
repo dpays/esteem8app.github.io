@@ -1,0 +1,189 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../api/github/get-repository-files.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="github-file-list">
+
+    <template>
+
+        <style include="shared-styles">
+
+            paper-listbox {
+                --paper-listbox-background-color: transparent;
+                --paper-listbox-color: inerhite;
+                border-left: 1px solid var(--app-background-secondary-text-color);
+                border-right: 1px solid var(--app-background-secondary-text-color);
+                color: var(--app-background-primary-text-color);
+            }
+
+            iron-icon {
+                color: var(--app-background-secondary-text-color);
+                margin-right: 12px;
+            }
+        </style>
+
+        <get-repository-files url="[[_url]]"
+                              files="{{_files}}">
+        </get-repository-files>
+
+        <paper-listbox selected="{{selectedFile}}"
+                       attr-for-selected="file">
+
+            <paper-item id="back" on-tap="_toBackFolder" hidden="[[_backHidden]]">
+                <iron-icon icon="my-icons:arrow-back"></iron-icon>
+                ...
+            </paper-item>
+
+            <template is="dom-repeat"
+                      items="[[_files]]">
+                <paper-item file="[[item]]">
+                    <iron-icon icon="my-icons:[[_computeFileIcon(item.name, item.type)]]"></iron-icon>
+                    [[item.name]]
+                </paper-item>
+            </template>
+
+        </paper-listbox>
+
+    </template>
+
+    <script>
+
+        (function() {
+
+            'use strict';
+
+            Polymer({
+
+                is: 'github-file-list',
+
+                properties: {
+
+                    /*
+                     * files array
+                     */
+                    repository: {
+                        type: String,
+                        observer: '_computeUrl'
+                    },
+
+                    selectedFile: {
+                        type: Object,
+                        notify: true,
+                        observer: '_selectNewFolder'
+                    },
+
+                    _files: {
+                        type: Array,
+                        observer: '_selectDefaultFile'
+                    },
+
+                    _url: {
+                        type: String
+                    },
+
+                    _backHidden: {
+                        type: Boolean
+                    }
+                },
+
+                ready: function() {
+
+                    this.$.back.addEventListener('tap', this._toBackFolder.bind(this));
+                    this._backHidden = true;
+                },
+
+                _computeUrl: function() {
+
+                    // Prepare url to query file that contains the repository file list
+                    if(typeof this.repository !== 'undefined') {
+
+                        if(this.repository !== '') {
+
+                            console.log(this.repository);
+                            var repository = this.repository;
+                            var url = repository.replace('https://github.com', 'https://api.github.com/repos');
+                            url += '/contents/';
+
+                            this._url = url;
+                        }
+                    }
+                },
+
+                _selectDefaultFile: function() {
+
+                    // Select readme.md by default
+                    var files = this._files;
+
+                    for(var i = 0; i < files.length; i++) {
+
+                        var fileName = files[i].name;
+                            fileName = fileName.toLowerCase();
+
+                        if(fileName.includes('readme.md')) {
+
+                            this.set('selectedFile', files[i]);
+                        }
+                    }
+                },
+
+                _selectNewFolder: function() {
+
+                    // File is a folder
+                    if(this.selectedFile.type == 'dir') {
+
+                        this._url = this.selectedFile.url;
+                        this._backHidden = false;
+                    }
+
+                },
+
+                _toBackFolder: function() {
+
+                    // Remove the last folder in url
+                    console.log(this._url);
+                    var urlSplited = this._url.split('/');
+
+                    if(urlSplited[urlSplited.length -1] == 'contents') {
+                        this._backHidden = true;
+                    }else {
+
+                        urlSplited.pop();
+                        this._url = urlSplited.join('/');
+
+                    }
+                },
+
+                _computeFileIcon: function(name, type) {
+
+                    switch (type) {
+
+                        case 'dir':
+
+                            return 'folder';
+
+                        case 'file':
+
+                            if(name.includes('.md')) {
+
+                                return 'text-file';
+                            }else if(name.includes('.html') || name.includes('.js') || name.includes('.css') || name.includes('.json')) {
+
+                                return 'code';
+                            }else {
+
+                                return 'file';
+                            }
+                    }
+
+                }
+
+            });
+        })();
+    </script>
+</dom-module>

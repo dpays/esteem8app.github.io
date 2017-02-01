@@ -1,0 +1,62 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<dom-module id="url-get-file"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'url-get-file',
+
+            properties: {
+
+                /*
+                 * File url loaded
+                 */
+                url:  {
+                    type: String,
+                    observer: '_loadFile'
+                },
+
+                /*
+                 * File
+                 */
+                responseText: {
+                    type: String,
+                    notify: true
+                }
+            },
+
+            _loadFile: function() {
+
+                if(typeof this.url !== 'undefined') {
+
+                    if(this.url !== ''){
+
+                        var thisElement = this;
+
+                        this.async(function() {
+
+                            // Request file
+                            var fileRequest = new XMLHttpRequest();
+                            fileRequest.open('GET', thisElement.url);
+
+                            // When file is recieved
+                            fileRequest.onreadystatechange = function() {
+
+                                // Set it in component
+                                thisElement.responseText = fileRequest.responseText;
+
+                            };
+
+                            // Lunch the request
+                            fileRequest.send();
+                        });
+                    }
+                }
+            }
+        });
+    })();
+</script>

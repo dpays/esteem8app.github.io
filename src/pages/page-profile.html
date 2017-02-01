@@ -18,6 +18,9 @@
 <link rel="import" href="../components/event-card.html">
 <link rel="import" href="../components/user-card.html">
 <link rel="import" href="../components/html-echo.html">
+<link rel="import" href="../components/pinned-tag-card.html">
+<link rel="import" href="../components/pinned-post-content.html">
+<link rel="import" href="../components/github-repository.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
@@ -159,12 +162,28 @@
                 padding-top: 12px;
             }
 
-            div[name="about"], div[name="about"] a {
+            div[name="about"] {
+                color: var(--app-background-secondary-text-color);
+                max-width: 600px;
+                margin: auto;
+            }
+
+            @media screen and (max-width: 600px) {
+                div[name="about"] {
+                   min-width: 100%;
+                }
+                paper-card {
+                    min-width: 0px !important;
+                }
+            }
+
+            div[name="about"] a, div[name="about"] iron-icon {
                 color: var(--app-background-primary-text-color);
             }
 
-            #AboutJsonData {
-                margin: auto;
+            div[name="about"] h2 {
+                margin-bottom: 0px;
+                margin-left: 16px;
             }
 
             #votingPower {
@@ -180,26 +199,27 @@
                 --paper-slider-disabled-active-color: var(--app-background-primary-text-color);
             }
 
-            .aboutContainer {
-                max-width: 600px;
-                padding-left: 16px;
-                padding-right: 16px;
-                margin: auto;
-            }
-
-            .sectionTitleAbout {
-                font-size: 18px;
+            paper-card {
+                background-color: var(--app-secondary-background-color);
+                --paper-card-header-text: {
+                    font-size: 18px;
+                    text-transform: uppercase;
+                    font-family: 'Roboto', 'Open Sans', sans-serif;
+                    color: var(--app-background-primary-text-color);
+                };
                 margin-top: 12px;
-                text-transform: uppercase;
-                font-family: 'Roboto', 'Open Sans', sans-serif;
-                color: var(--app-background-primary-text-color);
+                margin-bottom: 12px;
+                min-width: 600px;
             }
 
             #lastPostList {
+                max-width: 568px;
                 overflow: auto;
                 display: inline-flex;
-                max-width: 600px;
-                margin: auto;
+            }
+
+            .pinnedPostVotes {
+                color: var(--app-background-primary-text-color);
             }
 
         </style>
@@ -209,11 +229,11 @@
         </steem-get-account>
 
         <steem-get-followers account-name="[[_username]]"
-                             followers="{{account.followers}}">
+                             followers="{{_followers}}">
         </steem-get-followers>
 
         <steem-get-following account-name="[[_username]]"
-                             following="{{account.following}}">
+                             following="{{_following}}">
         </steem-get-following>
 
         <!-- IDEA: Clip a post permlink in profile json that is display in a tabs added + clip a post dedicated to be rendered in profile about tabs -->
@@ -269,10 +289,10 @@
                          class="followers"
                          on-tap="_setCurrentViewFollowers">
                         <span class="number">
-                            <template is="dom-if" if="[[account.followers.length]]">
-                                [[account.followers.length]]
+                            <template is="dom-if" if="[[_followers.length]]">
+                                [[_followers.length]]
                             </template>
-                            <template is="dom-if" if="[[!account.followers.length]]">
+                            <template is="dom-if" if="[[!_followers.length]]">
                                 0
                             </template>
                         </span>
@@ -284,10 +304,10 @@
                          class="followed"
                          on-tap="_setCurrentViewFollowers">
                         <span class="number">
-                            <template is="dom-if" if="[[account.following.length]]">
-                                [[account.following.length]]
+                            <template is="dom-if" if="[[_following.length]]">
+                                [[_following.length]]
                             </template>
-                            <template is="dom-if" if="[[!account.following.length]]">
+                            <template is="dom-if" if="[[!_following.length]]">
                                 0
                             </template>
                         </span>
@@ -309,7 +329,7 @@
                     <iron-icon icon="my-icons:account-about"></iron-icon>
                 </paper-tab>
                 <paper-tab name="posts">
-                    <iron-icon icon="my-icons:account-post"></iron-icon>
+                    <iron-icon icon="my-icons:text-file"></iron-icon>
                 </paper-tab>
                 <!-- Will be released when API permit it -->
                 <!--paper-tab name="comments">Comments</paper-tab-->
@@ -320,12 +340,12 @@
                     <iron-icon icon="my-icons:history"></iron-icon>
                 </paper-tab>
                 <paper-tab name="followers">
-                    >
+                    ->
                     <iron-icon icon="my-icons:user"></iron-icon>
                 </paper-tab>
                 <paper-tab name="following">
                     <iron-icon icon="my-icons:user"></iron-icon>
-                    >
+                    ->
                 </paper-tab>
             </paper-tabs>
 
@@ -336,68 +356,93 @@
                     attr-for-selected="name">
 
             <div name="about">
-                <div id="AboutJsonData" class="aboutContainer">
+                <h2>Presentation</h2>
+                <paper-card>
+                    <div class="card-content">
+                        <template is="dom-if" if="[[account.about.length]]">
+                            <div class="about">
+                                <p>[[account.about]]</p>
+                            </div>
+                        </template>
 
-                    <h2 class="sectionTitleAbout">Presentation</h2>
+                        <template is="dom-if" if="[[account.location.length]]">
+                            <div class="location">
+                                <iron-icon icon="my-icons:map"></iron-icon>
+                                <span>[[account.location]]</span>
+                            </div>
+                        </template>
 
-                    <template is="dom-if" if="[[account.about.length]]">
-                        <div class="about">
-                            <p>[[account.about]]</p>
-                        </div>
-                    </template>
+                        <template is="dom-if" if="[[account.website.length]]">
+                            <div class="link website">
+                                <iron-icon icon="my-icons:web"></iron-icon>
+                                <a target="_blank" href="[[[account.website]]">[[account.website]]</a>
+                            </div>
+                        </template>
 
-                    <template is="dom-if" if="[[account.location.length]]">
-                        <div class="location">
-                            <iron-icon icon="my-icons:map"></iron-icon>
-                            <span>[[account.location]]</span>
-                        </div>
-                    </template>
+                        <template is="dom-if" if="[[account.githubLink.length]]">
+                            <div class="link github">
+                                <iron-icon icon="my-icons:github"></iron-icon>
+                                <a target="_blank" href="[[account.githubLink]]">[[account.githubText]]</a>
+                            </div>
+                        </template>
+                    </div>
+                </paper-card>
 
-                    <template is="dom-if" if="[[account.website.length]]">
-                        <div class="website">
-                            <iron-icon icon="my-icons:web"></iron-icon>
-                            <a target="_blank" href="[[[account.website]]">[[account.website]]</a>
-                        </div>
-                    </template>
-
-                </div>
+                <!--div id="votingPower">
+                      <paper-slider id="votingPowerBar" disabled value="[[account.votingPower]]"></paper-slider>
+                      [[account.votingPower]]%
+                  </div-->
 
                 <!-- LAST POST -->
-                <div class="aboutContainer">
+                <h2>
+                    [[user]] posts
+                </h2>
+               <pinned-tag-card steem-path="[[user]]"></pinned-tag-card>
 
-                    <h2 class="sectionTitleAbout">Voting power</h2>
+                <!-- PINED POSTS (presentation) -->
+                <template is="dom-if" if="[[account.pinnedPosts]]">
 
-                    <div id="votingPower">
-                        <paper-slider id="votingPowerBar" disabled value="[[account.votingPower]]"></paper-slider>
-                        [[account.votingPower]]%
-                    </div>
+                    <h2>
+                        <iron-icon icon="my-icons:pin"></iron-icon>
+                        Pinned posts
+                    </h2>
 
-                    <template is="dom-if" if="[[posts.length]]">
-
-                        <h2 class="sectionTitleAbout">Last posts</h2>
-
-                        <div id="lastPostList">
-                            <template is="dom-repeat" items="[[posts]]">
-                                <post-card-light post="[[item]]" settings="[[settings]]"></post-card-light>
-                            </template>
-                        </div>
+                    <template is="dom-repeat" items="[[_toJson(account.pinnedPosts)]]">
+                        <paper-card>
+                            <pinned-post-content pinned-post-link="[[item]]"></pinned-post-content>
+                        </paper-card>
                     </template>
-                </div>
 
-                <!-- PINED RENDERED POST (Full presentation) -->
+                </template>
 
-                <template is="dom-if" if="[[account.pinnedPost]]">
-                    <steem-get-post path="[[account.pinnedPost]]"
-                                    post="{{_pinnedPost}}">
-                    </steem-get-post>
-                    <div class="aboutContainer">
-                        <html-echo html="[[_pinnedPost.body]]"></html-echo>
-                        <div class="pinnedPostVotes">
-                            <paper-icon-button icon="my-icons:arrow-up"
-                                               class="upvote">
-                            </paper-icon-button>[[post.net_votes]]
+                <!-- PINNED TAGS -->
+                <template is="dom-if" if="[[account.pinnedPaths]]">
+
+                    <h2>
+                        <iron-icon icon="my-icons:pin"></iron-icon>
+                        Pinned tags
+                    </h2>
+
+                    <template is="dom-repeat" items="[[_toJson(account.pinnedPaths)]]">
+                        <pinned-tag-card class="spacedCard" steem-path="[[item]]"></pinned-tag-card>
+                    </template>
+
+                </template>
+
+                <!-- GITHUB Repository -->
+                <template is="dom-if" if="[[account.githubLink.length]]">
+
+                    <h2>
+                        <a href="[[account.githubLink]]"><iron-icon icon="my-icons:github"></iron-icon></a>
+                        GitHub repository
+                    </h2>
+
+                    <paper-card>
+                        <div class="card-content">
+                            <github-repository repository="[[account.githubLink]]"></github-repository>
                         </div>
-                    </div>
+                    </paper-card>
+
                 </template>
 
             </div>
@@ -466,12 +511,12 @@
             <div name="followers">
                 <div id="followers-list">
 
-                    <template is="dom-if" if="[[!account.followers.length]]">
+                    <template is="dom-if" if="[[!_followers.length]]">
                         <h1 class="nothingText">[[user]] has no follower</h1>
                     </template>
 
-                    <template is="dom-if" if="[[account.followers.length]]">
-                        <template is="dom-repeat" items="[[account.followers]]">
+                    <template is="dom-if" if="[[_followers.length]]">
+                        <template is="dom-repeat" items="[[_followers]]">
                             <user-card user="[[item]]"></user-card>
                         </template>
                     </template>
@@ -482,12 +527,12 @@
             <div name="following">
                 <div id="following-list">
 
-                    <template is="dom-if" if="[[!account.following.length]]">
+                    <template is="dom-if" if="[[!_following.length]]">
                         <h1 class="nothingText">[[user]] is not following anyone</h1>
                     </template>
 
-                    <template is="dom-if" if="[[account.following.length]]">
-                        <template is="dom-repeat" items="[[account.following]]">
+                    <template is="dom-if" if="[[_following.length]]">
+                        <template is="dom-repeat" items="[[_following]]">
                             <user-card user="[[item]]"></user-card>
                         </template>
                     </template>
@@ -546,6 +591,14 @@
                     type: Array
                 },
 
+                _followers: {
+                    type: Array
+                },
+
+                _following: {
+                    type: Array
+                },
+
                 _events: {
                     type: Array
                 },
@@ -566,7 +619,9 @@
 
             observers: [
                 '_updateCoverImage(account.coverImage)',
-                '_userChanged(user)'
+                '_userChanged(user)',
+                '_justListen(_followers)',
+                '_justListen(_following)'
             ],
 
             ready: function() {
@@ -622,6 +677,11 @@
                 this.set('currentView', 'following')
             },
 
+            _setCurrentViewPosts: function() {
+
+                this.set('currentView', 'posts');
+            },
+
             _refreshIsFavoriteUser: function() {
 
                 this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._username) === -1);
@@ -663,6 +723,7 @@
             _refreshIsTabAbout: function() {
 
                 this._isTabAbout = (this.currentView == 'about');
+                //window.scrollTo(0, 0);
             },
 
             _refreshIsTopheaderShowed: function() {
@@ -676,6 +737,15 @@
                 }
 
 
+            },
+
+            _toJson: function (text) {
+
+                return JSON.parse(text);
+            },
+
+            _justListen: function (observedProperty) {
+                console.log(observedProperty);
             }
 
         });
