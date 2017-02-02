@@ -116,10 +116,7 @@
             <page-post name="post"
                        category="[[dataUrl1.data]]"
                        author="{{dataUrl2.data}}"
-                       post-name="[[dataUrl3.data]]"
-                       favorite-posts="{{favoritePosts}}"
-                       favorite-tags="{{favoriteTags}}"
-                       favorite-users="{{favoriteUsers}}">
+                       post-name="[[dataUrl3.data]]">
             </page-post>
 
             <page-favorites name="favorites"
@@ -296,16 +293,16 @@
             // URL has changed
             _routeChanged: function() {
 
-                // Get url and put these in variables
+                // Get url splited
                 var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
                 var dataUrl2 = typeof this.dataUrl2 !== 'undefined' ? this.dataUrl2.data : '';
                 var dataUrl3 = typeof this.dataUrl3 !== 'undefined' ? this.dataUrl3.data : '';
 
-                // Transmit url splited to function that choose page
+                // Transmit url splited -> choose page
                 this._routePageChanged(dataUrl1, dataUrl2, dataUrl3);
             },
 
-            // Function that choose page
+            // Choose page
             _routePageChanged: function(dataUrl1, dataUrl2, dataUrl3) {
 
                 // SET /dataUrl1/dataUrl2/dataUrl3 in variables
@@ -388,7 +385,6 @@
                 this.customStyle['--app-background-primary-text-color'] = backgroundPrimaryTextColor || this.settings.theme.backgroundPrimaryTextColor;
                 this.customStyle['--app-background-secondary-text-color'] = backgroundSecondaryTextColor || this.settings.theme.backgroundSecondaryTextColor;
 
-
                 // Render
                 Polymer.updateStyles();
             },
@@ -398,10 +394,69 @@
                 this._isDrawerOpen = true;
             },
 
+            // Because sub property are not notified
             _userNameChanged: function(username) {
 
                 this._username = username;
+            },
+
+            isFavoritePost: function(post) {
+
+                // Refresh favorite post state
+                return (this.favoritePosts.indexOf(post) != -1);
+            },
+
+            isFavoriteUser: function(username) {
+
+                // Refresh favorite user state
+                return (this.favoriteUsers.indexOf(username) != -1);
+            },
+
+            isFavoriteTag: function(category) {
+
+                // Refresh favorite tag state
+                return (this.favoriteTags.indexOf(category) != -1);
+            },
+
+            addFavoritePost: function(post) {
+
+                // Add post to favorite
+                this.push('favoritePosts', post);
+            },
+
+            addFavoriteUser: function(username) {
+
+                // Add user to favorite
+                this.push('favoriteUsers', username);
+            },
+
+            addFavoriteTag: function(category) {
+
+                // Add tag to favorite
+                this.push('favoriteTags', category);
+            },
+
+            removeFavoritePost: function(post) {
+
+                // remove post from favorite
+                var index = this.favoritePosts.indexOf(post); // index to delete
+                this.splice('favoritePosts', index, 1); // Delete index found
+            },
+
+            removeFavoriteUser: function(username) {
+
+                // remove user from favorite
+                var index = this.favoritePosts.indexOf(username); // index to delete
+                this.splice('favoriteUsers', index, 1); // Delete index found
+            },
+
+            removeFavoriteTag: function(category) {
+
+                // remove tag from favorite
+                var index = this.favoritePosts.indexOf(category); // index to delete
+                this.splice('favoriteTags', index, 1); // Delete index found
             }
+
         });
     </script>
 </dom-module>

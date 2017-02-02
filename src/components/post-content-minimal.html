@@ -11,7 +11,7 @@
 <link rel="import" href="../api/steemjs/steem-get-post.html">
 <link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../shared-styles.html">
-<dom-module id="pinned-post-content">
+<dom-module id="post-content-minimal">
 
     <template>
 
@@ -33,18 +33,15 @@
         </style>
 
         <div class="card-content">
-            <steem-get-post path="[[pinnedPostLink]]"
-                            post="{{_pinnedPost}}">
-            </steem-get-post>
-            <h1 id="pinnedPostTitle">
-                <a href="[[_pinnedPost.url]]">[[_pinnedPost.title]]</a>
+            <h1 id="postTitle">
+                <a href="[[post.url]]">[[post.title]]</a>
             </h1>
 
-            <html-echo html="[[_pinnedPost.body]]"></html-echo>
-            <div class="pinnedPostVotes">
+            <html-echo html="[[post.body]]"></html-echo>
+            <div class="postVotes">
                 <paper-icon-button icon="my-icons:arrow-up"
                                    class="upvote">
-                </paper-icon-button>[[_pinnedPost.net_votes]]
+                </paper-icon-button>[[post.net_votes]]
             </div>
         </div>
 
@@ -54,13 +51,18 @@
 
         Polymer({
 
-            is: 'pinned-post-content',
+            is: 'post-content-minimal',
 
             properties: {
 
-                pinnedPostLink: {
-                    type: String
+                post: {
+                    type: Object,
+                    observer: '_postChanged'
                 }
+            },
+
+            _postChanged: function() {
+                console.log(this.post);
             }
 
         });

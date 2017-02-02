@@ -51,13 +51,16 @@
 
         </style>
 
+
         <!-- post cards -->
-        <a href="[[post.url]]">
-            <paper-card id="postCardLight"
-                        heading="[[post.title]]"
-                        image="[[post.images.0]]">
-            </paper-card>
-        </a>
+        <template is="dom-if" if="[[post.title]]">
+            <a href="[[post.url]]">
+                <paper-card id="postCardLight"
+                            heading="[[post.title]]"
+                            image="[[post.images.0]]">
+                </paper-card>
+            </a>
+        </template>
     </template>
 
     <script>
@@ -73,12 +76,6 @@
             properties: {
 
                 post: {
-                    type: Object,
-                    observer: "_postChanged"
-                },
-
-
-                settings: {
                     type: Object
                 }
             },

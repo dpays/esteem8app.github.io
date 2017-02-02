@@ -1,0 +1,117 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="post-card.html">
+<link rel="import" href="post-card-light.html">
+<link rel="import" href="post-content-minimal.html">
+
+<link rel="import" href="../api/steemjs/steem-get-post.html">
+<dom-module id="post-wrapper">
+
+    <template>
+
+        <template is="dom-if" if="[[postPath]]">
+            <steem-get-post path="[[postPath]]"
+                            post="{{post}}">
+            </steem-get-post>
+        </template>
+
+        <div id="post"></div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'post-wrapper',
+
+            properties: {
+
+                /*
+                 * Post object
+                 */
+                post: {
+                    type: Object,
+                    observer: '_postChanged'
+                },
+
+                /*
+                 * Or post path
+                 */
+                postPath: {
+                    type: String
+                },
+
+                /*
+                 * Display post [card, card-light, content-minimal]
+                 */
+                postType: {
+                    type: String
+                }
+            },
+
+            ready: function () {
+
+                if(typeof this.postPath === 'undefined'){
+
+                    this.postPath = '';
+                }
+            },
+
+            _postChanged: function() {
+
+                this._displayPost();
+            },
+
+            _displayPost: function() {
+
+                if(typeof this.postType === 'undefined') {
+
+                    this.postType = 'post-card-light';
+                }
+
+                var elementName = 'post-card-light';
+
+                switch (this.postType) {
+
+                    case 'card':
+
+                        elementName = 'post-card';
+                        break;
+
+                    case 'card-light':
+
+                        elementName = 'post-card-light';
+                        break;
+
+                    case 'content-minimal':
+
+                        elementName = 'post-content-minimal';
+                        break;
+                }
+
+                // Create Element
+                var element = document.createElement(elementName);
+                    // Set data
+                    element.setAttribute('post', JSON.stringify(this.post));
+
+                Polymer.dom(this.$.post).appendChild(element);
+
+
+                console.log(JSON.stringify(this.post));
+
+                // TODO
+                /*
+                 * Implement this with polymer.templatizer and polymer.stamp for a 2 way data binding
+                 *
+                 * https://www.polymer-project.org/1.0/docs/api/Polymer.Templatizer
+                 * https://www.polymer-project.org/1.0/docs/api/Polymer.Templatizer#method-templatize
+                 * http://t-code.pl/blog/2015/08/polymer-templatizer/
+                 */
+
+
+            }
+        });
+
+    </script>
+</dom-module>

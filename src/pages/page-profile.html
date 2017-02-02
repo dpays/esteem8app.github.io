@@ -18,8 +18,7 @@
 <link rel="import" href="../components/event-card.html">
 <link rel="import" href="../components/user-card.html">
 <link rel="import" href="../components/html-echo.html">
-<link rel="import" href="../components/pinned-tag-card.html">
-<link rel="import" href="../components/pinned-post-content.html">
+<link rel="import" href="../components/post-wrapper.html">
 <link rel="import" href="../components/github-repository.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
@@ -340,12 +339,12 @@
                     <iron-icon icon="my-icons:history"></iron-icon>
                 </paper-tab>
                 <paper-tab name="followers">
-                    ->
+                    <iron-icon icon="my-icons:chevron-right"></iron-icon>
                     <iron-icon icon="my-icons:user"></iron-icon>
                 </paper-tab>
                 <paper-tab name="following">
                     <iron-icon icon="my-icons:user"></iron-icon>
-                    ->
+                    <iron-icon icon="my-icons:chevron-right"></iron-icon>
                 </paper-tab>
             </paper-tabs>
 
@@ -397,7 +396,7 @@
                <pinned-tag-card steem-path="[[user]]"></pinned-tag-card>
 
                 <!-- PINED POSTS (presentation) -->
-                <template is="dom-if" if="[[account.pinnedPosts]]">
+                <template is="dom-if" if="[[account.pinnedPosts.length]]">
 
                     <h2>
                         <iron-icon icon="my-icons:pin"></iron-icon>
@@ -406,42 +405,13 @@
 
                     <template is="dom-repeat" items="[[_toJson(account.pinnedPosts)]]">
                         <paper-card>
-                            <pinned-post-content pinned-post-link="[[item]]"></pinned-post-content>
+                            <post-wrapper post-type="content-minimal"
+                                          post-path="[[item]]">
+                            </post-wrapper>
                         </paper-card>
                     </template>
 
                 </template>
-
-                <!-- PINNED TAGS -->
-                <template is="dom-if" if="[[account.pinnedPaths]]">
-
-                    <h2>
-                        <iron-icon icon="my-icons:pin"></iron-icon>
-                        Pinned tags
-                    </h2>
-
-                    <template is="dom-repeat" items="[[_toJson(account.pinnedPaths)]]">
-                        <pinned-tag-card class="spacedCard" steem-path="[[item]]"></pinned-tag-card>
-                    </template>
-
-                </template>
-
-                <!-- GITHUB Repository -->
-                <template is="dom-if" if="[[account.githubLink.length]]">
-
-                    <h2>
-                        <a href="[[account.githubLink]]"><iron-icon icon="my-icons:github"></iron-icon></a>
-                        GitHub repository
-                    </h2>
-
-                    <paper-card>
-                        <div class="card-content">
-                            <github-repository repository="[[account.githubLink]]"></github-repository>
-                        </div>
-                    </paper-card>
-
-                </template>
-
             </div>
 
             <div name="posts">
@@ -455,8 +425,7 @@
                     <template is="dom-if" if="[[posts.length]]">
                         <template is="dom-repeat" items="[[posts]]">
                             <post-card post="[[item]]"
-                                       settings="[[settings]]"
-                                       favorite-posts="{{favoritePosts}}">
+                                       settings="[[settings]]">
                             </post-card>
                         </template>
                     </template>
@@ -553,39 +522,28 @@
                 },
 
                 posts: {
-                    type: Array,
-                    observer: '_postsChanged'
+                    type: Array
                 },
 
                 user: {
                     type: String
                 },
 
-                _username: {
-                    type: String,
-                    notify: true
-                },
-
                 account: {
-                    type: Object,
-                    observer: '_accountChanged'
+                    type: Object
                 },
 
                 currentView: {
-                    type: String,
-                    observer: '_refreshIsTabAbout'
-                },
-
-                favoritePosts: {
-                    type: Array
-                },
-
-                favoriteUsers: {
-                    type: Array
+                    type: String
                 },
 
                 replies: {
                     type: Array
+                },
+
+                _username: {
+                    type: String,
+                    notify: true
                 },
 
                 _followers: {
@@ -605,8 +563,7 @@
                 },
 
                 _isTabAbout: {
-                    type: Boolean,
-                    observer: '_refreshIsTopheaderShowed'
+                    type: Boolean
                 },
 
                 _pinnedPost: {
@@ -617,6 +574,9 @@
             observers: [
                 '_updateCoverImage(account.coverImage)',
                 '_userChanged(user)',
+                '_accountChanged(account)',
+                '_refreshIsTabAbout(currentView)',
+                '_refreshIsTopheaderShowed(_isTabAbout)',
                 '_justListen(_followers)',
                 '_justListen(_following)'
             ],
@@ -631,17 +591,20 @@
                 this.$.followersButton.addEventListener('tap', this._setCurrentViewFollowers.bind(this));
                 this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
                 this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
-
-                // Launch function
-                this._userChanged();
             },
 
             _userChanged: function(user) {
 
                 // Remove '@' at user and put it into _username
-                var user = user || this.user;
-                this._username = user.substring(1);
+                var user = user;
+                this.set('_username', user.substring(1));
                 this._refreshIsFavoriteUser();
+            },
+
+            _accountChanged: function(account) {
+
+                console.log(account);
+
             },
 
             _openDrawer: function() {
@@ -649,16 +612,13 @@
                 document.getElementById('appshell')._openDrawer();
             },
 
-            _accountChanged: function () {
-
-                console.log("account="+this.account);
-            },
-
             _updateCoverImage: function(url) {
 
                 if(url !== ''){
+
                     this.$.profileheader.style.backgroundImage = "url('" + url + "')";
                 }else {
+
                     this.$.profileheader.style.backgroundImage = "";
                 }
 
@@ -681,7 +641,7 @@
 
             _refreshIsFavoriteUser: function() {
 
-                this._isUserInFavorite = !(this.favoriteUsers.indexOf(this._username) === -1);
+                this._isUserInFavorite = document.getElementById('appshell').isFavoriteUser(this._username);
             },
 
             _toggleFavoriteUser: function() {
@@ -689,27 +649,22 @@
                 if(this._isUserInFavorite) {
 
                     // Remove user from favourite
-                    var index = this.favoriteUsers.indexOf(this._username);
-                    this.splice('favoriteUsers', index, 1);
+                    document.getElementById('appshell').removeFavoriteUser(this._username);
                 }else {
 
                     // Add user to favourite
-                    this.push('favoriteUsers', this._username);
+                    document.getElementById('appshell').addFavoriteUser(this._username);
                 }
 
                 // Invert favorite state of user
-                this._isUserInFavorite = !this._isUserInFavorite;
+                this._refreshIsFavoriteUser();
             },
 
             _computeFavoriteUserIcon: function(userIsInFavorite) {
 
-                if(userIsInFavorite) {
-
-                    return 'favorite';
-                }else {
-
-                    return 'favorite-border';
-                }
+                return userIsInFavorite ?
+                    'favorite':
+                    'favorite-border';
             },
 
             _loadMoreHistoryEvents: function() {
@@ -717,15 +672,15 @@
                 this.$.steemGetHistory.loadMoreData();
             },
 
-            _refreshIsTabAbout: function() {
+            _refreshIsTabAbout: function(currentView) {
 
-                this._isTabAbout = (this.currentView == 'about');
+                this._isTabAbout = (currentView == 'about');
                 //window.scrollTo(0, 0);
             },
 
-            _refreshIsTopheaderShowed: function() {
+            _refreshIsTopheaderShowed: function(_isTabAbout) {
 
-                if(this._isTabAbout) {
+                if(_isTabAbout) {
 
                     this.$.topheader.style = "";//"height: auto;"//+this.$.topheader.clientHeight+";";
                 }else {
@@ -742,6 +697,7 @@
             },
 
             _justListen: function (observedProperty) {
+
                 console.log(observedProperty);
             }
 

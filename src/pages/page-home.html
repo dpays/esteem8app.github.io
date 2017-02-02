@@ -227,7 +227,7 @@
         <!-- HEADER SECTION -->
         <div id="headersection">
             <div id="presentation-center">
-                <h1>Freely access now to the world first blockchain based social media platform without any ads.</h1>
+                <h1>Access now to the world first blockchain based social media platform without any ads.</h1>
                 <h2>Everyone get rewarded to use it ＾∇＾ !</h2>
                 <div id="presentation-button">
                     <paper-button>
@@ -262,10 +262,10 @@
             <paper-card id="whatsThat">
                 <div class="card-content">
                     <h2>What's that ?</h2>
-                    <p>Steem is a social network based on a currency where everyone is rewarded to use it.</p>
-                    <p>ESteem8 is a free web application that let you see what's new on the blockchain.</p>
-                    <p>You can add this app to your homescreen on any device by going into your browser page options.</p>
-                    <p><a href="/info">More info</a></p>
+                    <p>STEEM is a social network based on a currency where everyone is rewarded to use it.</p>
+                    <p>ESTEEM8 is a free web application that let you see what's going on on the Steem blockchain.</p>
+                    <p>You can pin this app on your homescreen on any device by going into your browser page options.</p>
+                    <p><a href="/info">What's what ?</a></p>
                     <!--p>You can change colors in <a href="/settings">settings</a>.</-->
                 </div>
             </paper-card>
@@ -273,9 +273,9 @@
             <paper-card id="joinTheMovement">
                 <div class="card-content">
                     <h2>Join the movement</h2>
-                    <p><a target="_blank" href="http://steemtools.com/">More Steem tools</a></p>
-                    <p><a target="_blank" href="https://steem.io/SteemWhitePaper.pdf">Steem White paper</a></p>
-                    <p><a href="/support">Support this application</a></p>
+                    <p><a target="_blank" href="http://steemtools.com/">Other Steem tools</a></p>
+                    <p><a target="_blank" href="https://steem.io/SteemWhitePaper.pdf">What is exactly Steem ?</a></p>
+                    <p><a href="/support">Support this app</a></p>
                 </div>
             </paper-card>
 
@@ -343,12 +343,12 @@
                 this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
                 this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
 
-                // Default tags
+                // Default var
                 this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
                 this._contributors = [];
 
                 // Change background
-                this._computeBackground();
+                this._updateBackground();
             },
 
             _openDrawer: function() {
@@ -363,6 +363,7 @@
 
             _computeContributorsFileText: function() {
 
+                // Extract contributors from github file
                 var regex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
                 var m;
 
@@ -390,7 +391,8 @@
 
             },
 
-            _computeBackground: function () {
+            _updateBackground: function () {
+                
                 if(document.referrer.match('github')){
 
                     this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';

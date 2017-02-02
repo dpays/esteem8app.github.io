@@ -166,7 +166,6 @@
 
             <!-- Publications lists -->
             <div id="posts-list">
-
                 <template is="dom-if" if="[[_isEsteem8Tag]]">
                     <p class="textIsEsteem8Tag">This is the application tag, you can upvote our publications to support us.</p>
                 </template>
@@ -174,9 +173,7 @@
                 <template is="dom-if" if="[[_posts.length]]">
                     <template is="dom-repeat" items="[[_posts]]">
                         <post-card post="[[item]]"
-                                   settings="[[settings]]"
-                                   favorite-posts="{{favoritePosts}}"
-                                   selected-post="{{selectedPost}}">
+                                   settings="[[settings]]">
                         </post-card>
                     </template>
                 </template>
@@ -202,15 +199,13 @@
                 // current sorting mode (hot, new, trending, created)
                 currentSorting: {
                     type: String,
-                    notify: true,
-                    observer: '_pathChanged'
+                    notify: true
                 },
 
                 // Current filter tag (esteem8, ...)
                 currentTag: {
                     type: String,
-                    notify: true,
-                    observer: '_pathChanged'
+                    notify: true
                 },
 
                 settings: {
@@ -222,22 +217,17 @@
                     notify: true
                 },
 
-                favoritePosts: {
-                    type: Array,
-                    notify: true
-                },
-
                 _posts: {
                     type: Array
+                },
+
+                _showProgress: {
+                    type: Boolean
                 },
 
                 _isSelectCategoryOpened: {
                     type: Boolean,
                     notify: true
-                },
-
-                _showProgress: {
-                    type: Boolean
                 },
 
                 _isEsteem8Tag: {
@@ -262,12 +252,6 @@
                 this._isSelectCategoryOpened = false;
                 this._showProgress = true;
 
-            },
-
-            _pathChanged: function(currentSorting, currentTag) {
-
-                console.log('currentSorting'+currentSorting);
-                console.log('currentSorting'+currentTag);
             },
 
             _openDrawer: function() {
@@ -302,12 +286,9 @@
 
             _refreshIsCurrentTagInFavorite: function () {
 
-                if(typeof this.favoriteTags === 'undefined') {
+                if(typeof this.favoriteTags === 'undefined') { return false; }
 
-                    return false;
-                }
-
-                this._isCurrentTagInFavorite = !(this.favoriteTags.indexOf(this.currentTag) === -1);
+                this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(this.currentTag);
             },
 
             _computeFavoriteTagIcon: function(tagIsInFavorite) {
@@ -317,13 +298,9 @@
                     return 'star';
                 }
 
-                if(tagIsInFavorite) {
-
-                    return 'star';
-                }else {
-
-                    return 'star-border';
-                }
+                return tagIsInFavorite ?
+                    'star':
+                    'star-border';
             },
 
             _toggleFavoriteTag: function() {
@@ -331,12 +308,11 @@
                 if(this._isCurrentTagInFavorite) {
 
                     // Remove tag from favourite
-                    var index = this.favoriteTags.indexOf(this.currentTag);
-                    this.splice('favoriteTags', index, 1);
+                    document.getElementById('appshell').removeFavoriteTag(this.currentTag);
                 }else {
 
                     // Add tag to favourite
-                    this.push('favoriteTags', this.currentTag);
+                    document.getElementById('appshell').addFavoriteTag(this.currentTag);
                 }
 
                 // Refresh actual state of fav tag displayed in floating toolbar

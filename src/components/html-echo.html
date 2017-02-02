@@ -2,6 +2,9 @@
 
 <link rel="import" href="../../bower_components/marked-element/marked-element.html">
 
+<link rel="import" href="post-path-list.html">
+<link rel="import" href="post-wrapper.html">
+
 <dom-module id="html-echo">
     <style>
         :host {
@@ -63,7 +66,7 @@
 
     </style>
     <template>
-        <marked-element markdown="[[html]]">
+        <marked-element markdown="[[_htmlDisplayed]]">
             <div class="markdown-html"></div>
         </marked-element>
     </template>
@@ -82,26 +85,52 @@
                 html: {
                     type: String,
                     observer: '_htmlChanged'
+                },
+
+                _htmlDisplayed: {
+                    type: String
                 }
             },
 
             ready: function() {
 
-              this._htmlChanged();
             },
 
-            _htmlChanged: function (neo) {
+            _htmlChanged: function () {
+
+                var html = this.html;
+
+                if(html.includes('― Leonardo da Vinci')){
+
+                    html += ' created/esteem8 ';
+                    html += ' esteem8/@esteem8/what-the-esteem8-is-fuck';
+                }
+
+                // Tag path -> <post-path-list>
+                var tagPathRegex = /(created|hot|trending|active)\/[a-zA-Z0-9-]+/gm;
+
+                html = html.replace(tagPathRegex, function(match){
+
+                    return '<post-path-list steem-path="' + match + '" post-type="card-light"></post-path-list>';
+                });
+
+                // Post path -> <post>
+                var postPathRegex = /[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
+
+                html = html.replace(postPathRegex, function(match){
+
+                    return '<post-wrapper steem-path="' + match + '" post-type="card-light"></post-wrapper>';
+                });
+
+
+                this._htmlDisplayed = html;
 
                 /* TODO
                  * [X] Render markdown as HTML
-                 * [ ] Render links as HTML
+                 * [ ] transform links into HTML or Custom elements
                  * [ ] Sanitize HTML
                  */
 
-                // WARNING: potential XSS vulnerability if `html` comes from an untrusted source
-                /*this.async(function() {
-                    this.$.content.innerHTML = neo || this.html;
-                })*/
             }
         });
     })();

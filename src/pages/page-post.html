@@ -314,13 +314,13 @@
 
                     </div>
 
-                    <!--div class="section">
+                    <div class="section">
                         <div id="shareButtons">
                             <share-button share-website="facebook"></share-button>
                             <share-button share-website="twitter"></share-button>
                             <share-button share-website="plus"></share-button>
                         </div>
-                    </div-->
+                    </div>
                 </div>
 
                 <!-- COMMMENTS Content -->
@@ -365,18 +365,6 @@
                     type: Object
                 },
 
-                favoritePosts: {
-                    type: Array
-                },
-
-                favoriteUsers: {
-                    type: Array
-                },
-
-                favoriteTags: {
-                    type: Array
-                },
-
                 _isInFavoritePost: {
                     type: Boolean
                 },
@@ -410,7 +398,7 @@
                 this.$.addFavoriteTagButton.addEventListener('tap', this._addFavoriteTag.bind(this));
                 this.$.removeFavoriteTagButton.addEventListener('tap', this._removeFavoriteTag.bind(this));
 
-                // Set default value
+                // Set default favorite statement
                 this._refreshIsFavoritePost();
                 this._refreshIsFavoriteUser();
                 this._refreshIsFavoriteTag();
@@ -447,25 +435,25 @@
             _refreshIsFavoritePost: function() {
 
                 // Refresh favorite post state
-                this._isInFavoritePost = (this.favoritePosts.indexOf(this.post) != -1);
+                this._isInFavoritePost = document.getElementById('appshell').isFavoritePost(this.post);
             },
 
             _refreshIsFavoriteUser: function() {
 
                 // Refresh favorite user state
-                this._isInFavoriteUser = (this.favoriteUsers.indexOf(this.username) != -1);
+                this._isInFavoriteUser =  document.getElementById('appshell').isFavoriteUser(this.username);
             },
 
             _refreshIsFavoriteTag: function() {
 
                 // Refresh favorite tag state
-                this._isInFavoriteTag = (this.favoriteTags.indexOf(this.category) != -1);
+                this._isInFavoriteTag =  document.getElementById('appshell').isFavoriteTag(this.category);
             },
 
             _addFavoritePost: function() {
 
                 // Add post to favorite
-                this.push('favoritePosts', this.post);
+                document.getElementById('appshell').addFavoritePost(this.post);
 
                 // Refresh favorite post state
                 this._refreshIsFavoritePost();
@@ -474,7 +462,7 @@
             _addFavoriteUser: function() {
 
                 // Add user to favorite
-                this.push('favoriteUsers', this.username);
+                document.getElementById('appshell').addFavoriteUser(this.username);
 
                 // Refresh favorite user state
                 this._refreshIsFavoriteUser();
@@ -483,7 +471,7 @@
             _addFavoriteTag: function() {
 
                 // Add tag to favorite
-                this.push('favoriteTags', this.category);
+                document.getElementById('appshell').addFavoriteTag(this.category);
 
                 // Refresh favorite tag state
                 this._refreshIsFavoriteTag();
@@ -492,8 +480,7 @@
             _removeFavoritePost: function() {
 
                 // remove post from favorite
-                var index = this.favoritePosts.indexOf(this.post); // index to delete
-                this.splice('favoritePosts', index, 1); // Delete index found
+                document.getElementById('appshell').removeFavoritePost(this.post);
 
                 // Refresh favorite post state
                 this._refreshIsFavoritePost();
@@ -502,8 +489,7 @@
             _removeFavoriteUser: function() {
 
                 // remove user from favorite
-                var index = this.favoritePosts.indexOf(this.username); // index to delete
-                this.splice('favoriteUsers', index, 1); // Delete index found
+                document.getElementById('appshell').removeFavoriteUser(this.username);
 
                 // Refresh favorite user state
                 this._refreshIsFavoriteUser();
@@ -512,8 +498,7 @@
             _removeFavoriteTag: function() {
 
                 // remove tag from favorite
-                var index = this.favoritePosts.indexOf(this.category); // index to delete
-                this.splice('favoriteTags', index, 1); // Delete index found
+                document.getElementById('appshell').removeFavoriteTag(this.category);
 
                 // Refresh favorite tag state
                 this._refreshIsFavoriteTag();

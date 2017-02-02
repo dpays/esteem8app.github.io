@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../api/steemjs/steem-get-state.html">
+<link rel="import" href="../components/post-wrapper.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="post-path-list">
+
+    <template>
+
+
+
+        <steem-get-state path="[[steemPath]]"
+                         posts="{{_posts}}">
+        </steem-get-state>
+
+        <div id="postList">
+                [[_posts]]
+                <template is="dom-repeat" items="[[_posts]]">
+                    post-wrapper
+                    <!--post-wrapper post-type="[[postType]]"
+                                  post="[[item]]">
+                    </post-wrapper-->
+                </template>
+
+        </div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'post-path-list',
+
+            properties: {
+
+                steemPath: {
+                    type: String,
+                    observer: '_computeTagName'
+                },
+
+                postType: {
+                    type: String
+                },
+
+                _tagName: {
+                    type: String
+                },
+
+                _posts: {
+                    type: Object,
+                    observer: '_postsChanged'
+                }
+            },
+
+            ready: function () {
+
+                this._posts = [];
+            },
+
+            _computeTagName: function() {
+
+                console.log(this.steemPath);
+
+                if(this.steemPath.includes('@')){
+
+                    this._tagName = this.steemPath;
+                }else {
+
+                    this._tagName = '#' + this.steemPath.split('/')[1];
+                }
+
+            },
+
+            _postsChanged: function() {
+                console.log(this._posts);
+            }
+
+        });
+
+    </script>
+</dom-module>

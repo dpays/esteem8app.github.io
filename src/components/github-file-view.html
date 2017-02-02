@@ -77,7 +77,7 @@
             </template>
 
             <template is="dom-if" if="[[_isFileImage]]">
-                <prism-render code="[[file.download_url]]"></prism-render>
+                <img src="[[file.download_url]]"></img>
             </template>
         </div>
 
@@ -97,12 +97,12 @@
                 properties: {
 
                     file: {
-                        type: Object
+                        type: Object,
+                        observer: '_computeFileType'
                     },
 
                     _fileText: {
-                        type: Object,
-                        observer: '_computeFileType'
+                        type: Object
                     },
 
                     _isFileMarkdown: {
