@@ -1,147 +1,180 @@
-<dom-module id="steem-get-state"></dom-module>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 
 <script src="./src/to-markdown.js"></script>
 <script src="./src/steem.min.js"></script>
 
-<script>
+<dom-module id="steem-get-state">
 
-    (function () {
+    <template>
 
-        Polymer({
+        <!-- TOAST NO POST(S) FOUND -->
+        <paper-toast id="toastPostNotFound"
+                     class="fit-bottom"
+                     text="Sorry bro :/ we didn't found anything">
+        </paper-toast>
 
-            is: 'steem-get-state',
+    </template>
 
-            properties: {
+    <script>
 
-                /*
-                 * Steem path to be loaded
-                 * f.e "/sorting/tag
-                 */
-                path: {
-                    type: String,
-                    observer: '_pathChanged'
+        (function () {
+
+            Polymer({
+
+                is: 'steem-get-state',
+
+                properties: {
+
+                    /*
+                     * Steem path to be loaded
+                     * f.e "/sorting/tag
+                     */
+                    path: {
+                        type: String,
+                        observer: '_pathChanged'
+                    },
+
+                    /*
+                     * Steem posts list array to be returned
+                     */
+                    posts: {
+                        type: Array,
+                        notify: true
+                    },
+
+                    /*
+                     * Boolean than define if this is being loading data
+                     */
+                    isLoading: {
+                        type: Boolean,
+                        notify: true
+                    }
                 },
 
-                /*
-                 * Steem posts list array to be returned
-                 */
-                posts: {
-                    type: Array,
-                    notify: true
+                ready: function() {
+
+                    // Set default value
+                    if(typeof this.queryError === 'undefined') {
+                        this.queryError = false;
+                    }
+
+                    if(typeof this.path === 'undefined'){
+                        this.path = '';
+                    }
+
+                    if(typeof this.isLoading === 'undefined') {
+
+                        this.isLoading = true;
+                    }
                 },
 
-                /*
-                 * Boolean set to true if there is a query error
-                 */
-                queryError: {
-                    type: Boolean,
-                    notify: true
-                }
-            },
+                // Update posts list when path changed
+                _pathChanged: function() {
 
-            ready: function() {
+                    this.isLoading = true;
 
-                // Set default value
-                if(typeof this.queryError === 'undefined') {
-                    this.queryError = false;
-                }
+                    var thisElement = this;
 
-                if(typeof this.path === 'undefined'){
-                    this.path = '';
-                }
-            },
+                    steem.api.getState(this.path, function(err, result) {
 
-            // Update posts list when path changed
-            _pathChanged: function() {
+                        if(typeof result !== 'undefined' && !err){
 
-                var thisElement = this;
+                            if(typeof result !== 'undefined') {
 
-                steem.api.getState(this.path, function(err, result) {
+                                if(typeof result.content !== 'undefined') {
 
-                    if(typeof result !== 'undefined' && !err){
+                                    thisElement._computePosts(result.content);
 
-                        if(typeof result.content !== 'undefined') {
+                                    return;
 
-                            thisElement._computePosts(result.content);
-                        }else {
-                            thisElement.queryError = true;
-                        }
-                    }else {
-
-                        thisElement.queryError = true;
-                    }
-                });
-
-            },
-
-            _computePostBody: function(body) {
-
-                return body;
-
-            },
-
-            _computePosts: function(content) {
-
-                var posts = [];
-                // Add each post to an array because post are object's properties
-                for (var key in content) {
-                    // skip loop if the property is from prototype
-                    if (!content.hasOwnProperty(key)) continue;
-
-                    var postRecived = content[key];
-                    var post = {};
-
-                    // Add images & tags
-                    if(typeof postRecived.json_metadata !== 'undefined'){
-
-                        var objectFromJson = JSON.parse(postRecived.json_metadata) || {};
-
-                        if(typeof objectFromJson.image !== 'undefined'){
-
-                            post.images = objectFromJson.image;
+                                }
+                            }
                         }
 
-                        if(typeof objectFromJson.tags !== 'undefined'){
+                        thisElement._showErrorToast = true;
 
-                            var tags = objectFromJson.tags;
-                            // Remove the first tag because it's displayed as category
-                            tags.shift();
-                            post.tags = tags;
+                    });
+
+                },
+
+                _computePostBody: function(body) {
+
+                    return body;
+
+                },
+
+                _computePosts: function(content) {
+
+                    var posts = [];
+                    // Add each post to an array because post are object's properties
+                    for (var key in content) {
+                        // skip loop if the property is from prototype
+                        if (!content.hasOwnProperty(key)) continue;
+
+                        var postRecived = content[key];
+                        var post = {};
+
+                        // Add images & tags
+                        if(typeof postRecived.json_metadata !== 'undefined'){
+
+                            var objectFromJson = JSON.parse(postRecived.json_metadata) || {};
+
+                            if(typeof objectFromJson.image !== 'undefined'){
+
+                                post.images = objectFromJson.image;
+                            }
+
+                            if(typeof objectFromJson.tags !== 'undefined'){
+
+                                var tags = objectFromJson.tags;
+                                // Remove the first tag because it's displayed as category
+                                tags.shift();
+                                post.tags = tags;
+                            }
                         }
+
+                        // Set images empty if null
+                        if(typeof post.images === 'undefined'){
+                            post.images = [];
+                        }
+
+                        // Set tags empty if null
+                        if(typeof post.tags === 'undefined'){
+                            post.tags = [];
+                        }
+
+                        post.body = postRecived.body;
+
+                        post.category = postRecived.category;
+                        post.title = postRecived.title;
+                        post.author = postRecived.author;
+                        post.dollarValue = parseFloat(postRecived.total_pending_payout_value.split(" ")[0]) + parseFloat(postRecived.total_payout_value.split(" ")[0]);
+                        post.net_votes = postRecived.net_votes;
+                        post.children = postRecived.children;
+                        post.activeVotes = postRecived.active_votes;
+                        post.created = postRecived.created;
+                        post.url = postRecived.url;
+
+                        // Push post in array
+                        posts.push(post);
                     }
 
-                    // Set images empty if null
-                    if(typeof post.images === 'undefined'){
-                        post.images = [];
-                    }
+                    this._setPosts(posts);
+                },
 
-                    // Set tags empty if null
-                    if(typeof post.tags === 'undefined'){
-                        post.tags = [];
-                    }
+                _setPosts: function(posts) {
+                    this.isLoading = false;
+                    this.posts = posts;
+                },
 
-                    post.body = postRecived.body;
+                _showErrorToast: function () {
 
-                    post.category = postRecived.category;
-                    post.title = postRecived.title;
-                    post.author = postRecived.author;
-                    post.dollarValue = parseFloat(postRecived.total_pending_payout_value.split(" ")[0]) + parseFloat(postRecived.total_payout_value.split(" ")[0]);
-                    post.net_votes = postRecived.net_votes;
-                    post.children = postRecived.children;
-                    post.activeVotes = postRecived.active_votes;
-                    post.created = postRecived.created;
-                    post.url = postRecived.url;
-
-                    // Push post in array
-                    posts.push(post);
+                    this.$.toastPostNotFound.show(); // Show toast
                 }
+            });
+        })();
+    </script>
 
-                this._setPosts(posts);
-            },
-
-            _setPosts: function(posts) {
-                this.posts = posts;
-            }
-        });
-    })();
-</script>
+</dom-module>

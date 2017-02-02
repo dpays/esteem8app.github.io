@@ -6,7 +6,6 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
-<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
@@ -78,12 +77,6 @@
             }
 
         </style>
-
-        <!-- TOAST NO POST(S) FOUND -->
-        <paper-toast id="toastPostNotFound"
-                     class="fit-bottom"
-                     text="Sorry bro :/ we didn't found anything">
-        </paper-toast>
 
         <!-- SELECT CATEGORY DIALOG -->
         <select-tag-dialog
@@ -165,7 +158,7 @@
             </paper-tabs>
             <paper-progress id="progress-bar"
                             indeterminate
-                            hidden="[[_posts.length]]">
+                            hidden="[[!_showProgress]]">
             </paper-progress>
         </div>
 
@@ -192,9 +185,9 @@
 
         <!-- GET POSTS -->
         <steem-get-state
-                path="[[_steemPath]]"
+                path="[[currentSorting]]/[[currentTag]]"
                 posts="{{_posts}}"
-                query-error="{{_queryError}}">
+                is-loading="{{_showProgress}}">
         </steem-get-state>
     </template>
 
@@ -210,14 +203,14 @@
                 currentSorting: {
                     type: String,
                     notify: true,
-                    observer: '_updateSteemPath'
+                    observer: '_pathChanged'
                 },
 
                 // Current filter tag (esteem8, ...)
                 currentTag: {
                     type: String,
                     notify: true,
-                    observer: '_updateSteemPath'
+                    observer: '_pathChanged'
                 },
 
                 settings: {
@@ -234,24 +227,13 @@
                     notify: true
                 },
 
-                _steemPath: {
-                    type: String,
-                    observer: '_steemPathChanged'
-                },
-
                 _posts: {
-                    type: Array,
-                    observer: '_showProgress'
+                    type: Array
                 },
 
                 _isSelectCategoryOpened: {
                     type: Boolean,
                     notify: true
-                },
-
-                _queryError: {
-                    type: Boolean,
-                    observer: '_showToast'
                 },
 
                 _showProgress: {
@@ -267,6 +249,8 @@
                 }
             },
 
+            observer: ['_pathChanged(currentSorting, currentTag)'],
+
             ready: function() {
 
                 // List events
@@ -280,6 +264,12 @@
 
             },
 
+            _pathChanged: function(currentSorting, currentTag) {
+
+                console.log('currentSorting'+currentSorting);
+                console.log('currentSorting'+currentTag);
+            },
+
             _openDrawer: function() {
 
                 document.getElementById('appshell')._openDrawer();
@@ -290,50 +280,19 @@
                 this._isSelectCategoryOpened = true;
             },
 
-            _updateSteemPath: function() {
+            _pathChanged: function() {
 
                 // Check if this is the app tag
                 this._computeIsEsteem8Tag();
 
                 // Check if tag is in favorite
                 this._refreshIsCurrentTagInFavorite();
-
-                var currentTag = (typeof this.currentTag === 'undefined') ?
-                        '': // use default tag
-                        this.currentTag; // use current tag
-
-                var currentSorting = (typeof this.currentSorting === 'undefined') ?
-                        'trending': // use default sorting
-                        this.currentSorting; // use current sorting
-
-                var steemPath = (currentTag == '') ?
-                        '/' + currentSorting: // only use sorting without tag
-                        '/' + currentSorting + '/' + currentTag; // Use sorting and tag
-
-                // Set path
-                this._steemPath = steemPath;
             },
 
             _steemPathChanged: function() {
 
                 // Scroll to top after new posts loaded
                 window.scrollTo(0, 0);
-            },
-
-            _showProgress: function() {
-
-                // Show progress bar or not
-                this._showProgress = (!this._posts.length);
-            },
-
-            _showToast: function () {
-
-                // If there is a query error
-                if(this._queryError == true){
-
-                    this.$.toastPostNotFound.show(); // Show toast
-                    this._queryError = false; // Reset error statement
-                }
             },
 
             _computeIsEsteem8Tag: function() {

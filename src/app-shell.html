@@ -286,8 +286,6 @@
                     };
                 }
 
-                // Select default page
-                this._routePageChanged();
             },
 
             attached: function() {
@@ -299,11 +297,11 @@
             _routeChanged: function() {
 
                 // Get url and put these in variables
-                var dataUrl1 = this.dataUrl1 ? this.dataUrl1.data : '';
-                var dataUrl2 = this.dataUrl2 ? this.dataUrl2.data : '';
-                var dataUrl3 = this.dataUrl3 ? this.dataUrl3.data : '';
+                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
+                var dataUrl2 = typeof this.dataUrl2 !== 'undefined' ? this.dataUrl2.data : '';
+                var dataUrl3 = typeof this.dataUrl3 !== 'undefined' ? this.dataUrl3.data : '';
 
-                // Transmit them to function that choose page
+                // Transmit url splited to function that choose page
                 this._routePageChanged(dataUrl1, dataUrl2, dataUrl3);
             },
 
@@ -311,9 +309,9 @@
             _routePageChanged: function(dataUrl1, dataUrl2, dataUrl3) {
 
                 // SET /dataUrl1/dataUrl2/dataUrl3 in variables
-                dataUrl1 = dataUrl1 || '';
-                dataUrl2 = dataUrl2 || '';
-                dataUrl3 = dataUrl3 || '';
+                var dataUrl1 = dataUrl1 || '';
+                var dataUrl2 = dataUrl2 || '';
+                var dataUrl3 = dataUrl3 || '';
 
                 // Choose page
                 if(dataUrl1 == ''){
@@ -357,6 +355,8 @@
 
             // Load and display page
             _selectedPageChanged: function(page) {
+
+
 
                 // Get page name
                 var page = page || this.selectedPage;
