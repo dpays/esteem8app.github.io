@@ -53,7 +53,7 @@
         <app-localstorage-document key="favoriteTags" data="{{favoriteTags}}"></app-localstorage-document>
 
         <!-- GET ACCOUNT -->
-        <steem-get-account account-name="[[settings.user.name]]"
+        <steem-get-account account-name="[[_username]]"
                            account="{{settings.user.account}}">
         </steem-get-account>
 
@@ -216,6 +216,10 @@
 
                 _isDrawerOpen: {
                     type: Boolean
+                },
+
+                _username: {
+                    type: String
                 }
 
             },
@@ -224,7 +228,7 @@
 
                 '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
                 '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)',
-                '_accountChanged(settings.user.account)'
+                '_userNameChanged(settings.user.name)'
             ],
 
             ready: function() {
@@ -392,6 +396,11 @@
             _openDrawer: function() {
 
                 this._isDrawerOpen = true;
+            },
+
+            _userNameChanged: function(username) {
+
+                this._username = username;
             }
         });
     </script>

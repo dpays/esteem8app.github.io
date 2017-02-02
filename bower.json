@@ -42,8 +42,7 @@
     "iron-scroll-threshold": "PolymerElements/iron-scroll-threshold#^1.0.3",
     "awesome-button": "*",
     "paper-menu-button": "PolymerElements/paper-menu-button#^1.5.2",
-    "paper-slider": "PolymerElements/paper-slider#^1.0.13",
-    "prism-element": "PolymerElements/prism-element#^1.2.0"
+    "paper-slider": "PolymerElements/paper-slider#^1.0.13"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

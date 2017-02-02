@@ -267,10 +267,6 @@
                 }
             },
 
-            observers: [
-                '_updateSteemPath(currentSorting, currentTag)'
-            ],
-
             ready: function() {
 
                 // List events
@@ -282,6 +278,11 @@
                 this._isSelectCategoryOpened = false;
                 this._showProgress = true;
 
+            },
+
+            _openDrawer: function() {
+
+                document.getElementById('appshell')._openDrawer();
             },
 
             _openSelectCategoryDialog: function() {
@@ -297,28 +298,17 @@
                 // Check if tag is in favorite
                 this._refreshIsCurrentTagInFavorite();
 
-                // Set posts empty for new path
-                //this._posts = [];
-                var steemPath = '';
-                var currentTag = '';
-                var currentSorting = 'trending';
+                var currentTag = (typeof this.currentTag === 'undefined') ?
+                        '': // use default tag
+                        this.currentTag; // use current tag
 
-                if(typeof this.currentTag !== 'undefined') {
-                    currentTag = this.currentTag;
-                }
+                var currentSorting = (typeof this.currentSorting === 'undefined') ?
+                        'trending': // use default sorting
+                        this.currentSorting; // use current sorting
 
-                if(typeof this.currentSorting !== 'undefined') {
-                    currentSorting = this.currentSorting || 'trending';
-                }
-
-                // '/sorting' or '/sorting/tag'
-                if(currentTag == '') {
-
-                    steemPath =  '/' + currentSorting;
-                }else {
-
-                    steemPath = '/' + currentSorting + '/' + currentTag;
-                }
+                var steemPath = (currentTag == '') ?
+                        '/' + currentSorting: // only use sorting without tag
+                        '/' + currentSorting + '/' + currentTag; // Use sorting and tag
 
                 // Set path
                 this._steemPath = steemPath;
@@ -330,41 +320,25 @@
                 window.scrollTo(0, 0);
             },
 
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
-            },
-
             _showProgress: function() {
 
                 // Show progress bar or not
-                if(!this._posts.length){
-
-                    this._showProgress = true;
-                }else {
-
-                    this._showProgress = false;
-                }
+                this._showProgress = (!this._posts.length);
             },
 
             _showToast: function () {
 
-                // If there is a query error -> show a toast & reset error statement
+                // If there is a query error
                 if(this._queryError == true){
-                    this.$.toastPostNotFound.show();
-                    this._queryError = false;
+
+                    this.$.toastPostNotFound.show(); // Show toast
+                    this._queryError = false; // Reset error statement
                 }
             },
 
             _computeIsEsteem8Tag: function() {
 
-                if(this.currentTag == 'esteem8') {
-
-                    this._isEsteem8Tag = true;
-                }else {
-
-                    this._isEsteem8Tag = false;
-                }
+                this._isEsteem8Tag = (this.currentTag == 'esteem8');
             },
 
             _refreshIsCurrentTagInFavorite: function () {
@@ -406,8 +380,8 @@
                     this.push('favoriteTags', this.currentTag);
                 }
 
-                // Refresh actual state of user
-                this._isCurrentTagInFavorite = !this._isCurrentTagInFavorite;
+                // Refresh actual state of fav tag displayed in floating toolbar
+                this._refreshIsCurrentTagInFavorite();
             }
 
         });

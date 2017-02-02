@@ -75,6 +75,10 @@
             <template is="dom-if" if="[[_isFileCode]]">
                 <prism-render code="[[_fileText]]"></prism-render>
             </template>
+
+            <template is="dom-if" if="[[_isFileImage]]">
+                <prism-render code="[[file.download_url]]"></prism-render>
+            </template>
         </div>
 
 
@@ -112,6 +116,10 @@
 
                     _isFileDir: {
                         type: Boolean
+                    },
+
+                    _isFileImage: {
+                        type: Boolean
                     }
                 },
 
@@ -127,8 +135,10 @@
                 _computeFileType: function() {
 
                     this._isFileMarkdown = (this._computeFileIcon(this.file.name)  == 'text-file');
+                    this._isFileImage = (this._computeFileIcon(this.file.name)  == 'image');
                     this._isFileCode = (this._computeFileIcon(this.file.name)  == 'code');
                     this._isFileDir = (this._computeFileIcon(this.file.name, this.file.type)  == 'folder');
+
                 },
 
                 _openFileInGithub: function(e) {
@@ -159,7 +169,10 @@
                             }else if(name.includes('.html') || name.includes('.js') || name.includes('.css') || name.includes('.json')) {
 
                                 return 'code';
-                            }else {
+                            }else if(name.includes('.jpg') || name.includes('.jpeg') || name.includes('.png') || name.includes('.gif') ||  name.includes('.svg')) {
+
+                                return 'image';
+                            }else{
 
                                 return 'file';
                             }
