@@ -51,6 +51,7 @@
         <app-localstorage-document key="favoritePosts" data="{{favoritePosts}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteUsers" data="{{favoriteUsers}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteTags" data="{{favoriteTags}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteFiles" data="{{favoriteFiles}}"></app-localstorage-document>
 
         <!-- GET ACCOUNT -->
         <steem-get-account account-name="[[_username]]"
@@ -126,12 +127,19 @@
                             favorite-users="{{favoriteUsers}}">
             </page-favorites>
 
+            <page-tools name="tools"></page-tools>
+
             <page-profile name="profile"
                           settings="[[settings]]"
                           user="[[dataUrl1.data]]"
                           favorite-posts="{{favoritePosts}}"
                           favorite-users="{{favoriteUsers}}">
             </page-profile>
+
+            <page-files name="files"
+                        settings="[[settings]]"
+                        favorite-files="{{favoriteFiles}}">
+            </page-files>
 
             <page-settings name="settings"
                            settings="{{settings}}">
@@ -211,6 +219,14 @@
                     type: Array
                 },
 
+                /*
+                 * favorite files array
+                 * Stored in browser
+                 */
+                favoriteFiles: {
+                    type: Array
+                },
+
                 _isDrawerOpen: {
                     type: Boolean
                 },
@@ -238,6 +254,7 @@
                 if(typeof this.favoritePosts == 'undefined') { this.favoritePosts = [];}
                 if(typeof this.favoriteUsers == 'undefined') { this.favoriteUsers = ['esteem8'];}
                 if(typeof this.favoriteTags == 'undefined') { this.favoriteTags = ['esteem8'];}
+                if(typeof this.favoriteFiles == 'undefined') { this.favoriteFiles = [{name: 'ESTEEM8 Logo', url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true'}];}
 
                 if(typeof this.settings == 'undefined') {
 
@@ -327,11 +344,19 @@
                 }else if(dataUrl1 == 'info') {
 
 
-                    this.selectedPage = 'info'; // SETTINGS
+                    this.selectedPage = 'info'; // INFO
+                }else if(dataUrl1 == 'tools') {
+
+
+                    this.selectedPage = 'tools'; // TOOLS
                 }else if(dataUrl1 == 'support') {
 
 
                     this.selectedPage = 'support'; // SUPPORT
+                }else if(dataUrl1 == 'files') {
+
+
+                    this.selectedPage = 'files'; // FILES
                 }else if(dataUrl1.charAt(0) == '@'){
 
 
@@ -348,6 +373,9 @@
 
                     this.selectedPage = '404'; // PAGE 404
                 }
+
+                // Close drawer
+                this.$.drawer.close();
             },
 
             // Load and display page
@@ -436,6 +464,12 @@
                 this.push('favoriteTags', category);
             },
 
+            addFavoriteFile: function(file) {
+
+                // Add tag to favorite
+                this.push('favoriteFiles', file);
+            },
+
             removeFavoritePost: function(post) {
 
                 // remove post from favorite
@@ -455,6 +489,13 @@
                 // remove tag from favorite
                 var index = this.favoritePosts.indexOf(category); // index to delete
                 this.splice('favoriteTags', index, 1); // Delete index found
+            },
+
+            removeFavoriteFile: function(file) {
+
+                // remove file from favorite
+                var index = this.favoritePosts.indexOf(file); // index to delete
+                this.splice('favoriteFiles', index, 1); // Delete index found
             }
 
         });

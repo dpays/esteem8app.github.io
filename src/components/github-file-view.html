@@ -34,7 +34,8 @@
                 border: 1px solid var(--app-background-secondary-text-color);
                 padding: 8px;
                 max-width: 550px;
-                overflow-y: auto;
+                height: 500px;
+                overflow: auto;
             }
 
             marked-element a{
@@ -49,6 +50,10 @@
             <iron-icon icon="my-icons:[[_computeFileIcon(file.name, file.type)]]"></iron-icon>
             [[file.name]]
             <div class="right" hidden="[[_isFileDir]]">
+                <paper-icon-button id="githubLinkDownload"
+                                   on-tap="_downloadFile()"
+                                   icon="my-icons:download">
+                </paper-icon-button>
                 <paper-icon-button id="githubLinkHistory"
                                    on-tap="_openFileInGithub()"
                                    open-type="commits"

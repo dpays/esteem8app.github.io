@@ -4,6 +4,7 @@
 
 <link rel="import" href="post-path-list.html">
 <link rel="import" href="post-wrapper.html">
+<link rel="import" href="github-repository.html">
 
 <dom-module id="html-echo">
     <style>
@@ -35,7 +36,7 @@
 
         /* TABLES */
         .markdown-html table {
-            width: 100%;
+            max-width: 100%;
             border-collapse: collapse;
             overflow: scroll;
         }
@@ -64,10 +65,19 @@
             background-color: #777;
         }
 
+        /* APP Elements */
+        .markdown-html post-path-list {
+            width: 100%;
+        }
+
+        .markdown-html post-wrapper {
+            width: 100%;
+        }
+
     </style>
     <template>
         <marked-element markdown="[[_htmlDisplayed]]">
-            <div class="markdown-html"></div>
+            <div class="markdown-html">[[_htmlDisplayed]]</div>
         </marked-element>
     </template>
 </dom-module>
@@ -102,33 +112,123 @@
 
                 if(html.includes('― Leonardo da Vinci')){
 
-                    html += ' created/esteem8 ';
-                    html += ' esteem8/@esteem8/what-the-esteem8-is-fuck';
+                    //html += ' created/esteem8-features ';
+                    //html += ' https://github.com/esteem8app/esteem8app.github.io ';
+                    //html += ' steem/@esteem8/esteem8-community-proposals ';
+                    //html += ' esteem8/@esteem8/what-the-esteem8-is-fuck ';
                 }
 
-                // Tag path -> <post-path-list>
-                var tagPathRegex = /(created|hot|trending|active)\/[a-zA-Z0-9-]+/gm;
+                /* RENDER in-app elements from link*/
 
+                // Tag path -> <post-path-list>
+                /*var tagPathRegex = /[^("|'|[)](created|hot|trending|active)\/[a-zA-Z0-9-]+/gm;
                 html = html.replace(tagPathRegex, function(match){
 
+                    var match = match.replace(" ", "");
+                    console.log(match);
+                    return '<post-path-list steem-path="' + match + '" post-type="card-light"></post-path-list>';
+                });
+
+                // User path -> <post-path-list>
+                var tagPathRegex = /[^(\/|"|'|[)]\/@[a-zA-Z0-9-]+/gm;
+                html = html.replace(tagPathRegex, function(match){
+
+                    var match = match.replace(" ", "");
                     return '<post-path-list steem-path="' + match + '" post-type="card-light"></post-path-list>';
                 });
 
                 // Post path -> <post>
                 var postPathRegex = /[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
-
                 html = html.replace(postPathRegex, function(match){
 
+                    var match = match.replace(" ", "");
                     return '<post-wrapper steem-path="' + match + '" post-type="card-light"></post-wrapper>';
+                });*/
+
+                // Github repository path -> <github-repository>
+                var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+/gm
+                html = html.replace(gitHubRepositoryRegex, function(match){
+
+                    var match = match.replace(" ", "");
+                    return '<github-repository repository="' + match + '" ></github-repository>';
                 });
+
+                // Consider it link -> <responsive-iframe>
+                var considerItRegex = /[^("|'|[)]https:\/\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.it\//gm;
+                html = html.replace(considerItRegex, function(match){
+
+                    var url = match.replace(" ", "");
+                    return '<responsive-iframe src="' + url + '" ></responsive-iframe>';
+                });
+
+                // Youtube video
+                var youtubeVideoregex = /[^("|'|[)]https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
+                html = html.replace(youtubeVideoregex, function(match){
+
+                    var match = match.replace(" ", "");
+                    var url = match.replace("https://www.youtube.com/watch?v=", "");
+                        url = match.replace("https://www.youtube.com/embed/", "");
+                    return '<responsive-iframe src="' + url + '" ></responsive-iframe>';
+                });
+
+                // Soundcloud track + maybe other soundcloud elements
+
+                // PDF
+                // https://customelements.io/streetturtle/pdf-element/
+
+                // Google docs -> <google-docs-embedded>
+                var googleDocsRegex = /[^("|'|[)]https:\/\/docs\.google\.com\/(presentation|document|spreadsheets|forms)\/d\/(e\/)?[a-zA-Z0-9-]+\/[?&a-zA-Z0-9-#=]+/gm;
+                html = html.replace(googleDocsRegex, function(match){
+
+                    var match = match = match.replace(" ", "");
+
+                    // Url can be one that is published or one that we use to edit doc
+                    var rawDocummentUrlRegex = /[^("|'|[)]https:\/\/docs\.google\.com\/(presentation|document|spreadsheets|forms)\/d\/(e\/)?[a-zA-Z0-9-]+\//g
+                    var url = rawDocummentUrlRegex.exec(match);
+
+                    if(url.includes('https://docs.google.com/presentation') || url.includes('https://docs.google.com/document')) {
+
+                        url += 'pub';
+                    }
+
+                    if(url.includes('https://docs.google.com/spreadsheets')) {
+
+                        url += 'pubhtml';
+                    }
+
+                    if(url.includes('https://docs.google.com/forms')) {
+
+                        url += 'viewform';
+                    }
+
+                    return '<google-docs-embedded src="' + url + '" ></google-docs-embedded>';
+                });
+
+
 
 
                 this._htmlDisplayed = html;
 
                 /* TODO
+                 * [ ] implement set post type from link such as card-light:/path
                  * [X] Render markdown as HTML
                  * [ ] transform links into HTML or Custom elements
+                 * [ ] transform absolute url that can be used by the app into relative to make theme functional
                  * [ ] Sanitize HTML
+                 */
+
+                /*
+                 * IDEAS
+                 * Email form maybe with https://formspree.io
+                 * Github HTML API file
+                 * Github HTML API folder
+                 * Github HTML API organization
+                 * Github HTML API Account
+                 * Github JS API implementation
+                 * Raw video extraction from yt and + with custom video player found on customelement.io
+                 * soundcloud JS API implementation https://developers.soundcloud.com/docs/api/guide
+                 * Discord embedded on desktop or link on mobile
+                 * Render code with prism render
                  */
 
             }

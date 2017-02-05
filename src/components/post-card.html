@@ -190,14 +190,29 @@
         <!-- Share dialog -->
         <paper-dialog id="shareDialog" with-backdrop>
             <paper-listbox>
+                <a target="_blank" href="https://www.reddit.com/submit?url=[[_domainName]][[post.url]]">
+                    <paper-item>
+                        <iron-icon icon="my-icons:reddit"></iron-icon>
+                        &nbsp;Reddit this !
+                    </paper-item>
+                </a>
                 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=[[_domainName]][[post.url]]">
-                    <paper-item>Share on Facebook</paper-item>
+                    <paper-item>
+                        <iron-icon icon="my-icons:facebook"></iron-icon>
+                        &nbsp;Facebook this :/
+                    </paper-item>
                 </a>
                 <a target="_blank" href="https://twitter.com/home?status=[[_domainName]][[post.url]]">
-                    <paper-item>Share on Twitter</paper-item>
+                    <paper-item>
+                        <iron-icon icon="my-icons:twitter"></iron-icon>
+                        &nbsp;Twitt this :(
+                    </paper-item>
                 </a>
                 <a target="_blank" href="https://plus.google.com/share?url=[[_domainName]][[post.url]]">
-                    <paper-item>Share on Google+</paper-item>
+                    <paper-item>
+                        <iron-icon icon="my-icons:google-plus"></iron-icon>
+                        &nbsp;Google+ what's that shit ?
+                    </paper-item>
                 </a>
             </paper-listbox>
         </paper-dialog>
@@ -297,7 +312,7 @@
 
             <!-- ACTION BUTTONS -->
             <div class="card-actions-buttons">
-                <paper-icon-button icon="my-icons:arrow-up"
+                <paper-icon-button icon="my-icons:thumb-up"
                                    class="upvote">
                 </paper-icon-button>[[post.net_votes]]
 

@@ -239,7 +239,10 @@
                 }
             },
 
-            observer: ['_pathChanged(currentSorting, currentTag)'],
+            observer: [
+                    '_pathChanged(currentSorting, currentTag)',
+                    '_refreshIsCurrentTagInFavorite(currentTag)'
+            ],
 
             ready: function() {
 
@@ -251,6 +254,7 @@
                 // Default variables value
                 this._isSelectCategoryOpened = false;
                 this._showProgress = true;
+                this._isCurrentTagInFavorite = false;
 
             },
 
@@ -268,9 +272,6 @@
 
                 // Check if this is the app tag
                 this._computeIsEsteem8Tag();
-
-                // Check if tag is in favorite
-                this._refreshIsCurrentTagInFavorite();
             },
 
             _steemPathChanged: function() {
@@ -284,11 +285,13 @@
                 this._isEsteem8Tag = (this.currentTag == 'esteem8');
             },
 
-            _refreshIsCurrentTagInFavorite: function () {
+            _refreshIsCurrentTagInFavorite: function (currentTag) {
+
+                var currentTag = currentTag || this.currentTag;
 
                 if(typeof this.favoriteTags === 'undefined') { return false; }
 
-                this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(this.currentTag);
+                this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(currentTag);
             },
 
             _computeFavoriteTagIcon: function(tagIsInFavorite) {
@@ -318,6 +321,12 @@
                 // Refresh actual state of fav tag displayed in floating toolbar
                 this._refreshIsCurrentTagInFavorite();
             }
+
+            /*
+             * TODO
+             * Current tag change the url
+             * Steem path possible to be a username
+             */
 
         });
     </script>

@@ -424,6 +424,8 @@
                 // Tag url part in page explore need to be repaired
 
                 // Back to previous URL
+                this.set('author', this.category); // WTF ? -> Because url parts 2 (tag) does not work
+                this.set('category', 'hot');
                 window.history.back();
             },
 

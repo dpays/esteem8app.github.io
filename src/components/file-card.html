@@ -1,0 +1,115 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="file-card">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: inline-flex;
+                background-color: var(--app-primary-background-color);
+            }
+
+            * {
+                font-weight: 300;
+            }
+
+            #fileCard {
+                display: block;
+                margin: 12px;
+                background: var(--app-secondary-background-color)
+                --paper-card-background-color: var(--app-secondary-background-color);
+                --paper-card-header-color: var(--app-background-primary-text-color);
+                --paper-card-header-image: {
+                    width: 216px;
+                    height: 133px;
+                };
+
+                --paper-card-header-text: {
+                    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .8));
+                    font-size: 12px;
+                    width: 100%;
+                    margin: 0;
+                    padding: 12px;
+                    color: #eee;
+
+                };
+            }
+
+
+
+        </style>
+
+
+        <!-- post cards -->
+
+        <paper-card id="fileCard"
+                    heading="[[file.name]]"
+                    image="[[file.url]]">
+        </paper-card>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'file-card',
+
+            behaviors: [
+                Polymer.AppLocalizeBehavior
+            ],
+
+            properties: {
+
+                file: {
+                    type: Object
+                },
+
+                _imageUrl: {
+                    type: String
+                }
+            },
+
+            observer: [
+                '_computeImageUrl(file)'
+            ],
+
+            ready: function() {
+
+                // List events
+                this.rf = new IntlRelativeFormat('en-us');
+            },
+
+            _computeImageUrl: function(file) {
+
+                if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
+
+                    this._imageUrl = file.url;
+                }else if(file.url.includes('docs.google.com/document')) {
+
+                    this._imageUrl =  'https://lh4.ggpht.com/-wROmWQVYTcjs3G6H0lYkBK2nPGYsY75Ik2IXTmOO2Oo0SMgbDtnF0eqz-BRR1hRQg=w300';
+                }
+            },
+
+            _timeFromNow: function(date) {
+
+                return new IntlRelativeFormat('en-us').format(new Date(date));
+            }
+
+        });
+
+    </script>
+</dom-module>

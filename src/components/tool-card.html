@@ -1,0 +1,105 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="tool-card">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+
+            #steemTool {
+                width: 400px;
+                margin-top: 12px;
+                margin-left: 16px;
+                margin-right: 16px;
+                color: var(--app-background-secondary-text-color);
+                --paper-card-background-color: var(--app-secondary-background-color);
+                --paper-card-header-text: {
+                    color: #fff;
+                    background-color: rgba(0, 0, 0, .5);
+                    width: 100%;
+                    text-align: left;
+                };
+                --paper-card-header-image: {
+                    height: 180px;
+                };
+            }
+
+            #steemTool .card-content {
+                height: 38px;
+                text-align: left;
+            }
+
+            @media screen and (max-width: 600px) {
+                #steemTool {
+                    width: 100%;
+                    margin-top: 12px;
+                    margin-left: 0px;
+                    margin-right: 0px;
+            }
+
+            #steemTool .card-actions {
+                text-align: right !important;
+            }
+
+            #steemTool .card-actions paper-button {
+                font-weight: bold;
+                color: var(--app-background-primary-text-color);
+            }
+
+
+        </style>
+
+        <paper-card id="steemTool"
+                    heading="[[tool.title]]"
+                    image="[[tool.image]]">
+            <div class="card-content">
+                [[tool.description]]
+            </div>
+            <div class="card-actions">
+                <paper-button id="openToolButton">open</paper-button>
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'tool-card',
+
+            behaviors: [
+                Polymer.AppLocalizeBehavior
+            ],
+
+            properties: {
+
+                tool: {
+                    type: Object
+                }
+            },
+
+            ready: function() {
+
+                this.$.openToolButton.addEventListener('tap', this._openLink.bind(this));
+            },
+
+            _openLink: function() {
+
+                window.open(this.tool.link);
+            }
+
+        });
+
+    </script>
+</dom-module>

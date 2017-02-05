@@ -7,21 +7,26 @@
 
     <template>
 
-
+        <style>
+            #posts {
+                display: flex;
+                overflow: auto;
+                padding: 16px;
+            }
+        </style>
 
         <steem-get-state path="[[steemPath]]"
                          posts="{{_posts}}">
         </steem-get-state>
 
-        <div id="postList">
-                [[_posts]]
+        <div id="posts">
+            <template is="dom-if" if="[[_posts.length]]">
                 <template is="dom-repeat" items="[[_posts]]">
-                    post-wrapper
-                    <!--post-wrapper post-type="[[postType]]"
+                    <post-wrapper post-type="[[postType]]"
                                   post="[[item]]">
-                    </post-wrapper-->
+                    </post-wrapper>
                 </template>
-
+            </template>
         </div>
 
     </template>
@@ -48,14 +53,14 @@
                 },
 
                 _posts: {
-                    type: Object,
+                    type: Array,
                     observer: '_postsChanged'
                 }
             },
 
             ready: function () {
 
-                this._posts = [];
+                console.log(this.steemPath);
             },
 
             _computeTagName: function() {
@@ -73,7 +78,9 @@
             },
 
             _postsChanged: function() {
-                console.log(this._posts);
+                console.log("For path "+this.steemPath+", posts ==="+this._posts);
+
+                this.$.posts.style.maxWidth = '568px';//this.$.posts.offsetWidth + 'px';
             }
 
         });

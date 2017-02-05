@@ -1,0 +1,119 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/file-card.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="page-files">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                height: 100%;
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                margin-top: -16px;
+                padding-top: 16px;
+                padding-bottom: 16px;
+                display: block;
+                background-color: var(--app-primary-background-color);
+            }
+
+            #fileOptionToolbar {
+                background-color: var(--app-dark-primary-color);
+                color: var(--app-primary-text-color);
+                width: 100%;
+            }
+
+            .dark-primary {
+                text-align: right;
+                width: 100%;
+            }
+
+            .page-content {
+                margin-top: 128px;
+            }
+
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar medium-tall">
+            <a href="/tools">
+                <paper-icon-button icon="my-icons:arrow-back"></paper-icon-button>
+            </a>
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    My files
+                </span>
+            </div>
+            <a href="/trending">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+            <div class="bottom right dark-primary">
+                <paper-icon-button id="copyFileLinkButton"
+                                   on-tap="_copyFileLink()"
+                                   icon="my-icons:copy">
+                </paper-icon-button>
+
+                <paper-icon-button id="openFileLinkButton"
+                                   on-tap="_openLink()"
+                                   icon="my-icons:link">
+                </paper-icon-button>
+                <paper-icon-button id="editFileLinkButton"
+                                   icon="my-icons:edit"
+                                   on-tap="_editFileLink()">
+                </paper-icon-button>
+            </div>
+        </paper-toolbar>
+
+        <div class="page-content">
+
+            <template is="dom-if" if="[[!favoriteFiles.length]]">
+                <h1>You don't have any files</h1>
+            </template>
+
+            <template is="dom-if" if="[[favoriteFiles.length]]">
+                <div class="file-cards">
+                    <template is="dom-repeat" items="[[favoriteFiles]]">
+                        <file-card file="[[item]]"></file-card>
+                    </template>
+                </div>
+            </template>
+
+        </div>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'page-files',
+
+            properties: {
+
+                favoriteFiles: {
+                    type: Array,
+                    notify: true
+                },
+
+                settings: {
+                    type: Object
+                }
+            }
+
+            //http://uploads.im/apidocs
+        });
+    </script>
+</dom-module>

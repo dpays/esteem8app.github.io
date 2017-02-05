@@ -11,6 +11,9 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
 <link rel="import" href="../components/post-card-light.html">
 <link rel="import" href="../components/post-card.html">
@@ -176,13 +179,26 @@
                 }
             }
 
-            div[name="about"] a, div[name="about"] iron-icon {
-                color: var(--app-background-primary-text-color);
-            }
-
             div[name="about"] h2 {
                 margin-bottom: 0px;
-                margin-left: 16px;
+                margin-left: 8px;
+            }
+
+            .aboutValues {
+                display: block;
+                font-family: 'Roboto', 'Open Sans', 'Lato', sans-serif;
+                padding-bottom: 4px;
+            }
+
+            .aboutValues .name {
+                color: var(--app-secondary-color);
+            }
+
+            #aboutViewName {
+                display: inline-block;
+                vertical-align: sub;
+                margin-top: 0;
+                color: var(--app-background-primary-text-color);
             }
 
             #votingPower {
@@ -198,10 +214,19 @@
                 --paper-slider-disabled-active-color: var(--app-background-primary-text-color);
             }
 
+            .link a {
+                color: var(--app-secondary-color) !important;
+            }
+
+            .link iron-icon {
+                color: var(--app-background-primary-text-color);
+            }
+
             paper-card {
                 background-color: var(--app-secondary-background-color);
                 --paper-card-header-text: {
                     font-size: 18px;
+                    padding-bottom: 0;
                     text-transform: uppercase;
                     font-family: 'Roboto', 'Open Sans', sans-serif;
                     color: var(--app-background-primary-text-color);
@@ -215,6 +240,16 @@
                 max-width: 568px;
                 overflow: auto;
                 display: inline-flex;
+            }
+
+            paper-menu-button {
+                color: var(--app-background-primary-text-color);
+                margin-left: 8px;
+            }
+
+            paper-menu, paper-item {
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-secondary-text-color);
             }
 
             .pinnedPostVotes {
@@ -319,7 +354,7 @@
             </div>
 
             <paper-tabs id="profileTabs"
-                        selected="{{currentView}}"
+                        selected="{{currentProfileView}}"
                         attr-for-selected="name"
                         fit-container
                         scrollable
@@ -339,81 +374,123 @@
                     <iron-icon icon="my-icons:history"></iron-icon>
                 </paper-tab>
                 <paper-tab name="followers">
-                    <iron-icon icon="my-icons:chevron-right"></iron-icon>
-                    <iron-icon icon="my-icons:user"></iron-icon>
+                    <iron-icon icon="my-icons:follower"></iron-icon>
                 </paper-tab>
                 <paper-tab name="following">
-                    <iron-icon icon="my-icons:user"></iron-icon>
-                    <iron-icon icon="my-icons:chevron-right"></iron-icon>
+                    <iron-icon icon="my-icons:following"></iron-icon>
                 </paper-tab>
             </paper-tabs>
 
         </div>
 
         <!-- CONTENT -->
-        <iron-pages selected="[[currentView]]"
+        <iron-pages selected="[[currentProfileView]]"
                     attr-for-selected="name">
 
+            <!-- ABOUT -->
             <div name="about">
-                <h2>Presentation</h2>
-                <paper-card>
-                    <div class="card-content">
-                        <template is="dom-if" if="[[account.about.length]]">
-                            <div class="about">
-                                <p>[[account.about]]</p>
+
+                <paper-menu-button>
+                    <paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button>
+                    <paper-menu id="aboutmenu" class="dropdown-content">
+                        <paper-item view="home">Home</paper-item>
+                        <template is="dom-if" if="[[account.pinnedPosts]]">
+                            <template is="dom-repeat" items="[[_toJson(account.pinnedPosts)]]">
+                                <paper-item view="[[item]]">[[_getPostTitleFromPath(item)]]</paper-item>
+                            </template>
+                        </template>
+                    </paper-menu>
+                </paper-menu-button>
+
+                <h2 id="aboutViewName">[[_getPostTitleFromPath(_currentAboutView)]]</h2>
+
+                <iron-pages selected="[[_currentAboutView]]"
+                            attr-for-selected="name">
+
+                    <div name="home">
+                        <paper-card heading="Informations" class="homeCard">
+
+                            <div class="card-content">
+                                <template is="dom-if" if="[[account.about.length]]">
+                                    <div class="about">
+                                        <p>[[account.about]]</p>
+                                    </div>
+                                </template>
+
+                                <template is="dom-if" if="[[account.location.length]]">
+                                    <div class="location">
+                                        <iron-icon icon="my-icons:map"></iron-icon>
+                                        <span>[[account.location]]</span>
+                                    </div>
+                                </template>
+
+                                <template is="dom-if" if="[[account.website.length]]">
+                                    <div class="link website">
+                                        <iron-icon icon="my-icons:web"></iron-icon>
+                                        <a target="_blank" href="[[account.website]]">[[_computeLinkText(account.website)]]</a>
+                                    </div>
+                                </template>
+                                <template is="dom-if" if="[[account.webLinks.length]]">
+                                    <template is="dom-repeat" items="[[_toJson(account.webLinks)]]">
+                                        <div class="link">
+                                            <iron-icon icon="my-icons:[[_computeLinkIcon(item)]]"></iron-icon>
+                                            <a target="_blank" href="[[item]]">[[_computeLinkText(item)]]</a>
+                                        </div>
+                                    </template>
+                                </template>
                             </div>
+                        </paper-card>
+
+                        <template is="dom-if" if="[[account.customValues]]">
+                            <paper-card heading="About" class="homeCard">
+                                <div class="card-content">
+                                    <template is="dom-repeat" items="[[_toJson(account.customValues)]]">
+                                        <div class="aboutValues">
+                                            <span class="name">[[item.name]]:</span>
+                                            <span class="value">&nbsp;[[item.value]]</span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </paper-card>
                         </template>
 
-                        <template is="dom-if" if="[[account.location.length]]">
-                            <div class="location">
-                                <iron-icon icon="my-icons:map"></iron-icon>
-                                <span>[[account.location]]</span>
-                            </div>
-                        </template>
+                        <!--div id="votingPower">
+                              <paper-slider id="votingPowerBar" disabled value="[[account.votingPower]]"></paper-slider>
+                              [[account.votingPower]]%
+                          </div-->
 
-                        <template is="dom-if" if="[[account.website.length]]">
-                            <div class="link website">
-                                <iron-icon icon="my-icons:web"></iron-icon>
-                                <a target="_blank" href="[[[account.website]]">[[account.website]]</a>
-                            </div>
-                        </template>
+                        <!-- LAST POST -->
+                        <paper-card heading="Last [[user]] publications" class="homeCard">
+                            <post-path-list steem-path="[[user]]" post-type="card-light"></post-path-list>
+                        </paper-card>
 
-                        <template is="dom-if" if="[[account.githubLink.length]]">
-                            <div class="link github">
-                                <iron-icon icon="my-icons:github"></iron-icon>
-                                <a target="_blank" href="[[account.githubLink]]">[[account.githubText]]</a>
-                            </div>
+                        <!-- PINED POSTS (presentation) -->
+                        <template is="dom-if" if="[[account.pinnedPost]]">
+                            <paper-card>
+                                <post-wrapper post-type="content-minimal"
+                                              post-path="[[account.pinnedPost]]">
+                                </post-wrapper>
+                            </paper-card>
                         </template>
                     </div>
-                </paper-card>
 
-                <!--div id="votingPower">
-                      <paper-slider id="votingPowerBar" disabled value="[[account.votingPower]]"></paper-slider>
-                      [[account.votingPower]]%
-                  </div-->
-
-                <!-- LAST POST -->
-               <pinned-tag-card steem-path="[[user]]"></pinned-tag-card>
-
-                <!-- PINED POSTS (presentation) -->
-                <template is="dom-if" if="[[account.pinnedPosts.length]]">
-
-                    <h2>
-                        <iron-icon icon="my-icons:pin"></iron-icon>
-                        Pinned posts
-                    </h2>
-
-                    <template is="dom-repeat" items="[[_toJson(account.pinnedPosts)]]">
-                        <paper-card>
-                            <post-wrapper post-type="content-minimal"
-                                          post-path="[[item]]">
-                            </post-wrapper>
-                        </paper-card>
+                    <template is="dom-if" if="[[account.pinnedPosts]]">
+                        <template is="dom-repeat" items="[[_toJson(account.pinnedPosts)]]">
+                            <div name="[[item]]">
+                                <paper-card>
+                                    <post-wrapper post-type="content-minimal"
+                                                  post-path="[[item]]">
+                                    </post-wrapper>
+                                </paper-card>
+                            </div>
+                        </template>
                     </template>
 
-                </template>
+                </iron-pages>
+
             </div>
 
+            <!-- POSTS -->
             <div name="posts">
                 <steem-get-state path="[[user]]" posts="{{posts}}"></steem-get-state>
                 <div id="posts-list">
@@ -433,6 +510,7 @@
                 </div>
             </div>
 
+            <!-- REPLIES -->
             <div name="replies">
                 <steem-get-replies user-name="[[_username]]"
                                    replies="{{replies}}">
@@ -452,6 +530,7 @@
                 </div>
             </div>
 
+            <!-- REPLIES -->
             <div name="history">
                 <steem-get-history id="steemGetHistory"
                                    user-name="[[_username]]"
@@ -474,6 +553,7 @@
                 </div>
             </div>
 
+            <!-- FOLLOWER -->
             <div name="followers">
                 <div id="followers-list">
 
@@ -490,6 +570,7 @@
                 </div>
             </div>
 
+            <!-- FOLLOWING -->
             <div name="following">
                 <div id="following-list">
 
@@ -533,7 +614,11 @@
                     type: Object
                 },
 
-                currentView: {
+                currentProfileView: {
+                    type: String
+                },
+
+                _currentAboutView: {
                     type: String
                 },
 
@@ -575,16 +660,21 @@
                 '_updateCoverImage(account.coverImage)',
                 '_userChanged(user)',
                 '_accountChanged(account)',
-                '_refreshIsTabAbout(currentView)',
+                '_refreshIsTabAbout(currentProfileView)',
                 '_refreshIsTopheaderShowed(_isTabAbout)',
+                '_currentAboutViewChanged(_currentAboutView)',
                 '_justListen(_followers)',
                 '_justListen(_following)'
             ],
 
+            listeners: {
+                'aboutmenu.tap': '_selectAboutView'
+            },
+
             ready: function() {
                 // Set variables
-                this.account = this.account || {};
-                this.currentView = "about";
+                this.currentProfileView = 'about';
+                this._currentAboutView = 'home';
 
                 // List event
                 this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -593,7 +683,16 @@
                 this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
             },
 
+            _currentAboutViewChanged: function(s) {
+                console.log(s);
+            },
+
             _userChanged: function(user) {
+
+                // Reset account object
+                this.account = {};
+                this._followers = [];
+                this._following = [];
 
                 // Remove '@' at user and put it into _username
                 var user = user;
@@ -604,7 +703,6 @@
             _accountChanged: function(account) {
 
                 console.log(account);
-
             },
 
             _openDrawer: function() {
@@ -624,19 +722,30 @@
 
             },
 
+            _selectAboutView: function(e) {
+                
+                if(typeof e.path[0].view === 'undefined') {
+                    
+                    this._currentAboutView = "home";
+                }else {
+
+                    this._currentAboutView = e.path[0].view;
+                }
+            },
+
             _setCurrentViewFollowers: function() {
 
-                this.set('currentView', 'followers');
+                this.set('currentProfileView', 'followers');
             },
 
             _setCurrentViewFollowing: function() {
 
-                this.set('currentView', 'following')
+                this.set('currentProfileView', 'following')
             },
 
             _setCurrentViewPosts: function() {
 
-                this.set('currentView', 'posts');
+                this.set('currentProfileView', 'posts');
             },
 
             _refreshIsFavoriteUser: function() {
@@ -672,10 +781,21 @@
                 this.$.steemGetHistory.loadMoreData();
             },
 
-            _refreshIsTabAbout: function(currentView) {
+            _refreshIsTabAbout: function(currentProfileView) {
 
-                this._isTabAbout = (currentView == 'about');
+                this._isTabAbout = (currentProfileView == 'about');
                 //window.scrollTo(0, 0);
+            },
+
+            _getPostTitleFromPath: function(postPath) {
+
+                var pathSplitted = postPath.split('/');
+                var postTitleindex = pathSplitted.length-1;
+                var postTitle = pathSplitted[postTitleindex];
+                var postTitleText = postTitle.split('-').join(' ');
+                    postTitleText = postTitleText.charAt(0).toUpperCase() + postTitleText.slice(1);
+
+                return postTitleText;
             },
 
             _refreshIsTopheaderShowed: function(_isTabAbout) {
@@ -691,15 +811,73 @@
 
             },
 
-            _toJson: function (text) {
+            _computeLinkIcon: function(link) {
+
+                if(link.includes('github.com') || link.includes('github.io')) {
+
+                    return 'github';
+                }else if(link.includes('plus.google.com')) {
+
+                    return 'google-plus';
+                }else if(link.includes('twitter.com')) {
+
+                    return 'twitter';
+                }else if(link.includes('facebook.com')) {
+
+                    return 'facebook';
+                }else if(link.includes('google') && link.includes('maps')) {
+
+                    return 'map';
+                }else if(link.includes('dribbble')) {
+
+                    return 'dribbble';
+                }else if(link.includes('jira')) {
+
+                    return 'jira';
+                }else if(link.includes('slack.com')) {
+
+                    return 'slack';
+                }else if(link.includes('snapchat')) {
+
+                    return 'snapchat';
+                }else if(link.includes('soundcloud.com')) {
+
+                    return 'soundcloud';
+                }else if(link.includes('twitch.tv')) {
+
+                    return 'twitch';
+                }else if(link.includes('discordapp.com')) {
+
+                    return 'discord';
+                }else {
+
+                    return 'link';
+                }
+            },
+
+            _computeLinkText: function(link) {
+
+                var link = link.replace("https://", "")
+                        .replace("http://", "")
+                        .replace("www.", "");
+
+                return link;
+            },
+
+            _toJson: function(text) {
 
                 return JSON.parse(text);
             },
 
-            _justListen: function (observedProperty) {
+            _justListen: function(observedProperty) {
 
                 console.log(observedProperty);
             }
+
+            /*
+             * IDEAS
+             * Pin post into a tab or and pin posts into a second tab in tab about
+             */
 
         });
     </script>

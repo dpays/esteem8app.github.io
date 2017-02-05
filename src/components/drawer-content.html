@@ -215,17 +215,17 @@
                     </paper-item>
                 </a>
 
+                <!--a href="/tools">
+                    <paper-item>
+                        <iron-icon icon="my-icons:apps"></iron-icon>
+                        <span>Tools</span>
+                    </paper-item>
+                </a-->
+
                 <a href="/settings">
                     <paper-item>
                         <iron-icon icon="my-icons:settings"></iron-icon>
                         <span>Settings</span>
-                    </paper-item>
-                </a>
-
-                <a target="_blank" href="https://discord.gg/5nqRwbf">
-                    <paper-item id="chat">
-                        <iron-icon icon="my-icons:chat"></iron-icon>
-                        <span>App chat</span>
                     </paper-item>
                 </a>
 
@@ -258,6 +258,10 @@
 
                 settings: {
                     type: Object
+                },
+
+                firstUrl: {
+                    type: String
                 }
             },
 
@@ -269,7 +273,7 @@
                 
                 // List events
                 this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
-                
+
                 this._updateCoverImage();
             },
 
