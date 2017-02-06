@@ -182,7 +182,7 @@
 
                     var match = match = match.replace(" ", "");
 
-                    // Url can be one that is published or one that we use to edit doc
+                    // Url can be one that is publicly published or one that we used in editor
                     var rawDocummentUrlRegex = /[^("|'|[)]https:\/\/docs\.google\.com\/(presentation|document|spreadsheets|forms)\/d\/(e\/)?[a-zA-Z0-9-]+\//g
                     var url = rawDocummentUrlRegex.exec(match);
 
@@ -205,7 +205,7 @@
                 });
 
 
-
+                // REGEX tester https://regex101.com/
 
                 this._htmlDisplayed = html;
 

@@ -62,7 +62,7 @@
             </div>
 
             <div name="issues">
-
+                <github-issue-list repository="[[repository]]"></github-issue-list>
             </div>
 
         </iron-pages>
@@ -114,6 +114,8 @@
                  *  * GitHub-account
                  *  * GitHub-organization
                  */
+
+                // API https://developer.github.com/v3/repos/#get
             });
         })();
     </script>

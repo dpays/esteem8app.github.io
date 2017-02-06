@@ -498,6 +498,14 @@
                 this.splice('favoriteFiles', index, 1); // Delete index found
             }
 
+            // TODO
+            /*
+             * dataUrl2.data is notifying but does not appears on url
+             * according to https://github.com/PolymerElements/app-route/issues/75
+             * It seem that dataUrl1.data need to terminate the string with "/" to resolve this
+             * It's why page explore display the username when go back from page post because explore url is not set properly
+             */
+
         });
     </script>
 </dom-module>

@@ -1,0 +1,52 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../other/url-get-file.html">
+
+<dom-module id="get-repository-issues">
+
+    <template>
+        <url-get-file url="[[url]]"
+                      response-text="{{_issueListText}}">
+        </url-get-file>
+    </template>
+
+    <script>
+
+        (function () {
+
+            Polymer({
+
+                is: 'get-repository-issues',
+
+                properties: {
+
+                    /*
+                     * File url loaded
+                     */
+                    url: {
+                        type: String
+                    },
+
+                    /*
+                     * Issues list object
+                     */
+                    issues: {
+                        type: Array,
+                        notify: true
+                    },
+
+                    _issueListText: {
+                        type: String,
+                        observer: '_computeIssues'
+                    }
+                },
+
+                _computeIssues: function() {
+
+                    // transform text received in object
+                    this.set('issues', JSON.parse(this._issueListText));
+                }
+            });
+        })();
+    </script>
+</dom-module>

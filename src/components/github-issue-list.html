@@ -1,0 +1,107 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../api/github/get-repository-issues.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="github-issue-list">
+
+    <template>
+
+        <style include="shared-styles">
+
+            paper-listbox {
+                --paper-listbox-background-color: transparent;
+                --paper-listbox-color: inerhite;
+                border-left: 1px solid var(--app-background-secondary-text-color);
+                border-right: 1px solid var(--app-background-secondary-text-color);
+                color: var(--app-background-primary-text-color);
+            }
+
+            iron-icon {
+                color: var(--app-background-secondary-text-color);
+                margin-right: 12px;
+            }
+        </style>
+
+        <get-repository-issues url="[[_url]]"
+                              files="{{_files}}">
+        </get-repository-issues>
+
+        <paper-listbox selected="{{selectedFile}}"
+                       attr-for-selected="file">
+
+
+            <template is="dom-repeat"
+                      items="[[_files]]">
+                <paper-item file="[[item]]">
+                    <iron-icon icon="my-icons:[[_computeFileIcon(item.name, item.type)]]"></iron-icon>
+                    [[item.name]]
+                </paper-item>
+            </template>
+
+        </paper-listbox>
+
+    </template>
+
+    <script>
+
+        (function() {
+
+            'use strict';
+
+            Polymer({
+
+                is: 'github-issue-list',
+
+                properties: {
+
+                    /*
+                     * files array
+                     */
+                    repository: {
+                        type: String,
+                        observer: '_computeUrl'
+                    },
+
+                    _issues: {
+                        type: Array
+                    },
+
+                    _url: {
+                        type: String
+                    }
+                },
+
+                ready: function() {
+
+
+                },
+
+                _computeUrl: function() {
+
+                    // Prepare url to query page that contains the repository issues list
+                    if(typeof this.repository !== 'undefined') {
+
+                        if(this.repository !== '') {
+
+                            console.log(this.repository);
+                            var repository = this.repository;
+                            var url = repository.replace('https://github.com', 'https://api.github.com/repos');
+                            url += '/issues';
+
+                            this._url = url;
+                        }
+                    }
+                }
+
+                // API https://developer.github.com/v3/issues/#list-issues-for-a-repository
+
+            });
+        })();
+    </script>
+</dom-module>
