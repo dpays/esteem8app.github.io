@@ -4,4 +4,4 @@
 
 
 1. Strategies are planned optimally with the [make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md).
-2. Strategies are efficiently transformed into [tasks](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo) with the [process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md).
+2. Strategies are efficiently transformed into [todo/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/projects) with the [process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md).
