@@ -11,17 +11,23 @@ Shemas are composed of unlimited nested systems and interactions.
 
 For each of these systems and interactions, a specific strategy will be made in order to seperately optimize each systems and interactions that compose the primary system called "ESTEEM8".
 
-Theses strategy will be placed into the "optimization-strategies" folder.
+Theses strategy will be placed into the [optimization-strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) folder.
 
-For exemple for "Add app users" systems and interactions a strategy will be made this way above:
+--
 
-Add app user [1] -> Optimze convertion rate between STEEM users and the APP users :
+## Example
+
+For "Add app users" systems and interactions a strategy will be made the way above:
+
+1. Add app user [1] -> Optimze convertion rate between STEEM (publications) users and the APP users :
  * Optimize the way that publications are posted : STEEM publications visitor -> APP STEEM publications visitor.
  * Optimize the content of publications : APP STEEM publications visitor -> APP visitor.
  * Optmize the content of the APP : APP visitor -> APP users.
  * Optmize the application quality: APP users -> APP active users.
- * Get feedback and analysis about these systems and optmize it again and again.
+ * Get feedback and analysis about these systems and refine and optimize it again and again.
  
-Add app user [2] -> ...
+2. Add app user [2] -> ...
+
+-
 
 "->" = optimaly tranform = get the best convertion rate.
