@@ -29,7 +29,7 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 ### What to do ?
 
 * Fix [issues](https://github.com/esteem8app/esteem8app.github.io/issues).
-* Process [tasks](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/task-list).
+* Process [projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/projects).
 
 or
 
