@@ -102,7 +102,7 @@
                 <iron-icon class="authorIcon" icon="my-icons:person-circle"></iron-icon>
                 <a class="author" href="[[reply.author]]">[[reply.author]]</a>
                 <span class="inPost">on [[reply.title]]</span>
-                <span class="date">[[timeFromNow(reply.created)]]</span>
+                <span class="date">[[_timeFromNow(reply.created)]]</span>
             </div>
             <div class="body">
                 <marked-element markdown="[[reply.body]]">
@@ -165,7 +165,7 @@
                 }
             },
 
-            timeFromNow: function(date) {
+            _timeFromNow: function(date) {
 
                 return new IntlRelativeFormat('en-us').format(new Date(date));
             }

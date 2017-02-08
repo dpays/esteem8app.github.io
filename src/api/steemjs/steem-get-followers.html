@@ -18,8 +18,7 @@
                  * Component will query account data with this name.
                  */
                 accountName:  {
-                    type: String,
-                    observer: '_accountNameChanged'
+                    type: String
                 },
 
                 /*
@@ -28,7 +27,6 @@
                  */
                 followers: {
                     type: Array,
-                    observer: '_followersChanged',
                     notify: true
                 },
 
@@ -38,16 +36,22 @@
                 }
             },
 
-            _accountNameChanged: function() { // When account change
+            observers: [
+                '_accountNameChanged(accountName)',
+                '_followerChanged(followers)'
+            ],
 
+            _accountNameChanged: function(accountName) { // When account change
 
-                if(this.accountName != ''){
+                this.followers = []; // Reset followers
+                this._lastFollowerLoaded = '';
+                this._loadFollower(accountName); // Start loading
 
-                    //this.followers = []; // Reset followers
-                    this._lastFollowerLoaded = '';
-                    this._loadFollower(); // Start loading
+                console.log("The name has changed: Try to load follower");
+            },
 
-                }
+            _followerChanged: function(s) {
+                console.log("Folower changed and ="+s);
             },
 
             _loadMore: function() { // load more followers if needed
@@ -72,17 +76,19 @@
 
             },
 
-            _loadFollower: function() {
+            _loadFollower: function(accountName) {
                 console.log("Start loading");
 
                 var thisElement = this;
+                var accountName = accountName || this.accountName;
+                var lastFollowerLoaded = this._lastFollowerLoaded || '';
 
                 // Query followers
                 this.async(function () {
 
                     console.log('loadedFrom='+thisElement._lastFollowerLoaded);
                     // !!! Need api to provide load more than 100 followers to load full list
-                    steem.api.getFollowers(thisElement.accountName, thisElement._lastFollowerLoaded, null, 100, function(err, result) {
+                    steem.api.getFollowers(accountName, lastFollowerLoaded, null, 100, function(err, result) {
 
                         if(typeof thisElement.followers === 'undefined') {
                             console.log("Reset follower");

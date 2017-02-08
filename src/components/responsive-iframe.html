@@ -15,16 +15,27 @@
 
         <style include="shared-styles">
 
+            :host {
+                width: 100%;
+            }
 
+            #container {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
 
 
         </style>
 
-        <iframe src="[[src]]"
-                frameborder="0"
-                height=""
-                width="">
-        </iframe>
+        <div id="container">
+            <iframe src="[[src]]"
+                    frameborder="0"
+                    height=""
+                    width="">
+            </iframe>
+        </div>
+
     </template>
 
     <script>
@@ -48,13 +59,37 @@
                  */
                 ratio: {
                     type: String
-                }
+                },
 
+                _width: {
+                    type: Number
+                },
+
+                _height: {
+                    type: Number
+                }
 
             },
 
             ready: function() {
 
+                if(typeof this.ratio === 'undefined') {
+                    this.ratio = '16:9';
+                }
+
+                var ratioArray = this.ratio.split(':');
+                var ratioWidth = Integer.parseInt(ratioArray[0]);
+                var ratioHeight = Integer.parseInt(ratioArray[1]);
+                var ratio = ratioWidth/ratioHeight;
+
+                var containerWidth = this.$.container.clientWidth;
+
+
+                var width = containerWidth;
+                var height = width * ratio;
+
+                this.set('_width', width);
+                this.set('_height', height);
 
             }
 

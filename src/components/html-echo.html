@@ -118,6 +118,28 @@
                     //html += ' esteem8/@esteem8/what-the-esteem8-is-fuck ';
                 }
 
+                // RENDER <a href into <img>
+                var imageLinkARegex = /<a([ ="'a-zA-Z0-9-]+)? href=('|")(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?("|')>(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?<\/a>/gm;
+                html = html.replace(imageLinkARegex, function(match){
+
+                    var imgUrlRegex = /(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?/g;
+                    var url = imgUrlRegex.exec(match)[0];
+
+                    return '<img src="' + url + '" ></img>';
+                });
+
+                // RENDER ![](src) & [](src) into <img>
+                var markdwonImageRegex = /!?\([ a-zA-Z0-9-]+\)!?\[(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?]/gm;
+                html = html.replace(markdwonImageRegex, function(match){
+
+                    var imgUrlRegex = /(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?/g;
+                    var url = imgUrlRegex.exec(match)[0];
+
+                    return '<img src="' + url + '" ></img>';
+                });
+
+                // RENDER direct image link into <img> (must not be yet in <img>)
+
                 /* RENDER in-app elements from link*/
 
                 // Tag path -> <post-path-list>
@@ -184,7 +206,7 @@
 
                     // Url can be one that is publicly published or one that we used in editor
                     var rawDocummentUrlRegex = /[^("|'|[)]https:\/\/docs\.google\.com\/(presentation|document|spreadsheets|forms)\/d\/(e\/)?[a-zA-Z0-9-]+\//g
-                    var url = rawDocummentUrlRegex.exec(match);
+                    var url = rawDocummentUrlRegex.exec(match)[0];
 
                     if(url.includes('https://docs.google.com/presentation') || url.includes('https://docs.google.com/document')) {
 

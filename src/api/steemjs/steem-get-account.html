@@ -113,7 +113,8 @@
                                 if(typeof objectFromJson.profile.pinned_posts === 'undefined'){
 
                                     if(name == 'esteem8') {
-                                        thisElement.set('account.pinnedPosts', '["steem/@esteem8/esteem8-community-questions", "steem/@esteem8/esteem8-community-proposals", "esteem8-chat/@esteem8/esteem8-community-chat"]');
+                                        // Nested menu support later
+                                        thisElement.set('account.pinnedPosts', '[{"name": "Feedback", "posts": ["steem/@esteem8/esteem8-community-questions"]}, {"name": "Proposals", "posts": ["steem/@esteem8/esteem8-community-questions"]}, {"name": "Support", "posts": ["steem/@esteem8/esteem8-community-questions"]}, {"name": "Develop", "posts": ["steem/@esteem8/esteem8-community-questions"]}]');
                                     }else {
                                         thisElement.set('account.pinnedPosts', '');
                                     }

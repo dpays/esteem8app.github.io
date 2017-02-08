@@ -5,7 +5,7 @@
 <dom-module id="get-repository-issues">
 
     <template>
-        <url-get-file url="[[url]]"
+        <url-get-file url="[[_url]]"
                       response-text="{{_issueListText}}">
         </url-get-file>
     </template>
@@ -21,9 +21,30 @@
                 properties: {
 
                     /*
-                     * File url loaded
+                     * Github repository
                      */
-                    url: {
+                    repository: {
+                        type: String
+                    },
+
+                    /*
+                     * Milestone number or 'none'
+                     */
+                    milestone: {
+                        type: String
+                    },
+
+                    /*
+                     * Label separated by a comma
+                     */
+                    labels: {
+                        type: String
+                    },
+
+                    /*
+                     * Issue type ('all', 'open' or 'closed')
+                     */
+                    issueType: {
                         type: String
                     },
 
@@ -35,10 +56,84 @@
                         notify: true
                     },
 
+                    _url: {
+                        type: String
+                    },
+
                     _issueListText: {
                         type: String,
                         observer: '_computeIssues'
                     }
+                },
+
+                observers: [
+                    '_computeIssuesUrl(repository, milestone, labels, issueType)'
+                ],
+
+                _computeIssuesUrl: function(repository, milestone, labels, issueType) {
+
+                    // Prepare url to query page that contains the repository issues list
+                    if(repository !== '') {
+
+                        var url = repository.replace('https://github.com', 'https://api.github.com/repos');
+                        url += '/issues';
+
+                        if(this._isThereParamters) {
+
+                            url += '?';
+                        }
+
+                        if(typeof this.milestone !== 'undefined') {
+
+                            if(this.milestone != '') {
+
+                                url += 'milestone=' + this.milestone+'&';
+                            }
+                        }
+
+                        if(typeof this.labels !== 'undefined') {
+
+                            if(this.labels != '') {
+
+                                url += 'labels=' + this.labels+'&';
+                            }
+                        }
+
+                        if(typeof this.issueType !== 'undefined') {
+
+                            if(this.issueType != '') {
+
+                                url += 'type=' + this.issueType+'&';
+                            }
+                        }
+
+                        console.log(url);
+
+                        this._url = url;
+                    }
+
+                },
+
+                _isThereParamters: function() {
+
+                    if(typeof this.milestone !== 'undefined') {
+
+                        if(this.milestone != '') {
+
+                            return true;
+                        }
+                    }
+
+                    if(typeof this.labels !== 'undefined') {
+
+                        if(this.labels != '') {
+
+                            return true;
+                        }
+                    }
+
+                    return false;
+
                 },
 
                 _computeIssues: function() {
@@ -46,6 +141,8 @@
                     // transform text received in object
                     this.set('issues', JSON.parse(this._issueListText));
                 }
+
+                // TODO -> Load more
             });
         })();
     </script>

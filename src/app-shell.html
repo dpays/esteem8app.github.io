@@ -109,7 +109,7 @@
                           favorite-posts="{{favoritePosts}}"
                           favorite-tags="{{favoriteTags}}"
                           id="explorePage"
-                          current-sorting="{{dataUrl1.data}}"
+                          current-sorting-url="{{dataUrl1.data}}"
                           current-tag="{{dataUrl2.data}}"
                           settings="[[settings]]">
             </page-explore>
@@ -131,9 +131,7 @@
 
             <page-profile name="profile"
                           settings="[[settings]]"
-                          user="[[dataUrl1.data]]"
-                          favorite-posts="{{favoritePosts}}"
-                          favorite-users="{{favoriteUsers}}">
+                          user="[[dataUrl1.data]]">
             </page-profile>
 
             <page-files name="files"

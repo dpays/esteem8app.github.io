@@ -2,11 +2,11 @@
 
 <link rel="import" href="../other/url-get-file.html">
 
-<dom-module id="get-repository-files">
+<dom-module id="get-repository-labels">
 
     <template>
         <url-get-file url="[[_url]]"
-                      response-text="{{_fileListText}}">
+                      response-text="{{_labelListText}}">
         </url-get-file>
     </template>
 
@@ -16,7 +16,7 @@
 
             Polymer({
 
-                is: 'get-repository-files',
+                is: 'get-repository-labels',
 
                 properties: {
 
@@ -28,9 +28,9 @@
                     },
 
                     /*
-                     * File list object
+                     * Labels list object
                      */
-                    files: {
+                    labels: {
                         type: Array,
                         notify: true
                     },
@@ -39,34 +39,36 @@
                         type: String
                     },
 
-                    _fileListText: {
+                    _labelListText: {
                         type: String,
-                        observer: '_computeFiles'
+                        observer: '_computeLabels'
                     }
                 },
 
                 observers: [
-                    '_computeFilesUrl(repository)'
+                    '_computeLabelsUrl(repository)'
                 ],
 
-                _computeFilesUrl: function(repository) {
+                _computeLabelsUrl: function(repository) {
 
-                    // Prepare url to query page that contains the repository file list
+                    // Prepare url to query page that contains the repository labels list
                     if(repository !== '') {
 
                         var url = repository.replace('https://github.com', 'https://api.github.com/repos');
-                        url += '/contents/';
+                        url += '/labels';
 
                         this._url = url;
                     }
 
                 },
 
-                _computeFiles: function() {
+                _computeLabels: function() {
 
                     // transform text received in object
-                    this.set('files', JSON.parse(this._fileListText));
+                    this.set('labels', JSON.parse(this._labelListText));
                 }
+
+                // TODO -> Load more
             });
         })();
     </script>

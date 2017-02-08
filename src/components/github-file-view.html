@@ -34,7 +34,7 @@
                 border: 1px solid var(--app-background-secondary-text-color);
                 padding: 8px;
                 max-width: 550px;
-                height: 500px;
+                max-height: 500px;
                 overflow: auto;
             }
 
@@ -47,6 +47,7 @@
         <url-get-file url="[[file.download_url]]" response-text="{{_fileText}}"></url-get-file>
 
         <paper-item class="currentFileInfo">
+
             <iron-icon icon="my-icons:[[_computeFileIcon(file.name, file.type)]]"></iron-icon>
             [[file.name]]
             <div class="right" hidden="[[_isFileDir]]">

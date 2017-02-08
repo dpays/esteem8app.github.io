@@ -2,11 +2,14 @@
 
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 
-<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
-<link rel="import" href="../components/github-file-list.html">
-<link rel="import" href="../components/github-file-view.html">
+<link rel="import" href="../components/github-repository-file.html">
+<link rel="import" href="../components/github-issue-list.html">
+<link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../shared-styles.html">
 <dom-module id="github-repository">
 
@@ -16,53 +19,79 @@
             width: 100%;
         }
 
-        #fileList {
-            max-height: 300px;
-            overflow: auto;
+        #repositoryCurrentView{
+            background-color: var(--app-primary-color);
+            color: var(--app-primary-text-color);
         }
 
-        paper-tabs {
-            --paper-tabs-selection-bar-color: var(--app-background-primary-text-color);
-            border-bottom: 1px solid var(--app-background-secondary-text-color);
+        #repositoryCurrentView .title {
+            font-weight: 500;
+            text-transform: uppercase;
         }
 
-        paper-tab {
-            --paper-tab-ink: var(--app-background-secondary-text-color);
+        #repositoryCurrentView .title .sub-title {
+            font-size: 12px;
+            text-transform: lowercase;
+        }
+
+        paper-menu {
+            padding: 0;
+        }
+
+        #repositoryViewsMenu, #repositoryViewsMenu paper-menu {
+            background-color: var(--app-dark-primary-color);
+            color: var(--app-primary-text-color);
         }
 
     </style>
 
     <template>
 
-        <paper-tabs selected="{{_currentView}}"
-                    attr-for-selected="name"
-                    fit-container
-                    scrollable
-                    no-slide>
+        <div id="repositoryView">
+            <paper-toolbar id="repositoryCurrentView">
+                <paper-icon-button id="toggleMenuButton"
+                                   on-tap="_toggleMenu()"
+                                   icon="my-icons:[[_getMenuIcon(_isMenuOpen)]]">
+                </paper-icon-button>
+                <span class="title">
+                    [[_currentRepositoryView]]
+                    <span class="sub-title">
+                        [[_computeRepoName(repository, _currentRepositoryView)]]
+                    </span>
+                </span>
+                <paper-icon-button id="openCurrentViewButton"
+                                   icon="my-icons:link"
+                                   on-tap="_openCurrentView()">
+                </paper-icon-button>
+            </paper-toolbar>
+            <div id="repositoryViewsMenu" hidden="[[!_isMenuOpen]]">
+                <paper-menu selected="{{_currentRepositoryView}}"
+                            attr-for-selected="repository-view">
+                    <paper-item repository-view="files">
+                        <iron-icon icon="my-icons:file"></iron-icon>&nbsp;
+                        Files
+                    </paper-item>
+                    <paper-item repository-view="tasks">
+                        <iron-icon icon="my-icons:done"></iron-icon>&nbsp;
+                        Tasks
+                    </paper-item>
+                </paper-menu>
+            </div>
+        </div>
 
-            <paper-tab name="code">Code</paper-tab>
-            <paper-tab name="issues">Issues</paper-tab>
-
-        </paper-tabs>
-
-        <iron-pages selected="[[_currentView]]"
+        <iron-pages selected="[[_currentRepositoryView]]"
                     attr-for-selected="name">
 
-            <div name="code">
+            <div name="files">
 
-                <div id="fileList">
-                    <github-file-list repository="[[repository]]"
-                                      selected-file="{{_selectedFile}}">
-                    </github-file-list>
-                </div>
-                <div id="fileView">
-                    <github-file-view file="[[_selectedFile]]"></github-file-view>
-                </div>
+                <github-repository-file repository="[[repository]]"></github-repository-file>
 
             </div>
 
-            <div name="issues">
+            <div name="tasks">
+
                 <github-issue-list repository="[[repository]]"></github-issue-list>
+
             </div>
 
         </iron-pages>
@@ -88,23 +117,74 @@
                         type: Object
                     },
 
-                    _currentView: {
-                        type: String
+                    _isMenuOpen: {
+                      type: Boolean
                     },
 
-                    _selectedFile: {
-                        type: Object,
-                        observer: '_selectedFileChanged'
+                    _currentRepositoryView: {
+                        type: String,
+                        observer: '_closeMenu'
                     }
                 },
 
                 ready: function() {
 
-                    this._currentView = 'code';
+                    // Set default variables
+                    this._currentRepositoryView = 'files';
+
+                    // Set event listeners
+                    this.$.toggleMenuButton.addEventListener('tap', this._toggleMenu.bind(this));
+                    this.$.openCurrentViewButton.addEventListener('tap', this._openCurrentView.bind(this));
+
                 },
 
-                _selectedFileChanged: function() {
+                _getMenuIcon: function(isMenuOpen) {
 
+                    if(isMenuOpen) {
+
+                        return 'close';
+                    }else {
+
+                        return 'menu';
+                    }
+                },
+
+                _getLastUrlPart: function() {
+
+                    var view = '';
+
+                    switch(this._currentRepositoryView) {
+
+                        case 'tasks':
+                            view = '/issues';
+                    }
+
+                    return view;
+                },
+
+                _computeRepoName: function(url) {
+
+                    url = url.replace('https://github.com/', '');
+                    url += this._getLastUrlPart();
+
+                    return url;
+                },
+
+                _toggleMenu: function() {
+
+                    this._isMenuOpen = !this._isMenuOpen;
+                },
+
+                _closeMenu: function() {
+
+                    this._isMenuOpen = false;
+                },
+
+                _openCurrentView: function() {
+
+                    var view = this._getLastUrlPart();
+
+                    window.open(this.repository + view);
                 }
 
                 // IDEAS

@@ -1,0 +1,63 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/github-file-list.html">
+<link rel="import" href="../components/github-file-view.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="github-repository-file">
+
+    <style include="shared-styles">
+
+        :host {
+            width: 100%;
+        }
+
+
+    </style>
+
+    <template>
+
+            <github-file-list repository="[[repository]]"
+                              selected-file="{{_selectedFile}}">
+            </github-file-list>
+
+            <github-file-view file="[[_selectedFile]]"></github-file-view>
+
+    </template>
+
+    <script>
+
+        (function() {
+
+            'use strict';
+
+            Polymer({
+
+                is: 'github-repository-file',
+
+                properties: {
+
+                    /*
+                     * repository url
+                     */
+                    repository: {
+                        type: Object
+                    },
+
+                    _selectedFile: {
+                        type: Object,
+                        observer: '_selectedFileChanged'
+                    }
+                },
+
+                ready: function() {
+
+
+                },
+
+                _selectedFileChanged: function() {
+
+                }
+            });
+        })();
+    </script>
+</dom-module>

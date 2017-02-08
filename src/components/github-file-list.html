@@ -14,6 +14,15 @@
 
         <style include="shared-styles">
 
+            #fileList {
+                max-height: 300px;
+                overflow: auto;
+            }
+
+            #folderBack {
+                border: 1px solid var(--app-background-secondary-text-color);
+            }
+
             paper-listbox {
                 --paper-listbox-background-color: transparent;
                 --paper-listbox-color: inerhite;
@@ -28,27 +37,31 @@
             }
         </style>
 
-        <get-repository-files url="[[_url]]"
+        <get-repository-files repository="[[repository]]"
                               files="{{_files}}">
         </get-repository-files>
 
-        <paper-listbox selected="{{selectedFile}}"
-                       attr-for-selected="file">
-
+        <div id="folderBack">
             <paper-item id="back" on-tap="_toBackFolder" hidden="[[_backHidden]]">
                 <iron-icon icon="my-icons:arrow-back"></iron-icon>
                 ...
             </paper-item>
+        </div>
 
-            <template is="dom-repeat"
-                      items="[[_files]]">
-                <paper-item file="[[item]]">
-                    <iron-icon icon="my-icons:[[_computeFileIcon(item.name, item.type)]]"></iron-icon>
-                    [[item.name]]
-                </paper-item>
-            </template>
+        <div id="fileList">
+            <paper-listbox selected="{{selectedFile}}"
+                           attr-for-selected="file">
 
-        </paper-listbox>
+                <template is="dom-repeat"
+                          items="[[_files]]">
+                    <paper-item file="[[item]]">
+                        <iron-icon icon="my-icons:[[_computeFileIcon(item.name, item.type)]]"></iron-icon>
+                        [[item.name]]
+                    </paper-item>
+                </template>
+
+            </paper-listbox>
+        </div>
 
     </template>
 
@@ -68,8 +81,7 @@
                      * files array
                      */
                     repository: {
-                        type: String,
-                        observer: '_computeUrl'
+                        type: String
                     },
 
                     selectedFile: {
@@ -83,10 +95,6 @@
                         observer: '_selectDefaultFile'
                     },
 
-                    _url: {
-                        type: String
-                    },
-
                     _backHidden: {
                         type: Boolean
                     }
@@ -96,23 +104,6 @@
 
                     this.$.back.addEventListener('tap', this._toBackFolder.bind(this));
                     this._backHidden = true;
-                },
-
-                _computeUrl: function() {
-
-                    // Prepare url to query page that contains the repository file list
-                    if(typeof this.repository !== 'undefined') {
-
-                        if(this.repository !== '') {
-
-                            console.log(this.repository);
-                            var repository = this.repository;
-                            var url = repository.replace('https://github.com', 'https://api.github.com/repos');
-                            url += '/contents/';
-
-                            this._url = url;
-                        }
-                    }
                 },
 
                 _selectDefaultFile: function() {

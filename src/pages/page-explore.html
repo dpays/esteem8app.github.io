@@ -197,6 +197,11 @@
             properties: {
                 
                 // current sorting mode (hot, new, trending, created)
+                currentSortingUrl: {
+                    type: String,
+                    notify: true
+                },
+
                 currentSorting: {
                     type: String,
                     notify: true
@@ -240,8 +245,10 @@
             },
 
             observer: [
-                    '_pathChanged(currentSorting, currentTag)',
-                    '_refreshIsCurrentTagInFavorite(currentTag)'
+                '_pathChanged(currentSorting, currentTag)',
+                '_refreshIsCurrentTagInFavorite(currentTag)',
+                '_refreshCurrentSorting(currentSortingUrl)',
+                '_refreshCurrentSortingUrl(currentSorting)'
             ],
 
             ready: function() {
@@ -261,6 +268,20 @@
             _openDrawer: function() {
 
                 document.getElementById('appshell')._openDrawer();
+            },
+
+            _refreshCurrentSorting: function(currentSortingUrl) {
+
+                var currentSorting = currentSortingUrl.replace('/', '');
+
+                this.set('currentSorting', currentSorting);
+            },
+
+            _refreshCurrentSortingUrl: function(currentSorting) {
+
+                var currentSortingUrl = currentSorting + '/';
+
+                this.set('currentSortingUrl', currentSortingUrl);
             },
 
             _openSelectCategoryDialog: function() {
