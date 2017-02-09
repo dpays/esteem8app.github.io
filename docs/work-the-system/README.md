@@ -14,7 +14,6 @@ A system is what make it does what it perform.
 * **A process** is a series of _mechanical and chemical operations_ composed of nested process grouped by task type.
 
 ## Composition
-
 ### The what
 
 * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
@@ -34,7 +33,6 @@ A system is what make it does what it perform.
   * [Process principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md) how to apply strategies ?
   
 ## Explanations
-
 ### Organization level
 
 * [Objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) are made for a very long term planning.
@@ -50,14 +48,7 @@ A system is what make it does what it perform.
 * Organization principles are tools to write and precise these process descriptions also called objectives, strategies, projects and tasks.
 * Process principles are tools to translate process descriptions into mechanical and biological process.
 
---
-
-* System definition -> Optimization strategies
-* System objectives -> Development strategies
-* Definition & Objectives -> Strategies -> Projects -> Tasks [Definition and conversion are made using organization principles]
-* Tasks -> mechanical and biological process [Conversion is made using process principles]
-
---
+#### Using Organization principles
 
 [**What ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) (**definition of** composition & objectives ) ->
 
@@ -66,3 +57,7 @@ A system is what make it does what it perform.
 **Projects** ([GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)) ->
 
 **Tasks** ([GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) that can be filtered by label(skills) & milestone(projects)).
+
+#### Using Process principles
+
+Tasks -> Mechanical and biological process (Your job)
