@@ -40,7 +40,7 @@ A system is what make it does what it perform.
 * [Projects](https://github.com/esteem8app/esteem8app.github.io/projects) are made for a middle term planning from mixed strategy parts grouped by work type and strategies.
 * [Tasks](https://github.com/esteem8app/esteem8app.github.io/issues) are made for a short term planning from mixed projects parts grouped by work type.
 
-### Organization interactions
+### Organization level (precision)
 
 * These 4 point above are organizational (process description) and sorted from a high level to a low level.
   * High level -> lowly precise process description, morely grouped by objective and plan type.
@@ -48,16 +48,16 @@ A system is what make it does what it perform.
 * Organization principles are tools to write and precise these process descriptions also called objectives, strategies, projects and tasks.
 * Process principles are tools to translate process descriptions into mechanical and biological process.
 
-#### Using Organization principles
+#### Using "Organization principles" document
 
-[**What ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) (**definition of** composition & objectives ) ->
+[**What ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) (**definition of:** composition & objectives ) ->
 
-[**How ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) (**strategie** to optimize composition & reach objectives) ->
+[**How ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) (**strategie to:** optimize composition & reach objectives) ->
 
 **Projects** ([GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)) ->
 
-**Tasks** ([GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) that can be filtered by label(skills) & milestone(projects)).
+**Tasks** ([GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered and sorted by label(=skills) & milestone(=projects)).
 
-#### Using Process principles
+#### Using "Process principles" document
 
 Tasks -> Mechanical and biological process (Your job)
