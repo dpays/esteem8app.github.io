@@ -1,4 +1,4 @@
-# Work the system (methodology)
+# Work the system methodology
 
 This document describe the document set used to work the primary **ESTEEM8 system**.
 
@@ -48,16 +48,16 @@ A system is what make it does what it perform.
 * Organization principles are tools to write and precise these process descriptions also called objectives, strategies, projects and tasks.
 * Process principles are tools to translate process descriptions into mechanical and biological process.
 
-#### Using "Organization principles" document
+#### Using "Organization principles" doc
 
-[**What ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) (**definition of:** composition & objectives ) ->
+* [**What ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) (**Definition of** composition & objectives ) ->
 
-[**How ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) (**strategie to:** optimize composition & reach objectives) ->
+* [**How ?**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) (**Strategie to** optimize composition & reach objectives) ->
 
-**Projects** ([GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)) ->
+* **Projects** ([GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)) ->
 
-**Tasks** ([GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered and sorted by label(=skills) & milestone(=projects)).
+* **Tasks** ([GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered and sorted by label(=skills) & milestone(=projects)).
 
-#### Using "Process principles" document
+#### Using "Process principles" doc
 
-Tasks -> Mechanical and biological process (Your job)
+* **Tasks** -> Mechanical and biological process (Your job)
