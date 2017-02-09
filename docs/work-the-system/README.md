@@ -1,20 +1,30 @@
 # Work the system (methodology)
 
-This document describe the document set used to optimally work the primary **ESTEEM8 system**.
+This document describe the document set used to work the primary **ESTEEM8 system**.
 
-### What ?
+### Introduction
+```
+A system is what make it does what it perform.
+```
+
+### Vocabulary
+* **A system** is a composition of nested systems composed of functions.
+* **A function** is a composition of process grouped by a type.
+* **A process** is a series of mechanical or chemical operations.
+
+### Definitions are the what
 
 * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
- * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-definition.md) what is the system ?
+ * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-definition.md) what is the current system ?
  * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) what is it's objectives ?
 
-### How ?
+### Strategies are the how
 
  * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies)
-  * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) how will it get more efficient ?
-  * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) how will it reach it's objectives ?
+  * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) how will it optimize it's current state ?
+  * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) how will it develop it's current state ?
 
-### With ?
+### Principles are how of "how and what"
  
  * [/tools](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/tools)
   * [Make strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md) how to make strategies ?
