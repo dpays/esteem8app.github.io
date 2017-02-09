@@ -12,7 +12,7 @@ These point above are organized from very high level to very low level, as much 
 
 Organization principles are tools to write a textual representation of these process composed of informations that describe process procedure. Efficiency principles are tools to translate these textual representation of process into real mechanical and biological process.
 
-As high the textual process representation level is, as much it's representation is grouped by objectives and as low the process textual representation level is, as much it's representation is grouped by process skills or type. This in order to minimize effort switching subject (objective) for a planning process and minimizing effort switching skills for a processing process process. 
+As high the process description level is, as much it's representation is grouped by objectives, as low the process description level is, as much it's representation is grouped by process skills and type. This to minimize effort switching subject (objective) for a planning process and skills for a processing process. 
 
 ## Organization principles
 * Choose directive parts that is optimal to work on for the workday.
