@@ -1,12 +1,18 @@
 # Process strategy principles
 
-This is a tool to optimally transform mixed strategy parts into process (actions or tasks).
+This is a tool to optimally transform mixed strategy(process representation) parts into actions(process).
 
-## Introduction
+## Procedure
+* [Objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) are made for a infinite term planning.
+* [Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) are made for a long term planning and translated from objectives grouped by objectives.
+* [Projects](https://github.com/esteem8app/esteem8app.github.io/projects) are made for a middle term planning from mixed strategy parts grouped by work type and strategies.
+* [Tasks](https://github.com/esteem8app/esteem8app.github.io/issues) are made for a short term planning from mixed projects parts grouped by work type.
 
-Before starting to work **choose optimal (best) strategy parts** you want to work on, detail them into sub-process (projects) and then optimally timely organize them.
+These point above are organized from very high level to very low level, as much a level is low as high process description is precise.
 
-During the work time **process sub-process chosen efficiently** by being in good body and mind conditions.
+Organization principles are tools to write a textual representation of these process composed of informations that describe process procedure. Efficiency principles are tools to translate these textual representation of process into real mechanical and biological process.
+
+As high the textual process representation level is, as much it's representation is grouped by objectives and as low the process textual representation level is, as much it's representation is grouped by process skills or type. This in order to minimize effort switching subject (objective) for a planning process and minimizing effort switching skills for a processing process process. 
 
 ## Organization principles
 * Choose directive parts that is optimal to work on for the workday.
@@ -15,10 +21,8 @@ During the work time **process sub-process chosen efficiently** by being in good
  * Do efficiency improvement process first to maximize exchange rate.
  * You can increase motivation by knowing doing actual optimal task to achieve the defined objective.
  * First things first by urgency then importance with knowing strategies deadlines.
-* Directive parts chosen must be optimally transformed into sub-process that can be called tasks.
-* Tasks can be time planned, prioritized and sequenced or not.
-
-The project has already some strategy parts detailed and timely organized into [todo](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo).
+* Directive parts chosen must be optimally transformed into sub-process.
+* Sub-process can be time planned, prioritized and sequenced or not.
 
 ## Efficiency principles
 * Processing perfectly a task mean with the best exchange rate.
