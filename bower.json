@@ -43,7 +43,9 @@
     "awesome-button": "*",
     "paper-menu-button": "PolymerElements/paper-menu-button#^1.5.2",
     "paper-slider": "PolymerElements/paper-slider#^1.0.13",
-    "paper-menu": "PolymerElements/paper-menu#^1.2.2"
+    "paper-menu": "PolymerElements/paper-menu#^1.2.2",
+    "paper-tooltip": "PolymerElements/paper-tooltip#^1.1.3",
+    "google-chart": "GoogleWebComponents/google-chart#^1.1.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

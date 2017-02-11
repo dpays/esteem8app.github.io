@@ -115,7 +115,12 @@
                     //html += ' created/esteem8-features ';
                     //html += ' https://github.com/esteem8app/esteem8app.github.io ';
                     //html += ' steem/@esteem8/esteem8-community-proposals ';
-                    //html += ' esteem8/@esteem8/what-the-esteem8-is-fuck ';
+                    //html += ' steem/@primerz/what-is-steem ';
+                }
+
+                if(html.includes('You can create your own idea')) {
+
+                    //html += ' https://github.com/esteem8app/esteem8app.github.io ';
                 }
 
                 // RENDER <a href into <img>
@@ -158,14 +163,14 @@
                     var match = match.replace(" ", "");
                     return '<post-path-list steem-path="' + match + '" post-type="card-light"></post-path-list>';
                 });
-
+                */
                 // Post path -> <post>
                 var postPathRegex = /[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
                 html = html.replace(postPathRegex, function(match){
 
                     var match = match.replace(" ", "");
-                    return '<post-wrapper steem-path="' + match + '" post-type="card-light"></post-wrapper>';
-                });*/
+                    return '<post-wrapper steem-path="' + match + '" post-type="content-minimal"></post-wrapper>';
+                });
 
                 // Github repository path -> <github-repository>
                 var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+/gm

@@ -7,8 +7,9 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 
+<link rel="import" href="../components/github-repository-overview.html">
 <link rel="import" href="../components/github-repository-file.html">
-<link rel="import" href="../components/github-issue-list.html">
+<link rel="import" href="github-repository-issue.html">
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../shared-styles.html">
 <dom-module id="github-repository">
@@ -43,6 +44,10 @@
             color: var(--app-primary-text-color);
         }
 
+        iron-pages {
+            background-color: var(--app-primary-background-color);
+        }
+
     </style>
 
     <template>
@@ -64,16 +69,25 @@
                                    on-tap="_openCurrentView()">
                 </paper-icon-button>
             </paper-toolbar>
+
             <div id="repositoryViewsMenu" hidden="[[!_isMenuOpen]]">
                 <paper-menu selected="{{_currentRepositoryView}}"
                             attr-for-selected="repository-view">
-                    <paper-item repository-view="files">
-                        <iron-icon icon="my-icons:file"></iron-icon>&nbsp;
-                        Files
+                    <!-- overview -->
+                    <paper-item repository-view="overview">
+                        <iron-icon icon="my-icons:dashboard"></iron-icon>
+                        &nbsp;Overview
                     </paper-item>
+                    <!-- code -->
+                    <paper-item repository-view="files">
+                        <iron-icon icon="my-icons:file"></iron-icon>
+                        &nbsp;Files
+                    </paper-item>
+                    <!-- projects -->
+                    <!-- issues -->
                     <paper-item repository-view="tasks">
-                        <iron-icon icon="my-icons:done"></iron-icon>&nbsp;
-                        Tasks
+                        <iron-icon icon="my-icons:done"></iron-icon>
+                        &nbsp;Tasks
                     </paper-item>
                 </paper-menu>
             </div>
@@ -82,16 +96,20 @@
         <iron-pages selected="[[_currentRepositoryView]]"
                     attr-for-selected="name">
 
+            <div name="overview">
+                <github-repository-overview repository="[[repository]]"
+                                            repository-view="{{_currentRepositoryView}}">
+                </github-repository-overview>
+            </div>
+
             <div name="files">
-
-                <github-repository-file repository="[[repository]]"></github-repository-file>
-
+                <github-repository-file repository="[[repository]]">
+                </github-repository-file>
             </div>
 
             <div name="tasks">
-
-                <github-issue-list repository="[[repository]]"></github-issue-list>
-
+                <github-repository-issue repository="[[repository]]">
+                </github-repository-issue>
             </div>
 
         </iron-pages>
@@ -130,7 +148,7 @@
                 ready: function() {
 
                     // Set default variables
-                    this._currentRepositoryView = 'files';
+                    this._currentRepositoryView = 'overview';
 
                     // Set event listeners
                     this.$.toggleMenuButton.addEventListener('tap', this._toggleMenu.bind(this));

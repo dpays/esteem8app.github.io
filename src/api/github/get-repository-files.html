@@ -5,7 +5,7 @@
 <dom-module id="get-repository-files">
 
     <template>
-        <url-get-file url="[[_url]]"
+        <url-get-file url="[[url]]"
                       response-text="{{_fileListText}}">
         </url-get-file>
     </template>
@@ -21,9 +21,9 @@
                 properties: {
 
                     /*
-                     * Github repository
+                     * Github repository folder url
                      */
-                    repository: {
+                    url: {
                         type: String
                     },
 
@@ -35,31 +35,10 @@
                         notify: true
                     },
 
-                    _url: {
-                        type: String
-                    },
-
                     _fileListText: {
                         type: String,
                         observer: '_computeFiles'
                     }
-                },
-
-                observers: [
-                    '_computeFilesUrl(repository)'
-                ],
-
-                _computeFilesUrl: function(repository) {
-
-                    // Prepare url to query page that contains the repository file list
-                    if(repository !== '') {
-
-                        var url = repository.replace('https://github.com', 'https://api.github.com/repos');
-                        url += '/contents/';
-
-                        this._url = url;
-                    }
-
                 },
 
                 _computeFiles: function() {

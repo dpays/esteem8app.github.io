@@ -1,0 +1,72 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../other/url-get-file.html">
+
+<dom-module id="get-repository-overview">
+
+    <template>
+        <url-get-file url="[[_url]]"
+                      response-text="{{_repositoryObjectText}}">
+        </url-get-file>
+    </template>
+
+    <script>
+
+        (function () {
+
+            Polymer({
+
+                is: 'get-repository-overview',
+
+                properties: {
+
+                    /*
+                     * Github repository
+                     */
+                    repository: {
+                        type: String
+                    },
+
+                    /*
+                     * Repository states object
+                     */
+                    repositoryObject: {
+                        type: Object,
+                        notify: true
+                    },
+
+                    _repositoryObjectText: {
+                        type: String,
+                        observer: '_computeRepository'
+                    },
+
+                    _url: {
+                        type: String
+                    }
+                },
+
+                observers: [
+                    '_computeFilesUrl(repository)'
+                ],
+
+                _computeFilesUrl: function(repository) {
+
+                    // Prepare url to query page that contains the repository file list
+                    if(repository !== '') {
+
+                        var url = repository.replace('https://github.com', 'https://api.github.com/repos');
+
+                        this._url = url;
+                    }
+
+                },
+
+                _computeRepository: function() {
+
+                    // transform text received in object
+                    this.set('repositoryObject', JSON.parse(this._repositoryObjectText));
+                }
+            });
+        })();
+    </script>
+</dom-module>

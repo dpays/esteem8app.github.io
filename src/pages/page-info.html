@@ -2,6 +2,7 @@
 
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
@@ -58,6 +59,16 @@
                 font-family: 'Open sans', 'Roboto', sans-serif;
             }
 
+            .certifications {
+                text-align: right;
+            }
+
+            .certifications iron-icon {
+                --iron-icon-height: 16px;
+                --iron-icon-width: 16px;
+                display: inline-flex;
+            }
+
         </style>
 
         <!-- TOOLBAR -->
@@ -67,7 +78,7 @@
             </a>
             <div class="floatingToolbar">
                 <span class="floatingToolbarTitle">
-                    More info
+                    More information
                 </span>
             </div>
             <a href="/trending">
@@ -78,20 +89,31 @@
         <!-- CARDS -->
         <div class="mainCard">
 
-            <paper-card>
+            <paper-card id="infocard">
                 <div class="card-content">
                     <h2>What is this ?</h2>
                     <p>This is a web app that you can access it like a website and use like an application.</p>
-                    <p>If you are on mobile, you can add it to your home screen by going into your browser options, it's free and instantaneous (It works on desktop too).</p>
+                    <p>If you are on your mobile phone, you can pin this to your home screen by going into your browser options, it's free and instantaneous (It works on desktop too).</p>
+                    <p>Visit <a href="/@esteem8">@esteem8</a> account for more information.</p>
 
                     <h2>What is Steem ?</h2>
-                    <p>Steem is a community network composed of multiple nodes that is called a <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+blockchain+database">blockchain</a>, <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+crypto+currency">cryptocurrencies</a> are similar but Steem embed a social network feature.
+                    <p>Steem is a community network composed of multiple computer that is called a <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+blockchain+database">blockchain</a>, <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+crypto+currency">cryptocurrencies</a> are similar but Steem embed a social network feature.
                         <br>This app let you freely use Steem without taking any of your data and get rewarded by the blockchain.</p>
 
                     <h2>Why it's cool ?</h2>
-                    <p>Because it's free, there is no ads and the network is <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+decentralized+network">decentralized</a>, it means that it is unbreakable, unstoppable and incorruptible. And more than that, the blockchain reward you for using it.</p>
+                    <p>Because it's free, there is no ads and the network is <a target="_blank" href="https://duckduckgo.com/?q=what+is+a+decentralized+network">decentralized</a>, that means that it's unbreakable, unstoppable and incorruptible. And more than that, the blockchain reward you for using it.</p>
+                    <template is="dom-if" if="[[_isCertificationShown]]">
+                        <div class="certifications">
+                            <iron-icon id="_nonIllumitatiCertifcation" src="https://s27.postimg.org/wuojxnj9v/non_illimuniti_certification.png"></iron-icon>
+                            <iron-icon id="_nonReptoidAllicanceCertifcation" src="https://s27.postimg.org/qfpj0zck3/non_reptoid_certification2.png"></iron-icon>
+                        </div>
+                    </template>
                 </div>
             </paper-card>
+            <template is="dom-if" if="[[_isCertificationShown]]">
+                <paper-tooltip for="_nonIllumitatiCertifcation">Non illuminati certification</paper-tooltip>
+                <paper-tooltip for="_nonReptoidAllicanceCertifcation">Non reptoid certification<br>Note: Only those who are in the reptoid alliance</paper-tooltip>
+            </template>
         </div>
 
     </template>
@@ -102,12 +124,26 @@
 
             is: 'page-info',
 
+            listeners: {
+                'infocard.tap': '_showCertifications'
+            },
+
             properties: {
 
                 settings: {
                     type: Object,
                     notify: true
                 }
+            },
+
+            ready: function() {
+
+                this._isCertificationShown = false;
+            },
+
+            _showCertifications: function() {
+
+                this._isCertificationShown = true;
             }
         });
     </script>

@@ -19,15 +19,9 @@
                 overflow: auto;
             }
 
-            #folderBack {
-                border: 1px solid var(--app-background-secondary-text-color);
-            }
-
             paper-listbox {
                 --paper-listbox-background-color: transparent;
                 --paper-listbox-color: inerhite;
-                border-left: 1px solid var(--app-background-secondary-text-color);
-                border-right: 1px solid var(--app-background-secondary-text-color);
                 color: var(--app-background-primary-text-color);
             }
 
@@ -35,16 +29,16 @@
                 color: var(--app-background-secondary-text-color);
                 margin-right: 12px;
             }
+
         </style>
 
-        <get-repository-files repository="[[repository]]"
+        <get-repository-files url="[[_url]]"
                               files="{{_files}}">
         </get-repository-files>
 
         <div id="folderBack">
             <paper-item id="back" on-tap="_toBackFolder" hidden="[[_backHidden]]">
                 <iron-icon icon="my-icons:arrow-back"></iron-icon>
-                ...
             </paper-item>
         </div>
 
@@ -90,6 +84,10 @@
                         observer: '_selectNewFolder'
                     },
 
+                    _url: {
+                        type: String
+                    },
+
                     _files: {
                         type: Array,
                         observer: '_selectDefaultFile'
@@ -100,10 +98,27 @@
                     }
                 },
 
+                observers: [
+                    '_computeFilesUrl(repository)'
+                ],
+
                 ready: function() {
 
                     this.$.back.addEventListener('tap', this._toBackFolder.bind(this));
                     this._backHidden = true;
+                },
+
+                _computeFilesUrl: function(repository) {
+
+                    // Prepare url to query page that contains the repository file list
+                    if(repository !== '') {
+
+                        var url = repository.replace('https://github.com', 'https://api.github.com/repos');
+                        url += '/contents/';
+
+                        this._url = url;
+                    }
+
                 },
 
                 _selectDefaultFile: function() {
@@ -141,6 +156,7 @@
                     var urlSplited = this._url.split('/');
 
                     if(urlSplited[urlSplited.length -1] == 'contents') {
+
                         this._backHidden = true;
                     }else {
 
