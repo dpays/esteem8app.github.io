@@ -1,21 +1,21 @@
 # Contributing kit
 
-ESTEEM8 Project, team and users greatly appreciate any kind of contribution.
+ESTEEM8 System, team and users greatly appreciate any kind of contribution.
 
 ## Suggestions
 
 **Feedback**
 
-* Specific feedback -> Use [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
-* New feature proposal -> Use the [Esteem8 features proposal](https://steemit.com/steem/@esteem8/esteem8-community-proposals) Steem publication.
+* **Feedback** -> Use the [ESTEEM8 - Community feedback](https://steemit.com/esteem8/@esteem8/esteem8-community-feedback) Steem post or [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues) with the `enhancement` tag.
+* **Proposal** -> Use the [ESTEEM8 - Community proposal](https://steemit.com/steem/@esteem8/esteem8-community-proposals) Steem post.
 
 **Bugs reporting**
 
-Please submit bugs as regular issues on the [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues). We'll try to resolve it as quickly as possible.
+Please submit bugs as regular issues on the [github issues page](https://github.com/esteem8app/esteem8app.github.io/issues). We'll try to resolve them as quickly as possible.
 
 ## Development
 
-**Links above will provide you all you need to start developping.**
+**Links above provide all knowledge needed to develop something in the ES8 system.**
 
 Please read first the project [work the system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/Strategic-objective.md) methodology to understand the way we work.
 
@@ -24,12 +24,12 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 * [Ressources](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/ressources.md)
 * [Documentation](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/documentation.md)
 
-**Development can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/publications-template/new-feature.md) on the Steem network using the "esteem8-new-features" tag.
+**Development can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/publications-template/new-feature.md) on the Steem/Golos network using the "esteem8-features" tag.
 
-### What to do ?
+### What can i do ?
 
-* Fix [issues](https://github.com/esteem8app/esteem8app.github.io/issues).
-* Process [projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo/projects).
+* Fix some [bugs](https://github.com/esteem8app/esteem8app.github.io/labels/bug).
+* Process some [tasks](https://github.com/esteem8app/esteem8app.github.io/labels/todo).
 
 or
 
