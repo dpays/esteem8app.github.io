@@ -19,7 +19,7 @@ Basicaly these components above are working similary as a program. Comparing to 
 ### The what
 
 * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
- * [System definition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-definition.md) is the detailed current whole system state.
+ * [System composition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-composition.md) is the detailed current whole system state.
  * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) is the detailed current system objectives, goal or destination.
 
 ### The how
@@ -38,7 +38,7 @@ Basicaly these components above are working similary as a program. Comparing to 
 ### Organization level
 
 * [Objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) are made for a very long term planning.
-* [Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) are made for a long term planning and translated from objectives [grouped by objectives].
+* [Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) are made for a long term planning and translated from composition & objectives [grouped by output].
 * [Projects](https://github.com/esteem8app/esteem8app.github.io/projects) are made for a middle term planning from mixed strategy parts [grouped by work type and strategies].
 * [Tasks](https://github.com/esteem8app/esteem8app.github.io/issues) are made for a short term planning from mixed projects parts [grouped by work type].
 
@@ -50,14 +50,14 @@ These 4 point above are organizational (process description) and sorted from a h
 
 #### Using "Organization principles" doc [Describe]
 
-* [**What:**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition) (**Definition of** composition & objectives ) ->
+* [**What**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition): [composition & objectives] ->
 
-* [**How:**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) (**Strategie to** optimize composition & reach objectives) ->
+* [**How**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies): [optimize composition & develop objectives] ->
 
-* **Projects:** ([GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)) ->
+* **Projects (How layer 2):** [[GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)] ->
 
-* **Tasks:** ([GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered and sorted by label(=skills) & milestone(=projects)).
+* **Tasks (How layer 3):** [[GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered by skills(label) & projects(milestone)].
 
 #### Using "Process principles" doc [Process]
 
-* **Tasks:** -> Mechanical and biological process (Your job)
+* **Tasks:** -> Mechanical and biological process [Your process]
