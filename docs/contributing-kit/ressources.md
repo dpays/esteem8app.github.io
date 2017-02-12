@@ -5,5 +5,7 @@
  * [Google](https://elements.polymer-project.org/)
 * Material design
  * [Inspiration](https://material.uplabs.com/)
- * icons ([Community](https://materialdesignicons.com/), [Google](https://design.google.com/icons/))
+ * Icons 
+    * [Community](https://materialdesignicons.com/)
+    * [Google](https://design.google.com/icons/) 
 * [SteemJS API](https://github.com/adcpm/steem)
