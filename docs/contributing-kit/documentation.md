@@ -10,7 +10,7 @@ Application starting point loaded from index.html.
 
 It provide:
 * Page router
-* Local data (settings, favorites posts, favorites users, favorites tags)
+* Local data (settings, favorites posts, favorites users, favorites tags, favorites files)
 * Theme colors
 
 #### shared-styles.html
