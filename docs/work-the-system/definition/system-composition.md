@@ -1,11 +1,11 @@
 # ESTEEM8 System composition
-This is an overview of it's detailed composition.
+This is an overview of the whole ES8 system composition.
 
 This schema will be splited into a first low-detailed schema with primary systems and interactions and some other with the details of these primary systems.
 
 ![Alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/ESTEEM8%20System%20overview.png?raw=true "ESTEEM8 System composition")
 
-The schema was made on [draw.io](https://www.draw.io/).
+Schema made with [draw.io](https://www.draw.io/).
 
 Shemas are composed of unlimited nested systems and interactions.
 
