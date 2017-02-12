@@ -1,7 +1,7 @@
 # Tools
 
 * [Plan strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/plan-strategy-principles.md) is used to plan optimal strategies from objectives and strategies.
-* [Process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md) is to efficiently tranform [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) into [tasks](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo).
+* [Process strategy principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md) is used to efficiently transform [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) into **projects** ([Folder projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects), [GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) and [GitHub milestones](https://github.com/esteem8app/esteem8app.github.io/milestones)) and then [GitHub tasks](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/todo).
 
 --
 
