@@ -61,3 +61,7 @@ These 4 point above are organizational (process description) and sorted from a h
 #### Using "Process principles" doc [Process]
 
 * **Tasks:** -> Mechanical and biological process [Your process]
+
+## Shema visualitation
+
+![Work a system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/Work%20a%20system.png?raw=true)
