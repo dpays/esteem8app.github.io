@@ -52,7 +52,7 @@ These 4 point above are organizational (process description) and sorted from a h
 
 * [**What**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition): [composition & objectives] ->
 
-* [**How**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies): [optimize composition & develop objectives] ->
+* [**How**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies): [composition optimization & objectives development] ->
 
 * **Projects (How layer 2):** [[GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)] ->
 
