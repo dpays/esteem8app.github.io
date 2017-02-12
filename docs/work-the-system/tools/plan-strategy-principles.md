@@ -1,4 +1,4 @@
-# Make strategy principles
+# Plan strategy principles
 This is a tool to plan optimal strategies in order to reach objectives.
 It can be applied to any strategy type (optimization or developement).
 
