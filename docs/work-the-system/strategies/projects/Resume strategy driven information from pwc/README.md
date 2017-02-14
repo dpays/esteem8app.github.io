@@ -25,7 +25,7 @@
  5. Sythethise resumes in one markdown document.
  6. Review, feedback and discuss about document.
  7. Create the document (1-5 pages) in /tools/strategy-planner/plugins/docname.md
-   7.1 Move "plan-strategy-principles.md" document into a new folder called "docs/strategy-planner".
-   7.2 Create the doc into "/plugins" into "docs/strategy-planner".
-   7.3 From "plan-strategy-principles.md" link this new document.
+    * 7.1 Move "plan-strategy-principles.md" document into a new folder called "docs/strategy-planner".
+    * 7.2 Create the doc into "/plugins" into "docs/strategy-planner".
+    * 7.3 From "plan-strategy-principles.md" link this new document.
  8. Review, feedback and discuss about the process done.
