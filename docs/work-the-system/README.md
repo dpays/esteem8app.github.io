@@ -42,6 +42,8 @@ Basicaly these components above are working similary as a program. Comparing to 
 * [Projects](https://github.com/esteem8app/esteem8app.github.io/projects) are made for a middle term planning from mixed strategy parts [grouped by work type and strategies].
 * [Tasks](https://github.com/esteem8app/esteem8app.github.io/issues) are made for a short term planning from mixed projects parts [grouped by work type].
 
+All organization level or layer [Objectives, strategies, projects and tasks] can be [Linked, Nested, Have [dependency](https://en.wikipedia.org/wiki/Dependency_(project_management)), Have [relationships](https://www.google.com/search?q=entity+relationship+diagram)] with all organization level or layer.
+
 These 4 point above are organizational (process description) and sorted from a high level to a low level.
  * High level -> lowly precise process description, morely grouped by objective and plan type.
  * Low level -> highly precise process description, morely grouped by skills and process type.
@@ -65,3 +67,7 @@ These 4 point above are organizational (process description) and sorted from a h
 ## Shema visualitation
 
 ![Work a system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/Work%20a%20system.png?raw=true)
+
+## More informations
+
+This framework has been built using the [work the system](http://www.workthesystem.com/) methodology base made by Sam Carpenter.
