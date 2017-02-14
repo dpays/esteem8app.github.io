@@ -5,8 +5,8 @@
  **Concern:** improvment of "Plan strategy principles" especialy for strategy type "strategy" (organization layer 2) in form of a linked md doc (in /tools/strategy-planner/plugins/docname.md).
  
  Linked to:
-  * [Project]() (Links, todo, ideas ...)
-  * [Milestone]() (Tasks, disscusion, ideas, feedback and brainstorming, ...)
+  * [Project](https://github.com/esteem8app/esteem8app.github.io/projects/12) (Links, todo, ideas ...)
+  * [Milestone](https://github.com/esteem8app/esteem8app.github.io/milestone/3) (Tasks, disscusion, ideas, feedback and brainstorming, ...)
  
  --
 
@@ -24,7 +24,7 @@
  4. Review, feedback and discuss about resumes.
  5. Sythethise resumes in one markdown document.
  6. Review, feedback and discuss about document.
- 7. Create the document in /tools/strategy-planner/plugins/docname.md
+ 7. Create the document (1-5 pages) in /tools/strategy-planner/plugins/docname.md
    7.1 Move "plan-strategy-principles.md" document into a new folder called "docs/strategy-planner".
    7.2 Create the doc into "/plugins" into "docs/strategy-planner".
    7.3 From "plan-strategy-principles.md" link this new document.
