@@ -12,8 +12,7 @@ Trough fixed mindset result is the output not improvment, so improvement is emot
 
 Trough growth mindset, result is not the output but improvment so improvment is much less emotion energy wasting and effort can be placed optimally in taking what is good to take in the inside and outside paramters and just do the best possible considering actual paramters. It unlock possibilites, improve efficently and low emotion energy wast.
 
-Some typical output based on same input that can be used to differenciate these mindset:
-![Fixed mindset & Grosth mindset comparaison](http://www.hrzone.com/sites/default/files/growth_mindset_poster_0.png?itok=P81uHYAk)
+[Some typical output based on same input that can be used to differenciate these mindset](http://www.hrzone.com/sites/default/files/growth_mindset_poster_0.png?itok=P81uHYAk)
 
 ## Extrinsic and intrinsic motivation
 
