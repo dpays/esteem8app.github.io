@@ -27,6 +27,7 @@ Basicaly these components above are working similary as a program. Comparing to 
  * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies)
   * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) is the way to optimize the current system.
   * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) is the way to develop the current system.
+  * [/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects) are projects made from strategies.
 
 ### The how of "what + how"
  
