@@ -53,13 +53,13 @@ These 4 point above are organizational (process description) and sorted from a h
 
 #### Using "Organization principles" doc [Describe]
 
-* [**What**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition): [composition & objectives] ->
+* [layer 1] [**What**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition): [composition & objectives] ->
 
-* [**How**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies): [composition optimization & objectives development] ->
+* [layer 2] [**How**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies): [composition optimization & objectives development] ->
 
-* **Projects (How layer 2):** [[GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects) & [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)] ->
+* [layer 3] **Projects:** [[/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects), [GitHub projects](https://github.com/esteem8app/esteem8app.github.io/projects), [GitHub milestone](https://github.com/esteem8app/esteem8app.github.io/milestones) (with the same name)] ->
 
-* **Tasks (How layer 3):** [[GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered by skills(label) & projects(milestone)].
+* [layer 4] **Tasks:** [[GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered by skills(label) & projects(milestone)].
 
 #### Using "Process principles" doc [Process]
 
