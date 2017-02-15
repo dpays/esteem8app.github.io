@@ -5,4 +5,4 @@
 
 ---
  
- Word strategy can be confusing. If not precised a strategy is a strategy, if precised it can be a project and a task.
+ Word strategy can be confusing. If not precised a strategy is a strategy, if precised it can be an objective, a composition, a project or a task.
