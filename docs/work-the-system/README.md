@@ -71,4 +71,4 @@ These 4 point above are organizational (process description) and sorted from a h
 
 ## More informations
 
-This framework has been built using the [work the system](http://www.workthesystem.com/) methodology base made by Sam Carpenter.
+This framework has been built using the [work the system](http://www.workthesystem.com/).
