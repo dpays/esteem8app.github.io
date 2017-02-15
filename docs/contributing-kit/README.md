@@ -29,7 +29,8 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 ### What can i do ?
 
 * Fix some [bugs](https://github.com/esteem8app/esteem8app.github.io/labels/bug).
-* Process some [tasks](https://github.com/esteem8app/esteem8app.github.io/labels/todo).
+* Work on a [project](https://github.com/esteem8app/esteem8app.github.io/milestones).
+* Create a project from [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
 
 or
 
