@@ -11,7 +11,7 @@
 <link rel="import" href="../components/prism-render.html">
 <link rel="import" href="../api/other/url-get-file.html">
 <link rel="import" href="../shared-styles.html">
-<dom-module id="github-file-view">
+<dom-module id="github-repository-file-view">
 
     <template>
 
@@ -96,15 +96,26 @@
 
             Polymer({
 
-                is: 'github-file-view',
+                is: 'github-repository-file-view',
 
                 properties: {
 
+                    /*
+                     * GitHub file Object given from API
+                     */
                     file: {
                         type: Object,
                         observer: '_computeFileType'
                     },
 
+                    /*
+                     * Github repository file url to load
+                     */
+                    /*fileUrl: {
+                        type: String,
+                        observer: '_createFileObject'
+                    },
+*/
                     _fileText: {
                         type: Object
                     },
@@ -135,6 +146,22 @@
                     this.$.githubLinkView.addEventListener('tap', this._openFileInGithub.bind(this));
 
                 },
+
+                /*_createFileObject: function() {
+
+                    var fileObject = {};
+                    var htmlFileUrl = this.fileUrl
+                            .replace("github.com", "raw.githubusercontent.com")
+                            .replace("/blob", "")
+
+                    fileObject.download_url = htmlFileUrl;
+                    fileObject.name = /((?:[\. %a-zA-Z0-9-]+)?.\w+)$/gm.exec(htmlFileUrl)[0];
+                    fileObject.type = 'file';
+
+                    this.file = fileObject;
+                    this._computeFileType();
+
+                },*/
 
                 _computeFileType: function() {
 

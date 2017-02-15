@@ -19,8 +19,9 @@
 <link rel="import" href="../api/github/get-repository-milestones.html">
 <link rel="import" href="../api/github/get-repository-labels.html">
 <link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../shared-styles.html">
-<dom-module id="github-repository-issue">
+<dom-module id="github-repository-issue-list">
 
     <template>
 
@@ -164,7 +165,10 @@
 
                                 <paper-item-body two-line>
                                     <div>[[item.title]] ([[item.closed_issues]]/[[_computeTotalIssues(item.open_issues, item.closed_issues)]])</div>
-                                    <div secondary>[[item.description]] [[[_timeFromNow(item.created_at)]] by [[item.creator.login]]]</div>
+                                    <div secondary>
+                                        <html-echo html="[[item.description]]"></html-echo>
+                                        [[_timeFromNow(item.created_at)]] by [[item.creator.login]]
+                                    </div>
                                 </paper-item-body>
 
                             </paper-icon-item>
@@ -276,7 +280,7 @@
 
             Polymer({
 
-                is: 'github-repository-issue',
+                is: 'github-repository-issue-list',
 
                 behaviors: [
                     Polymer.AppLocalizeBehavior

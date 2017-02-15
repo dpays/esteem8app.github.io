@@ -2,12 +2,15 @@
 
 <link rel="import" href="../../bower_components/marked-element/marked-element.html">
 
-<link rel="import" href="post-path-list.html">
 <link rel="import" href="post-wrapper.html">
+<link rel="import" href="post-path-list.html">
 <link rel="import" href="github-repository.html">
+<link rel="import" href="github-repository-file-view.html">
 
 <dom-module id="html-echo">
     <style>
+
+        /* GENERAL */
         :host {
             display: block;
         }
@@ -17,6 +20,40 @@
             color: var(--app-primary-text-color);
         }
 
+        .markdown-html .primary-color {
+            color: var(--app-primary-color);
+        }
+
+        .markdown-html .secondary-color {
+            color: var(--app-secondary-color);
+        }
+
+        .markdown-html .bold {
+            font-weight: bold;
+        }
+
+        .markdown-html .low-priority {
+            color: #8BC34A;
+        }
+
+        .markdown-html .medium-priority {
+            color: #FFEB3B;
+        }
+
+        .markdown-html .high-priority {
+            color: #FF5722;
+        }
+
+        .markdown-html .bold {
+            font-weight: bold;
+        }
+
+        .markdown-html .bold {
+            font-weight: bold;
+        }
+
+
+        /* BASIC */
         .markdown-html a {
             color: var(--app-secondary-color) !important;
         }
@@ -114,6 +151,7 @@
 
                     //html += ' created/esteem8-features ';
                     //html += ' https://github.com/esteem8app/esteem8app.github.io ';
+                    //html += '  https://github.com/esteem8app/esteem8app.github.io/blob/master/src/scripts/intl-relativeformat-with-locales.min.js ';
                     //html += ' steem/@esteem8/esteem8-community-proposals ';
                     //html += ' steem/@primerz/what-is-steem ';
                 }
@@ -142,6 +180,24 @@
 
                     return '<img src="' + url + '" ></img>';
                 });
+
+
+                var commentProjectElement = /(\[((objectives?|composition|strategy|strategies|projects?|tasks?)]))/gm;
+                html = html.replace(commentProjectElement, function(match){
+
+                    return '<span class="primary-color">' + match + '</span>';
+                });
+
+                var postPriorityElement = /(\[(?:very )?(low|medium|high) (priority)\])/gm;
+                html = html.replace(postPriorityElement, function(match){
+
+                    var priorityColorRegex = /((low|medium|high) priority)/g;
+                    var priorityColor = imgUrlRegex.exec(match)[0];
+                        priorityColor = priorityColor.replace(" ", "-");
+
+                    return '<span class="' + priorityColor + '">' + match + '</span>';
+                });
+
 
                 // RENDER direct image link into <img> (must not be yet in <img>)
 
@@ -173,11 +229,19 @@
                 });
 
                 // Github repository path -> <github-repository>
-                var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+/gm
+                var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+ /gm
                 html = html.replace(gitHubRepositoryRegex, function(match){
 
-                    var match = match.replace(" ", "");
+                    var match = match.replace(/ /g, "");
                     return '<github-repository repository="' + match + '" ></github-repository>';
+                });
+
+                // Github file view -> <github-repository-file-view>
+                var gitHubRepositoryFileRegex = /[^("|'|\[)](https:\/\/github.com\/\w+\/([\.a-zA-Z0-9]+)\/blob\/\w+\/[\.\/a-zA-Z0-9-]+)/gm
+                html = html.replace(gitHubRepositoryFileRegex, function(match){
+
+                    var match = match.replace(/ /g, "");
+                    return '<github-repository-file-view file-url="' + match + '" ></github-repository-file-view>';
                 });
 
                 // Consider it link -> <responsive-iframe>

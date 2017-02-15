@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/github-file-list.html" afterPath="$PROJECT_DIR$/src/components/github-repository-file-list.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/github-file-view.html" afterPath="$PROJECT_DIR$/src/components/github-repository-file-view.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/components/github-repository-issue.html" afterPath="$PROJECT_DIR$/src/components/github-repository-issue-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/github-repository-file.html" afterPath="$PROJECT_DIR$/src/components/github-repository-file.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/github-repository.html" afterPath="$PROJECT_DIR$/src/components/github-repository.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-profile.html" afterPath="$PROJECT_DIR$/src/pages/page-profile.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,33 +30,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="github-repository-overview.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/github-repository-overview.html">
+      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="56" column="29" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
+            <state relative-caret-position="504">
+              <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
               <folding>
-                <element signature="e#2502#2508#0" expanded="true" />
-                <element signature="e#3391#3397#0" expanded="true" />
-                <element signature="e#3398#3404#0" expanded="true" />
-                <element signature="e#3645#3651#0" expanded="true" />
-                <element signature="e#3652#3658#0" expanded="true" />
+                <element signature="e#17701#17707#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="html-echo.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="html-echo.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="741">
-              <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
+            <state relative-caret-position="810">
+              <caret line="152" column="22" selection-start-line="152" selection-start-column="22" selection-end-line="152" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="72">
@@ -59,44 +62,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="github-file-view.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/github-file-view.html">
+      <file leaf-file-name="github-repository-file-view.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/github-repository-file-view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="81" />
+            <state relative-caret-position="758">
+              <caret line="128" column="39" selection-start-line="128" selection-start-column="39" selection-end-line="128" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="google-chart.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bower_components/google-chart/google-chart.css">
+      <file leaf-file-name="github-repository-file-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/github-repository-file-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+            <state relative-caret-position="632">
+              <caret line="50" column="47" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="github-repository-issue.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/github-repository-issue.html">
+      <file leaf-file-name="post-card.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="278" column="44" selection-start-line="278" selection-start-column="44" selection-end-line="278" selection-end-column="44" />
-              <folding>
-                <element signature="n#style#0;n#span#0;n#paper-checkbox#0;n#paper-item#0;n#template#0;n#paper-menu#0;n#paper-menu-button#0;n#div#1;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#template#0;n#template#0;n#div#1;n#paper-item-body#0;n#paper-item#0;n#template#0;n#paper-listbox#0;n#div#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="github-file-list.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/github-file-list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+            <state relative-caret-position="808">
+              <caret line="195" column="43" selection-start-line="195" selection-start-column="43" selection-end-line="195" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -105,9 +95,13 @@
       <file leaf-file-name="get-repository-files.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api/github/get-repository-files.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="918">
-              <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="594">
+              <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+              <folding>
+                <marker date="1486942375741" expanded="true" signature="1003:1021" ph="{...}" />
+                <marker date="1486942375741" expanded="true" signature="1003:1240" ph="{...}" />
+                <marker date="1486942375741" expanded="true" signature="1066:1214" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,9 +109,22 @@
       <file leaf-file-name="github-repository-file.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/github-repository-file.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="882">
-              <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
+            <state relative-caret-position="450">
+              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="github-repository-issue-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/github-repository-issue-list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#paper-checkbox#0;n#paper-item#0;n#template#0;n#paper-menu#0;n#paper-menu-button#0;n#div#1;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#template#0;n#template#0;n#div#1;n#paper-item-body#0;n#paper-item#0;n#template#0;n#paper-listbox#0;n#div#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,13 +132,9 @@
       <file leaf-file-name="github-repository.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/github-repository.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1602">
+            <state relative-caret-position="721">
               <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-              <folding>
-                <element signature="e#2907#2913#0" expanded="true" />
-                <element signature="e#3140#3146#0" expanded="true" />
-                <element signature="e#3410#3416#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -151,9 +154,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/pinned-post-content.html" />
-        <option value="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" />
-        <option value="$PROJECT_DIR$/src/components/pinned-tag-card.html" />
         <option value="$PROJECT_DIR$/src/components/pinned-tag-cards.html" />
         <option value="$PROJECT_DIR$/src/components/post-card-light.html" />
         <option value="$PROJECT_DIR$/src/components/path-post-list.html" />
@@ -167,7 +167,6 @@
         <option value="$PROJECT_DIR$/src/components/page-tools.html" />
         <option value="$PROJECT_DIR$/src/api/other/url-get-file.html" />
         <option value="$PROJECT_DIR$/src/components/tool-card.html" />
-        <option value="$PROJECT_DIR$/src/components/post-card.html" />
         <option value="$PROJECT_DIR$/src/pages/my-docs.html" />
         <option value="$PROJECT_DIR$/404.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-state.html" />
@@ -185,7 +184,6 @@
         <option value="$PROJECT_DIR$/src/components/drawer-content.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html" />
         <option value="$PROJECT_DIR$/src/app-shell.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
         <option value="$PROJECT_DIR$/src/pages/page-explore.html" />
         <option value="$PROJECT_DIR$/src/pages/page-home.html" />
         <option value="$PROJECT_DIR$/src/pages/page-info.html" />
@@ -194,14 +192,19 @@
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
         <option value="$PROJECT_DIR$/bower_components/google-chart/google-chart.css" />
         <option value="$PROJECT_DIR$/src/components/github-repository-overview.html" />
-        <option value="$PROJECT_DIR$/src/components/github-file-view.html" />
         <option value="$PROJECT_DIR$/src/components/github-issue-list.html" />
-        <option value="$PROJECT_DIR$/src/components/github-repository.html" />
-        <option value="$PROJECT_DIR$/src/components/github-repository-file.html" />
         <option value="$PROJECT_DIR$/src/components/github-file-list.html" />
         <option value="$PROJECT_DIR$/src/api/github/get-repository-files.html" />
-        <option value="$PROJECT_DIR$/src/components/html-echo.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
+        <option value="$PROJECT_DIR$/src/components/github-file-view.html" />
+        <option value="$PROJECT_DIR$/src/components/github-repository-file.html" />
+        <option value="$PROJECT_DIR$/src/components/github-repository.html" />
+        <option value="$PROJECT_DIR$/src/components/github-repository-issue-list.html" />
+        <option value="$PROJECT_DIR$/src/components/github-repository-file-list.html" />
+        <option value="$PROJECT_DIR$/src/components/post-card.html" />
+        <option value="$PROJECT_DIR$/src/components/github-repository-file-view.html" />
+        <option value="$PROJECT_DIR$/src/components/html-echo.html" />
       </list>
     </option>
   </component>
@@ -492,23 +495,24 @@
       <workItem from="1486054234886" duration="74282000" />
       <workItem from="1486313527911" duration="57041000" />
       <workItem from="1486594474955" duration="47099000" />
+      <workItem from="1486942385318" duration="12568000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="448622000" />
+    <option name="totallyTimeSpent" value="461190000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29400387" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29980657" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33054626" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33723524" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -581,7 +585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="642">
           <caret line="41" column="55" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -593,36 +596,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/todo/projects/Improve animations/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/todo/projects/Add to home screen tutorial/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/todo/projects/Improve doc/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/todo/projects/Improve animations/README.md" />
+    <entry file="file://$PROJECT_DIR$/docs/todo/projects/Add to home screen tutorial/README.md" />
+    <entry file="file://$PROJECT_DIR$/docs/todo/projects/Improve doc/README.md" />
     <entry file="file://$PROJECT_DIR$/docs/todo/tasks/code/BUGS.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -663,16 +639,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs/work-the-system/definition/system-definition.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/work-the-system/definition/system-definition.md" />
     <entry file="file://$PROJECT_DIR$/docs/work-the-system/definition/system-objectives.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -687,7 +654,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2137">
           <caret line="253" column="0" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -703,10 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="905">
           <caret line="167" column="12" selection-start-line="167" selection-start-column="12" selection-end-line="170" selection-end-column="13" />
-          <folding>
-            <element signature="n#style#0;n#paper-icon-button#1;n#div#2;n#paper-card#0;n#template#0;n#dom-module#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#span#2;n#div#2;n#paper-card#0;n#template#0;n#dom-module#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -794,25 +756,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="754">
           <caret line="221" column="22" selection-start-line="221" selection-start-column="13" selection-end-line="221" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="418" column="12" selection-start-line="418" selection-start-column="12" selection-end-line="421" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2291">
-          <caret line="253" column="13" selection-start-line="250" selection-start-column="12" selection-end-line="253" selection-end-column="13" />
-          <folding>
-            <element signature="e#17610#17616#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -820,7 +763,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="25" column="28" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -828,7 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="792">
           <caret line="89" column="55" selection-start-line="84" selection-start-column="16" selection-end-line="89" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -860,7 +801,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2135">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -868,7 +808,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -884,7 +823,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-749">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -901,75 +839,34 @@
         <state relative-caret-position="612">
           <caret line="56" column="29" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
           <folding>
-            <element signature="e#2502#2508#0" expanded="true" />
-            <element signature="e#3391#3397#0" expanded="true" />
-            <element signature="e#3398#3404#0" expanded="true" />
-            <element signature="e#3645#3651#0" expanded="true" />
-            <element signature="e#3652#3658#0" expanded="true" />
+            <element signature="e#2502#2508#0" expanded="false" />
+            <element signature="e#3391#3397#0" expanded="false" />
+            <element signature="e#3398#3404#0" expanded="false" />
+            <element signature="e#3645#3651#0" expanded="false" />
+            <element signature="e#3652#3658#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/github-file-view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="27" column="16" selection-start-line="27" selection-start-column="16" selection-end-line="27" selection-end-column="81" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/github-repository.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1602">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding>
-            <element signature="e#2907#2913#0" expanded="true" />
-            <element signature="e#3140#3146#0" expanded="true" />
-            <element signature="e#3410#3416#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/github-repository-file.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="882">
-          <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/github-repository-issue.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="278" column="44" selection-start-line="278" selection-start-column="44" selection-end-line="278" selection-end-column="44" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#paper-checkbox#0;n#paper-item#0;n#template#0;n#paper-menu#0;n#paper-menu-button#0;n#div#1;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#template#0;n#template#0;n#div#1;n#paper-item-body#0;n#paper-item#0;n#template#0;n#paper-listbox#0;n#div#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/github-file-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/api/github/get-repository-files.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="51" column="13" selection-start-line="51" selection-start-column="13" selection-end-line="51" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="594">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding>
+            <marker date="1486942375741" expanded="true" signature="1003:1021" ph="{...}" />
+            <marker date="1486942375741" expanded="true" signature="1003:1240" ph="{...}" />
+            <marker date="1486942375741" expanded="true" signature="1066:1214" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
+    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
-          <folding />
+        <state relative-caret-position="504">
+          <caret line="76" column="45" selection-start-line="76" selection-start-column="45" selection-end-line="76" selection-end-column="45" />
+          <folding>
+            <element signature="e#17701#17707#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -977,6 +874,65 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/github-repository-file.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/github-repository.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="721">
+          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/github-repository-issue-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#paper-checkbox#0;n#paper-item#0;n#template#0;n#paper-menu#0;n#paper-menu-button#0;n#div#1;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#template#0;n#template#0;n#div#1;n#paper-item-body#0;n#paper-item#0;n#template#0;n#paper-listbox#0;n#div#1;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/github-repository-file-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="50" column="47" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="808">
+          <caret line="195" column="43" selection-start-line="195" selection-start-column="43" selection-end-line="195" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/github-repository-file-view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="758">
+          <caret line="128" column="39" selection-start-line="128" selection-start-column="39" selection-end-line="128" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="152" column="22" selection-start-line="152" selection-start-column="22" selection-end-line="152" selection-end-column="22" />
           <folding />
         </state>
       </provider>
