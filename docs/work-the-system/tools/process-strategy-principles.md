@@ -15,6 +15,7 @@ Organization principles are tools to write a textual representation of these pro
 As high the process description level is, as much it's representation is grouped by objectives, as low the process description level is, as much it's representation is grouped by process skills and type. This to minimize effort switching subject (objective) for a planning process and skills for a processing process. 
 
 ## Organization principles
+* Output must justify input.
 * Choose directive parts that is optimal to work on for the workday.
 * To optimally choose what to work on use these principles above:
  * See thing with a cost-conscious driven mindset to minimize effort.
@@ -32,6 +33,7 @@ As high the process description level is, as much it's representation is grouped
  * See each little malfunction or process like something you can improve.
  * Be happy for quick wins and a slightly positive.
 * Be concentrate, focus on actual process and make effort.
-* Do your best, you are the last efficiency parameter.
+* Don't wait on other process or process quality.
+* Do your best, trust you, you are the last efficiency parameter.
 
 See [Work my system](https://github.com/Primerz/Work-my-system) project for more informations about this framework and it's used words.
