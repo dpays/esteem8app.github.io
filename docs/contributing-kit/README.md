@@ -30,7 +30,7 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 
 * Fix some [bugs](https://github.com/esteem8app/esteem8app.github.io/labels/bug).
 * Work on a [project](https://github.com/esteem8app/esteem8app.github.io/milestones).
-* Create a project from [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
+* Create a new project from [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
 
 or
 
