@@ -1,5 +1,4 @@
 # Very high level organization (level 0)
-
 This level is positioning on the top of other organization level by it's subtile influance on it's above organization level.
 
 ## Introduction
@@ -12,9 +11,9 @@ It's possible to use this trick in order to influance other organization level e
 More precisely, thinking that a [X = strategy, objective, project, task ...] will be [Y = applied, achieved, done, planned efficiently, ...] [Z = fast, efficiently, ...] can influance and make it easier with the "multiplication" of effort given to achieve the desired output.
 
 ## Principles
-
 It exist a bunch of way to apply this trick, most often used are described above:
 
+* want, wish accomplish something and make effort to have more motivation and be determined.
 * Mentaly think some times that "I think that X will be Y Z".
 * Write some times in a paper that "I think that X will be Y Z" (Better efficiently before sleeping).
 
