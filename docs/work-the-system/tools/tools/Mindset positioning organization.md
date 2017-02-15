@@ -1,4 +1,4 @@
-# Mindset positioning organization
+# Mindset positioning organization [Pre-alpha]
 
 This concern the growth and fixed mindset & the extrinsic and intrinsic motivation.
 
