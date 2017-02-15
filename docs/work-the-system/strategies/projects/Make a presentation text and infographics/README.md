@@ -14,7 +14,9 @@ Make a text that simply present the concept and core value of the Esteem8 projec
 ## Strategy
 
 1. Sub-secquence text
-2. Detail (write) sub-secuqencede text (Sub-title).
-3. Integrate meanfull and design inforgraphics.
+2. Detail (write) sub-secquence text (Sub-title).
+3. Review, refine,brainstorm, and feedback sub-secquence.
+4. Integrate meanfull and design inforgraphics.
    * Find inforgraphics or designer to make them
-     * If find design, post a steem publication and directly write the new-project-template.md document
+     * If find designers, post a steem publication and directly write the new-project-template.md document
+5. Review, refine,brainstorm, and feedback the process done.
