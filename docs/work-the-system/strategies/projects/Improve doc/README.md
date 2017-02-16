@@ -1,8 +1,9 @@
 # Project improve doc
 
-[high priority]
+`[high priority]`
 
-Concern the interaction that facilitate the way that contributors contribute to the application. 
+**Concern:** the interaction that facilitate the way that contributors contribute to the application.
+**Objective:** optimize the way that the Esteem8 Github project works.
 
 ## Strategy
 
