@@ -1,12 +1,15 @@
 # Project Add to homescreen tutorial
 [high priority]
 
-Linked to [Add to homescreen project](https://github.com/esteem8app/esteem8app.github.io/projects/11)
+**Concern:** "keeping" add user[all].
+
+**Objective:** Provide a way to permit users know that app can be added to homescreen and to see how to do that.
+
+Linked to [Add to homescreen project](https://github.com/esteem8app/esteem8app.github.io/projects/11) and [Add to homescreen milestone](https://github.com/esteem8app/esteem8app.github.io/milestone/2)
 
 ## Objectives
 
-Concern the interaction that keep user using the app.
-And general users satisfaction.
+Concern the interaction that keep user using the app frequently and general users satisfaction.
 
 ## Strategy
 
