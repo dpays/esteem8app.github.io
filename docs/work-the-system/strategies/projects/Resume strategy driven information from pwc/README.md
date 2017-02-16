@@ -4,7 +4,10 @@
  
  **Concern:** improvment of "Plan strategy principles" especialy for strategy type "strategy" (organization layer 2) in form of a linked md doc (in /tools/strategy-planner/plugins/docname.md).
  
- Linked to:
+ Is part of:
+ * [Improve doc](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects/Improve%20doc) project.
+ 
+Linked to:
   * [Project](https://github.com/esteem8app/esteem8app.github.io/projects/12) (Links, todo, ideas ...)
   * [Milestone](https://github.com/esteem8app/esteem8app.github.io/milestone/3) (Tasks, disscusion, ideas, feedback and brainstorming, ...)
  
