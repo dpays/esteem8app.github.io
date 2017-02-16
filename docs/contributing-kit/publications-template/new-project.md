@@ -26,12 +26,11 @@ Project created by @{author.steemUserName}
 **Objective:** {project.objective}
 
 Linked to:
-
 {project.githubLinks}
 
 {project.otherLinks}
 
---
+### Description
 
 {project.description}
 
@@ -65,4 +64,4 @@ Steem tutorials:
 
 ---
 
-**$post-tags:** esteem8 esteem8-contribution esteem8-[optimization or development]
+**$post-tags:** esteem8 esteem8-project esteem8-contribution esteem8-[optimization or development]
