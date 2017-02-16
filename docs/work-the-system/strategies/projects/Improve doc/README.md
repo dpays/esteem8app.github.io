@@ -6,6 +6,8 @@
 
 **Objective:** optimize the way that the Esteem8 Github project works.
 
+**Linked to:** [Improve doc](https://github.com/esteem8app/esteem8app.github.io/milestone/4) milestone.
+
 ## Strategy
 
 1. [X] Link the folder "projects" with documentation
