@@ -1,8 +1,10 @@
 # Project improve animation
 
-[Very low priority]
+`[Very low priority]`
 
-Concern interaction that make application giving more efficiently informations and user transmitting intentions to the application.
+**Concern:** interaction that make application giving more efficiently informations and user transmitting intentions to the application.
+
+**Objective:** Provide a more friendly, design and logical use(See intuitive) expercience, not a loud interface with usless animation.
 
 ## Strategy
 * [ ] Look for animations inspirations
