@@ -9,9 +9,10 @@
 ## Strategy
 
 1. [X] Link the folder "projects" with documentation
-2. [ ] Make some modifications to actual docs framwork with taking some parts of -> [Work a system](https://github.com/Primerz/Work-a-system) framework with the actual one that is [Work my system](https://github.com/Primerz/Work-my-system) framework
-3. [ ] Make the whole docs framework clear and as simple as possible + fully complete.
-4. [ ] Review, feedback and refine each document that compose the /docs folder.
+2. [ ] Make some modifications to actual docs framwork with taking some parts of -> [Work a system](https://github.com/Primerz/Work-a-system) framework with the actual one that is [Work my system](https://github.com/Primerz/Work-my-system) framework.
+3. [ ] Integrate useful information from strategy pwc to the "plan strategies", see [Resume strategy driven information from pwc](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects/Resume%20strategy%20driven%20information%20from%20pwc) project.
+4. [ ] Make the whole docs framework clear and as simple as possible + fully complete.
+5. [ ] Review, feedback and refine each document that compose the /docs folder.
 
 [low priority]
 
