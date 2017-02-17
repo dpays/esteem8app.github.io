@@ -18,20 +18,33 @@
 
         <style include="shared-styles">
 
+
+
             /* GENERAL */
+            :host:before {
+                content: "";
+                display: block;
+                position: fixed;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -10;
+
+                --home-background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
+                background-image: var(--home-background-image);
+                background-position: center;
+                background-attachment: fixed;
+                background-size: cover;
+            }
+
             :host {
                 /*https://s28.postimg.org/vhmxzavsb/mdcontract.jpg*/
-                --home-background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
-
                 min-height: 100%;
                 width: 100%;
                 position: absolute;
-                background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+                background: transparent;
                 /*background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
-                background-position: center;
-                background-attachment: fixed;
-                background-image: var(--home-background-image);
-                background-size: cover;
 
             }
 
@@ -233,7 +246,7 @@
         <div id="headersection">
             <div id="presentation-center">
                 <h1>Access now to the world first blockchain based social media platform without any ads.</h1>
-                <h2>Everyone get rewarded to use it ＾∇＾ !</h2>
+                <h2>Everyone get rewarded to use it !</h2>
                 <div id="presentation-button">
                     <paper-button>
                         <a href="https://youtu.be/xZmpCAqD7hs"
@@ -398,7 +411,7 @@
 
             _updateBackground: function () {
                 
-                if(document.referrer.match('github')){
+                if(document.referrer.match('github.com')){
 
                     this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
                     this.$.headersection.style.color = '#eee';
