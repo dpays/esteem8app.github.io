@@ -195,16 +195,18 @@
             is: 'page-explore',
 
             properties: {
-                
+
                 // current sorting mode (hot, new, trending, created)
                 currentSortingUrl: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    observer: '_refreshCurrentSorting'
                 },
 
                 currentSorting: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    observer: '_refreshCurrentSortingUrl'
                 },
 
                 // Current filter tag (esteem8, ...)
@@ -245,10 +247,9 @@
             },
 
             observer: [
+
                 '_pathChanged(currentSorting, currentTag)',
-                '_refreshIsCurrentTagInFavorite(currentTag)',
-                '_refreshCurrentSorting(currentSortingUrl)',
-                '_refreshCurrentSortingUrl(currentSorting)'
+                '_refreshIsCurrentTagInFavorite(currentTag)'
             ],
 
             ready: function() {
@@ -270,18 +271,16 @@
                 document.getElementById('appshell')._openDrawer();
             },
 
-            _refreshCurrentSorting: function(currentSortingUrl) {
+            _refreshCurrentSorting: function() {
 
-                var currentSorting = currentSortingUrl.replace('/', '');
-
-                this.set('currentSorting', currentSorting);
+                this.currentSorting = this.currentSortingUrl.replace('/', '');
             },
 
-            _refreshCurrentSortingUrl: function(currentSorting) {
+            _refreshCurrentSortingUrl: function() {
 
-                var currentSortingUrl = currentSorting + '/';
-
-                this.set('currentSortingUrl', currentSortingUrl);
+                var currentTag = this.currentTag;
+                this.currentSortingUrl = this.currentSorting + '/';
+                this.currentTag = currentTag; // Because if not set again, it is removed by this fucking app router, but now steem-get-post make 2 query --'
             },
 
             _openSelectCategoryDialog: function() {
