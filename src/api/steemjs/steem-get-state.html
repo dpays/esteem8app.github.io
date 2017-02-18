@@ -12,7 +12,7 @@
         <!-- TOAST NO POST(S) FOUND -->
         <paper-toast id="toastPostNotFound"
                      class="fit-bottom"
-                     text="Sorry bro :/ we didn't found anything for [[path]]">
+                     text="Sorry bro :/ we didn't found anything">
         </paper-toast>
 
     </template>
@@ -165,9 +165,9 @@
                 },
 
                 _setPosts: function(posts) {
+
                     this.isLoading = false;
                     this.posts = posts;
-                    console.log(posts);
                 },
 
                 _showErrorToast: function () {

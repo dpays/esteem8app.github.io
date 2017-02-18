@@ -278,9 +278,15 @@
 
             _refreshCurrentSortingUrl: function() {
 
-                var currentTag = this.currentTag;
-                this.currentSortingUrl = this.currentSorting + '/';
-                this.currentTag = currentTag; // Because if not set again, it is removed by this fucking app router, but now steem-get-post make 2 query --'
+                if(document.getElementById('appshell')._isPageExplore()) {
+
+                    var currentTag = this.currentTag || '';
+                    this.currentSortingUrl = this.currentSorting + '/';
+
+                    if(currentTag != '') {
+                        this.currentTag = currentTag; // Because if not set again, it is removed by this fucking app router, but now steem-get-post make 2 query
+                    }
+                }
             },
 
             _openSelectCategoryDialog: function() {

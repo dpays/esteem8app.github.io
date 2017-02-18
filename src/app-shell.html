@@ -355,15 +355,16 @@
 
 
                     this.selectedPage = 'files'; // FILES
-                }else if(dataUrl1.charAt(0) == '@'){
+                }else if(this._isPageProfile()){
 
-
+                    this.dataUrl2.data = '';
+                    this.dataUrl3.data = '';
                     this.selectedPage = 'profile'; // PROFILE
-                }else if(dataUrl1 == 'created' || dataUrl1 == 'hot' || dataUrl1 == 'trending' || dataUrl1 == 'active') {
+                }else if(this._isPageExplore()) {
 
-
+                    this.dataUrl3.data = '';
                     this.selectedPage = 'explore'; // EXPLORE
-                }else if(dataUrl2.charAt(0) ==  '@'){
+                }else if(this._isPagePost()){
 
 
                     this.selectedPage = 'post'; // SINGLE PUBLICATION
@@ -374,6 +375,31 @@
 
                 // Close drawer
                 this.$.drawer.close();
+            },
+
+            _isPageExplore: function() {
+
+                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
+
+                return (dataUrl1 == 'created' || dataUrl1 == 'created/'
+                        || dataUrl1 == 'hot' || dataUrl1 == 'hot/'
+                        || dataUrl1 == 'trending' || dataUrl1 == 'trending/'
+                        || dataUrl1 == 'active' || dataUrl1 == 'active/'
+                );
+            },
+
+            _isPagePost: function(){
+
+                var dataUrl2 = typeof this.dataUrl2 !== 'undefined' ? this.dataUrl2.data : '';
+
+                return (dataUrl2.charAt(0) ==  '@');
+            },
+
+            _isPageProfile: function() {
+
+                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
+
+                return (dataUrl1.charAt(0) == '@');
             },
 
             // Load and display page

@@ -177,8 +177,10 @@
                 div[name="about"] {
                    min-width: 100%;
                 }
+                
                 paper-card {
                     min-width: 0px !important;
+                    width: 100%;
                 }
             }
 
@@ -238,6 +240,8 @@
                 margin-bottom: 12px;
                 min-width: 600px;
             }
+
+
 
             #lastestPostList {
                 max-width: 568px;
@@ -493,7 +497,6 @@
                     </template>
 
                 </iron-pages>
-
             </div>
 
             <!-- POSTS -->
@@ -676,6 +679,7 @@
             },
 
             ready: function() {
+
                 // Set variables
                 this._currentProfileView = 'about';
                 this._currentAboutView = 'home';
@@ -689,12 +693,16 @@
 
             _userChanged: function(user) {
 
-                // Reset _account object
+                if(user.charAt(0) == '@') {
 
-                // Remove '@' at user and put it into _username
-                var user = user;
-                this.set('_username', user.substring(1));
-                this._refreshIsFavoriteUser();
+                    // Reset _account object
+                    this._account = {};
+
+                    // Remove '@' at user and put it into _username
+                    var user = user;
+                    this.set('_username', user.substring(1));
+                    this._refreshIsFavoriteUser();
+                }
             },
 
             _openDrawer: function() {
