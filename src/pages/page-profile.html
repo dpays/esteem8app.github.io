@@ -34,6 +34,7 @@
 <link rel="import" href="../api/steemjs/steem-get-history.html">
 
 <link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/responsive-iframe.html">
 
 <link rel="import" href="../shared-styles.html">
 
@@ -467,6 +468,13 @@
                               [[_account.votingPower]]%
                           </div-->
 
+                        <paper-card heading="responsive iframe">
+                            <responsive-iframe
+                                    prompt-user="true"
+                                    url="https://www.youtube.com/embed/eSHgFkYEb2o">
+                            </responsive-iframe>
+                        </paper-card>
+
                         <!-- LATEST POST -->
                         <paper-card heading="Latest [[user]] publications" class="homeCard">
                             <post-path-list steem-path="[[user]]" post-type="card-light"></post-path-list>
@@ -582,7 +590,7 @@
             </div>
 
             <!-- FOLLOWING -->
-            <div name="following">
+            <div name="following" class="BE-398-500">
                 <div id="following-list">
 
                     <template is="dom-if" if="[[!_following.length]]">

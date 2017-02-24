@@ -1,12 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-
-<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
-
-<link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="responsive-iframe">
@@ -19,21 +15,54 @@
                 width: 100%;
             }
 
-            #container {
+            #iframecontainer {
                 width: 100%;
                 margin: 0;
                 padding: 0;
             }
 
+            .empty-iframe {
+                text-align: center;
+            }
+
+            .empty-iframe #showSourceButton {
+                display: inline;
+                z-index: 2;
+            }
+
+            .url {
+                overflow: auto;
+                position: absolute;
+                padding-left: 8px;
+                padding-right: 8px;
+                left: 0;
+                top: 0;
+                z-index: 1;
+            }
 
         </style>
 
-        <div id="container">
-            <iframe src="[[src]]"
+        <div id="iframecontainer">
+
+            <div class="empty-iframe"
+                 hidden="[[_url]]"
+                 style="height: [[_height]]px; line-height: [[_height]]px">
+
+                <span class="empty-iframe-content">
+                    <paper-button id="showSourceButton" on-tap="_showSource()">
+                        Show source
+                    </paper-button>
+                    <span class="url" style="width: [[_computeWidthLessSomething(_width, '16')]]px">[[url]]</span>
+                </span>
+            </div>
+
+            <iframe src="[[_url]]"
+                    hidden="[[!_url]]"
                     frameborder="0"
-                    height=""
-                    width="">
+                    width="[[_width]]px"
+                    height="[[_height]]px">
             </iframe>
+
         </div>
 
     </template>
@@ -49,7 +78,7 @@
                 /*
                  * URL source
                  */
-                src: {
+                url: {
                     type: String
                 },
 
@@ -59,6 +88,18 @@
                  */
                 ratio: {
                     type: String
+                },
+
+                /*
+                 * A prompt will occur to ask to show iframe if set as true
+                 */
+                promptUser: {
+                    type: Boolean,
+                    observer: '_setUrl'
+                },
+
+                _url: {
+                    type: Number
                 },
 
                 _width: {
@@ -73,24 +114,73 @@
 
             ready: function() {
 
-                if(typeof this.ratio === 'undefined') {
-                    this.ratio = '16:9';
+                // Set var and listener
+                this._url = "";
+                this.$.showSourceButton.addEventListener('tap', this._showSource.bind(this));
+
+                // Set width and height
+                var thisElement = this;
+
+                setTimeout(function(){
+
+                    var ratio = '16:9';
+
+                    if(typeof this.ratio !== 'undefined') {
+                        ratio = this.ratio;
+                    }
+
+                    var ratioArray = ratio.split(':');
+                    var ratioWidth = parseInt(ratioArray[0]);
+                    var ratioHeight = parseInt(ratioArray[1]);
+                    var ratio = ratioHeight/ratioWidth;
+
+                    var containerWidth = thisElement.$.iframecontainer.clientWidth;
+
+
+                    var width = containerWidth;
+                    var height = width * ratio;
+
+                    thisElement.set('_width', parseInt(width));
+                    thisElement.set('_height', parseInt(height));
+
+                }, 300); // Can't find another solution to trigger this function after "iframecontainer" is correctly sized
+
+                // Ask user to show Iframe or not depending on the source
+
+                var promptUser = false;
+
+                if(typeof this.promptUser !== 'undefined') {
+
+                    promptUser = this.promptUser;
                 }
 
-                var ratioArray = this.ratio.split(':');
-                var ratioWidth = Integer.parseInt(ratioArray[0]);
-                var ratioHeight = Integer.parseInt(ratioArray[1]);
-                var ratio = ratioWidth/ratioHeight;
+                // If user don't need to be prompted, directly show iframe (set the url)
+                if(!promptUser) {
 
-                var containerWidth = this.$.container.clientWidth;
+                    this._url = this.url;
+                }
 
+            },
 
-                var width = containerWidth;
-                var height = width * ratio;
+            _setUrl: function() {
 
-                this.set('_width', width);
-                this.set('_height', height);
+                // prompt closed, show iframe
+                if(typeof this.promptUser !== 'undefined') {
+                    if(!this.promptUser) {
 
+                        this._url = this.url;
+                    }
+                }
+            },
+
+            _showSource: function() {
+
+                this.promptUser = false;
+            },
+
+            _computeWidthLessSomething: function(width, something) {
+
+                return width - something;
             }
 
         });
