@@ -102,10 +102,16 @@
                     type: Number
                 },
 
+                /*
+                 * If width and height are set, element keep the same proportions
+                 */
                 _width: {
                     type: Number
                 },
 
+                /*
+                 * If width and height are set, element keep the same proportions
+                 */
                 _height: {
                     type: Number
                 }
@@ -124,9 +130,22 @@
                 setTimeout(function(){
 
                     var ratio = '16:9';
+                    var fixedHeight = '';
 
-                    if(typeof this.ratio !== 'undefined') {
-                        ratio = this.ratio;
+                    // Set ratio by the ratio
+                    if(typeof thisElement.ratio !== 'undefined') {
+
+                        ratio = thisElement.ratio;
+                    }
+
+                    if(typeof thisElement._width !== 'undefined' && typeof thisElement._height !== 'undefined') {
+
+                        // Or keeping actual proportion (this is a hack)
+                        ratio = thisElement._width + ":" + thisElement._height;
+                    }else if (typeof thisElement._height !== 'undefined') {
+
+                        // Or with fixed height
+                        fixedHeight = thisElement._height;
                     }
 
                     var ratioArray = ratio.split(':');
@@ -139,6 +158,11 @@
 
                     var width = containerWidth;
                     var height = width * ratio;
+
+                    if(fixedHeight !== '') {
+
+                        height = fixedHeight;
+                    }
 
                     thisElement.set('_width', parseInt(width));
                     thisElement.set('_height', parseInt(height));

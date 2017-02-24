@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/google-docs-embedded.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/responsive-iframe.html" afterPath="$PROJECT_DIR$/src/components/responsive-iframe.html" />
@@ -26,16 +27,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="steem.min.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/steemjs/src/steem.min.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="835" selection-start-line="0" selection-start-column="835" selection-end-line="0" selection-end-column="835" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="page-explore.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/page-explore.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -56,21 +47,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1033">
-              <caret line="472" column="44" selection-start-line="472" selection-start-column="44" selection-end-line="472" selection-end-column="44" />
+            <state relative-caret-position="529">
+              <caret line="468" column="34" selection-start-line="468" selection-start-column="34" selection-end-line="468" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="responsive-iframe.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="responsive-iframe.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/responsive-iframe.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
+            <state relative-caret-position="1016">
+              <caret line="178" column="17" selection-start-line="178" selection-start-column="17" selection-end-line="178" selection-end-column="17" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -82,8 +73,28 @@
       <file leaf-file-name="html-echo.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2025">
-              <caret line="305" column="295" selection-start-line="305" selection-start-column="295" selection-end-line="305" selection-end-column="295" />
+            <state relative-caret-position="544">
+              <caret line="281" column="66" selection-start-line="280" selection-start-column="24" selection-end-line="281" selection-end-column="66" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page-post.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="google-docs-embedded.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/google-docs-embedded.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -104,16 +115,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="6534">
               <caret line="363" column="0" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="steem-get-post.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-post.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1602">
-              <caret line="89" column="55" selection-start-line="84" selection-start-column="16" selection-end-line="89" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -144,7 +145,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/path-post-list.html" />
         <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/pages/page-settings.html" />
@@ -192,9 +192,10 @@
         <option value="$PROJECT_DIR$/src/pages/page-explore.html" />
         <option value="$PROJECT_DIR$/src/components/drawer-content.html" />
         <option value="$PROJECT_DIR$/src/pages/page-favorites.html" />
-        <option value="$PROJECT_DIR$/src/components/html-echo.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
         <option value="$PROJECT_DIR$/src/components/responsive-iframe.html" />
+        <option value="$PROJECT_DIR$/src/components/html-echo.html" />
+        <option value="$PROJECT_DIR$/src/components/google-docs-embedded.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
       </list>
     </option>
   </component>
@@ -443,12 +444,12 @@
       <workItem from="1486942385318" duration="17055000" />
       <workItem from="1487369212035" duration="11022000" />
       <workItem from="1487433084474" duration="830000" />
-      <workItem from="1487900118673" duration="8995000" />
+      <workItem from="1487900118673" duration="23565000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="486524000" />
+    <option name="totallyTimeSpent" value="501094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -460,7 +461,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34615386" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35395762" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -491,20 +492,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/post-content-minimal.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
-          <caret line="41" column="55" selection-start-line="41" selection-start-column="55" selection-end-line="41" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/file-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="21" column="70" selection-start-line="21" selection-start-column="70" selection-end-line="21" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/todo/projects/Improve animations/README.md" />
     <entry file="file://$PROJECT_DIR$/docs/todo/projects/Add to home screen tutorial/README.md" />
     <entry file="file://$PROJECT_DIR$/docs/todo/projects/Improve doc/README.md" />
@@ -827,30 +814,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/responsive-iframe.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1016">
+          <caret line="178" column="17" selection-start-line="178" selection-start-column="17" selection-end-line="178" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2025">
-          <caret line="305" column="295" selection-start-line="305" selection-start-column="295" selection-end-line="305" selection-end-column="295" />
+        <state relative-caret-position="544">
+          <caret line="281" column="66" selection-start-line="280" selection-start-column="24" selection-end-line="281" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/google-docs-embedded.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1033">
-          <caret line="472" column="44" selection-start-line="472" selection-start-column="44" selection-end-line="472" selection-end-column="44" />
+        <state relative-caret-position="529">
+          <caret line="468" column="34" selection-start-line="468" selection-start-column="34" selection-end-line="468" selection-end-column="34" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/responsive-iframe.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="29" column="26" selection-start-line="29" selection-start-column="26" selection-end-line="29" selection-end-column="26" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

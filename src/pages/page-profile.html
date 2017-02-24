@@ -27,7 +27,7 @@
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
-<link rel="import" href="../api/steemjs/steem-get-_account.html">
+<link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../api/steemjs/steem-get-followers.html">
 <link rel="import" href="../api/steemjs/steem-get-following.html">
 <link rel="import" href="../api/steemjs/steem-get-replies.html">
@@ -467,13 +467,6 @@
                               <paper-slider id="votingPowerBar" disabled value="[[_account.votingPower]]"></paper-slider>
                               [[_account.votingPower]]%
                           </div-->
-
-                        <paper-card heading="responsive iframe">
-                            <responsive-iframe
-                                    prompt-user="true"
-                                    url="https://www.youtube.com/embed/eSHgFkYEb2o">
-                            </responsive-iframe>
-                        </paper-card>
 
                         <!-- LATEST POST -->
                         <paper-card heading="Latest [[user]] publications" class="homeCard">

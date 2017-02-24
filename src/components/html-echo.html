@@ -6,6 +6,7 @@
 <link rel="import" href="post-path-list.html">
 <link rel="import" href="github-repository.html">
 <link rel="import" href="github-repository-file-view.html">
+<link rel="import" href="google-docs-embedded.html">
 
 <dom-module id="html-echo">
     <style>
@@ -224,7 +225,7 @@
                 var postPathRegex = /[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
                 html = html.replace(postPathRegex, function(match){
 
-                    var match = match.replace(" ", "");
+                    var match = match.replace(/ /g, "");
                     return '<post-wrapper steem-path="' + match + '" post-type="content-minimal"></post-wrapper>';
                 });
 
@@ -248,18 +249,18 @@
                 var considerItRegex = /[^("|'|[)]https:\/\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.it\//gm;
                 html = html.replace(considerItRegex, function(match){
 
-                    var url = match.replace(" ", "");
-                    return '<responsive-iframe src="' + url + '" ></responsive-iframe>';
+                    var url = match.replace(/ /g, "");
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
                 // Youtube video
                 var youtubeVideoregex = /[^("|'|[)]https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
                 html = html.replace(youtubeVideoregex, function(match){
 
-                    var match = match.replace(" ", "");
+                    var match = match.replace(/ /g, "");
                     var url = match.replace("https://www.youtube.com/watch?v=", "");
                         url = match.replace("https://www.youtube.com/embed/", "");
-                    return '<responsive-iframe src="' + url + '" ></responsive-iframe>';
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
                 // Soundcloud track + maybe other soundcloud elements
@@ -268,33 +269,111 @@
                 // https://customelements.io/streetturtle/pdf-element/
 
                 // Google docs -> <google-docs-embedded>
-                var googleDocsRegex = /[^("|'|[)]https:\/\/docs\.google\.com\/(presentation|document|spreadsheets|forms)\/d\/(e\/)?[a-zA-Z0-9-]+\/[?&a-zA-Z0-9-#=]+/gm;
+                var googleDocsRegex = /[^("|'|[)]https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?(u\/)?(0\/)?[_?=\-.a-zA-Z0-9-]*\/[%\-.?&a-zA-Z0-9-#=]*/gm;
                 html = html.replace(googleDocsRegex, function(match){
 
-                    var match = match = match.replace(" ", "");
+                    var match = match.replace(/ /g, "");
+                    var url = '';
 
-                    // Url can be one that is publicly published or one that we used in editor
-                    var rawDocummentUrlRegex = /[^("|'|[)]https:\/\/docs\.google\.com\/(presentation|document|spreadsheets|forms)\/d\/(e\/)?[a-zA-Z0-9-]+\//g
-                    var url = rawDocummentUrlRegex.exec(match)[0];
+                    if(!match.includes('maps')) {
 
-                    if(url.includes('https://docs.google.com/presentation') || url.includes('https://docs.google.com/document')) {
+                        // Url can be one that is publicly published or one that we used in editor
+                        var rawDocummentUrlRegex = /https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?[_?=\-.a-zA-Z0-9-]*\//g
+                        url = rawDocummentUrlRegex.exec(match)[0];
 
-                        url += 'pub';
+                        if(url.includes('https://docs.google.com/presentation')) {
+
+                            url += 'embed';
+                        }
+
+                        if(url.includes('https://docs.google.com/document')){
+
+                            url += 'pub?embedded=true';
+                        }
+
+                        if(url.includes('https://docs.google.com/spreadsheets')) {
+
+                            url += 'pubhtml';
+                        }
+
+                        if(url.includes('https://docs.google.com/forms')) {
+
+                            url += 'viewform';
+                        }
+
+                        if(url.includes('https://docs.google.com/drawings')) {
+
+                            url += 'pub';
+                        }
+
+                    }else if(match.includes('maps')) {
+
+                        url = 'https://www.google.com/maps/d/u/0/embed?';
+
+                        var rawMapUrlRegx = /mid=[_a-zA-Z0-9-]*/g;
+                        var mid = rawMapUrlRegx.exec(match)[0];
+
+                        url += mid;
                     }
 
-                    if(url.includes('https://docs.google.com/spreadsheets')) {
 
-                        url += 'pubhtml';
-                    }
-
-                    if(url.includes('https://docs.google.com/forms')) {
-
-                        url += 'viewform';
-                    }
-
-                    return '<google-docs-embedded src="' + url + '" ></google-docs-embedded>';
+                    return '<google-docs-embedded url="' + url + '" ></google-docs-embedded>';
                 });
 
+                // Google site
+                var googleSiteRegex = /[^("|'|[)]https:\/\/sites\.google\.com\/view\/[_a-zA-Z0-9-]*\//gm;
+                html = html.replace(googleSiteRegex, function(match) {
+
+                    var url = match.replace(/ /g, "");
+
+                    return '<responsive-iframe url="' + url + '" ratio="3:1" ></responsive-iframe>';
+                });
+
+                // Custom element ( [iframe$ratio=1:3&url=https://primerz.github.io/])
+                var customElementRegex = /\[(iframe|steem tag)(\$)?([\/.=&:a-z0-9]+)?]/gm;
+                html = html.replace(customElementRegex, function(match) {
+
+                    var match = match.replace(/ /g, "");
+                    var match = match.replace("[", "");
+                    var match = match.replace("]", "");
+
+                    var rawElement = match.split("$")[0];
+                    var options = match.split("$")[1].split("&") || [];
+
+                    var preDefinedAttributes = [];
+                    var appElement = '';
+
+                    // Get element type
+                    switch (rawElement) {
+
+                        case 'iframe':
+                            appElement = 'responsive-iframe';
+                            preDefinedAttributes.push(['prompt-user', 'true']);
+
+                    }
+
+                    //Add parameters (attribute and value)
+                    var attributes = preDefinedAttributes; // Array of attributes & value
+
+                    for(var i = 0; i < options.length;i++) {
+
+                        var attribute = options[i].split('='); // [attribute, value]
+                        attributes.push(attribute);
+
+                    }
+
+                    // Create html
+                    var html = '<'+ appElement + ' ';
+
+                    for (var i = 0; i < attributes.length; i++) {
+
+                        html += attributes[i][0] + '="' + attributes[i][1] + '" ';
+                    }
+
+                    html += '></' + appElement + '>';
+
+                    return html;
+                });
 
                 // REGEX tester https://regex101.com/
 
