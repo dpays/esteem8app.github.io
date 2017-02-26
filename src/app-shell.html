@@ -357,12 +357,24 @@
                     this.selectedPage = 'files'; // FILES
                 }else if(this._isPageProfile()){
 
-                    this.dataUrl2.data = '';
-                    this.dataUrl3.data = '';
+                    if(typeof this.dataUrl2 !== 'undefined'){
+
+                        this.dataUrl2.data = '';
+                    }
+
+                    if(typeof this.dataUrl3 !== 'undefined'){
+
+                        this.dataUrl3.data = '';
+                    }
+
                     this.selectedPage = 'profile'; // PROFILE
                 }else if(this._isPageExplore()) {
 
-                    this.dataUrl3.data = '';
+                    if(typeof this.dataUrl3 !== 'undefined'){
+
+                        this.dataUrl3.data = '';
+                    }
+
                     this.selectedPage = 'explore'; // EXPLORE
                 }else if(this._isPagePost()){
 
