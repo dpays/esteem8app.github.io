@@ -1,5 +1,5 @@
 # ESTEEM8 Logo
-
+ (Depreciated, will be soon replaced by https://github.com/esteem8app/ES8-branding/tree/master/logo)
 ## Specifications
 
 Property | value
