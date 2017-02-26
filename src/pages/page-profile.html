@@ -331,10 +331,10 @@
                          class="followers"
                          on-tap="_setCurrentViewFollowers">
                         <span class="number">
-                            <template is="dom-if" if="[[_followers.length]]">
-                                [[_followers.length]]
+                            <template is="dom-if" if="[[_account.followerCount]]">
+                                [[_account.followerCount]]
                             </template>
-                            <template is="dom-if" if="[[!_followers.length]]">
+                            <template is="dom-if" if="[[!_account.followerCount]]">
                                 0
                             </template>
                         </span>
@@ -346,10 +346,10 @@
                          class="followed"
                          on-tap="_setCurrentViewFollowers">
                         <span class="number">
-                            <template is="dom-if" if="[[_following.length]]">
-                                [[_following.length]]
+                            <template is="dom-if" if="[[_account.followingCount]]">
+                                [[_account.followingCount]]
                             </template>
-                            <template is="dom-if" if="[[!_following.length]]">
+                            <template is="dom-if" if="[[!_account.followingCount]]">
                                 0
                             </template>
                         </span>
@@ -696,8 +696,11 @@
 
                 if(user.charAt(0) == '@') {
 
-                    // Reset _account object
-                    this._account = {};
+                    // DATA won't change so... (PLZ don't insult me, it's temporary)
+                    if(typeof this._username !== 'undefined' && this._username != user.substring(1)) {
+
+                        location.reload();
+                    }
 
                     // Remove '@' at user and put it into _username
                     var user = user;

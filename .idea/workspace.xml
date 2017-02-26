@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.html" afterPath="$PROJECT_DIR$/404.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/github-repository-overview.html" afterPath="$PROJECT_DIR$/src/components/github-repository-overview.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/github-repository.html" afterPath="$PROJECT_DIR$/src/components/github-repository.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/responsive-iframe.html" afterPath="$PROJECT_DIR$/src/components/responsive-iframe.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-post.html" afterPath="$PROJECT_DIR$/src/pages/page-post.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-profile.html" afterPath="$PROJECT_DIR$/src/pages/page-profile.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,16 +26,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="html-echo.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/html-echo.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="601">
-              <caret line="168" column="22" selection-start-line="168" selection-start-column="22" selection-end-line="168" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="github-repository-file-view.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/github-repository-file-view.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,11 +46,51 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="github-repository.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="github-repository.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/github-repository.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="648">
               <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="steem-get-followers.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="612">
+              <caret line="49" column="74" selection-start-line="49" selection-start-column="74" selection-end-line="49" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="588">
+              <caret line="699" column="20" selection-start-line="699" selection-start-column="20" selection-end-line="702" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page-post.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1925">
+              <caret line="431" column="0" selection-start-line="431" selection-start-column="0" selection-end-line="431" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="steem-get-account.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="791">
+              <caret line="216" column="70" selection-start-line="216" selection-start-column="57" selection-end-line="216" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -92,44 +116,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="post-something-dialog.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dialogs/post-something-dialog.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-648">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="select-tag-dialog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dialogs/select-tag-dialog.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="823">
               <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="responsive-iframe.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/responsive-iframe.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2070">
-              <caret line="136" column="16" selection-start-line="136" selection-start-column="16" selection-end-line="136" selection-end-column="16" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="images-slider.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/images-slider.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -161,14 +152,12 @@
         <option value="$PROJECT_DIR$/src/components/post-path-list.html" />
         <option value="$PROJECT_DIR$/src/components/file-card.html" />
         <option value="$PROJECT_DIR$/src/pages/page-files.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-post.html" />
         <option value="$PROJECT_DIR$/src/components/post-content-minimal.html" />
         <option value="$PROJECT_DIR$/src/pages/page-tools.html" />
         <option value="$PROJECT_DIR$/src/api/github/get-repository-milestones.html" />
         <option value="$PROJECT_DIR$/src/components/reply-card.html" />
         <option value="$PROJECT_DIR$/src/api/github/get-repository-labels.html" />
         <option value="$PROJECT_DIR$/src/api/github/get-repository-issues.html" />
-        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html" />
         <option value="$PROJECT_DIR$/src/components/my-icons.html" />
         <option value="$PROJECT_DIR$/src/api/github/get-repository-overview.html" />
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
@@ -176,7 +165,6 @@
         <option value="$PROJECT_DIR$/src/components/github-issue-list.html" />
         <option value="$PROJECT_DIR$/src/components/github-file-list.html" />
         <option value="$PROJECT_DIR$/src/api/github/get-repository-files.html" />
-        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
         <option value="$PROJECT_DIR$/src/components/github-file-view.html" />
         <option value="$PROJECT_DIR$/src/components/github-repository-file.html" />
         <option value="$PROJECT_DIR$/src/components/github-repository-issue-list.html" />
@@ -192,7 +180,6 @@
         <option value="$PROJECT_DIR$/src/pages/page-explore.html" />
         <option value="$PROJECT_DIR$/src/components/drawer-content.html" />
         <option value="$PROJECT_DIR$/src/components/google-docs-embedded.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
         <option value="$PROJECT_DIR$/src/pages/page-favorites.html" />
         <option value="$PROJECT_DIR$/src/app-shell.html" />
         <option value="$PROJECT_DIR$/index.html" />
@@ -201,6 +188,10 @@
         <option value="$PROJECT_DIR$/src/components/html-echo.html" />
         <option value="$PROJECT_DIR$/src/components/github-repository-overview.html" />
         <option value="$PROJECT_DIR$/src/components/github-repository.html" />
+        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html" />
+        <option value="$PROJECT_DIR$/src/api/steemjs/steem-get-account.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-post.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
       </list>
     </option>
   </component>
@@ -489,12 +480,12 @@
       <workItem from="1486942385318" duration="17055000" />
       <workItem from="1487369212035" duration="11022000" />
       <workItem from="1487433084474" duration="830000" />
-      <workItem from="1487900118673" duration="39214000" />
+      <workItem from="1487900118673" duration="43227000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="516743000" />
+    <option name="totallyTimeSpent" value="520756000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -506,7 +497,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35451505" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3489409" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -599,13 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="954">
-          <caret line="53" column="50" selection-start-line="53" selection-start-column="50" selection-end-line="53" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/api/github/get-repository-issues.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1177">
@@ -680,13 +664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="113" column="0" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -766,26 +743,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/google-docs-embedded.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
           <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2041">
-          <caret line="468" column="34" selection-start-line="468" selection-start-column="34" selection-end-line="468" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -925,6 +886,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-followers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="49" column="74" selection-start-line="49" selection-start-column="74" selection-end-line="49" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="791">
+          <caret line="216" column="70" selection-start-line="216" selection-start-column="57" selection-end-line="216" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1925">
+          <caret line="431" column="0" selection-start-line="431" selection-start-column="0" selection-end-line="431" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="699" column="20" selection-start-line="699" selection-start-column="20" selection-end-line="702" selection-end-column="21" />
           <folding />
         </state>
       </provider>

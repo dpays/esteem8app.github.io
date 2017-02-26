@@ -207,6 +207,23 @@
                             }
                         });
                     });
+
+                    this.async(function(){
+
+                        steem.api.getFollowCount(name, function(err, result) {
+
+                            if(!err && typeof result !== 'undefined' && result !== null){
+
+                                thisElement.set('account.followerCount', result.follower_count);
+                                thisElement.set('account.followingCount', result.following_count);
+                            }else {
+
+                                thisElement.set('account.followerCount', 0);
+                                thisElement.set('account.followingCount', 0);
+                            }
+
+                        });
+                    });
                 }
             }
         });

@@ -290,7 +290,7 @@
                     </div>
 
                     <div class="section">
-                        <a class="category" href="/trending/[[category]]">
+                        <a class="category" href="/trending/[[category]]/">
                             <iron-icon class="categoryIcon"
                                        icon="my-icons:label">
                             </iron-icon>
@@ -316,9 +316,9 @@
 
                     <div class="section">
                         <div id="shareButtons">
-                            <share-button share-website="facebook"></share-button>
-                            <share-button share-website="twitter"></share-button>
                             <share-button share-website="plus"></share-button>
+                            <share-button share-website="twitter"></share-button>
+                            <share-button share-website="facebook"></share-button>
                         </div>
                     </div>
                 </div>
@@ -362,7 +362,8 @@
                 },
 
                 post: {
-                    type: Object
+                    type: Object,
+                    notify: true
                 },
 
                 _isInFavoritePost: {
