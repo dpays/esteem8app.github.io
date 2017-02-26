@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
 <link rel="import" href="../../bower_components/google-chart/google-chart.html">
 
 <link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
@@ -18,30 +20,39 @@
             width: 100%;
         }
 
-        .one-card, .two-card {
+        .one-card, .two-card, .card {
             width: 100%;
         }
 
         paper-card {
-            max-width: 100%;
+            width: calc(100% - 32px);
+            height: calc(100% - 32px);
             margin: 16px;
         }
 
-        .left {
-            float: left;
-        }
-
-        .right {
-            float: right;
+        .two-card {
+            @apply(--layout-horizontal);
         }
 
         .two-card .card {
-            width: 48%;
-            display: inline-block;
+            @apply(--layout-flex);
+            min-height: 220px;
+        }
+
+        @media screen and (max-width: 560px) {
+
+            .two-card {
+                @apply(--layout-vertical);
+            }
         }
 
         #basicInfoCard, #stateCounterCard, #moreInfoCard, #chartCard {
             background-color: var(--app-secondary-background-color);
+        }
+
+        .title {
+            display: block;
+            overflow: auto;
         }
 
         .title h3 {
@@ -59,8 +70,6 @@
 
         #websiteButton {
             float: right;
-            margin-top: -12px;
-            margin-right: -12px;
         }
 
         google-chart {
@@ -123,9 +132,9 @@
 
     </div>
 
-    <div class="two-card">
+    <div class="two-card container">
 
-        <div class="left card">
+        <div class="card">
             <paper-card id="chartCard">
                 <div class="card-content">
                     <span>Languages</span>
@@ -140,7 +149,7 @@
             </paper-card>
         </div>
 
-        <div class="right card">
+        <div class="card">
             <paper-card id="stateCounterCard">
                 <div class="card-content">
                     <div role="listbox">
@@ -192,7 +201,7 @@
 
                 <paper-button id="openIssuesButton" hidden="[[!_repositoryObject.has_issues]]"
                               on-tap="_openIssues()">
-                    Issues
+                    [[_repositoryObject.open_issues]] Issues
                 </paper-button>
 
                 <paper-button id="openWikiButton" hidden="[[!_repositoryObject.has_wiki]]"

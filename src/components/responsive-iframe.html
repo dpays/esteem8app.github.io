@@ -129,48 +129,12 @@
 
                 setTimeout(function(){
 
-                    var ratio = '16:9';
-                    var fixedHeight = '';
-
-                    // Set ratio by the ratio
-                    if(typeof thisElement.ratio !== 'undefined') {
-
-                        ratio = thisElement.ratio;
-                    }
-
-                    if(typeof thisElement._width !== 'undefined' && typeof thisElement._height !== 'undefined') {
-
-                        // Or keeping actual proportion (this is a hack)
-                        ratio = thisElement._width + ":" + thisElement._height;
-                    }else if (typeof thisElement._height !== 'undefined') {
-
-                        // Or with fixed height
-                        fixedHeight = thisElement._height;
-                    }
-
-                    var ratioArray = ratio.split(':');
-                    var ratioWidth = parseInt(ratioArray[0]);
-                    var ratioHeight = parseInt(ratioArray[1]);
-                    var ratio = ratioHeight/ratioWidth;
-
-                    var containerWidth = thisElement.$.iframecontainer.clientWidth;
-
-
-                    var width = containerWidth;
-                    var height = width * ratio;
-
-                    if(fixedHeight !== '') {
-
-                        height = fixedHeight;
-                    }
-
-                    thisElement.set('_width', parseInt(width));
-                    thisElement.set('_height', parseInt(height));
+                    thisElement._computeFrameSize();
 
                 }, 300); // Can't find another solution to trigger this function after "iframecontainer" is correctly sized
 
-                // Ask user to show Iframe or not depending on the source
 
+                // Ask user to show Iframe or not depending on the source
                 var promptUser = false;
 
                 if(typeof this.promptUser !== 'undefined') {
@@ -183,6 +147,48 @@
 
                     this._url = this.url;
                 }
+
+            },
+
+            _computeFrameSize: function() {
+
+                var ratio = '16:9';
+                var fixedHeight = '';
+
+                // Set ratio by the ratio
+                if(typeof this.ratio !== 'undefined') {
+
+                    ratio = this.ratio;
+                }
+
+                if(typeof this._width !== 'undefined' && typeof this._height !== 'undefined') {
+
+                    // Or keeping actual proportion (this is a hack)
+                    ratio = this._width + ":" + this._height;
+                }else if (typeof this._height !== 'undefined') {
+
+                    // Or with fixed height
+                    fixedHeight = this._height;
+                }
+
+                var ratioArray = ratio.split(':');
+                var ratioWidth = parseInt(ratioArray[0]);
+                var ratioHeight = parseInt(ratioArray[1]);
+                var ratio = ratioHeight/ratioWidth;
+
+                var containerWidth = this.$.iframecontainer.clientWidth;
+
+
+                var width = containerWidth;
+                var height = width * ratio;
+
+                if(fixedHeight !== '') {
+
+                    height = fixedHeight;
+                }
+
+                this.set('_width', parseInt(width));
+                this.set('_height', parseInt(height));
 
             },
 
