@@ -29,8 +29,8 @@
                 width: 100%;
                 height: 100%;
                 margin: 0;
-                --header-background: '';
                 background-color: var(--app-primary-background-color);
+                --header-background: var(--app-primary-background-color);
             }
 
             /* HEADER */
@@ -45,7 +45,7 @@
                 height: 440px;
                 color: #fff;
 
-                background-image: var(--header-background);
+                background: var(--header-background);
                 background-position: center;
                 background-size: cover;
 
@@ -102,13 +102,19 @@
             /* POST */
             #post {
                 margin-top: -16px;
-                background-color: var(--app-secondary-background-color);
+                background-color: var(--app-primary-background-color);
             }
 
             /* CONTENT */
 
+            .posted-ago {
+                margin-top: -16px;
+                float: right;
+            }
+
             #bodyContent {
                 margin-top: 456px;
+                padding-top: 32px !important;
                 font-weight: lighter;
                 text-rendering: optimizeLegibility;
                 font-family: 'Open Sans', 'Roboto', sans-serif;
@@ -119,8 +125,9 @@
                 padding: 16px;
                 margin-left: auto;
                 margin-right: auto;
+                border-bottom: 1px solid var(--app-primary-background-color);
+                background-color: var(--app-secondary-background-color);
                 color: var(--app-background-primary-text-color);
-                border-bottom: 1px solid var(--app-background-secondary-text-color);
             }
 
             #bodyContent img {
@@ -144,6 +151,15 @@
                 background-color: var(--app-primary-background-color);
                 text-decoration: none;
                 color: var(--app-background-secondary-text-color);
+            }
+
+            #shareSection {
+                margin-top: 16px;
+                text-align: right;
+            }
+
+            #shareButtons {
+                display: inline;
             }
 
             /* METADATA section */
@@ -171,12 +187,6 @@
 
             #metadataContent .section span paper-icon-button {
                 float: right;
-            }
-
-            #shareButtons {
-                position: absolute;
-                z-index: 1;
-                margin-top: 4px;
             }
 
             /* COMMENTS Content */
@@ -247,7 +257,12 @@
                 <!-- BODY content -->
                 <div id="bodyContent">
 
+                    <span class="background-secondary-text posted-ago">
+                        [[_computeTimeFromNow(post.created)]]
+                    </span>
+
                     <html-echo html="[[post.body]]"></html-echo>
+
 
                     <div class="tags">
                         <template is="dom-repeat"
@@ -257,6 +272,14 @@
                                 #[[item]]
                             </a>
                         </template>
+                    </div>
+
+                    <div id="shareSection">
+                        <div id="shareButtons">
+                            <share-button share-website="plus"></share-button>
+                            <share-button share-website="twitter"></share-button>
+                            <share-button share-website="facebook"></share-button>
+                        </div>
                     </div>
 
                 </div>
@@ -313,14 +336,6 @@
                         </span>
 
                     </div>
-
-                    <div class="section">
-                        <div id="shareButtons">
-                            <share-button share-website="plus"></share-button>
-                            <share-button share-website="twitter"></share-button>
-                            <share-button share-website="facebook"></share-button>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- COMMMENTS Content -->
@@ -342,6 +357,10 @@
 
             is: 'page-post',
 
+            behaviors: [
+                Polymer.AppLocalizeBehavior
+            ],
+
             properties: {
 
                 category: {
@@ -349,8 +368,7 @@
                 },
 
                 author: {
-                    type: String,
-                    observer: '_authorChanged'
+                    type: String
                 },
 
                 username: {
@@ -362,8 +380,7 @@
                 },
 
                 post: {
-                    type: Object,
-                    notify: true
+                    type: Object
                 },
 
                 _isInFavoritePost: {
@@ -380,13 +397,13 @@
             },
 
             observers: [
-                '_updateImageBackground(post.images)'
+                '_authorChanged(author)',
+                '_updateImageBackground(post)'
             ],
 
             ready: function() {
 
                 // List events
-                /* Why these event listeners don't work ? -> TODO repair this */
                 this.$.previousUrlButton.addEventListener('tap', this._previousUrl.bind(this));
 
                 this.$.addFavoritePostButton.addEventListener('tap', this._addFavoritePost.bind(this));
@@ -405,34 +422,42 @@
                 this._refreshIsFavoriteTag();
             },
 
-            _authorChanged: function() {
+            _authorChanged: function(author) {
 
-                // Remove the '@' to the author
-                this.username = this.author.substring(1, this.author.length);
+                // Remove the '@' to the author to load post
+                this.set('username', author.replace('@', ''));
+
+                // Scroll to top because content change
+                window.scrollTo(0, 0);
             },
 
-            _updateImageBackground: function(images) {
+            _updateImageBackground: function(post) {
 
-                if(typeof images !== 'undefined') {
+                if(typeof post.images !== 'undefined') {
 
-                    this.customStyle['--header-background'] = 'url('+images[0]+')';
-                    this.updateStyles();
+                    this.customStyle['--header-background'] = 'url(' + post.images[0] + ')';
+                }else {
+
+                    this.customStyle['--header-background'] = this.customStyle['--app-primary-background-color'];
                 }
+
+                this.updateStyles();
             },
 
             _previousUrl: function() {
 
-                // Tag url part in page explore need to be repaired
-
-                // Back to previous URL
-                this.set('author', this.category); // WTF ? -> Because url parts 2 (tag) does not work
-                this.set('category', 'hot');
+                // Back to previous URL or explore page
                 window.history.back();
             },
 
             _openConfirmationRemovePost: function() {
 
                 this.$.confirmationRemovePost.open();
+            },
+
+            _computeTimeFromNow: function(date) {
+
+                return new IntlRelativeFormat('en-us').format(new Date(date));
             },
 
             _refreshIsFavoritePost: function() {

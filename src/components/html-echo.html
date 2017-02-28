@@ -56,14 +56,16 @@
         .markdown-html blockquote {
             margin-left: 0;
             margin-right: 0;
+            padding: 4px;
             padding-left: 32px;
-            border-left: solid 3px var(--app-background-secondary-text-color);
+            border-left: solid 2px var(--app-secondary-color);
         }
 
 
         /* BASIC */
         .markdown-html a {
             color: var(--app-secondary-color) !important;
+            text-decoration: none;
         }
 
         .markdown-html * {
@@ -77,6 +79,9 @@
 
         .markdown-html img {
             max-width: 100%;
+            vertical-align: middle;
+            margin-top: 4px;
+            margin-bottom: 4px;
         }
 
         /* TABLES */
@@ -84,6 +89,10 @@
             max-width: 100%;
             border-collapse: collapse;
             overflow: scroll;
+        }
+
+        .markdown-html thead {
+            background-color: rgba(128, 128, 128, .2);
         }
 
         .markdown-html table, .markdown-html th, .markdown-html td {
@@ -108,6 +117,10 @@
 
         .markdown-html tr:hover {
             background-color: #777;
+        }
+
+        .markdown-html th:empty, .markdown-html td:empty {
+            display: none;
         }
 
         /* APP Elements */
@@ -175,23 +188,43 @@
                 }
 
                 // RENDER <a href into <img>
-                var imageLinkARegex = /<a([ ="'a-zA-Z0-9-]+)? href=('|")(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?("|')>(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?<\/a>/gm;
+                /*var imageLinkARegex = /<a([ ="'a-zA-Z0-9-]+)? href=('|")[ .:_\/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??[ \/%&=a-zA-Z0-9-]*("|')>[ .:_\/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??[ \/%&=a-zA-Z0-9-]*<\/a>/gm;
                 html = html.replace(imageLinkARegex, function(match){
 
                     var imgUrlRegex = /(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?/g;
                     var url = imgUrlRegex.exec(match)[0];
 
+                    url = url.replace(/ /gm, '');
+
+                    return '<img src="' + url + '" ></img>';
+                });*/
+
+                // RENDER ![image alt text](src)
+                var markdwonImageRegex = /!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;
+                html = html.replace(markdwonImageRegex, function(match){
+
+                    var url = match.replace(/!\[[ a-zA-Z0-9]*\]\(/g, '').replace(')', '').replace(/ /gm, '');
+
                     return '<img src="' + url + '" ></img>';
                 });
 
-                // RENDER ![](src) & [](src) into <img>
-                var markdwonImageRegex = /!?\([ a-zA-Z0-9-]+\)!?\[(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?]/gm;
-                html = html.replace(markdwonImageRegex, function(match){
+                // RENDER direct link image
+                var directImageLinkRegex = /http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*(?=<)/gm;
+                html = html.replace(directImageLinkRegex, function(match){
 
-                    var imgUrlRegex = /(https?:\/\/)?(\w+.)?\w+.\w+[ \/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??([ \/%&=a-zA-Z0-9-]+)?/g;
-                    var url = imgUrlRegex.exec(match)[0];
+                    var twoFirstChar = match.substring(0, 2);
+                    var firstChar = match.substring(0, 1);
 
-                    return '<img src="' + url + '" ></img>';
+                    if(twoFirstChar == 'a>' || firstChar == '"' || firstChar == "'" || firstChar == "(") {
+
+                        // If link is not link text but html or markdown link
+                        return match;
+                    } {
+
+                        // Link is pure text
+                        var url = match.replace(/ /gm, '');
+                        return '<img src="' + url + '" ></img>';
+                    }
                 });
 
 
@@ -265,12 +298,22 @@
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
-                // Youtube video
-                var youtubeVideoregex = /[^("|'|[)]https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
-                html = html.replace(youtubeVideoregex, function(match){
+                // Youtube video link
+                var youtubeVideoLinkregex = /[^("|'|[)]https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
+                html = html.replace(youtubeVideoLinkregex, function(match){
 
                     var match = match.replace(/ /g, "");
                     var url = match.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                // Youtube short video link
+                var youtubeShortVdeoLinkRegex = /[^("|'|[)]https:\/\/youtu\.be\/[a-zA-Z0-9]+/gm;
+                html = html.replace(youtubeShortVdeoLinkRegex, function(match){
+
+                    var match = match.replace(/ /g, "");
+                    var url = match.replace("https://youtu.be/", "https://www.youtube.com/embed/");
 
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });

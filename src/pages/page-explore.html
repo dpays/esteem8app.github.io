@@ -200,19 +200,26 @@
                 currentSortingUrl: {
                     type: String,
                     notify: true,
-                    observer: '_refreshCurrentSorting'
+                    observer: '_currentSortingChanged'
                 },
 
                 currentSorting: {
                     type: String,
                     notify: true,
-                    observer: '_refreshCurrentSortingUrl'
+                    observer: '_currentSortingUrlChanged'
                 },
 
                 // Current filter tag (esteem8, ...)
+                currentTagUrl: {
+                    type: String,
+                    notify: true,
+                    observer: '_currentTagUrlChanged'
+                },
+
                 currentTag: {
                     type: String,
-                    notify: true
+                    notify: true,
+                    observer: '_currentTagChanged'
                 },
 
                 settings: {
@@ -246,12 +253,6 @@
                 }
             },
 
-            observer: [
-
-                '_pathChanged(currentSorting, currentTag)',
-                '_refreshIsCurrentTagInFavorite(currentTag)'
-            ],
-
             ready: function() {
 
                 // List events
@@ -271,20 +272,20 @@
                 document.getElementById('appshell')._openDrawer();
             },
 
-            _refreshCurrentSorting: function() {
+            _currentSortingChanged: function() {
 
                 this.currentSorting = this.currentSortingUrl.replace('/', '');
             },
 
-            _refreshCurrentSortingUrl: function() {
+            _currentSortingUrlChanged: function() {
 
                 if(document.getElementById('appshell')._isPageExplore()) {
 
-                    var currentTag = this.currentTag || '';
+                    var currentTagUrl = this.currentTagUrl || this.currentTag  + '/' || '';
                     this.currentSortingUrl = this.currentSorting + '/';
 
-                    if(currentTag != '') {
-                        this.currentTag = currentTag; // Because if not set again, it is removed by this fucking app router, but now steem-get-post make 2 query
+                    if(currentTagUrl != '') {
+                        this.currentTagUrl = currentTagUrl; // Because if not set again, it is removed by this fucking app router, but now steem-get-post make 2 query
                     }
                 }
             },
@@ -294,10 +295,37 @@
                 this._isSelectCategoryOpened = true;
             },
 
-            _pathChanged: function() {
+            _currentTagChanged: function() {
 
                 // Check if this is the app tag
                 this._computeIsEsteem8Tag();
+
+                // Refresh add to favorite icon
+                this._refreshIsCurrentTagInFavorite();
+
+                // Update url
+                if(this.currentTag != '') {
+
+                    var currentTagUrl = this.currentTag + '/';
+
+                    if(this.currentTagUrl != currentTagUrl) {
+
+                        this.currentTagUrl = currentTagUrl;
+                    }
+
+                    this.currentTagUrl = this.currentTag + '/';
+                }else {
+
+                    this.currentTagUrl = '';
+                }
+            },
+
+            _currentTagUrlChanged: function() {
+
+                // Update current tag from url to make query and make tabs working
+
+                this.currentTag = this.currentTagUrl.replace('/', '');
+
             },
 
             _steemPathChanged: function() {
@@ -308,16 +336,17 @@
 
             _computeIsEsteem8Tag: function() {
 
-                this._isEsteem8Tag = (this.currentTag == 'esteem8');
+                this._isEsteem8Tag = (this.currentTag.includes('esteem8'));
             },
 
-            _refreshIsCurrentTagInFavorite: function (currentTag) {
+            _refreshIsCurrentTagInFavorite: function() {
 
-                var currentTag = currentTag || this.currentTag;
+                if(typeof this.favoriteTags === 'undefined') {
 
-                if(typeof this.favoriteTags === 'undefined') { return false; }
+                    return false;
+                }
 
-                this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(currentTag);
+                this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(this.currentTag);
             },
 
             _computeFavoriteTagIcon: function(tagIsInFavorite) {

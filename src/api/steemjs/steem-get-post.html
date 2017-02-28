@@ -18,8 +18,7 @@
                  * f.e "/sorting/tag
                  */
                 path: {
-                    type: String,
-                    observer: '_pathChanged'
+                    type: String
                 },
 
                 /*
@@ -36,8 +35,15 @@
                 queryError: {
                     type: Boolean,
                     notify: true
+                },
+
+                isLoading: {
+                    type: Boolean,
+                    notify: true
                 }
             },
+
+            observers: ['_pathChanged(path)'],
 
             ready: function() {
 
@@ -45,20 +51,23 @@
                 if(typeof this.queryError === 'undefined') {
                     this.queryError = false;
                 }
+
+                if(typeof this.isLoading === 'undefined') {
+                    this.isLoading = true;
+                }
             },
 
             // Update posts list when path changed
-            _pathChanged: function() {
+            _pathChanged: function(path) {
 
-                console.log(this.path);
+                if(/[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/.test(path)) {
 
-                if(this.path !== ''){
-
+                    this.isLoading = true;
                     var thisElement = this;
 
                     this.async(function() {
 
-                        steem.api.getState(this.path, function(err, result) {
+                        steem.api.getState(path, function(err, result) {
 
                             if(result !== 'undefined' && !err){
 
@@ -66,10 +75,15 @@
                             }else {
 
                                 thisElement.queryError = true;
+                                console.error('steem-get-post.html: something went wrong with the query, path="' + path + '"');
                             }
                         });
                     });
+                }else {
+
+                    console.error('steem-get-post.html: path not fit requirements, path="' + path + '"');
                 }
+
             },
 
             _computePost: function(content) {
@@ -78,8 +92,6 @@
 
                     comments: []
                 };
-
-                var counter = 0;
 
                 // First object properties is post, others are comment
                 for (var key in content) {
@@ -115,6 +127,7 @@
                         }
 
                         post.body = contentReceived.body;
+                        //alert(post.body);
                         post.url = contentReceived.url;
                         post.category = contentReceived.category;
                         post.title = contentReceived.title;
@@ -145,18 +158,17 @@
                             comment.votes = contentReceived.net_votes;
                             comment.replies = contentReceived.children;
                             comment.dollarValue =   parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) +
-                                    parseFloat(contentReceived.total_payout_value.split(" ")[0]);
+                                                    parseFloat(contentReceived.total_payout_value.split(" ")[0]);
 
                             comment.body = contentReceived.body;
 
                             post.comments.push(comment);
                         }
                     }
-
-                    counter++;
                 }
 
                 this.set('post', post);
+                this.isLoading = false;
             }
         });
     })();

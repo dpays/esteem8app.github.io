@@ -328,60 +328,60 @@
                 // Choose page
                 if(dataUrl1 == ''){
 
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage ='home';// HOME
                 }else if(dataUrl1 == 'login'){
 
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'login'; // LOGIN
                 }else if(dataUrl1 == 'favorites') {
 
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'favorites'; //FAVORITES
                 }else if(dataUrl1 == 'settings') {
 
-
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'settings'; // SETTINGS
                 }else if(dataUrl1 == 'info') {
 
-
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'info'; // INFO
                 }else if(dataUrl1 == 'tools') {
 
-
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'tools'; // TOOLS
                 }else if(dataUrl1 == 'support') {
 
-
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'support'; // SUPPORT
                 }else if(dataUrl1 == 'files') {
 
-
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'files'; // FILES
                 }else if(this._isPageProfile()){
 
-                    if(typeof this.dataUrl2 !== 'undefined'){
-
-                        this.dataUrl2.data = '';
-                    }
-
-                    if(typeof this.dataUrl3 !== 'undefined'){
-
-                        this.dataUrl3.data = '';
-                    }
-
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = 'profile'; // PROFILE
                 }else if(this._isPageExplore()) {
 
-                    if(typeof this.dataUrl3 !== 'undefined'){
-
-                        this.dataUrl3.data = '';
-                    }
-
+                    this._resetDataUrl3();
                     this.selectedPage = 'explore'; // EXPLORE
                 }else if(this._isPagePost()){
-
 
                     this.selectedPage = 'post'; // SINGLE PUBLICATION
                 }else {
 
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
                     this.selectedPage = '404'; // PAGE 404
                 }
 
@@ -414,10 +414,41 @@
                 return (dataUrl1.charAt(0) == '@');
             },
 
+            _resetDataUrl1: function() {
+
+                if(typeof this.dataUrl1 === 'undefined'){
+
+                    this.dataUrl1 = {data: ''};
+                }else {
+
+                    this.dataUrl1.data = '';
+                }
+            },
+
+            _resetDataUrl2: function() {
+
+                if(typeof this.dataUrl2 === 'undefined'){
+
+                    this.dataUrl2 = {data: ''};
+                }else {
+
+                    this.dataUrl2.data = '';
+                }
+            },
+
+            _resetDataUrl3: function() {
+
+                if(typeof this.dataUrl3 === 'undefined'){
+
+                    this.dataUrl3 = {data: ''};
+                }else {
+
+                    this.dataUrl3.data = '';
+                }
+            },
+
             // Load and display page
             _selectedPageChanged: function(page) {
-
-
 
                 // Get page name
                 var page = page || this.selectedPage;

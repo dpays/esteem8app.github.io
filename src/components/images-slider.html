@@ -28,11 +28,6 @@
             width: 100%;
         }
 
-        paper-icon-button {
-            height: 64px;
-            width: 64px;
-        }
-
         #navInfo {
             right: 0;
             height: 175px;
@@ -46,31 +41,69 @@
         }
 
         #imageDialog {
-            overflow-x: scroll;
             margin: 48px;
+            max-width: 100%;
+            max-height: 100%;
         }
 
         #imageInDialog {
             margin-top: 0;
             margin-bottom: -5px;
             padding: 0;
+            --iron-image-width: 100%;
+            --iron-image-height: 100%;
+            z-index: 1;
         }
 
         #closeDialog {
             position: fixed;
             color: white;
-            z-index: 1;
+            z-index: 3;
             right: 0;
             top: 0;
-            margin: 0;
-            padding: 18px;
+            margin: 16px;
+        }
+
+        #downloadImage {
+            position: fixed;
+            color: white;
+            text-decoration: none;
+            z-index: 3;
+            right: 0;
+            bottom: 0;
+            margin: 16px;
         }
 
         @media screen and (max-width: 600px) {
 
             #imageDialog {
-                margin: 24px;
+                margin: 0px;
             }
+
+            #closeDialog {
+                display: none;
+            }
+        }
+
+        #imageWrapper {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            z-index: 2;
+        }
+
+        #leftWrap {
+            float: left;
+            width: 50%;
+            height: 100%;
+        }
+
+        #rightWrap {
+            float: right;
+            width: 50%;
+            height: 100%;
         }
 
     </style>
@@ -78,7 +111,7 @@
     <template>
 
         <div id="navInfo"
-             on-tap="_next()">
+             on-tap="_nextImage()">
             [[_computeCurrent(current)]]/[[images.length]]
         </div>
 
@@ -92,10 +125,23 @@
                       entry-animation="fade-in-animation"
                       exit-animation="fade-out-animation"
                       with-backdrop>
+            <!--paper-icon-button id="addImageToFile"
+                                  icon="my-icons:add">
+            </paper-icon-button-->
+
             <paper-icon-button id="closeDialog"
                                icon="my-icons:close"
                                dialog-dismiss>
             </paper-icon-button>
+
+            <a id="downloadImage" href="[[currentImage]]" download>
+                <paper-icon-button icon="my-icons:download"></paper-icon-button>
+            </a>
+
+            <div id="imageWrapper">
+                <div id="leftWrap" on-tap="_nextImage()"></div>
+                <div id="rightWrap" on-tap="_previousImage()"></div>
+            </div>
             <iron-image id="imageInDialog"
                         src="[[currentImage]]">
             </iron-image>
@@ -137,8 +183,11 @@
             ready: function() {
 
                 // Event listeners
-                this.$.navInfo.addEventListener('tap', this._next.bind(this));
+                this.$.navInfo.addEventListener('tap', this._nextImage.bind(this));
                 this.$.imageBox.addEventListener('tap', this._openImageDialog.bind(this));
+
+                this.$.leftWrap.addEventListener('tap', this._previousImage.bind(this));
+                this.$.rightWrap.addEventListener('tap', this._nextImage.bind(this));
 
                 // Set current if not set
                 this.current = this.current || 0;
@@ -176,12 +225,12 @@
                 }
             },
 
-            _next: function() {
+            _nextImage: function() {
 
                 this.current = this._computeCurrent(this.current) % this.images.length;
             },
 
-            _previous: function() {
+            _previousImage: function() {
 
                 if(this.current == 0){
 

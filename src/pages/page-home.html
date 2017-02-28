@@ -89,6 +89,10 @@
                 --paper-button-ink-color: var(--app-primary-text-color);
             }
 
+            #loginButton a {
+                text-decoration: none;
+            }
+
             @media screen and (max-width: 600px) {
                 #loginButton {  top: 8px;  }
             }
@@ -97,8 +101,8 @@
                 color: var(--app-primary-text-color);
             }
 
-            paper-button a {
-                text-decoration: none;
+            #presentation-button a {
+                text-decoration: none !important;
             }
 
             /* TOOLBAR */
@@ -126,10 +130,6 @@
             #exploreButton {
                 background-color: var(--app-secondary-color);
                 --paper-button-ink-color: var(--app-secondary-text-color);
-            }
-
-            #exploreButton a {
-                color: var(--app-secondary-text-color);
             }
 
             #presentation-button {
@@ -256,15 +256,13 @@
                 <h1>Access now to the world first blockchain based social media platform without any ads.</h1>
                 <h2>Everyone get rewarded to use it !</h2>
                 <div id="presentation-button">
-                    <paper-button>
-                        <a href="https://youtu.be/xZmpCAqD7hs"
-                           target="_blank">
-                            play video
-                        </a>
-                    </paper-button>
-                    <paper-button id="exploreButton" raised>
-                        <a href="/trending/">Explore</a>
-                    </paper-button>
+                    <a href="https://youtu.be/xZmpCAqD7hs"
+                       target="_blank">
+                        <paper-button>play video</paper-button>
+                    </a>
+                    <a href="/trending/">
+                        <paper-button id="exploreButton" raised>What's trending ?</paper-button>
+                    </a>
                 </div>
             </div>
         </div>
