@@ -107,12 +107,6 @@
 
                         this.shareWebsite = 'facebook';
                     }
-
-                    // Set default url to share
-                    if(typeof this.shareUrl === 'undefined') {
-
-                        this.shareUrl = window.location.href;
-                    }
                 },
 
                 _typeChanged: function() {
@@ -171,7 +165,7 @@
 
                     }
 
-                    url += this.shareUrl;
+                    url += this.shareUrl || window.location.href;
 
                     window.open(url);
                 }

@@ -1,61 +1,84 @@
-<dom-module id="steem-get-history"></dom-module>
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <script src="./src/steem.min.js"></script>
 
-<script>
+<dom-module id="steem-get-history">
 
-    (function () {
+    <script>
 
-        Polymer({
+        (function () {
 
-            is: 'steem-get-history',
+            Polymer({
 
-            properties: {
+                is: 'steem-get-history',
 
-                /*
-                 * Account name.
-                 * f.e. "you"
-                 * Component will query account data with this name.
-                 */
-                userName:  {
-                    type: String,
-                    observer: '_userNameChanged'
+                properties: {
+
+                    /*
+                     * Account name.
+                     * f.e. "you"
+                     * Component will query account data with this name.
+                     */
+                    userName:  {
+                        type: String,
+                        observer: '_userNameChanged'
+                    },
+
+                    /*
+                     * Account history events array.
+                     * Component will provide following list in this array.
+                     */
+                    events: {
+                        type: Array,
+                        notify: true
+                    }
                 },
 
-                /*
-                 * Account history events array.
-                 * Component will provide following list in this array.
-                 */
-                events: {
-                    type: Array,
-                    notify: true
-                }
-            },
+                ready: function() {
 
-            ready: function() {
+                    // Update account if empty
+                    if(typeof this.userName !== 'undefined') {
+                        this._userNameChanged();
+                    }
 
-                // Update account if empty
-                if(typeof this.userName !== 'undefined') {
-                    this._userNameChanged();
-                }
-
-                //Set default variables
-                this.set('events', []);
-            },
-
-            _userNameChanged: function() {
-
-                // Update events
-                if(typeof this.userName === 'undefined') {
+                    //Set default variables
                     this.set('events', []);
-                }else {
+                },
+
+                _userNameChanged: function() {
+
+                    // Update events
+                    if(typeof this.userName === 'undefined') {
+                        this.set('events', []);
+                    }else {
+                        var thisElement = this;
+
+                        // Query events
+                        this.async(function() {
+
+                            // request events history
+                            steem.api.getAccountHistory(thisElement.userName, 999999999, 100, function(err, result) {
+                                if(!err){
+
+                                    thisElement._computeEvents(result);
+                                }else {
+                                    console.error(err);
+                                }
+                            });
+
+                        });
+                    }
+                },
+
+                loadMoreData: function() {
+
                     var thisElement = this;
 
                     // Query events
                     this.async(function() {
 
                         // request events history
-                        steem.api.getAccountHistory(thisElement.userName, 999999999, 100, function(err, result) {
+                        steem.api.getAccountHistory(thisElement.userName, 999999999, thisElement.events.length+100, function(err, result) {
                             if(!err){
 
                                 thisElement._computeEvents(result);
@@ -65,105 +88,86 @@
                         });
 
                     });
-                }
-            },
+                },
 
-            loadMoreData: function() {
+                _computeEvents: function (events) {
 
-                var thisElement = this;
+                    var length = events.length;
 
-                // Query events
-                this.async(function() {
+                    var computedEvents = [];
 
-                    // request events history
-                    steem.api.getAccountHistory(thisElement.userName, 999999999, thisElement.events.length+100, function(err, result) {
-                        if(!err){
+                    // Compute each event
+                    for(var i = 0; i < length; i++) {
 
-                            thisElement._computeEvents(result);
-                        }else {
-                            console.error(err);
+                        var event = events[i][1];
+
+                        // Default value
+                        var when = event.timestamp;
+                        var what = 'what undefined';
+                        var who = 'who undefined';
+                        var atLink = 'atLink undefined';
+                        var atName = 'atNam undefined';
+
+                        // Operation
+                        var operationName = event.op[0];
+                        var op = event.op[1];
+
+                        // Compute depend operation type
+                        switch(operationName) {
+                            case 'vote':
+
+                                // Vote compute
+                                what = 'upvote';
+                                who = op.voter;
+                                atLink = '@' + op.author + '/' + op.permlink;
+                                atName = '@' + op.author + '/' + op.permlink.replace(/-/g, ' ');
+                                break;
+                            case 'comment':
+
+                                // Comment compute
+                                what = 'replied to';
+                                who = op.author;
+                                atLink = '@' + op.parent_userName + '/' + op.parent_permlink;
+                                atName = op.parent_permlink.replace(/-/g, ' ');
+                                break;
+                            case 'curation_reward':
+
+                                // Curation reward compute
+                                what = 'get rewarded for curation';
+                                who = op.curator;
+                                atLink = '@' + op.comment_userName + '/' + op.comment_permlink;
+                                atName = op.comment_permlink.replace(/-/g, ' ');
+                                break;
                         }
-                    });
 
-                });
-            },
+                        // Put computed properties into an object
+                        var computedEvent = {
+                            who: who,
+                            what: what,
+                            atLink: atLink,
+                            atName: atName,
+                            when: when
+                        };
 
-            _computeEvents: function (events) {
+                        //Put object into an array
+                        computedEvents.push(computedEvent);
 
-                var length = events.length;
-
-                var computedEvents = [];
-
-                // Compute each event
-                for(var i = 0; i < length; i++) {
-
-                    var event = events[i][1];
-
-                    // Default value
-                    var when = event.timestamp;
-                    var what = 'what undefined';
-                    var who = 'who undefined';
-                    var atLink = 'atLink undefined';
-                    var atName = 'atNam undefined';
-
-                    // Operation
-                    var operationName = event.op[0];
-                    var op = event.op[1];
-
-                    // Compute depend operation type
-                    switch(operationName) {
-                        case 'vote':
-
-                            // Vote compute
-                            what = 'upvote';
-                            who = op.voter;
-                            atLink = '@' + op.author + '/' + op.permlink;
-                            atName = '@' + op.author + '/' + op.permlink.replace(/-/g, ' ');
-                            break;
-                        case 'comment':
-
-                            // Comment compute
-                            what = 'replied to';
-                            who = op.author;
-                            atLink = '@' + op.parent_userName + '/' + op.parent_permlink;
-                            atName = op.parent_permlink.replace(/-/g, ' ');
-                            break;
-                        case 'curation_reward':
-
-                            // Curation reward compute
-                            what = 'get rewarded for curation';
-                            who = op.curator;
-                            atLink = '@' + op.comment_userName + '/' + op.comment_permlink;
-                            atName = op.comment_permlink.replace(/-/g, ' ');
-                            break;
+                        //Revert array
+                        computedEvents.reverse();
                     }
 
-                    // Put computed properties into an object
-                    var computedEvent = {
-                        who: who,
-                        what: what,
-                        atLink: atLink,
-                        atName: atName,
-                        when: when
-                    };
+                    //Put array into components
+                    if(this.events.length == 0) {
 
-                    //Put object into an array
-                    computedEvents.push(computedEvent);
+                        this.set('events', computedEvents);
+                    }else {
 
-                    //Revert array
-                    computedEvents.reverse();
+                        this.push('events', computedEvents);
+                    }
+
                 }
+            });
+        })();
+    </script>
 
-                //Put array into components
-                if(this.events.length == 0) {
-
-                    this.set('events', computedEvents);
-                }else {
-
-                    this.push('events', computedEvents);
-                }
-
-            }
-        });
-    })();
-</script>
+</dom-module>

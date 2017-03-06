@@ -9,8 +9,9 @@
 
         <style include="prism-theme-default">
             pre {
-                padding: 0;
+                padding: 12px;
                 margin: 0;
+                overflow: auto;
             }
         </style>
 
@@ -35,20 +36,34 @@
 
                 lang: {
                     type: String
+                },
+
+                backgroundColor: {
+                    type: String,
+                    observer: '_setBackgroundColor'
                 }
             },
 
             attached: function() {
+
+
+
                 this._renderCode();
             },
 
             _renderCode: function() {
+
                 this.$.output.innerHTML = this.highlightCode(this.code, this.lang);
             },
 
             highlightCode: function(code, lang) {
 
                 return this.fire('syntax-highlight', {code: code, lang: lang}).detail.code;
+            },
+
+            _setBackgroundColor: function() {
+
+                this.$.output.style.backgroundColor = this.backgroundColor;
             }
 
             /* IDEA

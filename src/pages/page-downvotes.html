@@ -1,0 +1,207 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="page-support">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                min-height: 100%;
+                width: 100%;
+                display: block;
+                position: absolute;
+
+                /*background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+                background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
+                --home-background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
+                /*background-image: var(--home-background-image);
+                background-size: cover;
+                background-position: center center;
+                background-attachment: fixed;*/
+                background: var(--app-primary-background-color);
+            }
+
+            /*@media screen and (max-width: 400px) {
+
+                :host{
+                    background: transparent;
+                    --home-background-image: url("https://s24.postimg.org/zfssz1kad/mdcontract_2_mobile_2.png");
+                }
+
+                :host:before {
+                    content: "";
+                    display: block;
+                    position: fixed;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: -10;
+
+                    --home-background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
+                    background-image: var(--home-background-image);
+                    background-position: center;
+                    background-attachment: fixed;
+                    background-size: cover;
+                }
+            }*/
+
+            /* SUPPORT CARDS */
+            .supportCards {
+                max-width: 400px;
+                padding-top: 82px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .supportCards paper-card {
+                margin-bottom: 16px;
+                width: 100%;
+                display: block;
+            }
+
+            paper-card h2 {
+                color: var(--app-secondary-color);
+                padding-top: 16px;
+                padding-left: 16px;
+                padding-right: 16px;
+                margin: 0;
+            }
+
+            paper-card a {
+                line-height: 32px;
+                color: var(--app-secondary-color);
+                text-decoration: none;
+            }
+
+            .card-content div {
+                width: 100%;
+                height: 48px;
+            }
+
+            .card-content span {
+                color: #222;
+            }
+
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_openDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    Support us
+                </span>
+            </div>
+
+            <a href="/trending">
+                <paper-icon-button id="exploreButton" icon="my-icons:explore"></paper-icon-button>
+            </a>
+
+        </paper-toolbar>
+
+        <!-- SUPPORT CARDS -->
+        <div class="supportCards">
+
+            <paper-card>
+
+                <h2>Invite your friends</h2>
+                <div class="card-content">
+                    <span>The app is community-driven and you are part of it.<br>If you want to help team and users bring power back to people you can share it with your friends, we'll be very grateful.</span>
+                    <br>
+                    <br>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//esteem8.com">Share on Facebook</a>
+                    <br>
+                    <a href="https://plus.google.com/share?url=https%3A//esteem8.com">Share on Google+</a>
+                    <br>
+                    <a href="https://twitter.com/home?status=%0A%0Ahttps%3A//esteem8.com">Share on Twitter</a>
+                    <br>
+                    <a href="mailto:?&subject=Hey bro check this !&body=This%20is%20social%20media%20web%20application%20that%20let%20you%20earn%20money%20by%20using%20it.%0AAnd%20it's%20community%20driven%20!%0Ahttps%3A//esteem8.com">Share by Email</a>
+                    <br>
+                </div>
+            </paper-card>
+
+            <paper-card>
+
+                <h2>Interact with us</h2>
+                <div class="card-content">
+                    <span>You can reward contributors by up-voting publications within these tags.</span>
+                    <br>
+                    <br>
+                    <a href="/created/esteem8/">#esteem8</a> for all ES8 posts
+                    <br>
+                    <a href="/created/esteem8-features/">#esteem8-features</a> for code contributions post
+                    <br>
+                    <a href="/created/esteem8-contribution/">#esteem8-contribution</a> for all contributions post
+                </div>
+            </paper-card>
+
+            <paper-card>
+
+                <h2>Make a donation</h2>
+                <div class="card-content">
+                    <span>Or make a donation to support the Esteem8 team.</span>
+                    <br>
+                    <br>
+                    <a href="">Steem donation</a>
+                    <br>
+                    <a href="">Paypal donation</a>
+                    <br>
+                    <a href="">Bitcoin donation</a>
+                    <br>
+                    <a id="timeDonation" href="/created/esteem8">Time donation</a>
+                </div>
+            </paper-card>
+        </div>
+        </div>
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'page-support',
+
+            properties: {
+
+                settings: {
+                    type: Object,
+                    notify: true
+                },
+
+                author: {
+                    type: String,
+                    observer: '_'
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            },
+
+            _openDrawer: function() {
+
+                document.getElementById('appshell')._openDrawer();
+            }
+        });
+    </script>
+</dom-module>

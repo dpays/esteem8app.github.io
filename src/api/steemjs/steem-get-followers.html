@@ -1,124 +1,126 @@
-<dom-module id="steem-get-followers"></dom-module>
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <script src="./src/steem.min.js"></script>
 
-<script>
+<dom-module id="steem-get-followers">
+    <script>
 
-    (function () {
+        (function () {
 
-        Polymer({
+            Polymer({
 
-            is: 'steem-get-followers',
+                is: 'steem-get-followers',
 
-            properties: {
+                properties: {
 
-                /*
-                 * Account name.
-                 * f.e. "you"
-                 * Component will query account data with this name.
-                 */
-                accountName:  {
-                    type: String
-                },
+                    /*
+                     * Account name.
+                     * f.e. "you"
+                     * Component will query account data with this name.
+                     */
+                    accountName:  {
+                        type: String
+                    },
 
-                /*
-                 * Followers array.
-                 * Component will provide followers list in this array.
-                 */
-                followers: {
-                    type: Array,
-                    notify: true
-                },
+                    /*
+                     * Followers array.
+                     * Component will provide followers list in this array.
+                     */
+                    followers: {
+                        type: Array,
+                        notify: true
+                    },
 
-                _lastFollowerLoaded: {
-                    type: String,
-                    observer: '_loadMore'
-                }
-            },
-
-            observers: [
-                '_accountNameChanged(accountName)',
-                '_followerChanged(followers)'
-            ],
-
-            _accountNameChanged: function(accountName) { // When account change
-
-                this.followers = []; // Reset followers
-                this._lastFollowerLoaded = '';
-                this._loadFollower(accountName); // Start loading
-
-                console.log("The name has changed: Try to load follower");
-            },
-
-            _followerChanged: function(s) {
-                console.log("Folower changed and ="+s);
-            },
-
-            _loadMore: function() { // load more followers if needed
-
-                console.log("load more triggered|Last follower="+this._lastFollowerLoaded);
-                if(typeof this.followers !== 'undefined') {
-
-                    if(this.followers.length > 0) {
-
-                        var followerLength = this.followers.length;
-
-                        // Load more ?
-                        var followerMultipleOf100 = (followerLength/100 == Math.floor(followerLength/100));
-                        var loadMore = (this.followers.length >= 100 && followerMultipleOf100);
-
-                        if(loadMore == true) {
-                            console.log("I'm trying to load more");
-                            this._loadFollower();
-                        }
+                    _lastFollowerLoaded: {
+                        type: String,
+                        observer: '_loadMore'
                     }
-                }
+                },
 
-            },
+                observers: [
+                    '_accountNameChanged(accountName)',
+                    '_followerChanged(followers)'
+                ],
 
-            _loadFollower: function(accountName) {
-                console.log("Start loading");
+                _accountNameChanged: function(accountName) { // When account change
 
-                var thisElement = this;
-                var accountName = accountName || this.accountName;
-                var lastFollowerLoaded = this._lastFollowerLoaded || '';
+                    this.followers = []; // Reset followers
+                    this._lastFollowerLoaded = '';
+                    this._loadFollower(accountName); // Start loading
 
-                // Query followers
-                this.async(function () {
+                    console.log("The name has changed: Try to load follower");
+                },
 
-                    console.log('loadedFrom='+thisElement._lastFollowerLoaded);
-                    // !!! Need api to provide load more than 100 followers to load full list
-                    steem.api.getFollowers(accountName, lastFollowerLoaded, null, 100, function(err, result) {
+                _followerChanged: function(s) {
+                    console.log("Folower changed and ="+s);
+                },
 
-                        if(typeof thisElement.followers === 'undefined') {
-                            console.log("Reset follower");
-                            thisElement.followers = [];
-                        }
+                _loadMore: function() { // load more followers if needed
 
-                        if (!err) {
+                    console.log("load more triggered|Last follower="+this._lastFollowerLoaded);
+                    if(typeof this.followers !== 'undefined') {
 
-                            for (var i = 0; i < result.length; i++) {
+                        if(this.followers.length > 0) {
 
-                                // Process user
-                                var user = result[i].follower;
+                            var followerLength = this.followers.length;
 
-                                // Push received user in followers
-                                thisElement.push('followers', user);
+                            // Load more ?
+                            var followerMultipleOf100 = (followerLength/100 == Math.floor(followerLength/100));
+                            var loadMore = (this.followers.length >= 100 && followerMultipleOf100);
 
+                            if(loadMore == true) {
+                                console.log("I'm trying to load more");
+                                this._loadFollower();
                             }
                         }
+                    }
+
+                },
+
+                _loadFollower: function(accountName) {
+                    console.log("Start loading");
+
+                    var thisElement = this;
+                    var accountName = accountName || this.accountName;
+                    var lastFollowerLoaded = this._lastFollowerLoaded || '';
+
+                    // Query followers
+                    this.async(function () {
+
+                        console.log('loadedFrom='+thisElement._lastFollowerLoaded);
+                        // !!! Need api to provide load more than 100 followers to load full list
+                        steem.api.getFollowers(accountName, lastFollowerLoaded, null, 100, function(err, result) {
+
+                            if(typeof thisElement.followers === 'undefined') {
+                                console.log("Reset follower");
+                                thisElement.followers = [];
+                            }
+
+                            if (!err) {
+
+                                for (var i = 0; i < result.length; i++) {
+
+                                    // Process user
+                                    var user = result[i].follower;
+
+                                    // Push received user in followers
+                                    thisElement.push('followers', user);
+
+                                }
+                            }
 
 
-                        // Get the last follower of the list for the next query
-                        console.log("what i get is:");
-                        console.log(result);
-                        thisElement.set('_lastFollowerLoaded', result[result.length-1].follower);
+                            // Get the last follower of the list for the next query
+                            console.log("what i get is:");
+                            console.log(result);
+                            thisElement.set('_lastFollowerLoaded', result[result.length-1].follower);
+                        });
+
                     });
 
-                });
 
-
-            }
-        });
-    })();
-</script>
+                }
+            });
+        })();
+    </script>
+</dom-module>

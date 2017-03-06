@@ -200,7 +200,7 @@
         </style>
 
         <steem-get-post path="[[category]]/[[author]]/[[postName]]"
-                        post="{{post}}">
+                        post="{{_post}}">
         </steem-get-post>
 
         <!-- Confirmation remove from favorite -->
@@ -236,7 +236,7 @@
                                            id="previousUrlButton"
                                            on-tap="_previousUrl()">
                         </paper-icon-button>
-                        <h4 condensed-title>[[post.title]]</h4>
+                        <h4 condensed-title>[[_post.title]]</h4>
                         </paper-icon-button>
                         <span hidden="[[_isInFavoritePost]]">
                             <paper-icon-button id="addFavoritePostButton"
@@ -251,17 +251,17 @@
                             </paper-icon-button>
                         </span>
                     </app-toolbar>
-                    <h1 main-title>[[post.title]]</h1>
+                    <h1 main-title>[[_post.title]]</h1>
                 </app-header>
 
                 <!-- BODY content -->
                 <div id="bodyContent">
 
                     <span class="background-secondary-text posted-ago">
-                        [[_computeTimeFromNow(post.created)]]
+                        [[_computeTimeFromNow(_post.created)]]
                     </span>
 
-                    <html-echo html="[[post.body]]"></html-echo>
+                    <html-echo html="[[_post.body]]"></html-echo>
 
 
                     <div class="tags">
@@ -341,8 +341,8 @@
                 <!-- COMMMENTS Content -->
                 <div id="commentsContent">
 
-                    <h3 class="commentsNumber">[[post.commentsLength]] comments</h3>
-                    <template is="dom-repeat" items="[[post.comments]]">
+                    <h3 class="commentsNumber">[[_post.commentsLength]] comments</h3>
+                    <template is="dom-repeat" items="[[_post.comments]]">
                         <comment-content comment="[[item]]"></comment-content>
                     </template>
                 </div>
@@ -368,7 +368,8 @@
                 },
 
                 author: {
-                    type: String
+                    type: String,
+                    observer: '_authorChanged'
                 },
 
                 username: {
@@ -379,8 +380,13 @@
                     type: String
                 },
 
-                post: {
-                    type: Object
+                _post: {
+                    type: Object,
+                    notify: true
+                },
+
+                _postBody: {
+                    type: String
                 },
 
                 _isInFavoritePost: {
@@ -397,8 +403,8 @@
             },
 
             observers: [
-                '_authorChanged(author)',
-                '_updateImageBackground(post)'
+                '_updateImageBackground(_post)',
+                '_authorChanged(author)'
             ],
 
             ready: function() {
@@ -425,10 +431,16 @@
             _authorChanged: function(author) {
 
                 // Remove the '@' to the author to load post
-                this.set('username', author.replace('@', ''));
+                var username = author.replace('@', '');
+
+                if(this.username !== username) {
+
+                    this.set('username', username);
+                }
 
                 // Scroll to top because content change
                 window.scrollTo(0, 0);
+
             },
 
             _updateImageBackground: function(post) {
@@ -481,7 +493,7 @@
             _addFavoritePost: function() {
 
                 // Add post to favorite
-                document.getElementById('appshell').addFavoritePost(this.post);
+                document.getElementById('appshell').addFavoritePost(this._post);
 
                 // Refresh favorite post state
                 this._refreshIsFavoritePost();
@@ -508,7 +520,7 @@
             _removeFavoritePost: function() {
 
                 // remove post from favorite
-                document.getElementById('appshell').removeFavoritePost(this.post);
+                document.getElementById('appshell').removeFavoritePost(this._post);
 
                 // Refresh favorite post state
                 this._refreshIsFavoritePost();

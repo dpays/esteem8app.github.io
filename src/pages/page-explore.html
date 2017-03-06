@@ -200,13 +200,13 @@
                 currentSortingUrl: {
                     type: String,
                     notify: true,
-                    observer: '_currentSortingChanged'
+                    observer: '_currentSortingUrlChanged'
                 },
 
                 currentSorting: {
                     type: String,
                     notify: true,
-                    observer: '_currentSortingUrlChanged'
+                    observer: '_currentSortingChanged'
                 },
 
                 // Current filter tag (esteem8, ...)
@@ -272,22 +272,32 @@
                 document.getElementById('appshell')._openDrawer();
             },
 
+            // sorting var -> sorting url
             _currentSortingChanged: function() {
 
-                this.currentSorting = this.currentSortingUrl.replace('/', '');
+                this.currentSortingUrl = this.currentSorting + '/';
             },
 
+            // sorting url -> sorting var
             _currentSortingUrlChanged: function() {
 
-                if(document.getElementById('appshell')._isPageExplore()) {
+                // remove '/' and set currentSorting for tabs
 
-                    var currentTagUrl = this.currentTagUrl || this.currentTag  + '/' || '';
-                    this.currentSortingUrl = this.currentSorting + '/';
+                var currentSortingUrl = this.currentSortingUrl || this.currentSorting  + '/' || '';
+                var currentTag = this.currentTagUrl.replace('/', '') || this.currentTag || '';
 
-                    if(currentTagUrl != '') {
-                        this.currentTagUrl = currentTagUrl; // Because if not set again, it is removed by this fucking app router, but now steem-get-post make 2 query
+                if(currentSortingUrl.includes('created') || currentSortingUrl.includes('hot') || currentSortingUrl.includes('trending') || currentSortingUrl.includes('active')) {
+
+                    this.currentSorting = currentSortingUrl.replace('/', '');
+
+                    // Set current tag because router does not support only changing first part without the second after
+                    if(currentTag != '') {
+
+                        this.currentTag = currentTag;
                     }
+
                 }
+
             },
 
             _openSelectCategoryDialog: function() {
@@ -295,31 +305,26 @@
                 this._isSelectCategoryOpened = true;
             },
 
+            // sorting var -> sorting url
             _currentTagChanged: function() {
+
+                // Add '/' and set url
+                if(this.currentTag != '') {
+
+                    this.currentTagUrl = this.currentTag + '/';
+                }else {
+
+                    this.currentTagUrl = this.currentTagUrl || '';
+                }
 
                 // Check if this is the app tag
                 this._computeIsEsteem8Tag();
 
                 // Refresh add to favorite icon
                 this._refreshIsCurrentTagInFavorite();
-
-                // Update url
-                if(this.currentTag != '') {
-
-                    var currentTagUrl = this.currentTag + '/';
-
-                    if(this.currentTagUrl != currentTagUrl) {
-
-                        this.currentTagUrl = currentTagUrl;
-                    }
-
-                    this.currentTagUrl = this.currentTag + '/';
-                }else {
-
-                    this.currentTagUrl = '';
-                }
             },
 
+            // sorting url -> sorting var
             _currentTagUrlChanged: function() {
 
                 // Update current tag from url to make query and make tabs working

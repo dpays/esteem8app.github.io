@@ -239,7 +239,8 @@
 
                 '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
                 '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)',
-                '_userNameChanged(settings.user.name)'
+                '_userNameChanged(settings.user.name)',
+                '_webSocketChanged(settings.steem.webSocketUrl)'
             ],
 
             ready: function() {
@@ -291,9 +292,34 @@
                             imageResolution: 'medium'
                         },
 
+                        content: {
+                            emojiSheet: 'emojione',
+
+                            imageProxyUrl: 'https://steemitimages.com/',
+                            customImageProxyUrls: [],
+                            defaultImageProxyUrls: [
+                                'https://steemitimages.com/'
+                            ]
+                        },
+
                         support: {
                             enableSupportApplication: false,
                             enableSupportUpdates: false
+                        },
+
+                        steem: {
+
+                            webSocketUrl: 'wss://steemd.steemit.com/',
+                            customWebSocketUrls: [],
+                            defaultWebSocketUrls: [
+                                'wss://steemd.steemit.com/',
+                                'wss://steemd.steemitdev.com',
+                                'wss://node.steem.ws ',
+                                'wss://this.piston.rocks',
+                                'wss://seed.bitcoiner.me',
+                                'wss://212.117.213.186:2016'
+                            ]
+
                         }
                     };
                 }
@@ -563,6 +589,16 @@
                 // remove file from favorite
                 var index = this.favoritePosts.indexOf(file); // index to delete
                 this.splice('favoriteFiles', index, 1); // Delete index found
+            },
+
+            getSettings: function() {
+
+                return this.settings;
+            },
+
+            setSettings: function(settings) {
+
+                this.settings = settings;
             }
 
             // TODO

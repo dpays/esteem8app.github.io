@@ -7,6 +7,7 @@
 <link rel="import" href="github-repository.html">
 <link rel="import" href="github-repository-file-view.html">
 <link rel="import" href="google-docs-embedded.html">
+<link rel="import" href="prism-render.html">
 
 <dom-module id="html-echo">
     <style>
@@ -14,6 +15,7 @@
         /* GENERAL */
         :host {
             display: block;
+            overflow: auto;
         }
 
         ::selection {
@@ -79,6 +81,7 @@
 
         .markdown-html img {
             max-width: 100%;
+            height: auto;
             vertical-align: middle;
             margin-top: 4px;
             margin-bottom: 4px;
@@ -140,6 +143,8 @@
     </template>
 </dom-module>
 
+<script src="../github/js-emoji/lib/emoji.min.js" type="text/javascript"></script>
+
 <script>
 
     (function () {
@@ -151,22 +156,55 @@
             properties: {
 
                 html: {
-                    type: String,
-                    observer: '_htmlChanged'
+                    type: String
                 },
 
                 _htmlDisplayed: {
                     type: String
+                },
+
+                _emoji: {
+                    type: Object
                 }
             },
 
+            observers: ['_htmlChanged(html)'],
+
             ready: function() {
+
+                // Add emoji converter
+                var emoji = new EmojiConvertor();
+
+                // Set image sheets set
+                /*emoji.img_sets = {
+                    'apple'    : {'path' : '/src/github/js-emoji/build/emoji-data/img-apple-64/'   , 'sheet' : '/src/github/js-emoji/build/emoji-data/sheet_apple_64.png',    'mask' : 1 },
+                    'google'   : {'path' : '/src/github/js-emoji/build/emoji-data/img-google-64/'  , 'sheet' : '/src/github/js-emoji/build/emoji-data/sheet_google_64.png',   'mask' : 2 },
+                    'twitter'  : {'path' : '/src/github/js-emoji/build/emoji-data/img-twitter-64/' , 'sheet' : '/src/github/js-emoji/build/emoji-data/sheet_twitter_64.png',  'mask' : 4 },
+                    'emojione' : {'path' : '/src/github/js-emoji/build/emoji-data/img-emojione-64/', 'sheet' : '/src/github/js-emoji/build/emoji-data/sheet_emojione_64.png', 'mask' : 8 }
+                };*/
+
+                /*emoji.use_sheet = true;
+                emoji.init_env();
+
+                emoji.img_set = 'apple';
+                emoji.text_mode = false;
+
+                // Set emoji properties
+                emoji.addAliases({
+                    'smile' : ':)'
+                });*/
+
+                this.set('_emoji', emoji);
 
             },
 
-            _htmlChanged: function () {
+            _htmlChanged: function (html) {
 
-                var html = this.html;
+                //var html = this.html + ' :) ☺ ';
+
+                // Render emoji
+                /*html = this._emoji.replace_unified(html); // \u{1F604}
+                html = this._emoji.replace_colons(html); // :smile:*/
 
                 if(html.includes('― Leonardo da Vinci')){
 
@@ -199,7 +237,7 @@
                     return '<img src="' + url + '" ></img>';
                 });*/
 
-                // RENDER ![image alt text](src)
+                // RENDER Markdown image -> ![image alt text](src)
                 var markdwonImageRegex = /!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;
                 html = html.replace(markdwonImageRegex, function(match){
 
@@ -208,7 +246,7 @@
                     return '<img src="' + url + '" ></img>';
                 });
 
-                // RENDER direct link image
+                // RENDER Direct image link -> https://a.domain.org/
                 var directImageLinkRegex = /http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*(?=<)/gm;
                 html = html.replace(directImageLinkRegex, function(match){
 
@@ -244,6 +282,24 @@
                     return '<span class="' + priorityColor + '">' + match + '</span>';
                 });
 
+                // RENDER `` -> prism-render
+                var markdownCodeRegex = /`+[a-zA-Z0-9 \(\)\{\}\/\\\<\>\n\r\t\:\;\.\=\'\"\^\?\+\-\,\*\%\&\@\~\[\]\#\|\$\°\§\!\£]*`+/gm;
+                html = html.replace(markdownCodeRegex, function(match){
+
+                    var code = match.replace(/`/g, '');
+
+                    return '<prism-render code="' + code + '" background-color="rgba(128, 128, 128, .2)"></prism-render>';
+                });
+
+
+                // RENDER <pre><code></code></pre> -> prims-render
+                var htmlCodeRegex = /<pre>[\n \t \r]*<code>[a-zA-Z0-9 \(\)\{\}\/\\\<\>\n\r\t\:\;\.\=\'\"\^\?\+\-\,\*\%\&\@\~\[\]\#\|\$\°\§\!\£]*<\/code>[\n \t \r]*<\/pre>/gm;
+                html = html.replace(markdownCodeRegex, function(match){
+
+                    var code = match.replace(/<pre>[\n \t \r]*<code>/g, '').replace(/<\/code>[\n \t \r]*<\/pre>/g, '');
+
+                    return '<prism-render code="' + code + '" background-color="rgba(128, 128, 128, .2)"></prism-render>';
+                });
 
                 // RENDER direct image link into <img> (must not be yet in <img>)
 

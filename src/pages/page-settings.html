@@ -13,6 +13,7 @@
 
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/color-select.html">
+<link rel="import" href="../api/steemjs/steem-set-web-socket.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-settings">
@@ -87,7 +88,7 @@
                 --paper-input-container-color: var(--app-background-secondary-text-color);
             }
 
-            #imageResolutionDropdown {
+            paper-dropdown-menu {
                 --paper-input-container-focus-color: var(--app-secondary-color);
                 --paper-input-container-input-color: var(--app-background-primary-text-color);
             }
@@ -164,9 +165,14 @@
                         <span>Show card image</span>
                         <paper-toggle-button checked="{{settings.display.showCardImage}}"></paper-toggle-button>
                     </div>
+                </div>
+            </paper-card>
+
+            <paper-card>
+                <h2>Content</h2>
+                <div class="card-content">
                     <div>
-                        <paper-dropdown-menu id="imageResolutionDropdown"
-                                             label="Image resolution">
+                        <paper-dropdown-menu label="Thumbnail resolution">
                             <paper-listbox class="dropdown-content"
                                            selected="{{settings.display.imageResolution}}"
                                            attr-for-selected="value">
@@ -175,6 +181,60 @@
                                 <paper-item value="high">High</paper-item>
                             </paper-listbox>
                         </paper-dropdown-menu>
+                    </div>
+                    <!--div>
+                        <paper-dropdown-menu label="Image proxy">
+                            <paper-listbox class="dropdown-content"
+                                           selected="{{settings.content.imageProxyUrl}}"
+                                           attr-for-selected="value">
+                                <template is="dom-repeat" items="[[settings.content.defaultImageProxyUrls]]">
+                                    <paper-item value="[[item]]">[[item]]</paper-item>
+                                </template>
+                                <template is="dom-repeat" items="[[settings.content.customImageProxyUrls]]">
+                                    <paper-item value="[[item]]">[[item]]</paper-item>
+                                </template>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div-->
+                    <div>
+                        <paper-dropdown-menu label="Emoji library">
+                            <paper-listbox class="dropdown-content"
+                                           selected="{{settings.content.emojiSheet}}"
+                                           attr-for-selected="value">
+                                <paper-item value="emojione">EmojiOne</paper-item>
+                                <paper-item value="apple">Apple</paper-item>
+                                <paper-item value="google">Google</paper-item>
+                                <paper-item value="twitter">Twitter</paper-item>
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                </div>
+            </paper-card>
+
+            <paper-card>
+                <h2>Steem</h2>
+                <div class="card-content">
+                    <div>
+                        <paper-dropdown-menu label="Web socket">
+                            <paper-listbox class="dropdown-content"
+                                           selected="{{settings.steem.webSocketUrl}}"
+                                           attr-for-selected="value">
+
+                                <template is="dom-repeat" items="[[settings.steem.defaultWebSocketUrls]]">
+                                    <paper-item value="[[item]]">[[item]]</paper-item>
+                                </template>
+                                <template is="dom-repeat" items="[[settings.steem.customWebSocketUrls]]">
+                                    <paper-item value="[[item]]">[[item]]</paper-item>
+                                </template>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
+                    <steem-set-web-socket web-socket="{{settings.steem.webSocketUrl}}"></steem-set-web-socket>
+                    <div>
+                        <p>
+                            <a href="https://status.steemnodes.com/" target="_blank">https://status.steemnodes.com/</a>
+                        </p>
                     </div>
                 </div>
             </paper-card>
@@ -242,6 +302,18 @@
             _openDrawer: function() {
 
                 document.getElementById('appshell')._openDrawer();
+            },
+
+            // Merge default webSocket list and custom webSocket list
+            _computeWebSocketUrls: function(customWebSocketUrls) {
+
+                var customWebSocketUrls = customWebSocketUrls || this.settings.steem.customWebSocketUrls;
+                var defaultWebSocketUrls = this.settings.steem.defaultWebSocketUrls;
+
+                var fullWebSocketUrls = defaultWebSocketUrls.concat(customWebSocketUrls);
+
+                this.set('_webSocketUrls', fullWebSocketUrls);
+
             },
 
             // Change theme background
