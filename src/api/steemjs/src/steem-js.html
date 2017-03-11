@@ -1,0 +1,34 @@
+<link rel="import" href="../../../../bower_components/polymer/polymer.html">
+
+<script src="steem.min.js"></script>
+<script src="../../../scripts/functions.js"></script>
+
+<dom-module id="steem-js">
+
+    <script>
+
+        (function () {
+
+            Polymer({
+
+                is: 'steem-js',
+
+                properties: {
+
+                    /*
+                     * steemJs API Object
+                     */
+                    steemJs:  {
+                        type: Object
+                    }
+                },
+
+                ready: function() {
+
+                    // Query tags
+                    this.set('steemJs', cloneObj(steem));
+                }
+            });
+        })();
+    </script>
+</dom-module>

@@ -93,8 +93,8 @@
                 --paper-input-container-input-color: var(--app-background-primary-text-color);
             }
 
-            a {
-                color: var(--app-primary-text-color);
+            paper-card div a {
+                color: var(--app-primary-color);
                 text-decoration: none;
             }
 
@@ -364,8 +364,8 @@
 
                     // Set darker and lighter main colors
                     this.set('settings.theme.ultraDarkPrimaryColor', this._getColorluminance(this._primaryColor, -0.5));
-                    this.set('settings.theme.darkPrimaryColor', this._getColorluminance(this._primaryColor, -0.3));
-                    this.set('settings.theme.lightPrimaryColor', this._getColorluminance(this._primaryColor, 0.3));
+                    this.set('settings.theme.darkPrimaryColor', this._getColorluminance(this._primaryColor, -0.2));
+                    this.set('settings.theme.lightPrimaryColor', this._getColorluminance(this._primaryColor, 0.2));
 
                     // Get ideal text color based on background color
                     this._primaryTextColor = this._getTextColor(this._primaryColor);

@@ -150,7 +150,7 @@
     </template>
 </dom-module>
 
-<script src="../github/js-emoji/lib/emoji.min.js" type="text/javascript"></script>
+<!--script src="../github/js-emoji/lib/emoji.min.js" type="text/javascript"></script-->
 
 <script>
 
@@ -232,6 +232,10 @@
                     //html += ' https://github.com/esteem8app/esteem8app.github.io ';
                 }
 
+                // Relative link
+                html = html.replace('https://steemit.com', '')
+                           .replace('https://busy.org', '');
+
                 // RENDER <a href into <img>
                 /*var imageLinkARegex = /<a([ ="'a-zA-Z0-9-]+)? href=('|")[ .:_\/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??[ \/%&=a-zA-Z0-9-]*("|')>[ .:_\/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??[ \/%&=a-zA-Z0-9-]*<\/a>/gm;
                 html = html.replace(imageLinkARegex, function(match){
@@ -254,7 +258,7 @@
                 });
 
                 // RENDER Direct image link -> https://a.domain.org/
-                var directImageLinkRegex = /http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*(?=<)/gm;
+                var directImageLinkRegex = /http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*/gm;
                 html = html.replace(directImageLinkRegex, function(match){
 
                     var twoFirstChar = match.substring(0, 2);

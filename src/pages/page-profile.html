@@ -3,8 +3,10 @@
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<!--link rel="import" href="../../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"-->
 <link rel="import" href="../../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
@@ -68,6 +70,16 @@
                 border-radius: 33px;
                 background-color: var(--app-primary-text-color);
                 color: var(--app-primary-color);
+            }
+
+            #progress-bar {
+                width: 100%;
+                position: fixed;
+                z-index: 3;
+                left: 0;
+                top: 0;
+                --paper-progress-active-color: var(--app-secondary-color);
+                --paper-progress-container-color: var(--app-primary-color);
             }
 
             /* HEADER */
@@ -267,7 +279,8 @@
         </style>
 
         <steem-get-account account-name="[[_accountName]]"
-                           account="{{_account}}">
+                           account="{{_account}}"
+                           is-loading="{{_showProgress}}">
         </steem-get-account>
 
         <steem-get-followers account-name="[[_accountName]]"
@@ -280,8 +293,9 @@
 
         <!-- IDEA: Clip a post permlink in profile json that is display in a tabs added + clip a post dedicated to be rendered in profile about tabs -->
 
-        <!-- TOOLBAR -->
-        <paper-toolbar class="mainToolbar">
+        <!--div id="pageprofile"-->
+            <!-- TOOLBAR -->
+            <paper-toolbar class="mainToolbar">
 
             <paper-icon-button id="toggleDrawerMenu"
                                on-tap="_openDrawer()"
@@ -289,23 +303,27 @@
             </paper-icon-button>
 
             <div class="floatingToolbar">
-                <span class="floatingToolbarTitle">
-                    <span>
-                        [[user]]
-                        <span class="reputation">[[_account.reputation]]</span>
-                    </span>
-                    <span></span>
-                    <paper-icon-button id="toggleFavoriteUserButton"
-                                       icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]"
-                                       on-tap="_toggleFavoriteUser()">
-                    </paper-icon-button>
+            <span class="floatingToolbarTitle">
+                <span>
+                    [[user]]
+                    <span class="reputation">[[_account.reputation]]</span>
                 </span>
+                <span></span>
+                <paper-icon-button id="toggleFavoriteUserButton"
+                                   icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]"
+                                   on-tap="_toggleFavoriteUser()">
+                </paper-icon-button>
+            </span>
             </div>
 
             <a href="/hot/">
                 <paper-icon-button icon="my-icons:explore"></paper-icon-button>
             </a>
 
+            <paper-progress id="progress-bar"
+                            indeterminate
+                            hidden="[[!_showProgress]]">
+            </paper-progress>
         </paper-toolbar>
 
         <div id="profileheader">
@@ -330,32 +348,32 @@
                     <div id="followersButton"
                          class="followers"
                          on-tap="_setCurrentViewFollowers">
-                        <span class="number">
-                            <template is="dom-if" if="[[_account.followerCount]]">
-                                [[_account.followerCount]]
-                            </template>
-                            <template is="dom-if" if="[[!_account.followerCount]]">
-                                0
-                            </template>
-                        </span>
+                    <span class="number">
+                        <template is="dom-if" if="[[_account.followerCount]]">
+                            [[_account.followerCount]]
+                        </template>
+                        <template is="dom-if" if="[[!_account.followerCount]]">
+                            0
+                        </template>
+                    </span>
                         <span class="texte">
-                            Followers
-                        </span>
+                        Followers
+                    </span>
                     </div>
                     <div id="followingButton"
                          class="followed"
                          on-tap="_setCurrentViewFollowers">
-                        <span class="number">
-                            <template is="dom-if" if="[[_account.followingCount]]">
-                                [[_account.followingCount]]
-                            </template>
-                            <template is="dom-if" if="[[!_account.followingCount]]">
-                                0
-                            </template>
-                        </span>
+                    <span class="number">
+                        <template is="dom-if" if="[[_account.followingCount]]">
+                            [[_account.followingCount]]
+                        </template>
+                        <template is="dom-if" if="[[!_account.followingCount]]">
+                            0
+                        </template>
+                    </span>
                         <span class="texte">
-                            Following
-                        </span>
+                        Following
+                    </span>
                     </div>
                 </div>
 
@@ -525,7 +543,7 @@
             <!-- REPLIES -->
             <div name="replies">
                 <steem-get-replies user-name="[[_accountName]]"
-                                    replies="{{_replies}}">
+                                   replies="{{_replies}}">
                 </steem-get-replies>
                 <div id="replies-list">
 
@@ -599,6 +617,7 @@
                 </div>
             </div>
         </iron-pages>
+        <!--/div-->
     </template>
 
     <script>
@@ -615,6 +634,10 @@
 
                 user: {
                     type: String
+                },
+
+                _showProgress: {
+                    type: Boolean
                 },
 
                 _account: {
@@ -666,6 +689,10 @@
                 }
             },
 
+            /*behaviors: [
+                Polymer.IronScrollTargetBehavior
+            ],*/
+
             observers: [
                 '_updateCoverImage(_account.coverImage)',
                 '_userChanged(user)',
@@ -682,6 +709,7 @@
                 // Set variables
                 this._currentProfileView = 'about';
                 this._currentAboutView = 'home';
+                //this._pageProfile = this.$.pageprofile;
 
                 // List event
                 this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -689,6 +717,22 @@
                 this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
                 this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
             },
+
+            /*_scrollHandler: function() {
+
+                this.async(function() {
+
+                    var loadBefore = 450;
+
+                    var height = this._pageProfile.clientHeight - window.innerHeight;
+
+                    if(this._scrollTop > (height - loadBefore)) {
+
+                        alert('load');
+                    }
+
+                });
+            },*/
 
             _userChanged: function(user) {
 
@@ -807,9 +851,7 @@
 
             _capitalizeFirstLetter: function(string) {
 
-                string = string.charAt(0).toUpperCase() + string.slice(1);
-
-                return string;
+                return string.charAt(0).toUpperCase() + string.slice(1);
             },
 
             _refreshIsTopheaderShowed: function(isTabAbout) {
@@ -891,7 +933,7 @@
 
             /*
              * IDEAS
-             * Pin post into a tab or and pin _posts into a second tab in tab about
+             * Pin other element or element in post
              */
 
         });

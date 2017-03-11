@@ -2,6 +2,7 @@
 <link rel="import" href="../../../bower_components/paper-toast/paper-toast.html">
 
 <script src="./src/steem.min.js"></script>
+<script src="../../scripts/functions.js"></script>
 
 <dom-module id="steem-get-state">
 
@@ -48,6 +49,10 @@
                     isLoading: {
                         type: Boolean,
                         notify: true
+                    },
+
+                    _steemAPI: {
+                        type: Object
                     }
                 },
 
@@ -66,6 +71,8 @@
 
                         this.isLoading = true;
                     }
+
+                    this.set('_steemAPI', cloneObj(steem));
                 },
 
                 // Update posts list when path changed
@@ -77,22 +84,14 @@
 
                     steem.api.getState(this.path, function(err, result) {
 
-                        if(typeof result !== 'undefined' && !err){
+                        if(!err){
 
-                            if(typeof result !== 'undefined') {
+                            thisElement._computePosts(result.content);
 
-                                if(typeof result.content !== 'undefined') {
+                        }else {
 
-                                    thisElement._computePosts(result.content);
-
-                                    return;
-
-                                }
-                            }
+                            thisElement._showErrorToast();
                         }
-
-                        thisElement._showErrorToast();
-
                     });
 
                 },

@@ -1,8 +1,12 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
+<script src="./src/steem.min.js"></script>
+
 <dom-module id="steem-get-account">
 
-    <script src="./src/steem.min.js"></script>
+    <script src="../../scripts/functions.js"></script>
+
+    <!--steem-js steem-js="{{_steemAPI}}"></steem-js-->
 
     <script>
 
@@ -31,7 +35,25 @@
                     account: {
                         type: Object,
                         notify: true
+                    },
+
+                    /*
+                     * Is loading statement
+                     */
+                    isLoading: {
+                        type: Boolean,
+                        notify: true
+                    },
+
+                    _steemAPI: {
+                        type: Object
                     }
+                },
+
+                ready: function() {
+
+                    this.set('_steemAPI', cloneObj(steem));
+
                 },
 
                 // Query Steem for account data when name change
@@ -39,6 +61,8 @@
 
 
                     if(this.accountName != '') {
+
+                        this.isLoading = true;
 
                         // init account data
                         if(typeof this.account == 'undefined') {
@@ -64,10 +88,10 @@
 
                         // Query account data
                         this.async(function() {
-
+                            console.log(accountName);
                             // Query basic information
-                            steem.api.getAccounts([accountName], function(err, result) {
-
+                            thisElement._steemAPI.api.getAccounts([accountName], function(err, result) {
+                                console.log(err, result);
                                 thisElement._computeAccount(err, result);
 
                             });
@@ -76,9 +100,9 @@
                         // Query follow number
                         this.async(function(){
 
-                            steem.api.getFollowCount(accountName, function(err, result){
+                            thisElement._steemAPI.api.getFollowCount(accountName, function(err, result){
 
-                                    thisElement._computeAccountFollowCount(err, result);
+                                thisElement._computeAccountFollowCount(err, result);
                             });
                         });
                     }
@@ -96,11 +120,13 @@
                         this.set('account.followingCount', 0);
                     }
 
+                    this.isLoading = false;
+
                 },
 
                 _computeAccount: function(err, result) {
 
-                    var steemFormatter = steem.formatter;
+                    var steemFormatter = this._steemAPI.formatter;
 
                     if(!err){
 
