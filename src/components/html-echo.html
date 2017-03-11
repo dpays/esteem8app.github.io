@@ -55,12 +55,19 @@
             font-weight: bold;
         }
 
+        .markdown-html p {
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+
         .markdown-html blockquote {
             margin-left: 0;
             margin-right: 0;
             padding: 4px;
             padding-left: 32px;
+            padding-right: 16px;
             border-left: solid 2px var(--app-secondary-color);
+            background-color: rgba(128, 128, 128, .1);
         }
 
 
@@ -89,7 +96,7 @@
 
         /* TABLES */
         .markdown-html table {
-            max-width: 100%;
+            width: 100%;
             border-collapse: collapse;
             overflow: scroll;
         }
@@ -173,7 +180,7 @@
             ready: function() {
 
                 // Add emoji converter
-                var emoji = new EmojiConvertor();
+                //var emoji = new EmojiConvertor();
 
                 // Set image sheets set
                 /*emoji.img_sets = {
@@ -194,7 +201,7 @@
                     'smile' : ':)'
                 });*/
 
-                this.set('_emoji', emoji);
+                //this.set('_emoji', emoji);
 
             },
 
@@ -354,12 +361,22 @@
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
-                // Youtube video link
-                var youtubeVideoLinkregex = /[^("|'|[)]https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
-                html = html.replace(youtubeVideoLinkregex, function(match){
+                var youtubeVideoHtmlLinkregex = /<a[ a-zA-Z0-9\=\"\'\w]* href=("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*<\/a>/gm
+                html = html.replace(youtubeVideoHtmlLinkregex, function(matchString){
 
-                    var match = match.replace(/ /g, "");
-                    var url = match.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
+                    var match = matchString.match(/("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')/g, "");
+                    var url = match.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/")
+                                   .replace(/\"/g, '').replace(/\'/g, '');
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                var youtubeVideoMarkdownLinkregex = /\[[a-zA-Z0-9\=\"\'\w]*\]\(https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*\)/gm
+                html = html.replace(youtubeVideoMarkdownLinkregex, function(matchString){
+
+                    var match = matchString.match(/https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/g, "");
+                    var url = match.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/")
+                            .replace(/ /g, '');
 
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
@@ -370,6 +387,16 @@
 
                     var match = match.replace(/ /g, "");
                     var url = match.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                // Youtube video link
+                var youtubeVideoLinkregex = /https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
+                html = html.replace(youtubeVideoLinkregex, function(match){
+
+                    var match = match.replace(/ /g, "");
+                    var url = match.replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
 
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });

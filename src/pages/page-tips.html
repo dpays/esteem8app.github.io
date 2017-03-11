@@ -1,0 +1,139 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../api/steemjs/steem-get-post.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/icon-box.html">
+<link rel="import" href="../components/post-content-minimal.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="page-tips">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                min-height: 100%;
+                width: 100%;
+                display: block;
+                position: absolute;
+                background: var(--app-primary-background-color);
+            }
+
+            .tipCards {
+
+                @apply(--layout-horizontal);
+                max-width: 800px;
+                margin: auto;
+
+            }
+
+            .tipCard {
+
+                min-width: 50%;
+                max-width: 400px;
+            }
+
+            @media (max-width: 600px) {
+
+                .tipCard {
+
+                    min-width: 100%;
+                    max-width: 600px;
+                }
+            }
+
+        </style>
+
+        <!-- TOOLBAR -->
+        <paper-toolbar class="mainToolbar">
+
+            <paper-icon-button id="toggleDrawerMenu"
+                               on-tap="_openDrawer()"
+                               icon="my-icons:menu">
+            </paper-icon-button>
+
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    Page tips
+                </span>
+            </div>
+
+            <a href="/trending">
+                <paper-icon-button id="exploreButton" icon="my-icons:explore"></paper-icon-button>
+            </a>
+
+        </paper-toolbar>
+
+        <!-- TIPS CARDS -->
+        <div class="tipCards">
+
+            <paper-card class="tipCard">
+                <icon-box id="blogTips"
+                          on-tap="_openTip()"
+                          tip-path="/writing/@jessicanicklos/how-to-make-your-blog-creative-and-engaging"
+                          icon="edit"
+                          title="How to make your blog engaging ?"
+                          description="">
+                </icon-box>
+            </paper-card>
+
+        </div>
+
+        <!-- TIPS DIALOG -->
+        <paper-dialog id="tipDialog">
+            <steem-get-post path="[[_postPath]]" post="{{_postTip}}"></steem-get-post>
+            <post-content-minimal post="[[_postTip]]"></post-content-minimal>
+        </paper-dialog>
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'page-tips',
+
+            properties: {
+
+                settings: {
+                    type: Object
+                },
+
+                _postPath: {
+                    type: String
+                },
+
+                _postTip: {
+                    type: Object
+                }
+            },
+
+            ready: function() {
+
+                // List event
+                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
+                this.$.blogTips.addEventListener('tap', this._openTip.bind(this));
+            },
+
+            _openDrawer: function() {
+
+                document.getElementById('appshell')._openDrawer();
+            },
+
+            _openTip: function(e) {
+
+                console.log(e);
+            }
+        });
+    </script>
+</dom-module>

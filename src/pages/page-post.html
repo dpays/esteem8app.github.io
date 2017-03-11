@@ -34,6 +34,16 @@
             }
 
             /* HEADER */
+            #progress-bar {
+                width: 100%;
+                position: absolute;
+                z-index: 3;
+                left: 0;
+                top: 0;
+                --paper-progress-active-color: var(--app-secondary-color);
+                --paper-progress-container-color: var(--app-primary-background-color);
+            }
+
             app-header {
                 position: fixed;
                 z-index: 2;
@@ -75,7 +85,7 @@
             [main-title] {
                 font-weight: 300;
                 position: absolute;
-                bottom: 40px;
+                bottom: 64px;
                 left: 84px;
                 margin: 0;
             }
@@ -108,11 +118,12 @@
             /* CONTENT */
 
             .posted-ago {
-                margin-top: -16px;
-                float: right;
+                display: block;
+                text-align: right;
+                padding-right: 16px;
             }
 
-            #bodyContent {
+            #bodycontent {
                 margin-top: 456px;
                 padding-top: 32px !important;
                 font-weight: lighter;
@@ -120,9 +131,9 @@
                 font-family: 'Open Sans', 'Roboto', sans-serif;
             }
 
-            #bodyContent, #metadataContent, #commentsContent {
+            #bodycontent, #metadataContent, #commentsContent {
                 max-width: 800px;
-                padding: 16px;
+                padding: 32px;
                 margin-left: auto;
                 margin-right: auto;
                 border-bottom: 1px solid var(--app-primary-background-color);
@@ -130,7 +141,7 @@
                 color: var(--app-background-primary-text-color);
             }
 
-            #bodyContent img {
+            #bodycontent img {
                 max-width: 100%;
                 display: block;
                 margin: auto;
@@ -196,11 +207,45 @@
                 color: var(--app-background-primary-text-color);
             }
 
+            @media(max-width: 600px) {
+
+                #bodycontent, #metadataContent, #commentsContent {
+                    padding: 24px;
+                }
+            }
+
+            @media(max-width: 420px) {
+
+                #bodycontent, #metadataContent, #commentsContent {
+                    padding: 16px;
+                }
+
+                [main-title] {
+                    bottom: 48px;
+                }
+
+                app-header {
+                    height: 270px;
+                }
+
+                app-toolbar.tall {
+                    height: 230px;
+                }
+
+                sample-content {
+                    padding-top: 270px;
+                }
+
+                #bodycontent {
+                    margin-top: 286px;
+                }
+            }
 
         </style>
 
         <steem-get-post path="[[category]]/[[author]]/[[postName]]"
-                        post="{{_post}}">
+                        post="{{_post}}"
+                        is-loading="{{_showProgress}}">
         </steem-get-post>
 
         <!-- Confirmation remove from favorite -->
@@ -223,6 +268,10 @@
         </paper-dialog>
 
         <!-- POST -->
+        <paper-progress id="progress-bar"
+                        indeterminate
+                        hidden="[[!_showProgress]]">
+        </paper-progress>
         <div hidden="[[!post]]">
 
             <div id="post">
@@ -255,7 +304,7 @@
                 </app-header>
 
                 <!-- BODY content -->
-                <div id="bodyContent">
+                <div id="bodycontent">
 
                     <span class="background-secondary-text posted-ago">
                         [[_computeTimeFromNow(_post.created)]]
@@ -363,6 +412,10 @@
 
             properties: {
 
+                settings: {
+                    type: Object
+                },
+
                 category: {
                     type: String
                 },
@@ -378,6 +431,10 @@
 
                 postName: {
                     type: String
+                },
+
+                _showProgress: {
+                    type: Boolean
                 },
 
                 _post: {
@@ -426,17 +483,14 @@
                 this._refreshIsFavoritePost();
                 this._refreshIsFavoriteUser();
                 this._refreshIsFavoriteTag();
+
+                this.$.bodycontent.setAttribute('style', 'text-align:' + this.settings.content.textAlign + ';');
             },
 
             _authorChanged: function(author) {
 
                 // Remove the '@' to the author to load post
-                var username = author.replace('@', '');
-
-                if(this.username !== username) {
-
-                    this.set('username', username);
-                }
+                this.set('username', author.replace('@', ''));
 
                 // Scroll to top because content change
                 window.scrollTo(0, 0);
@@ -459,7 +513,7 @@
             _previousUrl: function() {
 
                 // Back to previous URL or explore page
-                window.history.back();
+                window.history.go(-1);
             },
 
             _openConfirmationRemovePost: function() {

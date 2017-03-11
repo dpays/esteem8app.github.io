@@ -1,0 +1,91 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="icon-box">
+
+    <template>
+
+        <style include="shared-styles">
+
+
+
+            .iconBox {
+
+            }
+
+            .icon {
+
+            }
+
+            .content {
+
+            }
+
+            .icon iron-icon {
+                width: 64px;
+                height: 64px;
+                color: var(--app-secondary-color);
+            }
+
+            .title {
+                color: var(--app-background-primary-text-color);
+            }
+
+            .description {
+                color: var(--app-background-secondary-text-color);
+            }
+
+        </style>
+
+
+        <div class="iconBox">
+
+            <div class="icon">
+                <iron-icon icon="my-icons:[[icon]]"></iron-icon>
+            </div>
+
+            <div class="content">
+                <h3 class="title">[[title]]</h3>
+                <p class="description">[[description]]</p>
+            </div>
+
+        </div>
+
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'icon-box',
+
+            properties: {
+
+                title: {
+                    type: String
+                },
+
+                description: {
+                    type: String
+                },
+
+                icon: {
+                    type: String
+                },
+
+                // Top or left
+                layout: {
+                    type: String
+                }
+            },
+
+            ready: function() {
+
+            }
+        });
+    </script>
+</dom-module>

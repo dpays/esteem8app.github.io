@@ -266,15 +266,15 @@
 
         </style>
 
-        <steem-get-account account-name="[[_username]]"
+        <steem-get-account account-name="[[_accountName]]"
                            account="{{_account}}">
         </steem-get-account>
 
-        <steem-get-followers account-name="[[_username]]"
+        <steem-get-followers account-name="[[_accountName]]"
                              followers="{{_followers}}">
         </steem-get-followers>
 
-        <steem-get-following account-name="[[_username]]"
+        <steem-get-following account-name="[[_accountName]]"
                              following="{{_following}}">
         </steem-get-following>
 
@@ -316,7 +316,7 @@
                     <template is="dom-if" if="[[_account.profileImage]]">
                         <iron-image class="profileRepresentation"
                                     sizing="cover"
-                                    src="https://img1.steemit.com/124x124/[[_account.profileImage]]">
+                                    src="https://steemitimages.com/124x124/[[_account.profileImage]]">
                         </iron-image>
                     </template>
                     <template is="dom-if" if="[[!_account.profileImage]]">
@@ -524,7 +524,7 @@
 
             <!-- REPLIES -->
             <div name="replies">
-                <steem-get-replies user-name="[[_username]]"
+                <steem-get-replies user-name="[[_accountName]]"
                                     replies="{{_replies}}">
                 </steem-get-replies>
                 <div id="replies-list">
@@ -545,7 +545,7 @@
             <!-- REPLIES -->
             <div name="history">
                 <steem-get-history id="steemGetHistory"
-                                   user-name="[[_username]]"
+                                   user-name="[[_accountName]]"
                                    events="{{_events}}">
                 </steem-get-history>
                 <div id="events-list">
@@ -583,7 +583,7 @@
             </div>
 
             <!-- FOLLOWING -->
-            <div name="following" class="BE-398-500">
+            <div name="following" class="BE-398-500 BE-528-963 not sure">
                 <div id="following-list">
 
                     <template is="dom-if" if="[[!_following.length]]">
@@ -610,8 +610,7 @@
             properties: {
 
                 settings: {
-                    type: Object,
-                    notify: true
+                    type: Object
                 },
 
                 user: {
@@ -638,9 +637,8 @@
                     type: String
                 },
 
-                _username: {
-                    type: String,
-                    notify: true
+                _accountName: {
+                    type: String
                 },
 
                 _followers: {
@@ -696,15 +694,20 @@
 
                 if(user.charAt(0) == '@') {
 
-                    // DATA won't change so... (PLZ don't insult me, it's temporary)
-                    if(typeof this._username !== 'undefined' && this._username != user.substring(1)) {
+                    // Reset account related data
+                    this.set('_posts', []);
+                    this.set('_events', []);
+                    this.set('_replies', []);
+                    this.set('_followers', []);
+                    this.set('_following', []);
 
-                        location.reload();
-                    }
+                    // Reset view position
+                    this._currentProfileView = 'about';
+                    this._currentAboutView = 'home';
 
-                    // Remove '@' at user and put it into _username
-                    var user = user;
-                    this.set('_username', user.substring(1));
+                    // Remove '@' at user and put it into _accountName
+                    this.set('_accountName', user.replace('@', ''));
+
                     this._refreshIsFavoriteUser();
                 }
             },
@@ -754,7 +757,7 @@
 
             _refreshIsFavoriteUser: function() {
 
-                this._isUserInFavorite = document.getElementById('appshell').isFavoriteUser(this._username);
+                this._isUserInFavorite = document.getElementById('appshell').isFavoriteUser(this._accountName);
             },
 
             _toggleFavoriteUser: function() {
@@ -762,11 +765,11 @@
                 if(this._isUserInFavorite) {
 
                     // Remove user from favourite
-                    document.getElementById('appshell').removeFavoriteUser(this._username);
+                    document.getElementById('appshell').removeFavoriteUser(this._accountName);
                 }else {
 
                     // Add user to favourite
-                    document.getElementById('appshell').addFavoriteUser(this._username);
+                    document.getElementById('appshell').addFavoriteUser(this._accountName);
                 }
 
                 // Invert favorite state of user

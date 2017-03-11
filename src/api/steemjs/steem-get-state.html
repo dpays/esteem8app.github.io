@@ -117,7 +117,16 @@
                         // Add images & tags
                         if(typeof postRecived.json_metadata !== 'undefined'){
 
-                            var objectFromJson = JSON.parse(postRecived.json_metadata) || {};
+                            var objectFromJson = {};
+
+                            try {
+
+                                objectFromJson = JSON.parse(postRecived.json_metadata);
+
+                            }catch(err) {
+
+                                console.error(err);
+                            }
 
                             if(typeof objectFromJson.image !== 'undefined'){
 

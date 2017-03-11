@@ -115,6 +115,7 @@
             </page-explore>
 
             <page-post name="post"
+                       settings="[[settings]]"
                        category="[[dataUrl1.data]]"
                        author="{{dataUrl2.data}}"
                        post-name="[[dataUrl3.data]]">
@@ -128,6 +129,8 @@
             </page-favorites>
 
             <page-tools name="tools"></page-tools>
+
+            <page-files name="tips"></page-files>
 
             <page-profile name="profile"
                           settings="[[settings]]"
@@ -299,7 +302,9 @@
                             customImageProxyUrls: [],
                             defaultImageProxyUrls: [
                                 'https://steemitimages.com/'
-                            ]
+                            ],
+
+                            textAlign: 'left'
                         },
 
                         support: {
@@ -316,8 +321,7 @@
                                 'wss://steemd.steemitdev.com',
                                 'wss://node.steem.ws ',
                                 'wss://this.piston.rocks',
-                                'wss://seed.bitcoiner.me',
-                                'wss://212.117.213.186:2016'
+                                'wss://seed.bitcoiner.me'
                             ]
 
                         }
@@ -392,6 +396,11 @@
                     this._resetDataUrl1();
                     this._resetDataUrl2();
                     this.selectedPage = 'files'; // FILES
+                }else if(dataUrl1 == 'tips') {
+
+                    this._resetDataUrl1();
+                    this._resetDataUrl2();
+                    this.selectedPage = 'tips'; // TIPS
                 }else if(this._isPageProfile()){
 
                     this._resetDataUrl1();
