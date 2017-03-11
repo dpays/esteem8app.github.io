@@ -42,3 +42,5 @@ Development must conform to [UX Design strategy](https://github.com/esteem8app/e
 * Continue development.
  * Purpose new features on steem or take the features purposed by users in "ESTEEM8 Features proposal" publication.
  * Timely develop these features based on value on steem and more parameters.
+
+![](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/strategies/development-strategies/esteem8-roadmap.png?raw=true)
