@@ -21,6 +21,9 @@ Contributions are greatly appreciated and can be rewarded, see the [contributing
 ![alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/screenshots/explore.png "Explore page")
 ![alt text](https://github.com/esteem8app/esteem8app.github.io/blob/master/screenshots/profile.png "Profile page")
 
+## Project roadmap
+
+![](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/strategies/development-strategies/esteem8-roadmap.png?raw=true)
 
 ## License
 
