@@ -1,3 +1,0 @@
-[submodule "js-emoji"]
-	path = src/github/js-emoji
-	url = https://github.com/iamcal/js-emoji.git
