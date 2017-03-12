@@ -257,156 +257,156 @@
             <drawer-content settings="[[settings]]"></drawer-content>
         </app-drawer>
     </template>
+</dom-module>
 
-    <script>
-        Polymer({
+<script>
+    Polymer({
 
-            is: 'page-favorites',
+        is: 'page-favorites',
 
-            listeners: {
-                'tags.tap': '_deleteTag',
-                'users.tap': '_deleteUser'
+        listeners: {
+            'tags.tap': '_deleteTag',
+            'users.tap': '_deleteUser'
+        },
+
+        properties: {
+
+            favoritePosts: {
+                type: Array,
+                notify: true
             },
 
-            properties: {
-
-                favoritePosts: {
-                    type: Array,
-                    notify: true
-                },
-
-                favoriteUsers: {
-                    type: Array,
-                    notify: true
-                },
-
-                favoriteTags: {
-                    type: Array,
-                    notify: true
-                },
-
-                currentView: {
-                    type: String
-                },
-
-                addTagInput: {
-                    type: String
-                },
-
-                addUserInput: {
-                    type: String
-                },
-
-                deletedUser: {
-                    type: String
-                },
-
-                deletedTag: {
-                    type: String
-                }
+            favoriteUsers: {
+                type: Array,
+                notify: true
             },
 
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-                this.$.addTagButton.addEventListener('tap', this._addTag.bind(this));
-                this.$.addUserButton.addEventListener('tap', this._addUser.bind(this));
-                this.$.cancelDeleteUserButton.addEventListener('tap', this._cancelDeleteUser.bind(this));
-                this.$.cancelDeleteTagButton.addEventListener('tap', this._cancelDeleteTag.bind(this));
-
-                // Default view
-                this.currentView = 'publications';
-
-                // Sort user A -> Z
-
-                // Sort tag A -> Z
-
+            favoriteTags: {
+                type: Array,
+                notify: true
             },
 
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
+            currentView: {
+                type: String
             },
 
-            _addUser: function() {
-
-                this.push('favoriteUsers', this.addUserInput.toLowerCase());
-                this.addUserInput = '';
+            addTagInput: {
+                type: String
             },
 
-            _addTag: function() {
-
-                this.push('favoriteTags', this.addTagInput.toLowerCase());
-                this.addTagInput = '';
+            addUserInput: {
+                type: String
             },
 
-            _deleteUser: function(e) {
-
-                // Get USER to delete
-                var user = e.model.item;
-                this.deletedUser = user;
-
-                // Open toast
-                this.$.toastDeleteUser.open();
-
-                // Delete USER
-                if(typeof e.model !== 'undefined') {
-                    var index = this.favoriteUsers.indexOf(user);
-                    if (index > -1) {
-                        this.splice('favoriteUsers', index, 1);
-                    }
-                }
+            deletedUser: {
+                type: String
             },
 
-            _deleteTag: function(e) {
+            deletedTag: {
+                type: String
+            }
+        },
 
-                // Get TAG to delete
-                var tag = e.model.item;
+        ready: function() {
 
-                // Open toast
-                this.deletedTag = tag;
-                this.$.toastDeleteTag.open();
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.addTagButton.addEventListener('tap', this._addTag.bind(this));
+            this.$.addUserButton.addEventListener('tap', this._addUser.bind(this));
+            this.$.cancelDeleteUserButton.addEventListener('tap', this._cancelDeleteUser.bind(this));
+            this.$.cancelDeleteTagButton.addEventListener('tap', this._cancelDeleteTag.bind(this));
 
-                // Delete TAG
-                if(typeof e.model !== 'undefined') {
-                    var index = this.favoriteTags.indexOf(tag);
-                    if (index > -1) {
-                        this.splice('favoriteTags', index, 1);
-                    }
-                }
-            },
+            // Default view
+            this.currentView = 'publications';
 
-            _cancelDeleteUser: function() {
+            // Sort user A -> Z
 
-                this.push('favoriteUsers', this.deletedUser);
-                this.$.toastDeleteUser.close();
-            },
+            // Sort tag A -> Z
 
-            _cancelDeleteTag: function() {
+        },
 
-                this.push('favoriteTags', this.deletedTag);
-                this.$.toastDeleteTag.close();
-            },
+        _openDrawer: function() {
 
-            _checkForEnterOnUserInput: function(e) {
-                // check if 'enter' was pressed
-                if (e.keyCode === 13) {
-                    this._addUser();
-                }
-            },
+            document.getElementById('appshell')._openDrawer();
+        },
 
-            _checkForEnterOnTagInput: function(e) {
+        _addUser: function() {
 
-                // check if 'enter' was pressed
-                if (e.keyCode === 13) {
-                    this._addTag();
+            this.push('favoriteUsers', this.addUserInput.toLowerCase());
+            this.addUserInput = '';
+        },
+
+        _addTag: function() {
+
+            this.push('favoriteTags', this.addTagInput.toLowerCase());
+            this.addTagInput = '';
+        },
+
+        _deleteUser: function(e) {
+
+            // Get USER to delete
+            var user = e.model.item;
+            this.deletedUser = user;
+
+            // Open toast
+            this.$.toastDeleteUser.open();
+
+            // Delete USER
+            if(typeof e.model !== 'undefined') {
+                var index = this.favoriteUsers.indexOf(user);
+                if (index > -1) {
+                    this.splice('favoriteUsers', index, 1);
                 }
             }
+        },
 
-            /*
-             * Improvment idea: swipe to delete with iron-swipeable-container
-             */
-        });
-    </script>
-</dom-module>
+        _deleteTag: function(e) {
+
+            // Get TAG to delete
+            var tag = e.model.item;
+
+            // Open toast
+            this.deletedTag = tag;
+            this.$.toastDeleteTag.open();
+
+            // Delete TAG
+            if(typeof e.model !== 'undefined') {
+                var index = this.favoriteTags.indexOf(tag);
+                if (index > -1) {
+                    this.splice('favoriteTags', index, 1);
+                }
+            }
+        },
+
+        _cancelDeleteUser: function() {
+
+            this.push('favoriteUsers', this.deletedUser);
+            this.$.toastDeleteUser.close();
+        },
+
+        _cancelDeleteTag: function() {
+
+            this.push('favoriteTags', this.deletedTag);
+            this.$.toastDeleteTag.close();
+        },
+
+        _checkForEnterOnUserInput: function(e) {
+            // check if 'enter' was pressed
+            if (e.keyCode === 13) {
+                this._addUser();
+            }
+        },
+
+        _checkForEnterOnTagInput: function(e) {
+
+            // check if 'enter' was pressed
+            if (e.keyCode === 13) {
+                this._addTag();
+            }
+        }
+
+        /*
+         * Improvment idea: swipe to delete with iron-swipeable-container
+         */
+    });
+</script>

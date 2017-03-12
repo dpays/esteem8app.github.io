@@ -66,154 +66,154 @@
         </div>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'responsive-iframe',
+        is: 'responsive-iframe',
 
-            properties: {
+        properties: {
 
-                /*
-                 * URL source
-                 */
-                url: {
-                    type: String
-                },
-
-                /*
-                 * {width}:{height}
-                 * B.E. 2:1, default 16:9
-                 */
-                ratio: {
-                    type: String
-                },
-
-                /*
-                 * A prompt will occur to ask to show iframe if set as true
-                 */
-                promptUser: {
-                    type: Boolean,
-                    observer: '_setUrl'
-                },
-
-                _url: {
-                    type: Number
-                },
-
-                /*
-                 * If width and height are set, element keep the same proportions
-                 */
-                _width: {
-                    type: Number
-                },
-
-                /*
-                 * If width and height are set, element keep the same proportions
-                 */
-                _height: {
-                    type: Number
-                }
-
+            /*
+             * URL source
+             */
+            url: {
+                type: String
             },
 
-            ready: function() {
+            /*
+             * {width}:{height}
+             * B.E. 2:1, default 16:9
+             */
+            ratio: {
+                type: String
+            },
 
-                // Set var and listener
-                this._url = "";
-                this.$.showSourceButton.addEventListener('tap', this._showSource.bind(this));
+            /*
+             * A prompt will occur to ask to show iframe if set as true
+             */
+            promptUser: {
+                type: Boolean,
+                observer: '_setUrl'
+            },
 
-                // Set width and height
-                var thisElement = this;
+            _url: {
+                type: Number
+            },
 
-                setTimeout(function(){
+            /*
+             * If width and height are set, element keep the same proportions
+             */
+            _width: {
+                type: Number
+            },
 
-                    thisElement._computeFrameSize();
+            /*
+             * If width and height are set, element keep the same proportions
+             */
+            _height: {
+                type: Number
+            }
 
-                }, 300); // Can't find another solution to trigger this function after "iframecontainer" is correctly sized
+        },
+
+        ready: function() {
+
+            // Set var and listener
+            this._url = "";
+            this.$.showSourceButton.addEventListener('tap', this._showSource.bind(this));
+
+            // Set width and height
+            var thisElement = this;
+
+            setTimeout(function(){
+
+                thisElement._computeFrameSize();
+
+            }, 300); // Can't find another solution to trigger this function after "iframecontainer" is correctly sized
 
 
-                // Ask user to show Iframe or not depending on the source
-                var promptUser = false;
+            // Ask user to show Iframe or not depending on the source
+            var promptUser = false;
 
-                if(typeof this.promptUser !== 'undefined') {
+            if(typeof this.promptUser !== 'undefined') {
 
-                    promptUser = this.promptUser;
-                }
+                promptUser = this.promptUser;
+            }
 
-                // If user don't need to be prompted, directly show iframe (set the url)
-                if(!promptUser) {
+            // If user don't need to be prompted, directly show iframe (set the url)
+            if(!promptUser) {
+
+                this._url = this.url;
+            }
+
+        },
+
+        _computeFrameSize: function() {
+
+            var ratio = '16:9';
+            var fixedHeight = '';
+
+            // Set ratio by the ratio
+            if(typeof this.ratio !== 'undefined') {
+
+                ratio = this.ratio;
+            }
+
+            if(typeof this._width !== 'undefined' && typeof this._height !== 'undefined') {
+
+                // Or keeping actual proportion (this is a hack)
+                ratio = this._width + ":" + this._height;
+            }else if (typeof this._height !== 'undefined') {
+
+                // Or with fixed height
+                fixedHeight = this._height;
+            }
+
+            var ratioArray = ratio.split(':');
+            var ratioWidth = parseInt(ratioArray[0]);
+            var ratioHeight = parseInt(ratioArray[1]);
+            var ratio = ratioHeight/ratioWidth;
+
+            var containerWidth = this.$.iframecontainer.clientWidth;
+
+
+            var width = containerWidth;
+            var height = width * ratio;
+
+            if(fixedHeight !== '') {
+
+                height = fixedHeight;
+            }
+
+            this.set('_width', parseInt(width));
+            this.set('_height', parseInt(height));
+
+        },
+
+        _setUrl: function() {
+
+            // prompt closed, show iframe
+            if(typeof this.promptUser !== 'undefined') {
+                if(!this.promptUser) {
 
                     this._url = this.url;
                 }
-
-            },
-
-            _computeFrameSize: function() {
-
-                var ratio = '16:9';
-                var fixedHeight = '';
-
-                // Set ratio by the ratio
-                if(typeof this.ratio !== 'undefined') {
-
-                    ratio = this.ratio;
-                }
-
-                if(typeof this._width !== 'undefined' && typeof this._height !== 'undefined') {
-
-                    // Or keeping actual proportion (this is a hack)
-                    ratio = this._width + ":" + this._height;
-                }else if (typeof this._height !== 'undefined') {
-
-                    // Or with fixed height
-                    fixedHeight = this._height;
-                }
-
-                var ratioArray = ratio.split(':');
-                var ratioWidth = parseInt(ratioArray[0]);
-                var ratioHeight = parseInt(ratioArray[1]);
-                var ratio = ratioHeight/ratioWidth;
-
-                var containerWidth = this.$.iframecontainer.clientWidth;
-
-
-                var width = containerWidth;
-                var height = width * ratio;
-
-                if(fixedHeight !== '') {
-
-                    height = fixedHeight;
-                }
-
-                this.set('_width', parseInt(width));
-                this.set('_height', parseInt(height));
-
-            },
-
-            _setUrl: function() {
-
-                // prompt closed, show iframe
-                if(typeof this.promptUser !== 'undefined') {
-                    if(!this.promptUser) {
-
-                        this._url = this.url;
-                    }
-                }
-            },
-
-            _showSource: function() {
-
-                this.promptUser = false;
-            },
-
-            _computeWidthLessSomething: function(width, something) {
-
-                return width - something;
             }
+        },
 
-        });
+        _showSource: function() {
 
-    </script>
-</dom-module>
+            this.promptUser = false;
+        },
+
+        _computeWidthLessSomething: function(width, something) {
+
+            return width - something;
+        }
+
+    });
+
+</script>

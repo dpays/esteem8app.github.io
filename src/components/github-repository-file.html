@@ -23,40 +23,40 @@
             <github-repository-file-view file="[[_selectedFile]]"></github-repository-file-view>
 
     </template>
-
-    <script>
-
-        (function() {
-
-            'use strict';
-
-            Polymer({
-
-                is: 'github-repository-file',
-
-                properties: {
-
-                    /*
-                     * repository url
-                     */
-                    repository: {
-                        type: Object
-                    },
-
-                    _selectedFile: {
-                        type: Object,
-                        observer: '_selectedFileChanged'
-                    }
-                },
-
-                ready: function() {
-
-                },
-
-                _selectedFileChanged: function() {
-
-                }
-            });
-        })();
-    </script>
 </dom-module>
+
+<script>
+
+    (function() {
+
+        'use strict';
+
+        Polymer({
+
+            is: 'github-repository-file',
+
+            properties: {
+
+                /*
+                 * repository url
+                 */
+                repository: {
+                    type: Object
+                },
+
+                _selectedFile: {
+                    type: Object,
+                    observer: '_selectedFileChanged'
+                }
+            },
+
+            ready: function() {
+
+            },
+
+            _selectedFileChanged: function() {
+
+            }
+        });
+    })();
+</script>

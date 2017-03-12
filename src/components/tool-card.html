@@ -71,35 +71,35 @@
             </div>
         </paper-card>
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'tool-card',
-
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
-
-            properties: {
-
-                tool: {
-                    type: Object
-                }
-            },
-
-            ready: function() {
-
-                this.$.openToolButton.addEventListener('tap', this._openLink.bind(this));
-            },
-
-            _openLink: function() {
-
-                window.open(this.tool.link);
-            }
-
-        });
-
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'tool-card',
+
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
+
+        properties: {
+
+            tool: {
+                type: Object
+            }
+        },
+
+        ready: function() {
+
+            this.$.openToolButton.addEventListener('tap', this._openLink.bind(this));
+        },
+
+        _openLink: function() {
+
+            window.open(this.tool.link);
+        }
+
+    });
+
+</script>

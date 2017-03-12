@@ -248,6 +248,22 @@
                     return '<img src="' + url + '" ></img>';
                 });*/
 
+                // Tag #tag
+                var tagRegex = /#[a-zA-Z0-9-]+/gm;
+                html = html.replace(tagRegex, function(match){
+
+                    var url = match.replace('#', '');
+
+                    return '<a href="/hot/' + url + '" >' + match + '</a>';
+                });
+
+                // User @username
+                var userRegex = /@[a-zA-Z0-9-]+/gm;
+                html = html.replace(userRegex, function(match){
+
+                    return '<a href="/' + match + '" >' + match + '</a>';
+                });
+
                 // RENDER Markdown image -> ![image alt text](src)
                 var markdwonImageRegex = /!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;
                 html = html.replace(markdwonImageRegex, function(match){
@@ -258,17 +274,16 @@
                 });
 
                 // RENDER Direct image link -> https://a.domain.org/
-                var directImageLinkRegex = /http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*/gm;
+                var directImageLinkRegex = /.?http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*/gm;
                 html = html.replace(directImageLinkRegex, function(match){
 
-                    var twoFirstChar = match.substring(0, 2);
                     var firstChar = match.substring(0, 1);
 
-                    if(twoFirstChar == 'a>' || firstChar == '"' || firstChar == "'" || firstChar == "(") {
+                    if(firstChar == '>' || firstChar == '"' || firstChar == "'" || firstChar == "(") {
 
                         // If link is not link text but html or markdown link
                         return match;
-                    } {
+                    }else {
 
                         // Link is pure text
                         var url = match.replace(/ /gm, '');
@@ -386,14 +401,24 @@
                 });
 
                 // Youtube short video link
-                var youtubeShortVdeoLinkRegex = /[^("|'|[)]https:\/\/youtu\.be\/[a-zA-Z0-9]+/gm;
-                html = html.replace(youtubeShortVdeoLinkRegex, function(match){
+                /*var youtubeShortVdeoLinkRegex = /.?https:\/\/youtu\.be\/[a-zA-Z0-9]+/gm;
+                html = html.replace(youtubeShortVdeoLinkRegex, function(matchedString){
 
-                    var match = match.replace(/ /g, "");
-                    var url = match.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+                    var firstChar = matchedString.substring(0, 1);
 
-                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
-                });
+                    if(firstChar == '>' || firstChar == '"' || firstChar == "'" || firstChar == "(") {
+
+                        // If link is not link text but html or markdown link
+                        return matchedString;
+                    }else {
+
+                        matchedString = matchedString.match(/https:\/\/youtu\.be\/[a-zA-Z0-9]+/g);
+                        var url = matchedString.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+
+                        return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                    }
+
+                });*/
 
                 // Youtube video link
                 var youtubeVideoLinkregex = /https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm

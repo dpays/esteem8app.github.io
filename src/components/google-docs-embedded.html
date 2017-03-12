@@ -38,41 +38,41 @@
         </div>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'google-docs-embedded',
+        is: 'google-docs-embedded',
 
-            properties: {
+        properties: {
 
-                /*
-                 * URL source
-                 */
-                url: {
-                    type: String
-                }
-
-            },
-
-            ready: function() {
-
-                // EventListener
-                this.$.openDocumentButton.addEventListener('tap', this._openDocument.bind(this));
-
-            },
-
-            _openDocument: function() {
-
-                var rawDocummentUrlRegex = /https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?[_?=\-.a-zA-Z0-9-]*\//g
-                var url = rawDocummentUrlRegex.exec(this.url)[0];
-
-                window.open(url);
-
+            /*
+             * URL source
+             */
+            url: {
+                type: String
             }
 
-        });
+        },
 
-    </script>
-</dom-module>
+        ready: function() {
+
+            // EventListener
+            this.$.openDocumentButton.addEventListener('tap', this._openDocument.bind(this));
+
+        },
+
+        _openDocument: function() {
+
+            var rawDocummentUrlRegex = /https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?[_?=\-.a-zA-Z0-9-]*\//g
+            var url = rawDocummentUrlRegex.exec(this.url)[0];
+
+            window.open(url);
+
+        }
+
+    });
+
+</script>

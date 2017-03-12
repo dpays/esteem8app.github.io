@@ -332,99 +332,99 @@
                       response-text="{{_contributorsFileText}}">
         </url-get-file>
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'page-home',
+        is: 'page-home',
 
-            properties: {
+        properties: {
 
-                settings: {
-                  type: Object
-                },
-
-                _tags: {
-                    type: Array
-                },
-
-                _contributorsFileText: {
-                    type: Object,
-                    observer: '_computeContributorsFileText'
-                },
-
-                _contributors: {
-                    type: Array,
-                    notify: true
-                }
-
+            settings: {
+                type: Object
             },
 
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-                this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
-
-                // Default var
-                this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
-                this._contributors = [];
-
-                // Change background
-                this._updateBackground();
+            _tags: {
+                type: Array
             },
 
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
-            },
-            
-            _openGithub: function() {
-                
-                window.open('https://github.com/esteem8app/esteem8app.github.io');  
+            _contributorsFileText: {
+                type: Object,
+                observer: '_computeContributorsFileText'
             },
 
-            _computeContributorsFileText: function() {
-
-                // Extract contributors from github file
-                var regex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
-                var m;
-
-                var text = this._contributorsFileText;
-
-                // extract each contributor from file
-                do {
-                    m = regex.exec(text);
-                    if(m) {
-
-                        // Add contributor
-                        var contributor = m[1];
-
-                        if(typeof contributor !== 'undefined') {
-
-                            if(this._contributors.indexOf(contributor) == -1) {
-
-                                // Push contributor
-                                this.push('_contributors', contributor);
-                            }
-                        }
-
-                    }
-                } while (m);
-
-            },
-
-            _updateBackground: function () {
-                
-                if(document.referrer.match('github.com')){
-
-                    this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
-                    this.$.headersection.style.color = '#eee';
-                    this.updateStyles();
-                }
+            _contributors: {
+                type: Array,
+                notify: true
             }
 
-        });
-    </script>
-</dom-module>
+        },
+
+        ready: function() {
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
+
+            // Default var
+            this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
+            this._contributors = [];
+
+            // Change background
+            this._updateBackground();
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        },
+
+        _openGithub: function() {
+
+            window.open('https://github.com/esteem8app/esteem8app.github.io');
+        },
+
+        _computeContributorsFileText: function() {
+
+            // Extract contributors from github file
+            var regex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/g;
+            var m;
+
+            var text = this._contributorsFileText;
+
+            // extract each contributor from file
+            do {
+                m = regex.exec(text);
+                if(m) {
+
+                    // Add contributor
+                    var contributor = m[1];
+
+                    if(typeof contributor !== 'undefined') {
+
+                        if(this._contributors.indexOf(contributor) == -1) {
+
+                            // Push contributor
+                            this.push('_contributors', contributor);
+                        }
+                    }
+
+                }
+            } while (m);
+
+        },
+
+        _updateBackground: function () {
+
+            if(document.referrer.match('github.com')){
+
+                this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
+                this.$.headersection.style.color = '#eee';
+                this.updateStyles();
+            }
+        }
+
+    });
+</script>

@@ -3,116 +3,114 @@
 <script src="./src/to-markdown.js"></script>
 <script src="./src/steem.min.js"></script>
 
-<dom-module id="steem-get-comment-replies">
+<dom-module id="steem-get-comment-replies"></dom-module>
 
-    <script>
+<script>
 
-        (function () {
+    (function () {
 
-            Polymer({
+        Polymer({
 
-                is: 'steem-get-comment-replies',
+            is: 'steem-get-comment-replies',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * Parent author
-                     * f.e. "username"
-                     */
-                    parentAuthor: {
-                        type: String
-                    },
-
-                    /*
-                     * Parent_permlink
-                     * f.e. "re-post-title-date"
-                     */
-                    parentPermlink: {
-                        type: String,
-                        observer: '_parent_permlinkChanged'
-                    },
-
-                    /*
-                     * Comment returned
-                     */
-                    comments: {
-                        type: Object,
-                        notify: true
-                    },
-
-                    /*
-                     * Query error statement
-                     */
-                    queryError: {
-                        type: Boolean,
-                        notify: true
-                    }
+                /*
+                 * Parent author
+                 * f.e. "username"
+                 */
+                parentAuthor: {
+                    type: String
                 },
 
-                ready: function() {
-
-                    // Set default value
-                    if(typeof this.comments === 'undefined') {
-                        this.comments = [];
-                    }
-
-                    if(typeof this.queryError === 'undefined') {
-                        this.queryError = false;
-                    }
-
+                /*
+                 * Parent_permlink
+                 * f.e. "re-post-title-date"
+                 */
+                parentPermlink: {
+                    type: String,
+                    observer: '_parent_permlinkChanged'
                 },
 
-                // Update posts list when path changed
-                _parent_permlinkChanged: function() {
-
-                    if(this.parentPermlink !== '' && this.parentAuthor !== ''){
-
-                        var thisElement = this;
-                        this.async(function() {
-                            steem.api.getContentReplies(this.parentAuthor, this.parentPermlink, function(err, result) {
-                                if(result !== 'undefined' && !err){
-                                    thisElement._computeComments(result);
-                                }else {
-                                    thisElement.queryError = true;
-                                }
-                            });
-                        });
-                    }
+                /*
+                 * Comment returned
+                 */
+                comments: {
+                    type: Object,
+                    notify: true
                 },
 
-                _computeComments: function(result) {
-
-                    var comments = [];
-
-
-                    // For each comments
-                    for (var i = 0; i < result.length; i++) {
-
-                        var commentReceived = result[i];
-                        var comment = {};
-
-                        // These are used to load replies
-                        comment.parent_author = commentReceived.parent_author;
-                        comment.parent_permlink = commentReceived.parent_permlink;
-                        comment.permlink = commentReceived.permlink;
-
-                        // Used data
-                        comment.author = commentReceived.author;
-                        comment.created = commentReceived.created;
-                        comment.votes = commentReceived.net_votes;
-                        comment.replies = commentReceived.children;
-                        comment.dollarValue = parseFloat(commentReceived.total_pending_payout_value.split(" ")[0]) + parseFloat(commentReceived.total_payout_value.split(" ")[0]);
-
-                        comment.body = commentReceived.body;
-
-                        comments.push(comment);
-
-                    }
-
-                    this.set('comments', comments);
+                /*
+                 * Query error statement
+                 */
+                queryError: {
+                    type: Boolean,
+                    notify: true
                 }
-            });
-        })();
-    </script>
+            },
 
-</dom-module>
+            ready: function() {
+
+                // Set default value
+                if(typeof this.comments === 'undefined') {
+                    this.comments = [];
+                }
+
+                if(typeof this.queryError === 'undefined') {
+                    this.queryError = false;
+                }
+
+            },
+
+            // Update posts list when path changed
+            _parent_permlinkChanged: function() {
+
+                if(this.parentPermlink !== '' && this.parentAuthor !== ''){
+
+                    var thisElement = this;
+                    this.async(function() {
+                        steem.api.getContentReplies(this.parentAuthor, this.parentPermlink, function(err, result) {
+                            if(result !== 'undefined' && !err){
+                                thisElement._computeComments(result);
+                            }else {
+                                thisElement.queryError = true;
+                            }
+                        });
+                    });
+                }
+            },
+
+            _computeComments: function(result) {
+
+                var comments = [];
+
+
+                // For each comments
+                for (var i = 0; i < result.length; i++) {
+
+                    var commentReceived = result[i];
+                    var comment = {};
+
+                    // These are used to load replies
+                    comment.parent_author = commentReceived.parent_author;
+                    comment.parent_permlink = commentReceived.parent_permlink;
+                    comment.permlink = commentReceived.permlink;
+
+                    // Used data
+                    comment.author = commentReceived.author;
+                    comment.created = commentReceived.created;
+                    comment.votes = commentReceived.net_votes;
+                    comment.replies = commentReceived.children;
+                    comment.dollarValue = parseFloat(commentReceived.total_pending_payout_value.split(" ")[0]) + parseFloat(commentReceived.total_payout_value.split(" ")[0]);
+
+                    comment.body = commentReceived.body;
+
+                    comments.push(comment);
+
+                }
+
+                this.set('comments', comments);
+            }
+        });
+    })();
+</script>

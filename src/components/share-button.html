@@ -57,119 +57,119 @@
         </template>
 
     </template>
-
-    <script>
-
-        (function() {
-
-            Polymer({
-
-                is: 'share-button',
-
-                listeners: {
-                    'tap': '_openShareWebsite'
-                },
-
-                properties: {
-
-                    /*
-                     * Share button type [facebook, twitter, plus]
-                     */
-                    shareWebsite: {
-                        type: String,
-                        observer: '_typeChanged'
-                    },
-
-                    /*
-                     * Url to share
-                     */
-                    shareUrl: {
-                        type: String
-                    },
-
-                    _isFacebook: {
-                        type: Boolean
-                    },
-
-                    _isTwitter: {
-                        type: Boolean
-                    },
-
-                    _isPlus: {
-                        type: Boolean
-                    }
-                },
-
-                ready: function() {
-
-                    // Set default share website
-                    if(typeof this.shareWebsite === 'undefined') {
-
-                        this.shareWebsite = 'facebook';
-                    }
-                },
-
-                _typeChanged: function() {
-
-                    // Set default boolean values
-                    if(typeof this._isFacebook === 'undefined') {
-
-                        this._isFacebook = false;
-                    }
-
-                    if(typeof this._isTwitter === 'undefined') {
-
-                        this._isTwitter = false;
-                    }
-
-                    if(typeof this._isPlus === 'undefined') {
-
-                        this._isPlus = false;
-                    }
-
-                    // Set boolean for showing expected button
-                    switch (this.shareWebsite) {
-
-                        case 'facebook':
-                            this._isFacebook = true;
-                            break;
-
-                        case 'twitter':
-                            this._isTwitter = true;
-                            break;
-
-                        case 'plus':
-                            this._isPlus = true;
-                            break;
-
-                    }
-                },
-
-                _openShareWebsite: function() {
-
-                    var url = '';
-
-                    switch (this.shareWebsite) {
-
-                        case 'facebook':
-                            url = 'https://www.facebook.com/sharer/sharer.php?u=';
-                            break;
-
-                        case 'twitter':
-                            url = 'https://twitter.com/home?status=';
-                            break;
-
-                        case 'plus':
-                            url = 'https://plus.google.com/share?url=';
-                            break;
-
-                    }
-
-                    url += this.shareUrl || window.location.href;
-
-                    window.open(url);
-                }
-            });
-        })();
-    </script>
 </dom-module>
+
+<script>
+
+    (function() {
+
+        Polymer({
+
+            is: 'share-button',
+
+            listeners: {
+                'tap': '_openShareWebsite'
+            },
+
+            properties: {
+
+                /*
+                 * Share button type [facebook, twitter, plus]
+                 */
+                shareWebsite: {
+                    type: String,
+                    observer: '_typeChanged'
+                },
+
+                /*
+                 * Url to share
+                 */
+                shareUrl: {
+                    type: String
+                },
+
+                _isFacebook: {
+                    type: Boolean
+                },
+
+                _isTwitter: {
+                    type: Boolean
+                },
+
+                _isPlus: {
+                    type: Boolean
+                }
+            },
+
+            ready: function() {
+
+                // Set default share website
+                if(typeof this.shareWebsite === 'undefined') {
+
+                    this.shareWebsite = 'facebook';
+                }
+            },
+
+            _typeChanged: function() {
+
+                // Set default boolean values
+                if(typeof this._isFacebook === 'undefined') {
+
+                    this._isFacebook = false;
+                }
+
+                if(typeof this._isTwitter === 'undefined') {
+
+                    this._isTwitter = false;
+                }
+
+                if(typeof this._isPlus === 'undefined') {
+
+                    this._isPlus = false;
+                }
+
+                // Set boolean for showing expected button
+                switch (this.shareWebsite) {
+
+                    case 'facebook':
+                        this._isFacebook = true;
+                        break;
+
+                    case 'twitter':
+                        this._isTwitter = true;
+                        break;
+
+                    case 'plus':
+                        this._isPlus = true;
+                        break;
+
+                }
+            },
+
+            _openShareWebsite: function() {
+
+                var url = '';
+
+                switch (this.shareWebsite) {
+
+                    case 'facebook':
+                        url = 'https://www.facebook.com/sharer/sharer.php?u=';
+                        break;
+
+                    case 'twitter':
+                        url = 'https://twitter.com/home?status=';
+                        break;
+
+                    case 'plus':
+                        url = 'https://plus.google.com/share?url=';
+                        break;
+
+                }
+
+                url += this.shareUrl || window.location.href;
+
+                window.open(url);
+            }
+        });
+    })();
+</script>

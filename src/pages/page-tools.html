@@ -182,78 +182,78 @@
 
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'page-tools',
+        is: 'page-tools',
 
-            properties: {
+        properties: {
 
-                _steemStateResponse: {
-                    type: String,
-                    observer: '_computeSteemStatesResponse'
-                },
-
-                _steemState: {
-                    type: Object
-                },
-
-                _tools: {
-                    type: Array
-                }
-
+            _steemStateResponse: {
+                type: String,
+                observer: '_computeSteemStatesResponse'
             },
 
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-
-                // Set tools
-                this._tools = [
-                    {
-                        title: 'Steem map',
-                        description: 'An Interactive World Map showing the Steem Statistics in a visual way.',
-                        image: 'http://steemimg.com/images/2016/09/08/Userse1fdf.png',
-                        link: 'https://steemmap.co.za'
-                    },
-                    {
-                        title: 'Steem fighter',
-                        description: 'A battle of steempowers.',
-                        image: 'https://s32.postimg.org/pbwmcwfbp/steemfighterlogo.png',
-                        link: 'http://steemfighter.com'
-                    },
-                    {
-                        title: 'Steem whales',
-                        description: 'A rankings website for Steemians.',
-                        image: 'https://s3.postimg.org/fnduwesw3/st-steemwhales.png',
-                        link: 'http://steemwhales.com'
-                    },
-                    {
-                        title: 'Steem dollar',
-                        description: 'Overview of live conversion rates of SBD, Steem and more.',
-                        image: 'https://s32.postimg.org/iaszf1p85/tool-_0003_SteemDollar.jpg',
-                        link: 'https://steemdollar.com'
-                    }
-                ];
+            _steemState: {
+                type: Object
             },
 
-            _computeSteemStatesResponse: function() {
-
-                // Set steem currencie data
-                this._steemState = JSON.parse(this._steemStateResponse)[0];
-
-            },
-
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
+            _tools: {
+                type: Array
             }
 
-            // TODO
-            // Compare steem precent change with other currencies https://coinmarketcap.com/api/
-        });
-    </script>
-</dom-module>
+        },
+
+        ready: function() {
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
+            // Set tools
+            this._tools = [
+                {
+                    title: 'Steem map',
+                    description: 'An Interactive World Map showing the Steem Statistics in a visual way.',
+                    image: 'http://steemimg.com/images/2016/09/08/Userse1fdf.png',
+                    link: 'https://steemmap.co.za'
+                },
+                {
+                    title: 'Steem fighter',
+                    description: 'A battle of steempowers.',
+                    image: 'https://s32.postimg.org/pbwmcwfbp/steemfighterlogo.png',
+                    link: 'http://steemfighter.com'
+                },
+                {
+                    title: 'Steem whales',
+                    description: 'A rankings website for Steemians.',
+                    image: 'https://s3.postimg.org/fnduwesw3/st-steemwhales.png',
+                    link: 'http://steemwhales.com'
+                },
+                {
+                    title: 'Steem dollar',
+                    description: 'Overview of live conversion rates of SBD, Steem and more.',
+                    image: 'https://s32.postimg.org/iaszf1p85/tool-_0003_SteemDollar.jpg',
+                    link: 'https://steemdollar.com'
+                }
+            ];
+        },
+
+        _computeSteemStatesResponse: function() {
+
+            // Set steem currencie data
+            this._steemState = JSON.parse(this._steemStateResponse)[0];
+
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        }
+
+        // TODO
+        // Compare steem precent change with other currencies https://coinmarketcap.com/api/
+    });
+</script>

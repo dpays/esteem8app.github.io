@@ -2,176 +2,174 @@
 
 <script src="./src/steem.min.js"></script>
 
-<dom-module id="steem-get-post">
+<dom-module id="steem-get-post"></dom-module>
 
-    <script>
+<script>
 
-        (function () {
+    (function () {
 
-            Polymer({
+        Polymer({
 
-                is: 'steem-get-post',
+            is: 'steem-get-post',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * Steem path to be loaded
-                     * f.e "/sorting/tag
-                     */
-                    path: {
-                        type: String
-                    },
-
-                    /*
-                     * Post to be returned after being queried
-                     */
-                    post: {
-                        type: Object,
-                        notify: true
-                    },
-
-                    /*
-                     * Boolean set to true if there is a query error
-                     */
-                    queryError: {
-                        type: Boolean,
-                        notify: true
-                    },
-
-                    isLoading: {
-                        type: Boolean,
-                        notify: true
-                    }
+                /*
+                 * Steem path to be loaded
+                 * f.e "/sorting/tag
+                 */
+                path: {
+                    type: String
                 },
 
-                observers: ['_pathChanged(path)'],
-
-                ready: function() {
-
-                    // Set default value
-                    if(typeof this.queryError === 'undefined') {
-                        this.queryError = false;
-                    }
-
-                    if(typeof this.isLoading === 'undefined') {
-                        this.isLoading = true;
-                    }
+                /*
+                 * Post to be returned after being queried
+                 */
+                post: {
+                    type: Object,
+                    notify: true
                 },
 
-                // Update posts list when path changed
-                _pathChanged: function(path) {
+                /*
+                 * Boolean set to true if there is a query error
+                 */
+                queryError: {
+                    type: Boolean,
+                    notify: true
+                },
 
-                    if(/[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/.test(path)) {
+                isLoading: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
 
-                        this.isLoading = true;
-                        var thisElement = this;
+            observers: ['_pathChanged(path)'],
 
-                        this.async(function() {
+            ready: function() {
 
-                            steem.api.getState(path, function(err, result) {
+                // Set default value
+                if(typeof this.queryError === 'undefined') {
+                    this.queryError = false;
+                }
 
-                                if(result !== 'undefined' && !err){
+                if(typeof this.isLoading === 'undefined') {
+                    this.isLoading = true;
+                }
+            },
 
-                                    thisElement._computePost(result.content);
-                                }else {
+            // Update posts list when path changed
+            _pathChanged: function(path) {
 
-                                    thisElement.queryError = true;
-                                    console.error('steem-get-post.html: something went wrong with the query, path="' + path + '"');
-                                }
-                            });
+                if(/[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/.test(path)) {
+
+                    this.isLoading = true;
+                    var thisElement = this;
+
+                    this.async(function() {
+
+                        steem.api.getState(path, function(err, result) {
+
+                            if(!err){
+
+                                thisElement._computePost(result.content);
+                            }else {
+
+                                thisElement.queryError = true;
+                                console.error('steem-get-post.html: something went wrong with the query, path="' + path + '"');
+                            }
                         });
-                    }else {
+                    });
+                }else {
 
-                        console.error('steem-get-post.html: path not fit requirements, path="' + path + '"');
-                    }
+                    console.error('steem-get-post.html: path not fit requirements, path="' + path + '"');
+                }
 
-                },
+            },
 
-                _computePost: function(content) {
+            _computePost: function(content) {
 
-                    var post = {
+                var post = {
 
-                        comments: []
-                    };
+                    comments: []
+                };
 
-                    // First object properties is post, others are comment
-                    for (var key in content) {
+                // First object properties is post, others are comment
+                for (var key in content) {
 
-                        // skip loop if the property is from prototype
-                        if (!content.hasOwnProperty(key)) continue;
+                    // skip loop if the property is from prototype
+                    if (!content.hasOwnProperty(key)) continue;
 
-                        var contentReceived = content[key];
-                        if(contentReceived.url === ('/'+this.path)){ // This object is the post -> Compute post
+                    var contentReceived = content[key];
+                    if(contentReceived.url === ('/'+this.path)){ // This object is the post -> Compute post
 
-                            // Add images & tags
-                            if(typeof contentReceived.json_metadata !== 'undefined'){
+                        // Add images & tags
+                        if(typeof contentReceived.json_metadata !== 'undefined'){
 
-                                var objectFromJson = JSON.parse(contentReceived.json_metadata) || {};
+                            var objectFromJson = JSON.parse(contentReceived.json_metadata) || {};
 
-                                if(typeof objectFromJson.image !== 'undefined'){
-                                    post.images = objectFromJson.image;
-                                }
-
-                                if(typeof objectFromJson.tags !== 'undefined'){
-                                    post.tags = objectFromJson.tags;
-                                }
+                            if(typeof objectFromJson.image !== 'undefined'){
+                                post.images = objectFromJson.image;
                             }
 
-                            // Set images empty if null
-                            if(typeof post.images === 'undefined'){
-                                post.images = [];
-                            }
-
-                            // Set tags empty if null
-                            if(typeof post.tags === 'undefined'){
-                                post.tags = [];
-                            }
-
-                            post.body = contentReceived.body;
-                            post.url = contentReceived.url;
-                            post.category = contentReceived.category;
-                            post.title = contentReceived.title;
-                            post.author = contentReceived.author;
-                            post.dollarValue =  parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) + parseFloat(contentReceived.total_payout_value.split(" ")[0]);
-                            post.net_votes = contentReceived.net_votes;
-                            post.children = contentReceived.children;
-                            post.activeVotes = contentReceived.active_votes;
-                            post.created = contentReceived.created;
-                            post.commentsLength = 0;
-
-                        }else { // ADD COMMENT
-
-                            post.commentsLength++;
-
-                            if(contentReceived.depth === 1) { // Only take first depth comment (No comment replies)
-
-                                var comment = {};
-
-                                // These are used to load replies
-                                comment.parent_author = contentReceived.parent_author;
-                                comment.parent_permlink = contentReceived.parent_permlink;
-                                comment.permlink = contentReceived.permlink;
-
-                                // Used data
-                                comment.author = contentReceived.author;
-                                comment.created = contentReceived.created;
-                                comment.votes = contentReceived.net_votes;
-                                comment.replies = contentReceived.children;
-                                comment.dollarValue =   parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) +
-                                        parseFloat(contentReceived.total_payout_value.split(" ")[0]);
-
-                                comment.body = contentReceived.body;
-
-                                post.comments.push(comment);
+                            if(typeof objectFromJson.tags !== 'undefined'){
+                                post.tags = objectFromJson.tags;
                             }
                         }
+
+                        // Set images empty if null
+                        if(typeof post.images === 'undefined'){
+                            post.images = [];
+                        }
+
+                        // Set tags empty if null
+                        if(typeof post.tags === 'undefined'){
+                            post.tags = [];
+                        }
+
+                        post.body = contentReceived.body;
+                        post.url = contentReceived.url;
+                        post.category = contentReceived.category;
+                        post.title = contentReceived.title;
+                        post.author = contentReceived.author;
+                        post.dollarValue =  parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) + parseFloat(contentReceived.total_payout_value.split(" ")[0]);
+                        post.net_votes = contentReceived.net_votes;
+                        post.children = contentReceived.children;
+                        post.activeVotes = contentReceived.active_votes;
+                        post.created = contentReceived.created;
+                        post.commentsLength = 0;
+
+                    }else { // ADD COMMENT
+
+                        post.commentsLength++;
+
+                        if(contentReceived.depth === 1) { // Only take first depth comment (No comment replies)
+
+                            var comment = {};
+
+                            // These are used to load replies
+                            comment.parent_author = contentReceived.parent_author;
+                            comment.parent_permlink = contentReceived.parent_permlink;
+                            comment.permlink = contentReceived.permlink;
+
+                            // Used data
+                            comment.author = contentReceived.author;
+                            comment.created = contentReceived.created;
+                            comment.votes = contentReceived.net_votes;
+                            comment.replies = contentReceived.children;
+                            comment.dollarValue =   parseFloat(contentReceived.total_pending_payout_value.split(" ")[0]) +
+                                    parseFloat(contentReceived.total_payout_value.split(" ")[0]);
+
+                            comment.body = contentReceived.body;
+
+                            post.comments.push(comment);
+                        }
                     }
-
-                    this.set('post', post);
-                    this.isLoading = false;
                 }
-            });
-        })();
-    </script>
 
-</dom-module>
+                this.set('post', post);
+                this.isLoading = false;
+            }
+        });
+    })();
+</script>

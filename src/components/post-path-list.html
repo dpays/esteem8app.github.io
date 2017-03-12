@@ -30,60 +30,60 @@
         </div>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'post-path-list',
+        is: 'post-path-list',
 
-            properties: {
+        properties: {
 
-                steemPath: {
-                    type: String,
-                    observer: '_computeTagName'
-                },
-
-                postType: {
-                    type: String
-                },
-
-                _tagName: {
-                    type: String
-                },
-
-                _posts: {
-                    type: Array,
-                    observer: '_postsChanged'
-                }
+            steemPath: {
+                type: String,
+                observer: '_computeTagName'
             },
 
-            ready: function () {
-
-                //console.log(this.steemPath);
+            postType: {
+                type: String
             },
 
-            _computeTagName: function() {
-
-                console.log(this.steemPath);
-
-                if(this.steemPath.includes('@')){
-
-                    this._tagName = this.steemPath;
-                }else {
-
-                    this._tagName = '#' + this.steemPath.split('/')[1];
-                }
-
+            _tagName: {
+                type: String
             },
 
-            _postsChanged: function() {
-                //console.log("For path "+this.steemPath+", posts ==="+this._posts);
+            _posts: {
+                type: Array,
+                observer: '_postsChanged'
+            }
+        },
 
-                this.$.posts.style.maxWidth = '568px';//this.$.posts.offsetWidth + 'px';
+        ready: function () {
+
+            //console.log(this.steemPath);
+        },
+
+        _computeTagName: function() {
+
+            console.log(this.steemPath);
+
+            if(this.steemPath.includes('@')){
+
+                this._tagName = this.steemPath;
+            }else {
+
+                this._tagName = '#' + this.steemPath.split('/')[1];
             }
 
-        });
+        },
 
-    </script>
-</dom-module>
+        _postsChanged: function() {
+            //console.log("For path "+this.steemPath+", posts ==="+this._posts);
+
+            this.$.posts.style.maxWidth = '568px';//this.$.posts.offsetWidth + 'px';
+        }
+
+    });
+
+</script>

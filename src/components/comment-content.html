@@ -130,33 +130,33 @@
 
         </div>
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'comment-content',
-
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
-
-            properties: {
-
-                comment: {
-                    type: Object
-                }
-
-            },
-
-            ready: function() {
-
-                this.comment.replies = [];
-            },
-
-            timeFromNow: function(date) {
-                return new IntlRelativeFormat('en-us').format(new Date(date));
-            }
-        });
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'comment-content',
+
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
+
+        properties: {
+
+            comment: {
+                type: Object
+            }
+
+        },
+
+        ready: function() {
+
+            this.comment.replies = [];
+        },
+
+        timeFromNow: function(date) {
+            return new IntlRelativeFormat('en-us').format(new Date(date));
+        }
+    });
+</script>

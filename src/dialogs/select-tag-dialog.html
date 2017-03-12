@@ -227,102 +227,102 @@
                         number="100">
         </steem-get-tags>
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'select-tag-dialog',
+        is: 'select-tag-dialog',
 
-            listeners: {
-                'trendingTags.tap': '_selectThisTag',
-                'favoriteTags.tap': '_selectThisTag'
+        listeners: {
+            'trendingTags.tap': '_selectThisTag',
+            'favoriteTags.tap': '_selectThisTag'
+        },
+
+        properties: {
+
+            opened: {
+                type: Boolean,
+                notify: true,
+                observer: '_openedChanged'
             },
 
-            properties: {
-
-                opened: {
-                    type: Boolean,
-                    notify: true,
-                    observer: '_openedChanged'
-                },
-
-                icon: {
-                  type: String
-                },
-
-                selectedTag: {
-                    type: Object,
-                    notify: true
-                },
-
-                currentSortingTags: {
-                    type: String,
-                    observer: '_currentSortingTagsChanged'
-                },
-
-                tags: {
-                    type: Array
-                },
-
-                favoriteTags: {
-                    type: Array
-                }
+            icon: {
+                type: String
             },
 
-            ready: function() {
-
-                // List the event that close the select category dialog
-                this.$.selectInputedTagButton.addEventListener('tap', this._selectInputedTag.bind(this));
-
-                // Set default value for icon and tabs
-                this.icon = 'done';
-                this.currentSortingTags = 'trending';
-
+            selectedTag: {
+                type: Object,
+                notify: true
             },
 
-            _selectInputedTag: function() {
-
-                // Select tag that is in input or push it in favorite
-                if(this.currentSortingTags == 'trending'){
-                    this.opened = false;
-                }else if(this.currentSortingTags == 'favorites') {
-                    this.push('favoriteTags', this.selectedTag);
-                }
-
+            currentSortingTags: {
+                type: String,
+                observer: '_currentSortingTagsChanged'
             },
 
-            _selectThisTag: function(e) {
+            tags: {
+                type: Array
+            },
 
-                // Select tag in list and close dialog
-                if(typeof e.model.item.name !== 'undefined') {
-                    this.selectedTag = e.model.item.name; // name property is tag (trending)
-                }else {
-                    this.selectedTag = e.model.item; // item is directly tag (favorite)
-                }
+            favoriteTags: {
+                type: Array
+            }
+        },
 
+        ready: function() {
+
+            // List the event that close the select category dialog
+            this.$.selectInputedTagButton.addEventListener('tap', this._selectInputedTag.bind(this));
+
+            // Set default value for icon and tabs
+            this.icon = 'done';
+            this.currentSortingTags = 'trending';
+
+        },
+
+        _selectInputedTag: function() {
+
+            // Select tag that is in input or push it in favorite
+            if(this.currentSortingTags == 'trending'){
                 this.opened = false;
-
-            },
-
-            _currentSortingTagsChanged: function() {
-
-                // Change icon when tabs change
-                if(this.currentSortingTags == 'trending'){
-                    this.icon = 'done';
-                }else {
-                    this.icon = 'add';
-                }
-            },
-
-            _checkForEnterOnTagInput: function(e) {
-
-                // check if 'enter' was pressed
-                if (e.keyCode === 13) {
-                    this._selectThisTag();
-                }
+            }else if(this.currentSortingTags == 'favorites') {
+                this.push('favoriteTags', this.selectedTag);
             }
 
-        });
-    </script>
-</dom-module>
+        },
+
+        _selectThisTag: function(e) {
+
+            // Select tag in list and close dialog
+            if(typeof e.model.item.name !== 'undefined') {
+                this.selectedTag = e.model.item.name; // name property is tag (trending)
+            }else {
+                this.selectedTag = e.model.item; // item is directly tag (favorite)
+            }
+
+            this.opened = false;
+
+        },
+
+        _currentSortingTagsChanged: function() {
+
+            // Change icon when tabs change
+            if(this.currentSortingTags == 'trending'){
+                this.icon = 'done';
+            }else {
+                this.icon = 'add';
+            }
+        },
+
+        _checkForEnterOnTagInput: function(e) {
+
+            // check if 'enter' was pressed
+            if (e.keyCode === 13) {
+                this._selectThisTag();
+            }
+        }
+
+    });
+</script>

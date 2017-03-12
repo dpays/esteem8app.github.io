@@ -59,154 +59,154 @@
         </div>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        (function() {
+    (function() {
 
-            'use strict';
+        'use strict';
 
-            Polymer({
+        Polymer({
 
-                is: 'github-repository-file-list',
+            is: 'github-repository-file-list',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * files array
-                     */
-                    repository: {
-                        type: String
-                    },
-
-                    selectedFile: {
-                        type: Object,
-                        notify: true,
-                        observer: '_selectNewFolder'
-                    },
-
-                    _url: {
-                        type: String
-                    },
-
-                    _files: {
-                        type: Array,
-                        observer: '_selectDefaultFile'
-                    },
-
-                    _backHidden: {
-                        type: Boolean
-                    }
+                /*
+                 * files array
+                 */
+                repository: {
+                    type: String
                 },
 
-                observers: [
-                    '_computeFilesUrl(repository)'
-                ],
-
-                ready: function() {
-
-                    this.$.back.addEventListener('tap', this._toBackFolder.bind(this));
-                    this._backHidden = true;
+                selectedFile: {
+                    type: Object,
+                    notify: true,
+                    observer: '_selectNewFolder'
                 },
 
-                _computeFilesUrl: function(repository) {
-
-                    // Prepare url to query page that contains the repository file list
-                    if(repository !== '') {
-
-                        var url = repository.replace('https://github.com', 'https://api.github.com/repos');
-                        url += '/contents/';
-
-                        this._url = url;
-                    }
-
+                _url: {
+                    type: String
                 },
 
-                _sortFileList: function(fileA, fileB) { // Sort by type then by name
-
-                    // Sort by name if same type
-                    if(fileA.type == fileB.type) {
-
-                        return fileA.name < fileB.name;
-
-                    }
-
-                    // Sort by type if not same type
-                    return (fileA.type == 'dir' && fileB.type == 'file') ?
-                        -1:
-                        +1;
+                _files: {
+                    type: Array,
+                    observer: '_selectDefaultFile'
                 },
 
-                _selectDefaultFile: function() {
+                _backHidden: {
+                    type: Boolean
+                }
+            },
 
-                    // Select readme.md by default
-                    var files = this._files;
+            observers: [
+                '_computeFilesUrl(repository)'
+            ],
 
-                    for(var i = 0; i < files.length; i++) {
+            ready: function() {
 
-                        var fileName = files[i].name;
-                            fileName = fileName.toLowerCase();
+                this.$.back.addEventListener('tap', this._toBackFolder.bind(this));
+                this._backHidden = true;
+            },
 
-                        if(fileName.includes('readme.md')) {
+            _computeFilesUrl: function(repository) {
 
-                            this.set('selectedFile', files[i]);
-                        }
-                    }
-                },
+                // Prepare url to query page that contains the repository file list
+                if(repository !== '') {
 
-                _selectNewFolder: function() {
+                    var url = repository.replace('https://github.com', 'https://api.github.com/repos');
+                    url += '/contents/';
 
-                    // File is a folder
-                    if(this.selectedFile.type == 'dir') {
+                    this._url = url;
+                }
 
-                        this._url = this.selectedFile.url;
-                        this._backHidden = false;
-                    }
+            },
 
-                },
+            _sortFileList: function(fileA, fileB) { // Sort by type then by name
 
-                _toBackFolder: function() {
+                // Sort by name if same type
+                if(fileA.type == fileB.type) {
 
-                    // Remove the last folder in url
-                    console.log(this._url);
-                    var urlSplited = this._url.split('/');
-
-                    if(urlSplited[urlSplited.length -1] == 'contents') {
-
-                        this._backHidden = true;
-                    }else {
-
-                        urlSplited.pop();
-                        this._url = urlSplited.join('/');
-
-                    }
-                },
-
-                _computeFileIcon: function(name, type) {
-
-                    switch (type) {
-
-                        case 'dir':
-
-                            return 'folder';
-
-                        case 'file':
-
-                            if(name.includes('.md')) {
-
-                                return 'text-file';
-                            }else if(name.includes('.html') || name.includes('.js') || name.includes('.css') || name.includes('.json')) {
-
-                                return 'code';
-                            }else {
-
-                                return 'file';
-                            }
-                    }
+                    return fileA.name < fileB.name;
 
                 }
 
-            });
-        })();
-    </script>
-</dom-module>
+                // Sort by type if not same type
+                return (fileA.type == 'dir' && fileB.type == 'file') ?
+                        -1:
+                        +1;
+            },
+
+            _selectDefaultFile: function() {
+
+                // Select readme.md by default
+                var files = this._files;
+
+                for(var i = 0; i < files.length; i++) {
+
+                    var fileName = files[i].name;
+                    fileName = fileName.toLowerCase();
+
+                    if(fileName.includes('readme.md')) {
+
+                        this.set('selectedFile', files[i]);
+                    }
+                }
+            },
+
+            _selectNewFolder: function() {
+
+                // File is a folder
+                if(this.selectedFile.type == 'dir') {
+
+                    this._url = this.selectedFile.url;
+                    this._backHidden = false;
+                }
+
+            },
+
+            _toBackFolder: function() {
+
+                // Remove the last folder in url
+                console.log(this._url);
+                var urlSplited = this._url.split('/');
+
+                if(urlSplited[urlSplited.length -1] == 'contents') {
+
+                    this._backHidden = true;
+                }else {
+
+                    urlSplited.pop();
+                    this._url = urlSplited.join('/');
+
+                }
+            },
+
+            _computeFileIcon: function(name, type) {
+
+                switch (type) {
+
+                    case 'dir':
+
+                        return 'folder';
+
+                    case 'file':
+
+                        if(name.includes('.md')) {
+
+                            return 'text-file';
+                        }else if(name.includes('.html') || name.includes('.js') || name.includes('.css') || name.includes('.json')) {
+
+                            return 'code';
+                        }else {
+
+                            return 'file';
+                        }
+                }
+
+            }
+
+        });
+    })();
+</script>

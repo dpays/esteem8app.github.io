@@ -2,93 +2,89 @@
 
 <script src="./src/steem.min.js"></script>
 
-<dom-module id="steem-get-following">
+<dom-module id="steem-get-following"></dom-module>
 
-    <script>
+<script>
 
-        (function () {
+    (function () {
 
-            Polymer({
+        Polymer({
 
-                is: 'steem-get-following',
+            is: 'steem-get-following',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * Account name.
-                     * f.e. "you"
-                     * Component will query account data with this name.
-                     */
-                    accountName:  {
-                        type: String,
-                        observer: '_accountNameChanged'
-                    },
-
-                    /*
-                     * Following array.
-                     * Component will provide following list in this array.
-                     */
-                    following: {
-                        type: Array,
-                        notify: true
-                    }
+                /*
+                 * Account name.
+                 * f.e. "you"
+                 * Component will query account data with this name.
+                 */
+                accountName:  {
+                    type: String
                 },
 
-                ready: function() {
-
-                    // Set default value
-                    if(typeof this.accountName === 'undefined') { this.accountName = '';}
-                    if(typeof this.following === 'undefined') { this.following = [];}
-
-                    // Set account object
-                    if(this.following === [] && this.accountName !== '') {
-
-                        this._accountNameChanged();
-                    }
-                },
-
-                // Query Steem network to provide account data
-                _accountNameChanged: function() {
-
-                    if(this.accountName === ''){
-
-                        // set account empty if accountName empty
-                        this.following = [];
-                    }else {
-
-                        var thisElement = this;
-                        var name = this.accountName;
-
-                        // Query following
-                        this.async(function () {
-
-                            // !!! Need api to provide load more than 100 following to load full list
-                            steem.api.getFollowing(name, 0, null, 100, function (err, result) {
-
-                                var following = [];
-
-                                if (!err) {
-
-                                    for (var i = 0; i < result.length; i++) {
-
-                                        // Process user
-                                        var user = result[i].following;
-
-                                        // Push received user in following
-                                        following.push(user);
-
-                                    }
-                                }
-
-                                // Set following
-                                thisElement.set('following', following);
-                            });
-
-                        });
-                    }
+                /*
+                 * Followers array.
+                 * Component will provide following list in this array.
+                 */
+                following: {
+                    type: Array,
+                    notify: true
                 }
-            });
-        })();
-    </script>
+            },
 
-</dom-module>
+            observers: [
+                '_accountNameChanged(accountName)',
+                '_followerChanged(following)'
+            ],
+
+            _accountNameChanged: function(accountName) { // When account change
+
+                this.following = []; // Reset following
+                this._loadFollowers();
+            },
+
+            _loadFollowers: function(accountName, lastFollowerLoaded) {
+
+                var thisElement = this;
+                var accountName = accountName || this.accountName;
+                var lastFollowerLoaded = lastFollowerLoaded || '';
+
+                // Query following
+                this.async(function () {
+
+                    // !!! Need api to provide load more than 100 following to load full list
+                    steem.api.getFollowing(accountName, lastFollowerLoaded, null, 100, function(err, result) {
+
+                        if(typeof thisElement.following === 'undefined') {
+
+                            thisElement.following = [];
+                        }
+
+                        if (!err) {
+
+                            for (var i = 0; i < result.length; i++) {
+
+                                // Process user
+                                var user = result[i].following;
+
+                                // Push received user in following
+                                thisElement.push('following', user);
+
+                            }
+                        }
+                    });
+
+                });
+
+
+            },
+
+            _loadMore: function() { // load more following if needed
+
+                this._loadFollowers(this.accountName, this.following[this.following.length -1]);
+
+            }
+        });
+    })();
+</script>

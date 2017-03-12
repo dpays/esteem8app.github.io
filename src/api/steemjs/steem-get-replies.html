@@ -2,112 +2,110 @@
 
 <script src="./src/steem.min.js"></script>
 
-<dom-module id="steem-get-replies">
+<dom-module id="steem-get-replies"></dom-module>
 
-    <script>
+<script>
 
-        (function () {
+    (function () {
 
-            Polymer({
+        Polymer({
 
-                is: 'steem-get-replies',
+            is: 'steem-get-replies',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * Account name.
-                     * f.e. "you"
-                     * Component will query account data with this name.
-                     */
-                    userName:  {
-                        type: String,
-                        observer: '_userNameChanged'
-                    },
-
-                    /*
-                     * Replies array.
-                     * Component will provide reply list in this array.
-                     */
-                    replies: {
-                        type: Object,
-                        notify: true
-                    }
+                /*
+                 * Account name.
+                 * f.e. "you"
+                 * Component will query account data with this name.
+                 */
+                userName:  {
+                    type: String,
+                    observer: '_userNameChanged'
                 },
 
-                ready: function() {
+                /*
+                 * Replies array.
+                 * Component will provide reply list in this array.
+                 */
+                replies: {
+                    type: Object,
+                    notify: true
+                }
+            },
 
-                    // Update account if empty
-                    if(typeof this.userName !== 'undefined') {
-                        this._userNameChanged();
-                    }
-                },
+            ready: function() {
 
-                _userNameChanged: function() {
+                // Update account if empty
+                if(typeof this.userName !== 'undefined') {
+                    this._userNameChanged();
+                }
+            },
 
-                    // Update replies
-                    if(typeof this.userName === 'undefined') {
-                        this.set('replies', []);
-                    }else {
-                        var thisElement = this;
+            _userNameChanged: function() {
 
-                        // Query replies
-                        this.async(function() {
+                // Update replies
+                if(typeof this.userName === 'undefined') {
+                    this.set('replies', []);
+                }else {
+                    var thisElement = this;
 
-                            // request basic information
-                            steem.api.getRepliesByLastUpdate(thisElement.userName, '', 100, function(err, result) {
-                                if(!err){
-                                    thisElement._computeReplies(result);
+                    // Query replies
+                    this.async(function() {
 
-                                }else {
-                                    console.error(err);
-                                }
-                            });
+                        // request basic information
+                        steem.api.getRepliesByLastUpdate(thisElement.userName, '', 100, function(err, result) {
+                            if(!err){
+                                thisElement._computeReplies(result);
 
+                            }else {
+                                console.error(err);
+                            }
                         });
-                    }
-                },
 
-                _computeReplies: function (replies) {
+                    });
+                }
+            },
 
-                    // Computed replies
-                    var computedReplies = [];
+            _computeReplies: function (replies) {
 
-                    // Process each replies
-                    for(var i = 0; i < replies.length;i++) {
+                // Computed replies
+                var computedReplies = [];
 
-                        // Process one reply
-                        var reply = replies[i];
+                // Process each replies
+                for(var i = 0; i < replies.length;i++) {
+
+                    // Process one reply
+                    var reply = replies[i];
 
 
-                        // Displayed data
-                        var titleArray = reply.parent_permlink.split('-');
-                        titleArray.splice(-1,1);
-                        var title = titleArray.join(' ').replace(/ re /g, ' -> ');
+                    // Displayed data
+                    var titleArray = reply.parent_permlink.split('-');
+                    titleArray.splice(-1,1);
+                    var title = titleArray.join(' ').replace(/ re /g, ' -> ');
 
-                        var computedReply = {
-                            author: '@' + reply.author,
-                            created: reply.created,
-                            title: title,
-                            body: reply.body,
-                            votes: reply.net_votes,
-                            dollarValue: parseInt(reply.total_payout_value.split(' ')[0]) + parseInt(reply.total_pending_payout_value.split(' ')[0]),
-                            replies: reply.children,
+                    var computedReply = {
+                        author: '@' + reply.author,
+                        created: reply.created,
+                        title: title,
+                        body: reply.body,
+                        votes: reply.net_votes,
+                        dollarValue: parseInt(reply.total_payout_value.split(' ')[0]) + parseInt(reply.total_pending_payout_value.split(' ')[0]),
+                        replies: reply.children,
 
-                            // Data to query reply of reply
-                            permlink: reply.permlink,
-                            authorName: reply.author
-                        };
+                        // Data to query reply of reply
+                        permlink: reply.permlink,
+                        authorName: reply.author
+                    };
 
-                        // Push completed reply
-                        computedReplies.push(computedReply);
-
-                    }
-
-                    this.set('replies', computedReplies);
+                    // Push completed reply
+                    computedReplies.push(computedReply);
 
                 }
-            });
-        })();
-    </script>
 
-</dom-module>
+                this.set('replies', computedReplies);
+
+            }
+        });
+    })();
+</script>

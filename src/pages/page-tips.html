@@ -95,45 +95,45 @@
         </paper-dialog>
 
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'page-tips',
-
-            properties: {
-
-                settings: {
-                    type: Object
-                },
-
-                _postPath: {
-                    type: String
-                },
-
-                _postTip: {
-                    type: Object
-                }
-            },
-
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-
-                this.$.blogTips.addEventListener('tap', this._openTip.bind(this));
-            },
-
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
-            },
-
-            _openTip: function(e) {
-
-                console.log(e);
-            }
-        });
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'page-tips',
+
+        properties: {
+
+            settings: {
+                type: Object
+            },
+
+            _postPath: {
+                type: String
+            },
+
+            _postTip: {
+                type: Object
+            }
+        },
+
+        ready: function() {
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
+            this.$.blogTips.addEventListener('tap', this._openTip.bind(this));
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        },
+
+        _openTip: function(e) {
+
+            console.log(e);
+        }
+    });
+</script>

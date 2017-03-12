@@ -88,38 +88,38 @@
         </paper-card>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'event-card',
+        is: 'event-card',
 
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
 
-            properties: {
+        properties: {
 
-                event: {
-                    type: Object
-                }
-
-            },
-
-            ready: function() {
-
-            },
-
-            _timeFromNow: function(date) {
-                return new IntlRelativeFormat('en-us').format(new Date(date));
-            },
-
-            _capitalizeSentence: function(sentence) {
-                return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+            event: {
+                type: Object
             }
 
-        });
+        },
 
-    </script>
-</dom-module>
+        ready: function() {
+
+        },
+
+        _timeFromNow: function(date) {
+            return new IntlRelativeFormat('en-us').format(new Date(date));
+        },
+
+        _capitalizeSentence: function(sentence) {
+            return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+        }
+
+    });
+
+</script>

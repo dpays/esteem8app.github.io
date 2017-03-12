@@ -16,172 +16,172 @@
 
     </template>
 
-    <script>
+</dom-module>
 
-        (function () {
+<script>
 
-            Polymer({
+    (function () {
 
-                is: 'steem-get-state',
+        Polymer({
 
-                properties: {
+            is: 'steem-get-state',
 
-                    /*
-                     * Steem path to be loaded
-                     * f.e "/sorting/tag
-                     */
-                    path: {
-                        type: String,
-                        observer: '_pathChanged'
-                    },
+            properties: {
 
-                    /*
-                     * Steem posts list array to be returned
-                     */
-                    posts: {
-                        type: Array,
-                        notify: true
-                    },
-
-                    /*
-                     * Boolean than define if this is being loading data
-                     */
-                    isLoading: {
-                        type: Boolean,
-                        notify: true
-                    },
-
-                    _steemAPI: {
-                        type: Object
-                    }
+                /*
+                 * Steem path to be loaded
+                 * f.e "/sorting/tag
+                 */
+                path: {
+                    type: String,
+                    observer: '_pathChanged'
                 },
 
-                ready: function() {
-
-                    // Set default value
-                    if(typeof this.queryError === 'undefined') {
-                        this.queryError = false;
-                    }
-
-                    if(typeof this.path === 'undefined'){
-                        this.path = '';
-                    }
-
-                    if(typeof this.isLoading === 'undefined') {
-
-                        this.isLoading = true;
-                    }
-
-                    this.set('_steemAPI', cloneObj(steem));
+                /*
+                 * Steem posts list array to be returned
+                 */
+                posts: {
+                    type: Array,
+                    notify: true
                 },
 
-                // Update posts list when path changed
-                _pathChanged: function() {
+                /*
+                 * Boolean than define if this is being loading data
+                 */
+                isLoading: {
+                    type: Boolean,
+                    notify: true
+                },
+
+                _steemAPI: {
+                    type: Object
+                }
+            },
+
+            ready: function() {
+
+                // Set default value
+                if(typeof this.queryError === 'undefined') {
+                    this.queryError = false;
+                }
+
+                if(typeof this.path === 'undefined'){
+                    this.path = '';
+                }
+
+                if(typeof this.isLoading === 'undefined') {
 
                     this.isLoading = true;
+                }
 
-                    var thisElement = this;
+                this.set('_steemAPI', cloneObj(steem));
+            },
 
-                    steem.api.getState(this.path, function(err, result) {
+            // Update posts list when path changed
+            _pathChanged: function() {
 
-                        if(!err){
+                this.isLoading = true;
 
-                            thisElement._computePosts(result.content);
+                var thisElement = this;
 
-                        }else {
+                steem.api.getState(this.path, function(err, result) {
 
-                            thisElement._showErrorToast();
-                        }
-                    });
+                    if(!err){
 
-                },
+                        thisElement._computePosts(result.content);
 
-                _computePostBody: function(body) {
+                    }else {
 
-                    return body;
+                        thisElement._showErrorToast();
+                    }
+                });
 
-                },
+            },
 
-                _computePosts: function(content) {
+            _computePostBody: function(body) {
 
-                    var posts = [];
-                    // Add each post to an array because post are object's properties
-                    for (var key in content) {
-                        // skip loop if the property is from prototype
-                        if (!content.hasOwnProperty(key)) continue;
+                return body;
 
-                        var postRecived = content[key];
-                        var post = {};
+            },
 
-                        // Add images & tags
-                        if(typeof postRecived.json_metadata !== 'undefined'){
+            _computePosts: function(content) {
 
-                            var objectFromJson = {};
+                var posts = [];
+                // Add each post to an array because post are object's properties
+                for (var key in content) {
+                    // skip loop if the property is from prototype
+                    if (!content.hasOwnProperty(key)) continue;
 
-                            try {
+                    var postRecived = content[key];
+                    var post = {};
 
-                                objectFromJson = JSON.parse(postRecived.json_metadata);
+                    // Add images & tags
+                    if(typeof postRecived.json_metadata !== 'undefined'){
 
-                            }catch(err) {
+                        var objectFromJson = {};
 
-                                console.error(err);
-                            }
+                        try {
 
-                            if(typeof objectFromJson.image !== 'undefined'){
+                            objectFromJson = JSON.parse(postRecived.json_metadata);
 
-                                post.images = objectFromJson.image;
-                            }
+                        }catch(err) {
 
-                            if(typeof objectFromJson.tags !== 'undefined'){
-
-                                var tags = objectFromJson.tags;
-                                // Remove the first tag because it's displayed as category
-                                tags.shift();
-                                post.tags = tags;
-                            }
+                            console.error(err);
                         }
 
-                        // Set images empty if null
-                        if(typeof post.images === 'undefined'){
-                            post.images = [];
+                        if(typeof objectFromJson.image !== 'undefined'){
+
+                            post.images = objectFromJson.image;
                         }
 
-                        // Set tags empty if null
-                        if(typeof post.tags === 'undefined'){
-                            post.tags = [];
+                        if(typeof objectFromJson.tags !== 'undefined'){
+
+                            var tags = objectFromJson.tags;
+                            // Remove the first tag because it's displayed as category
+                            tags.shift();
+                            post.tags = tags;
                         }
-
-                        post.body = postRecived.body;
-
-                        post.category = postRecived.category;
-                        post.title = postRecived.title;
-                        post.author = postRecived.author;
-                        post.dollarValue = parseFloat(postRecived.total_pending_payout_value.split(" ")[0]) + parseFloat(postRecived.total_payout_value.split(" ")[0]);
-                        post.net_votes = postRecived.net_votes;
-                        post.children = postRecived.children;
-                        post.activeVotes = postRecived.active_votes;
-                        post.created = postRecived.created;
-                        post.url = postRecived.url;
-
-                        // Push post in array
-                        posts.push(post);
                     }
 
-                    this._setPosts(posts);
-                },
+                    // Set images empty if null
+                    if(typeof post.images === 'undefined'){
+                        post.images = [];
+                    }
 
-                _setPosts: function(posts) {
+                    // Set tags empty if null
+                    if(typeof post.tags === 'undefined'){
+                        post.tags = [];
+                    }
 
-                    this.isLoading = false;
-                    this.posts = posts;
-                },
+                    post.body = postRecived.body;
 
-                _showErrorToast: function () {
+                    post.category = postRecived.category;
+                    post.title = postRecived.title;
+                    post.author = postRecived.author;
+                    post.dollarValue = parseFloat(postRecived.total_pending_payout_value.split(" ")[0]) + parseFloat(postRecived.total_payout_value.split(" ")[0]);
+                    post.net_votes = postRecived.net_votes;
+                    post.children = postRecived.children;
+                    post.activeVotes = postRecived.active_votes;
+                    post.created = postRecived.created;
+                    post.url = postRecived.url;
 
-                    this.$.toastPostNotFound.show(); // Show toast
+                    // Push post in array
+                    posts.push(post);
                 }
-            });
-        })();
-    </script>
 
-</dom-module>
+                this._setPosts(posts);
+            },
+
+            _setPosts: function(posts) {
+
+                this.isLoading = false;
+                this.posts = posts;
+            },
+
+            _showErrorToast: function () {
+
+                this.$.toastPostNotFound.show(); // Show toast
+            }
+        });
+    })();
+</script>

@@ -61,55 +61,55 @@
         </paper-card>
 
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'file-card',
-
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
-
-            properties: {
-
-                file: {
-                    type: Object
-                },
-
-                _imageUrl: {
-                    type: String
-                }
-            },
-
-            observer: [
-                '_computeImageUrl(file)'
-            ],
-
-            ready: function() {
-
-                // List events
-                this.rf = new IntlRelativeFormat('en-us');
-            },
-
-            _computeImageUrl: function(file) {
-
-                if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
-
-                    this._imageUrl = file.url;
-                }else if(file.url.includes('docs.google.com/document')) {
-
-                    this._imageUrl =  'https://lh4.ggpht.com/-wROmWQVYTcjs3G6H0lYkBK2nPGYsY75Ik2IXTmOO2Oo0SMgbDtnF0eqz-BRR1hRQg=w300';
-                }
-            },
-
-            _timeFromNow: function(date) {
-
-                return new IntlRelativeFormat('en-us').format(new Date(date));
-            }
-
-        });
-
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'file-card',
+
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
+
+        properties: {
+
+            file: {
+                type: Object
+            },
+
+            _imageUrl: {
+                type: String
+            }
+        },
+
+        observer: [
+            '_computeImageUrl(file)'
+        ],
+
+        ready: function() {
+
+            // List events
+            this.rf = new IntlRelativeFormat('en-us');
+        },
+
+        _computeImageUrl: function(file) {
+
+            if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
+
+                this._imageUrl = file.url;
+            }else if(file.url.includes('docs.google.com/document')) {
+
+                this._imageUrl =  'https://lh4.ggpht.com/-wROmWQVYTcjs3G6H0lYkBK2nPGYsY75Ik2IXTmOO2Oo0SMgbDtnF0eqz-BRR1hRQg=w300';
+            }
+        },
+
+        _timeFromNow: function(date) {
+
+            return new IntlRelativeFormat('en-us').format(new Date(date));
+        }
+
+    });
+
+</script>

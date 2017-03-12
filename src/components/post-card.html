@@ -332,135 +332,135 @@
                            account="{{account}}">
         </steem-get-account>
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'post-card',
+        is: 'post-card',
 
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
 
-            properties: {
+        properties: {
 
-                post: {
-                    type: Object,
-                    observer: "_postChanged"
-                },
-
-                settings: {
-                    type: Object
-                },
-
-                account: {
-                    type: Object,
-                    observer: '_accountChanged'
-                },
-
-                _contentToggled: {
-                    type: Boolean
-                },
-
-                _domainName: {
-                    type: String
-                }
+            post: {
+                type: Object,
+                observer: "_postChanged"
             },
 
-            ready: function() {
-
-                // List events
-                this.$.toggleContentData.addEventListener('tap', this._toggleContentDataHeight.bind(this));
-                this.$.addFavoriteButton.addEventListener('tap', this._addFavoriteTag.bind(this));
-                this.$.openConfirmationButton.addEventListener('tap', this._openConfirmationRemove.bind(this));
-                this.$.removeFavoriteButton.addEventListener('tap', this._removeFavoriteTag.bind(this));
-                this.$.openShareDialogButton.addEventListener('tap', this._openShareDialog.bind(this));
-
-
-                this.rf = new IntlRelativeFormat('en-us');
-                this._contentToggled = false;
-                this._domainName = window.location.hostname;
-                this._refreshIsFavorite();
+            settings: {
+                type: Object
             },
 
-            _toggleContentDataHeight: function() {
-
-                if(!this._contentToggled){
-
-                    this.$.toggleContentData.style = "height: 250px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
-                }else {
-
-                    this.$.toggleContentData.style = "";
-                }
-
-                this._contentToggled = !this._contentToggled;
+            account: {
+                type: Object,
+                observer: '_accountChanged'
             },
 
-            _postChanged: function() {
+            _contentToggled: {
+                type: Boolean
+            },
+
+            _domainName: {
+                type: String
+            }
+        },
+
+        ready: function() {
+
+            // List events
+            this.$.toggleContentData.addEventListener('tap', this._toggleContentDataHeight.bind(this));
+            this.$.addFavoriteButton.addEventListener('tap', this._addFavoriteTag.bind(this));
+            this.$.openConfirmationButton.addEventListener('tap', this._openConfirmationRemove.bind(this));
+            this.$.removeFavoriteButton.addEventListener('tap', this._removeFavoriteTag.bind(this));
+            this.$.openShareDialogButton.addEventListener('tap', this._openShareDialog.bind(this));
+
+
+            this.rf = new IntlRelativeFormat('en-us');
+            this._contentToggled = false;
+            this._domainName = window.location.hostname;
+            this._refreshIsFavorite();
+        },
+
+        _toggleContentDataHeight: function() {
+
+            if(!this._contentToggled){
+
+                this.$.toggleContentData.style = "height: 250px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
+            }else {
 
                 this.$.toggleContentData.style = "";
-                this._contentToggled = false;
-            },
-
-            _showImage: function(imagesLength, showImage) {
-
-                if (showImage) {
-
-                    if(imagesLength){
-
-                        return true;
-                    }
-                }
-
-                return false;
-            },
-
-            _computeTimeFromNow: function(date) {
-
-                return new IntlRelativeFormat('en-us').format(new Date(date));
-            },
-
-            _computePostValue: function(value) {
-
-                return Math.round(value * 100) / 100;
-            },
-
-            _computeAuthor: function(author) {
-
-                return '@'+author;
-            },
-
-            _refreshIsFavorite: function() {
-
-                this._isInFavorite = document.getElementById('appshell').isFavoriteTag(this.post);
-            },
-
-            _addFavoriteTag: function() {
-
-                // Add to favorite
-                document.getElementById('appshell').addFavoriteTag(this.post);
-                this._refreshIsFavorite();
-            },
-
-            _removeFavoriteTag: function() {
-
-                // remove from favorite
-                document.getElementById('appshell').removeFavoriteTag(this.post);
-                this._refreshIsFavorite();
-            },
-
-            _openConfirmationRemove: function() {
-
-                this.$.confirmationRemove.open();
-            },
-
-            _openShareDialog: function() {
-
-                this.$.shareDialog.open();
             }
 
-        });
+            this._contentToggled = !this._contentToggled;
+        },
 
-    </script>
-</dom-module>
+        _postChanged: function() {
+
+            this.$.toggleContentData.style = "";
+            this._contentToggled = false;
+        },
+
+        _showImage: function(imagesLength, showImage) {
+
+            if (showImage) {
+
+                if(imagesLength){
+
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
+        _computeTimeFromNow: function(date) {
+
+            return new IntlRelativeFormat('en-us').format(new Date(date));
+        },
+
+        _computePostValue: function(value) {
+
+            return Math.round(value * 100) / 100;
+        },
+
+        _computeAuthor: function(author) {
+
+            return '@'+author;
+        },
+
+        _refreshIsFavorite: function() {
+
+            this._isInFavorite = document.getElementById('appshell').isFavoriteTag(this.post);
+        },
+
+        _addFavoriteTag: function() {
+
+            // Add to favorite
+            document.getElementById('appshell').addFavoriteTag(this.post);
+            this._refreshIsFavorite();
+        },
+
+        _removeFavoriteTag: function() {
+
+            // remove from favorite
+            document.getElementById('appshell').removeFavoriteTag(this.post);
+            this._refreshIsFavorite();
+        },
+
+        _openConfirmationRemove: function() {
+
+            this.$.confirmationRemove.open();
+        },
+
+        _openShareDialog: function() {
+
+            this.$.shareDialog.open();
+        }
+
+    });
+
+</script>

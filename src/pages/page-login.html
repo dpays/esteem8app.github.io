@@ -151,43 +151,43 @@
         <sign-up-dialog is-open="{{isSignUpOpen}}"></sign-up-dialog>
 
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'page-login',
-
-            properties: {
-
-                settings: {
-                    type: Object,
-                    notify: true
-                },
-
-                isSignUpOpen: {
-                    type: Boolean
-                }
-            },
-
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-                this.$.signUpButton.addEventListener('tap', this._openSignUpDialog.bind(this));
-
-                this.isSignUpOpen = false;
-            },
-
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
-            },
-
-            _openSignUpDialog: function() {
-
-                this.isSignUpOpen = true;
-            }
-        });
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'page-login',
+
+        properties: {
+
+            settings: {
+                type: Object,
+                notify: true
+            },
+
+            isSignUpOpen: {
+                type: Boolean
+            }
+        },
+
+        ready: function() {
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.signUpButton.addEventListener('tap', this._openSignUpDialog.bind(this));
+
+            this.isSignUpOpen = false;
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        },
+
+        _openSignUpDialog: function() {
+
+            this.isSignUpOpen = true;
+        }
+    });
+</script>

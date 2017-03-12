@@ -113,33 +113,33 @@
             </wysiwyg-e>
         </paper-dialog>
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'post-something-dialog',
-
-            properties: {
-                opened: {
-                    type: Boolean,
-                    notify: true
-                },
-                value: {
-                    type: String
-                }
-            },
-
-            ready: function() {
-              this.value = "Write something here";
-            },
-
-            openDialog: function() {
-                this.opened = true;
-            }
-        });
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'post-something-dialog',
+
+        properties: {
+            opened: {
+                type: Boolean,
+                notify: true
+            },
+            value: {
+                type: String
+            }
+        },
+
+        ready: function() {
+            this.value = "Write something here";
+        },
+
+        openDialog: function() {
+            this.opened = true;
+        }
+    });
+</script>
 
 
 

@@ -137,40 +137,40 @@
             </div>
         </paper-card>
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'reply-card',
+        is: 'reply-card',
 
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
 
-            properties: {
+        properties: {
 
-                reply: {
+            reply: {
 
-                    type: Object
-                }
-
-            },
-
-            ready: function() {
-
-                // Set default variables
-                if(typeof this.reply.comments === 'undefined') {
-                    this.reply.comments = [];
-                }
-            },
-
-            _timeFromNow: function(date) {
-
-                return new IntlRelativeFormat('en-us').format(new Date(date));
+                type: Object
             }
 
-        });
+        },
 
-    </script>
-</dom-module>
+        ready: function() {
+
+            // Set default variables
+            if(typeof this.reply.comments === 'undefined') {
+                this.reply.comments = [];
+            }
+        },
+
+        _timeFromNow: function(date) {
+
+            return new IntlRelativeFormat('en-us').format(new Date(date));
+        }
+
+    });
+
+</script>

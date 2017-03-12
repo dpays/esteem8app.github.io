@@ -62,36 +62,36 @@
             </a>
         </template>
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'post-card-light',
-
-            behaviors: [
-                Polymer.AppLocalizeBehavior
-            ],
-
-            properties: {
-
-                post: {
-                    type: Object
-                }
-            },
-
-            ready: function() {
-
-                // List events
-                this.rf = new IntlRelativeFormat('en-us');
-            },
-
-            _timeFromNow: function(date) {
-
-                return new IntlRelativeFormat('en-us').format(new Date(date));
-            }
-
-        });
-
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'post-card-light',
+
+        behaviors: [
+            Polymer.AppLocalizeBehavior
+        ],
+
+        properties: {
+
+            post: {
+                type: Object
+            }
+        },
+
+        ready: function() {
+
+            // List events
+            this.rf = new IntlRelativeFormat('en-us');
+        },
+
+        _timeFromNow: function(date) {
+
+            return new IntlRelativeFormat('en-us').format(new Date(date));
+        }
+
+    });
+
+</script>

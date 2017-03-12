@@ -119,34 +119,34 @@
         </div>
 
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'page-info',
-
-            listeners: {
-                'infocard.tap': '_showCertifications'
-            },
-
-            properties: {
-
-                settings: {
-                    type: Object,
-                    notify: true
-                }
-            },
-
-            ready: function() {
-
-                this._isCertificationShown = false;
-            },
-
-            _showCertifications: function() {
-
-                this._isCertificationShown = true;
-            }
-        });
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'page-info',
+
+        listeners: {
+            'infocard.tap': '_showCertifications'
+        },
+
+        properties: {
+
+            settings: {
+                type: Object,
+                notify: true
+            }
+        },
+
+        ready: function() {
+
+            this._isCertificationShown = false;
+        },
+
+        _showCertifications: function() {
+
+            this._isCertificationShown = true;
+        }
+    });
+</script>

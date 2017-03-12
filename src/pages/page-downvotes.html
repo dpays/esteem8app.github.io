@@ -172,36 +172,36 @@
         </div>
         </div>
     </template>
-
-    <script>
-
-        Polymer({
-
-            is: 'page-support',
-
-            properties: {
-
-                settings: {
-                    type: Object,
-                    notify: true
-                },
-
-                author: {
-                    type: String,
-                    observer: '_'
-                }
-            },
-
-            ready: function() {
-
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-            },
-
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
-            }
-        });
-    </script>
 </dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'page-support',
+
+        properties: {
+
+            settings: {
+                type: Object,
+                notify: true
+            },
+
+            author: {
+                type: String,
+                observer: '_'
+            }
+        },
+
+        ready: function() {
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        }
+    });
+</script>

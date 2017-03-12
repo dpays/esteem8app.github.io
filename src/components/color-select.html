@@ -25,105 +25,105 @@
             </paper-listbox>
         </paper-dropdown-menu>
     </template>
-
-    <script>
-
-        (function() {
-
-            'use strict';
-
-            Polymer({
-
-                is: 'color-select',
-
-                properties: {
-
-                    /*
-                     * Paper input label
-                     */
-                    label: {
-                        type: String
-                    },
-
-                    /*
-                     * Color palette used
-                     */
-                    colorPalette: {
-                        type: Array
-                    },
-
-                    /*
-                     * Color picked
-                     */
-                    color: {
-                        type: String,
-                        notify: true,
-                        observer: '_colorChanged'
-                    },
-
-                    /*
-                     * Best text color
-                     */
-                    textColor: {
-                        type: String,
-                        notify: true
-                    }
-                },
-
-                ready: function() {
-
-                    // Set default color palette
-                    if(typeof this.colorPalette === 'undefined'){
-
-                        this.colorPalette = [
-
-                            {color: '#FFFFFF', name: 'White'},
-                            {color: '#F44336', name: 'Red'},
-                            {color: '#E91E63', name: 'Pink'},
-                            {color: '#9C27B0', name: 'Purple'},
-                            {color: '#673AB7', name: 'Deep Purple'},
-                            {color: '#3F51B5', name: 'Indigo'},
-                            {color: '#2196F3', name: 'Blue'},
-                            {color: '#03A9F4', name: 'Light Blue'},
-                            {color: '#00BCD4', name: 'Cyan'},
-                            {color: '#009688', name: 'Teal'},
-                            {color: '#4CAF50', name: 'Green'},
-                            {color: '#8BC34A', name: 'Light Green'},
-                            {color: '#CDDC39', name: 'Lime'},
-                            {color: '#FFEB3B', name: 'Yellow'},
-                            {color: '#FFC107', name: 'Amber'},
-                            {color: '#FF9800', name: 'Orange'},
-                            {color: '#FF5722', name: 'Deep Orange'},
-                            {color: '#795548', name: 'Brown'},
-                            {color: '#607D8B', name: 'Blue Grey'},
-                            {color: '#9E9E9E', name: 'Light grey'},
-                            {color: '#555555', name: 'Normal Grey'},
-                            {color: '#333333', name: 'Dark grey'},
-                            {color: '#181818', name: 'Darkest grey'},
-                            {color: '#000000', name: 'Black'}
-                        ];
-                    }
-
-                },
-
-                _getTextColor: function(color){
-
-                    // return best text color from a given color
-                    var hexcolor = color.substr(1);
-                    var r = parseInt(hexcolor.substr(0,2),16);
-                    var g = parseInt(hexcolor.substr(2,2),16);
-                    var b = parseInt(hexcolor.substr(4,2),16);
-                    var yiq = ((r*299)+(g*587)+(b*114))/1000;
-
-                    return (yiq >= 128+20) ? '#111111' : '#eeeeee';
-                },
-
-                _colorChanged: function() {
-
-                    // Set best text color
-                    this.textColor = this._getTextColor(this.color);
-                }
-            });
-        })();
-    </script>
 </dom-module>
+
+<script>
+
+    (function() {
+
+        'use strict';
+
+        Polymer({
+
+            is: 'color-select',
+
+            properties: {
+
+                /*
+                 * Paper input label
+                 */
+                label: {
+                    type: String
+                },
+
+                /*
+                 * Color palette used
+                 */
+                colorPalette: {
+                    type: Array
+                },
+
+                /*
+                 * Color picked
+                 */
+                color: {
+                    type: String,
+                    notify: true,
+                    observer: '_colorChanged'
+                },
+
+                /*
+                 * Best text color
+                 */
+                textColor: {
+                    type: String,
+                    notify: true
+                }
+            },
+
+            ready: function() {
+
+                // Set default color palette
+                if(typeof this.colorPalette === 'undefined'){
+
+                    this.colorPalette = [
+
+                        {color: '#FFFFFF', name: 'White'},
+                        {color: '#F44336', name: 'Red'},
+                        {color: '#E91E63', name: 'Pink'},
+                        {color: '#9C27B0', name: 'Purple'},
+                        {color: '#673AB7', name: 'Deep Purple'},
+                        {color: '#3F51B5', name: 'Indigo'},
+                        {color: '#2196F3', name: 'Blue'},
+                        {color: '#03A9F4', name: 'Light Blue'},
+                        {color: '#00BCD4', name: 'Cyan'},
+                        {color: '#009688', name: 'Teal'},
+                        {color: '#4CAF50', name: 'Green'},
+                        {color: '#8BC34A', name: 'Light Green'},
+                        {color: '#CDDC39', name: 'Lime'},
+                        {color: '#FFEB3B', name: 'Yellow'},
+                        {color: '#FFC107', name: 'Amber'},
+                        {color: '#FF9800', name: 'Orange'},
+                        {color: '#FF5722', name: 'Deep Orange'},
+                        {color: '#795548', name: 'Brown'},
+                        {color: '#607D8B', name: 'Blue Grey'},
+                        {color: '#9E9E9E', name: 'Light grey'},
+                        {color: '#555555', name: 'Normal Grey'},
+                        {color: '#333333', name: 'Dark grey'},
+                        {color: '#181818', name: 'Darkest grey'},
+                        {color: '#000000', name: 'Black'}
+                    ];
+                }
+
+            },
+
+            _getTextColor: function(color){
+
+                // return best text color from a given color
+                var hexcolor = color.substr(1);
+                var r = parseInt(hexcolor.substr(0,2),16);
+                var g = parseInt(hexcolor.substr(2,2),16);
+                var b = parseInt(hexcolor.substr(4,2),16);
+                var yiq = ((r*299)+(g*587)+(b*114))/1000;
+
+                return (yiq >= 128+20) ? '#111111' : '#eeeeee';
+            },
+
+            _colorChanged: function() {
+
+                // Set best text color
+                this.textColor = this._getTextColor(this.color);
+            }
+        });
+    })();
+</script>

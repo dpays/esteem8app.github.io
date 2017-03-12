@@ -249,7 +249,7 @@
                     <steem-set-web-socket web-socket="{{settings.steem.webSocketUrl}}"></steem-set-web-socket>
                     <div>
                         <p>
-                            <a href="https://status.steemnodes.com/" target="_blank">https://status.steemnodes.com/</a>
+                            <a href="https://status.steemnodes.com" target="_blank">https://status.steemnodes.com</a>
                         </p>
                     </div>
                 </div>
@@ -257,167 +257,167 @@
         </div>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'page-settings',
+        is: 'page-settings',
 
-            properties: {
+        properties: {
 
-                settings: {
-                    type: Object,
-                    notify: true
-                },
+            settings: {
+                type: Object,
+                notify: true
+            },
 
-                _primaryColor: {
-                    type: String,
-                    observer: '_themeChanged'
-                },
+            _primaryColor: {
+                type: String,
+                observer: '_themeChanged'
+            },
 
-                _primaryTextColor: {
-                    type: String
-                },
+            _primaryTextColor: {
+                type: String
+            },
 
-                _secondaryColor: {
-                    type: String,
-                    observer: '_themeChanged'
-                },
+            _secondaryColor: {
+                type: String,
+                observer: '_themeChanged'
+            },
 
-                _secondaryTextColor: {
-                    type: String
-                },
+            _secondaryTextColor: {
+                type: String
+            },
 
-                _darkBackground: {
-                    type: Boolean,
-                    observer: '_darkBackgroundChanged'
-                },
+            _darkBackground: {
+                type: Boolean,
+                observer: '_darkBackgroundChanged'
+            },
 
-                _isReady: {
-                    type: Boolean,
-                    value: false
+            _isReady: {
+                type: Boolean,
+                value: false
+            }
+        },
+
+        ready: function() {
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
+            // Set colors variables
+            this._primaryColor = this.settings.theme.primaryColor;
+            this._secondaryColor = this.settings.theme.secondaryColor || '#E91E63'; // Why do i have to do this ?
+            this._primaryTextColor = this.settings.theme.primaryTextColor;
+            this._secondaryTextColor = this.settings.theme.secondaryTextColor;
+            this._isReady = true;
+            this._darkBackground = (this.settings.theme.primaryBackgroundColor == '#282828');
+
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        },
+
+        // Merge default webSocket list and custom webSocket list
+        _computeWebSocketUrls: function(customWebSocketUrls) {
+
+            var customWebSocketUrls = customWebSocketUrls || this.settings.steem.customWebSocketUrls;
+            var defaultWebSocketUrls = this.settings.steem.defaultWebSocketUrls;
+
+            var fullWebSocketUrls = defaultWebSocketUrls.concat(customWebSocketUrls);
+
+            this.set('_webSocketUrls', fullWebSocketUrls);
+
+        },
+
+        // Change theme background
+        _darkBackgroundChanged: function() {
+
+            if(this._isReady){
+
+                if(this._darkBackground){
+
+                    this.set('settings.theme.primaryBackgroundColor', '#282828');
+                    this.set('settings.theme.secondaryBackgroundColor', '#383838');
+                    this.set('settings.theme.backgroundPrimaryTextColor', '#dddddd');
+                    this.set('settings.theme.backgroundSecondaryTextColor', '#888888');
+                }else {
+
+                    this.set('settings.theme.primaryBackgroundColor', '#eeeeee');
+                    this.set('settings.theme.secondaryBackgroundColor', '#ffffff');
+                    this.set('settings.theme.backgroundPrimaryTextColor', '#282828');
+                    this.set('settings.theme.backgroundSecondaryTextColor', '#666666');
                 }
-            },
+            }
+        },
 
-            ready: function() {
+        // Change theme colors
+        _themeChanged: function() {
 
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            if(typeof this._primaryColor !== 'undefined' && typeof this._secondaryColor !== 'undefined'){
 
-                // Set colors variables
-                this._primaryColor = this.settings.theme.primaryColor;
-                this._secondaryColor = this.settings.theme.secondaryColor || '#E91E63'; // Why do i have to do this ?
-                this._primaryTextColor = this.settings.theme.primaryTextColor;
-                this._secondaryTextColor = this.settings.theme.secondaryTextColor;
-                this._isReady = true;
-                this._darkBackground = (this.settings.theme.primaryBackgroundColor == '#282828');
+                // Set main colors
+                this.set('settings.theme.primaryColor', this._primaryColor);
+                this.set('settings.theme.secondaryColor', this._secondaryColor);
 
-            },
+                // Set darker and lighter main colors
+                this.set('settings.theme.ultraDarkPrimaryColor', this._getColorluminance(this._primaryColor, -0.5));
+                this.set('settings.theme.darkPrimaryColor', this._getColorluminance(this._primaryColor, -0.2));
+                this.set('settings.theme.lightPrimaryColor', this._getColorluminance(this._primaryColor, 0.2));
 
-            _openDrawer: function() {
+                // Get ideal text color based on background color
+                this._primaryTextColor = this._getTextColor(this._primaryColor);
+                this._secondaryTextColor = this._getTextColor(this._secondaryColor);
 
-                document.getElementById('appshell')._openDrawer();
-            },
+                // Set main text colors
+                this.set('settings.theme.primaryTextColor', this._primaryTextColor);
+                this.set('settings.theme.secondaryTextColor', this._secondaryTextColor);
+            }
+        },
 
-            // Merge default webSocket list and custom webSocket list
-            _computeWebSocketUrls: function(customWebSocketUrls) {
+        // Return the same color given with a different luminance
+        _getColorluminance: function(hex, lum) {
 
-                var customWebSocketUrls = customWebSocketUrls || this.settings.steem.customWebSocketUrls;
-                var defaultWebSocketUrls = this.settings.steem.defaultWebSocketUrls;
+            // Validate hexadecimal color string
+            hex = String(hex).replace(/[^0-9a-f]/gi, '');
 
-                var fullWebSocketUrls = defaultWebSocketUrls.concat(customWebSocketUrls);
-
-                this.set('_webSocketUrls', fullWebSocketUrls);
-
-            },
-
-            // Change theme background
-            _darkBackgroundChanged: function() {
-
-                if(this._isReady){
-
-                    if(this._darkBackground){
-
-                        this.set('settings.theme.primaryBackgroundColor', '#282828');
-                        this.set('settings.theme.secondaryBackgroundColor', '#383838');
-                        this.set('settings.theme.backgroundPrimaryTextColor', '#dddddd');
-                        this.set('settings.theme.backgroundSecondaryTextColor', '#888888');
-                    }else {
-
-                        this.set('settings.theme.primaryBackgroundColor', '#eeeeee');
-                        this.set('settings.theme.secondaryBackgroundColor', '#ffffff');
-                        this.set('settings.theme.backgroundPrimaryTextColor', '#282828');
-                        this.set('settings.theme.backgroundSecondaryTextColor', '#666666');
-                    }
-                }
-            },
-
-            // Change theme colors
-            _themeChanged: function() {
-
-                if(typeof this._primaryColor !== 'undefined' && typeof this._secondaryColor !== 'undefined'){
-
-                    // Set main colors
-                    this.set('settings.theme.primaryColor', this._primaryColor);
-                    this.set('settings.theme.secondaryColor', this._secondaryColor);
-
-                    // Set darker and lighter main colors
-                    this.set('settings.theme.ultraDarkPrimaryColor', this._getColorluminance(this._primaryColor, -0.5));
-                    this.set('settings.theme.darkPrimaryColor', this._getColorluminance(this._primaryColor, -0.2));
-                    this.set('settings.theme.lightPrimaryColor', this._getColorluminance(this._primaryColor, 0.2));
-
-                    // Get ideal text color based on background color
-                    this._primaryTextColor = this._getTextColor(this._primaryColor);
-                    this._secondaryTextColor = this._getTextColor(this._secondaryColor);
-
-                    // Set main text colors
-                    this.set('settings.theme.primaryTextColor', this._primaryTextColor);
-                    this.set('settings.theme.secondaryTextColor', this._secondaryTextColor);
-                }
-            },
-
-            // Return the same color given with a different luminance
-            _getColorluminance: function(hex, lum) {
-
-                // Validate hexadecimal color string
-                hex = String(hex).replace(/[^0-9a-f]/gi, '');
-
-                // Set hex string on 6 characters
-                if (hex.length < 6) {
-                    hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-                }
-
-                // Set luminance
-                lum = lum || 0;
-
-                // Convert to decimal and change luminosity
-                var rgb = "#", c, i;
-                for (i = 0; i < 3; i++) {
-                    c = parseInt(hex.substr(i*2,2), 16);
-                    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-                    rgb += ("00"+c).substr(c.length);
-                }
-
-                return rgb;
-            },
-
-            _getTextColor: function(color){
-
-                // return best text color from a given color
-                var hexcolor = color.substr(1);
-                var r = parseInt(hexcolor.substr(0,2),16);
-                var g = parseInt(hexcolor.substr(2,2),16);
-                var b = parseInt(hexcolor.substr(4,2),16);
-                var yiq = ((r*299)+(g*587)+(b*114))/1000;
-
-                return (yiq >= 128+20) ? '#111111' : '#eeeeee';
+            // Set hex string on 6 characters
+            if (hex.length < 6) {
+                hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
             }
 
-            /*
-             * TODO
-             * [ ] Default settings for embed elements
-             */
-        });
-    </script>
-</dom-module>
+            // Set luminance
+            lum = lum || 0;
+
+            // Convert to decimal and change luminosity
+            var rgb = "#", c, i;
+            for (i = 0; i < 3; i++) {
+                c = parseInt(hex.substr(i*2,2), 16);
+                c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+                rgb += ("00"+c).substr(c.length);
+            }
+
+            return rgb;
+        },
+
+        _getTextColor: function(color){
+
+            // return best text color from a given color
+            var hexcolor = color.substr(1);
+            var r = parseInt(hexcolor.substr(0,2),16);
+            var g = parseInt(hexcolor.substr(2,2),16);
+            var b = parseInt(hexcolor.substr(4,2),16);
+            var yiq = ((r*299)+(g*587)+(b*114))/1000;
+
+            return (yiq >= 128+20) ? '#111111' : '#eeeeee';
+        }
+
+        /*
+         * TODO
+         * [ ] Default settings for embed elements
+         */
+    });
+</script>

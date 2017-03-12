@@ -87,132 +87,132 @@
 
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        (function() {
+    (function() {
 
-            'use strict';
+        'use strict';
 
-            Polymer({
+        Polymer({
 
-                is: 'github-repository-file-view',
+            is: 'github-repository-file-view',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * GitHub file Object given from API
-                     */
-                    file: {
-                        type: Object,
-                        observer: '_computeFileType'
-                    },
-
-                    /*
-                     * Github repository file url to load
-                     */
-                    /*fileUrl: {
-                        type: String,
-                        observer: '_createFileObject'
-                    },
-*/
-                    _fileText: {
-                        type: Object
-                    },
-
-                    _isFileMarkdown: {
-                        type: Boolean
-                    },
-
-                    _isFileCode: {
-                        type: Boolean,
-                        observer: '_renderCode'
-                    },
-
-                    _isFileDir: {
-                        type: Boolean
-                    },
-
-                    _isFileImage: {
-                        type: Boolean
-                    }
+                /*
+                 * GitHub file Object given from API
+                 */
+                file: {
+                    type: Object,
+                    observer: '_computeFileType'
                 },
 
-                ready: function() {
-
-                    // List events
-                    this.$.githubLinkEdit.addEventListener('tap', this._openFileInGithub.bind(this));
-                    this.$.githubLinkHistory.addEventListener('tap', this._openFileInGithub.bind(this));
-                    this.$.githubLinkView.addEventListener('tap', this._openFileInGithub.bind(this));
-
+                /*
+                 * Github repository file url to load
+                 */
+                /*fileUrl: {
+                 type: String,
+                 observer: '_createFileObject'
+                 },
+                 */
+                _fileText: {
+                    type: Object
                 },
 
-                /*_createFileObject: function() {
-
-                    var fileObject = {};
-                    var htmlFileUrl = this.fileUrl
-                            .replace("github.com", "raw.githubusercontent.com")
-                            .replace("/blob", "")
-
-                    fileObject.download_url = htmlFileUrl;
-                    fileObject.name = /((?:[\. %a-zA-Z0-9-]+)?.\w+)$/gm.exec(htmlFileUrl)[0];
-                    fileObject.type = 'file';
-
-                    this.file = fileObject;
-                    this._computeFileType();
-
-                },*/
-
-                _computeFileType: function() {
-
-                    this._isFileMarkdown = (this._computeFileIcon(this.file.name)  == 'text-file');
-                    this._isFileImage = (this._computeFileIcon(this.file.name)  == 'image');
-                    this._isFileCode = (this._computeFileIcon(this.file.name)  == 'code');
-                    this._isFileDir = (this._computeFileIcon(this.file.name, this.file.type)  == 'folder');
-
+                _isFileMarkdown: {
+                    type: Boolean
                 },
 
-                _openFileInGithub: function(e) {
-
-                    var type = Polymer.dom(e).localTarget.getAttribute('open-type') || 'blob';
-
-                    var link = this.file.html_url;
-                        link = link.replace('blob', type);
-
-                    window.open(link);
+                _isFileCode: {
+                    type: Boolean,
+                    observer: '_renderCode'
                 },
 
-                _computeFileIcon: function(name, type) {
+                _isFileDir: {
+                    type: Boolean
+                },
 
-                    var type = type || 'file';
+                _isFileImage: {
+                    type: Boolean
+                }
+            },
 
-                    switch (type) {
+            ready: function() {
 
-                        case 'dir':
+                // List events
+                this.$.githubLinkEdit.addEventListener('tap', this._openFileInGithub.bind(this));
+                this.$.githubLinkHistory.addEventListener('tap', this._openFileInGithub.bind(this));
+                this.$.githubLinkView.addEventListener('tap', this._openFileInGithub.bind(this));
 
-                            return 'folder';
+            },
 
-                        case 'file':
+            /*_createFileObject: function() {
 
-                            if(name.includes('.md')) {
+             var fileObject = {};
+             var htmlFileUrl = this.fileUrl
+             .replace("github.com", "raw.githubusercontent.com")
+             .replace("/blob", "")
 
-                                return 'text-file';
-                            }else if(name.includes('.html') || name.includes('.js') || name.includes('.css') || name.includes('.json')) {
+             fileObject.download_url = htmlFileUrl;
+             fileObject.name = /((?:[\. %a-zA-Z0-9-]+)?.\w+)$/gm.exec(htmlFileUrl)[0];
+             fileObject.type = 'file';
 
-                                return 'code';
-                            }else if(name.includes('.jpg') || name.includes('.jpeg') || name.includes('.png') || name.includes('.gif') ||  name.includes('.svg')) {
+             this.file = fileObject;
+             this._computeFileType();
 
-                                return 'image';
-                            }else{
+             },*/
 
-                                return 'file';
-                            }
-                    }
+            _computeFileType: function() {
 
+                this._isFileMarkdown = (this._computeFileIcon(this.file.name)  == 'text-file');
+                this._isFileImage = (this._computeFileIcon(this.file.name)  == 'image');
+                this._isFileCode = (this._computeFileIcon(this.file.name)  == 'code');
+                this._isFileDir = (this._computeFileIcon(this.file.name, this.file.type)  == 'folder');
 
+            },
+
+            _openFileInGithub: function(e) {
+
+                var type = Polymer.dom(e).localTarget.getAttribute('open-type') || 'blob';
+
+                var link = this.file.html_url;
+                link = link.replace('blob', type);
+
+                window.open(link);
+            },
+
+            _computeFileIcon: function(name, type) {
+
+                var type = type || 'file';
+
+                switch (type) {
+
+                    case 'dir':
+
+                        return 'folder';
+
+                    case 'file':
+
+                        if(name.includes('.md')) {
+
+                            return 'text-file';
+                        }else if(name.includes('.html') || name.includes('.js') || name.includes('.css') || name.includes('.json')) {
+
+                            return 'code';
+                        }else if(name.includes('.jpg') || name.includes('.jpeg') || name.includes('.png') || name.includes('.gif') ||  name.includes('.svg')) {
+
+                            return 'image';
+                        }else{
+
+                            return 'file';
+                        }
                 }
 
-            });
-        })();
-    </script>
-</dom-module>
+
+            }
+
+        });
+    })();
+</script>

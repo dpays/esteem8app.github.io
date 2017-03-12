@@ -76,31 +76,31 @@
     </div>
 
   </template>
-
-  <script>
-
-    Polymer({
-
-      is: 'page-404',
-
-      properties: {
-
-        settings: {
-
-          type: Object
-        }
-      },
-
-      ready: function() {
-
-        this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-      },
-
-      _openDrawer: function() {
-
-          document.getElementById('appshell')._openDrawer();
-      }
-
-    });
-  </script>
 </dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'page-404',
+
+    properties: {
+
+      settings: {
+
+        type: Object
+      }
+    },
+
+    ready: function() {
+
+      this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+    },
+
+    _openDrawer: function() {
+
+      document.getElementById('appshell')._openDrawer();
+    }
+
+  });
+</script>

@@ -3,32 +3,31 @@
 <script src="steem.min.js"></script>
 <script src="../../../scripts/functions.js"></script>
 
-<dom-module id="steem-js">
+<dom-module id="steem-js"></dom-module>
 
-    <script>
+<script>
 
-        (function () {
+    (function () {
 
-            Polymer({
+        Polymer({
 
-                is: 'steem-js',
+            is: 'steem-js',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * steemJs API Object
-                     */
-                    steemJs:  {
-                        type: Object
-                    }
-                },
-
-                ready: function() {
-
-                    // Query tags
-                    this.set('steemJs', cloneObj(steem));
+                /*
+                 * steemJs API Object
+                 */
+                steemJs:  {
+                    type: Object
                 }
-            });
-        })();
-    </script>
-</dom-module>
+            },
+
+            ready: function() {
+
+                // Query tags
+                this.set('steemJs', cloneObj(steem));
+            }
+        });
+    })();
+</script>

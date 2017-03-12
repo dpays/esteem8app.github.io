@@ -271,204 +271,204 @@
         </div>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        (function() {
+    (function() {
 
-            'use strict';
+        'use strict';
 
-            Polymer({
+        Polymer({
 
-                is: 'github-repository-issue-list',
+            is: 'github-repository-issue-list',
 
-                behaviors: [
-                    Polymer.AppLocalizeBehavior
-                ],
+            behaviors: [
+                Polymer.AppLocalizeBehavior
+            ],
 
-                properties: {
+            properties: {
 
-                    /*
-                     * files array
-                     */
-                    repository: {
-                        type: String
-                    },
-
-                    _issues: {
-                        type: Array
-                    },
-
-                    _labels: {
-                        type: Array
-                    },
-
-                    _selectedLabels: {
-                        type: String
-                    },
-
-                    _milestones: {
-                        type: Array
-                    },
-
-                    _selectedMilestone: {
-                        type: String
-                    },
-
-                    _selectedMilestoneNumber: {
-                        type: String
-                    },
-
-                    _selectedIssueType: {
-                        type: String
-                    }
+                /*
+                 * files array
+                 */
+                repository: {
+                    type: String
                 },
 
-                observers: [
-                    '_selectedMilestoneChanged(_selectedMilestone)',
-                    '_labelsChanged(_labels)'
-                ],
-
-                listeners: {
-                    'selectTagMenu.tap': '_labelsChanged'
+                _issues: {
+                    type: Array
                 },
 
-                ready: function() {
-
-                    // Set event listener
-                    this.$.addIssueButton.addEventListener('tap', this._openAddIssue.bind(this));
-                    this.$.viewMilestoneButton.addEventListener('tap', this._openAddMilestone.bind(this));
-
-                    // Set default values
-                    this._selectedMilestone = 'None';
-                    this._selectedLabels = '';
-                    this._selectedIssueType = 'open';
+                _labels: {
+                    type: Array
                 },
 
-                _openAddIssue: function() {
-
-                    window.open(this.repository + '/issues/new');
+                _selectedLabels: {
+                    type: String
                 },
 
-                _openAddMilestone: function() {
-
-                    window.open(this.repository + '/milestones/');
+                _milestones: {
+                    type: Array
                 },
 
-                _timeFromNow: function(date) {
-
-                    return new IntlRelativeFormat('en-us').format(new Date(date));
+                _selectedMilestone: {
+                    type: String
                 },
 
-                _computeTotalIssues: function(open, closed) {
-
-                    return (open + closed);
+                _selectedMilestoneNumber: {
+                    type: String
                 },
 
+                _selectedIssueType: {
+                    type: String
+                }
+            },
 
-                _labelsChanged: function() {
-                    console.log("Labels taped");
-                    var length = this._labels.length;
-                    var selectedLabels = [];
+            observers: [
+                '_selectedMilestoneChanged(_selectedMilestone)',
+                '_labelsChanged(_labels)'
+            ],
 
-                    for(var i = 0; i < length;i++) {
+            listeners: {
+                'selectTagMenu.tap': '_labelsChanged'
+            },
 
-                        if(typeof this._labels[i].selected !== 'undefined') {
+            ready: function() {
 
-                            var label = this._labels[i];
+                // Set event listener
+                this.$.addIssueButton.addEventListener('tap', this._openAddIssue.bind(this));
+                this.$.viewMilestoneButton.addEventListener('tap', this._openAddMilestone.bind(this));
 
-                            if(label.selected){
+                // Set default values
+                this._selectedMilestone = 'None';
+                this._selectedLabels = '';
+                this._selectedIssueType = 'open';
+            },
 
-                                selectedLabels.push(label.name);
-                            }
+            _openAddIssue: function() {
+
+                window.open(this.repository + '/issues/new');
+            },
+
+            _openAddMilestone: function() {
+
+                window.open(this.repository + '/milestones/');
+            },
+
+            _timeFromNow: function(date) {
+
+                return new IntlRelativeFormat('en-us').format(new Date(date));
+            },
+
+            _computeTotalIssues: function(open, closed) {
+
+                return (open + closed);
+            },
+
+
+            _labelsChanged: function() {
+                console.log("Labels taped");
+                var length = this._labels.length;
+                var selectedLabels = [];
+
+                for(var i = 0; i < length;i++) {
+
+                    if(typeof this._labels[i].selected !== 'undefined') {
+
+                        var label = this._labels[i];
+
+                        if(label.selected){
+
+                            selectedLabels.push(label.name);
                         }
                     }
-
-                    if(selectedLabels.length) {
-
-                        // Github API need a string where label are separated by ','
-                        this._selectedLabels = selectedLabels.join(',');
-                    }else {
-
-                        this._selectedLabels = [];
-                    }
-
-                },
-
-                _selectedMilestoneChanged: function(_selectedMilestone) {
-
-                    console.log(_selectedMilestone);
-
-                    if(_selectedMilestone.toLowerCase() == 'none') {
-
-                        this._selectedMilestoneNumber = 'none';
-                    }else {
-
-                        this._selectedMilestoneNumber = this._getMilestoneNumberByTitle(_selectedMilestone);
-                    }
-                },
-
-                _computeMilestoneProgress: function(closed, open) {
-
-                    if(closed == 0) {
-
-                        return '0';
-                    }
-
-                    if(open == 0) {
-
-                        return '100';
-                    }
-
-                    var total = open + closed;
-                    var ratio = (closed / total) * 100 ; // on 100
-                    return Math.round(ratio);
-                },
-
-                _clearSelectedMilestone: function() {
-
-                    this._selectedMilestone = '';
-                },
-
-                _getMilestoneNumberByTitle: function(title) {
-
-                    if(typeof this._milestones !== 'undefined') {
-
-                        var milestones = this._milestones;
-                        var length = milestones.length;
-
-                        for(var i = 0; i < length; i++) {
-
-                            var milestone = milestones[i];
-
-                            if(milestone.title == title) {
-
-                                return milestone.number;
-                            }
-                        }
-                    }
-                },
-
-                _getTextColor: function(color){
-
-                    if(!color.includes('#')){
-
-                        color = '#'+color;
-                    }
-
-                    // return best text color from a given color
-                    var hexcolor = color.substr(1);
-                    var r = parseInt(hexcolor.substr(0,2),16);
-                    var g = parseInt(hexcolor.substr(2,2),16);
-                    var b = parseInt(hexcolor.substr(4,2),16);
-                    var yiq = ((r*299)+(g*587)+(b*114))/1000;
-
-                    return (yiq >= 128+20) ? '#222' : '#eee';
                 }
 
-                // API https://developer.github.com/v3/issues/#list-issues-for-a-repository
-                //https://developer.github.com/v3/issues/
-            });
-        })();
-    </script>
-</dom-module>
+                if(selectedLabels.length) {
+
+                    // Github API need a string where label are separated by ','
+                    this._selectedLabels = selectedLabels.join(',');
+                }else {
+
+                    this._selectedLabels = [];
+                }
+
+            },
+
+            _selectedMilestoneChanged: function(_selectedMilestone) {
+
+                console.log(_selectedMilestone);
+
+                if(_selectedMilestone.toLowerCase() == 'none') {
+
+                    this._selectedMilestoneNumber = 'none';
+                }else {
+
+                    this._selectedMilestoneNumber = this._getMilestoneNumberByTitle(_selectedMilestone);
+                }
+            },
+
+            _computeMilestoneProgress: function(closed, open) {
+
+                if(closed == 0) {
+
+                    return '0';
+                }
+
+                if(open == 0) {
+
+                    return '100';
+                }
+
+                var total = open + closed;
+                var ratio = (closed / total) * 100 ; // on 100
+                return Math.round(ratio);
+            },
+
+            _clearSelectedMilestone: function() {
+
+                this._selectedMilestone = '';
+            },
+
+            _getMilestoneNumberByTitle: function(title) {
+
+                if(typeof this._milestones !== 'undefined') {
+
+                    var milestones = this._milestones;
+                    var length = milestones.length;
+
+                    for(var i = 0; i < length; i++) {
+
+                        var milestone = milestones[i];
+
+                        if(milestone.title == title) {
+
+                            return milestone.number;
+                        }
+                    }
+                }
+            },
+
+            _getTextColor: function(color){
+
+                if(!color.includes('#')){
+
+                    color = '#'+color;
+                }
+
+                // return best text color from a given color
+                var hexcolor = color.substr(1);
+                var r = parseInt(hexcolor.substr(0,2),16);
+                var g = parseInt(hexcolor.substr(2,2),16);
+                var b = parseInt(hexcolor.substr(4,2),16);
+                var yiq = ((r*299)+(g*587)+(b*114))/1000;
+
+                return (yiq >= 128+20) ? '#222' : '#eee';
+            }
+
+            // API https://developer.github.com/v3/issues/#list-issues-for-a-repository
+            //https://developer.github.com/v3/issues/
+        });
+    })();
+</script>

@@ -17,6 +17,7 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-menu/paper-submenu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
 <link rel="import" href="../components/post-card-light.html">
 <link rel="import" href="../components/post-card.html">
@@ -25,7 +26,6 @@
 <link rel="import" href="../components/user-card.html">
 <link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../components/post-wrapper.html">
-<link rel="import" href="../components/github-repository.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
@@ -36,8 +36,6 @@
 <link rel="import" href="../api/steemjs/steem-get-history.html">
 
 <link rel="import" href="../components/my-icons.html">
-<link rel="import" href="../components/responsive-iframe.html">
-
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-profile">
@@ -347,7 +345,7 @@
                 <div class="headerRightPart">
                     <div id="followersButton"
                          class="followers"
-                         on-tap="_setCurrentViewFollowers">
+                         on-tap="_setCurrentViewFollowers()">
                     <span class="number">
                         <template is="dom-if" if="[[_account.followerCount]]">
                             [[_account.followerCount]]
@@ -362,7 +360,7 @@
                     </div>
                     <div id="followingButton"
                          class="followed"
-                         on-tap="_setCurrentViewFollowers">
+                         on-tap="_setCurrentViewFollowers()">
                     <span class="number">
                         <template is="dom-if" if="[[_account.followingCount]]">
                             [[_account.followingCount]]
@@ -619,323 +617,332 @@
         </iron-pages>
         <!--/div-->
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'page-profile',
+        is: 'page-profile',
 
-            properties: {
+        properties: {
 
-                settings: {
-                    type: Object
-                },
-
-                user: {
-                    type: String
-                },
-
-                _showProgress: {
-                    type: Boolean
-                },
-
-                _account: {
-                    type: Object
-                },
-
-                _posts: {
-                    type: Array
-                },
-
-                _replies: {
-                    type: Array
-                },
-
-                _currentProfileView: {
-                    type: String
-                },
-
-                _currentAboutView: {
-                    type: String
-                },
-
-                _accountName: {
-                    type: String
-                },
-
-                _followers: {
-                    type: Array
-                },
-
-                _following: {
-                    type: Array
-                },
-
-                _events: {
-                    type: Array
-                },
-
-                _isUserInFavorite: {
-                    type: Boolean
-                },
-
-                _isTabAbout: {
-                    type: Boolean
-                },
-
-                _pinnedPost: {
-                    type: Object
-                }
+            settings: {
+                type: Object
             },
 
-            /*behaviors: [
-                Polymer.IronScrollTargetBehavior
-            ],*/
-
-            observers: [
-                '_updateCoverImage(_account.coverImage)',
-                '_userChanged(user)',
-                '_refreshIsTabAbout(_currentProfileView)',
-                '_refreshIsTopheaderShowed(_isTabAbout)'
-            ],
-
-            listeners: {
-                'aboutmenu.tap': '_selectAboutView'
+            user: {
+                type: String
             },
 
-            ready: function() {
+            _showProgress: {
+                type: Boolean
+            },
 
-                // Set variables
+            _account: {
+                type: Object
+            },
+
+            _posts: {
+                type: Array
+            },
+
+            _replies: {
+                type: Array
+            },
+
+            _currentProfileView: {
+                type: String
+            },
+
+            _currentAboutView: {
+                type: String
+            },
+
+            _accountName: {
+                type: String
+            },
+
+            _followers: {
+                type: Array
+            },
+
+            _following: {
+                type: Array
+            },
+
+            _events: {
+                type: Array
+            },
+
+            _isUserInFavorite: {
+                type: Boolean
+            },
+
+            _isTabAbout: {
+                type: Boolean
+            },
+
+            _pinnedPost: {
+                type: Object
+            }
+        },
+
+        /*behaviors: [
+         Polymer.IronScrollTargetBehavior
+         ],*/
+
+        observers: [
+            '_updateCoverImage(_account.coverImage)',
+            '_userChanged(user)',
+            '_refreshIsTabAbout(_currentProfileView)',
+            '_refreshIsTopheaderShowed(_isTabAbout)'
+        ],
+
+        listeners: {
+            'aboutmenu.tap': '_selectAboutView'
+        },
+
+        ready: function() {
+
+            // Set variables
+            this._currentProfileView = 'about';
+            this._currentAboutView = 'home';
+            //this._pageProfile = this.$.pageprofile;
+
+            // List event
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.followersButton.addEventListener('tap', this._setCurrentViewFollowers.bind(this));
+            this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
+            this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
+        },
+
+        /*_scrollHandler: function() {
+
+         this.async(function() {
+
+         var loadBefore = 450;
+
+         var height = this._pageProfile.clientHeight - window.innerHeight;
+
+         if(this._scrollTop > (height - loadBefore)) {
+
+         alert('load');
+         }
+
+         });
+         },*/
+
+        _userChanged: function(user) {
+
+            if(user.includes('@')) {
+
+                // Reset account related data
+                this.set('_posts', []);
+                this.set('_events', []);
+                this.set('_replies', []);
+                this.set('_followers', []);
+                this.set('_following', []);
+
+                // Reset view position
                 this._currentProfileView = 'about';
                 this._currentAboutView = 'home';
-                //this._pageProfile = this.$.pageprofile;
 
-                // List event
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-                this.$.followersButton.addEventListener('tap', this._setCurrentViewFollowers.bind(this));
-                this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
-                this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
-            },
+                // Reload page
+                /*
+                 * Reload account data won't
+                 */
 
-            /*_scrollHandler: function() {
+                // Remove '@' at user and put it into _accountName
+                this.set('_accountName', user.replace('@', ''));
 
-                this.async(function() {
-
-                    var loadBefore = 450;
-
-                    var height = this._pageProfile.clientHeight - window.innerHeight;
-
-                    if(this._scrollTop > (height - loadBefore)) {
-
-                        alert('load');
-                    }
-
-                });
-            },*/
-
-            _userChanged: function(user) {
-
-                if(user.charAt(0) == '@') {
-
-                    // Reset account related data
-                    this.set('_posts', []);
-                    this.set('_events', []);
-                    this.set('_replies', []);
-                    this.set('_followers', []);
-                    this.set('_following', []);
-
-                    // Reset view position
-                    this._currentProfileView = 'about';
-                    this._currentAboutView = 'home';
-
-                    // Remove '@' at user and put it into _accountName
-                    this.set('_accountName', user.replace('@', ''));
-
-                    this._refreshIsFavoriteUser();
-                }
-            },
-
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
-            },
-
-            _updateCoverImage: function(url) {
-
-                if(url !== ''){
-
-                    this.$.profileheader.style.backgroundImage = "url('" + url + "')";
-                }else {
-
-                    this.$.profileheader.style.backgroundImage = "";
-                }
-
-            },
-
-            _selectAboutView: function(e) {
-                
-                if(typeof e.path[0].view === 'undefined') {
-                    
-                    this._currentAboutView = "home";
-                }else {
-
-                    this._currentAboutView = e.path[0].view;
-                }
-            },
-
-            _setCurrentViewFollowers: function() {
-
-                this.set('_currentProfileView', 'followers');
-            },
-
-            _setCurrentViewFollowing: function() {
-
-                this.set('_currentProfileView', 'following')
-            },
-
-            _setCurrentViewPosts: function() {
-
-                this.set('_currentProfileView', 'posts');
-            },
-
-            _refreshIsFavoriteUser: function() {
-
-                this._isUserInFavorite = document.getElementById('appshell').isFavoriteUser(this._accountName);
-            },
-
-            _toggleFavoriteUser: function() {
-
-                if(this._isUserInFavorite) {
-
-                    // Remove user from favourite
-                    document.getElementById('appshell').removeFavoriteUser(this._accountName);
-                }else {
-
-                    // Add user to favourite
-                    document.getElementById('appshell').addFavoriteUser(this._accountName);
-                }
-
-                // Invert favorite state of user
                 this._refreshIsFavoriteUser();
-            },
+            }
+        },
 
-            _computeFavoriteUserIcon: function(userIsInFavorite) {
+        _openDrawer: function() {
 
-                return userIsInFavorite ?
-                    'favorite':
-                    'favorite-border';
-            },
+            document.getElementById('appshell')._openDrawer();
+        },
 
-            _loadMoreHistoryEvents: function() {
+        _updateCoverImage: function(url) {
 
-                this.$.steemGetHistory.loadMoreData();
-            },
+            if(url !== ''){
 
-            _refreshIsTabAbout: function(currentProfileView) {
+                this.$.profileheader.style.backgroundImage = "url('" + url + "')";
+            }else {
 
-                this._isTabAbout = (currentProfileView == 'about');
-                //window.scrollTo(0, 0);
-            },
-
-            _getPostTitleFromPath: function(postPath) {
-
-                var pathSplitted = postPath.split('/');
-                var postTitleindex = pathSplitted.length-1;
-                var postTitle = pathSplitted[postTitleindex];
-                var postTitleText = postTitle.split('-').join(' ');
-                    postTitleText = this._capitalizeFirstLetter(postTitleText);
-
-                return postTitleText;
-            },
-
-            _capitalizeFirstLetter: function(string) {
-
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            },
-
-            _refreshIsTopheaderShowed: function(isTabAbout) {
-
-                if(isTabAbout) {
-
-                    this.$.topheader.style = "";//"height: auto;"//+this.$.topheader.clientHeight+";";
-                }else {
-
-                    this.$.topheader.style = "margin-top:-2px;margin-bottom:-1px;max-height: 0;display:none;transition: all 0.6s ease-out;";//transform: translateY(-600px)"; //"height: 0;margin:-1px;visibility:hidden;opacity: 0";
-                }
-
-
-            },
-
-            _computeLinkIcon: function(link) {
-
-                if(link.includes('github.com') || link.includes('github.io')) {
-
-                    return 'github';
-                }else if(link.includes('plus.google.com')) {
-
-                    return 'google-plus';
-                }else if(link.includes('twitter.com')) {
-
-                    return 'twitter';
-                }else if(link.includes('facebook.com')) {
-
-                    return 'facebook';
-                }else if(link.includes('google') && link.includes('maps')) {
-
-                    return 'map';
-                }else if(link.includes('dribbble')) {
-
-                    return 'dribbble';
-                }else if(link.includes('jira')) {
-
-                    return 'jira';
-                }else if(link.includes('slack.com')) {
-
-                    return 'slack';
-                }else if(link.includes('snapchat')) {
-
-                    return 'snapchat';
-                }else if(link.includes('soundcloud.com')) {
-
-                    return 'soundcloud';
-                }else if(link.includes('twitch.tv')) {
-
-                    return 'twitch';
-                }else if(link.includes('discordapp.com')) {
-
-                    return 'discord';
-                }else {
-
-                    return 'link';
-                }
-            },
-
-            _computeLinkText: function(link) {
-
-                if(typeof link !== 'undefined') {
-
-                    var link = link.replace("https://", "")
-                            .replace("http://", "")
-                            .replace("www.", "");
-
-                    return link;
-                }else {
-
-                    return '';
-                }
-            },
-
-            _toJson: function(text) {
-
-                return JSON.parse(text);
+                this.$.profileheader.style.backgroundImage = "";
             }
 
-            /*
-             * IDEAS
-             * Pin other element or element in post
-             */
+        },
 
-        });
-    </script>
-</dom-module>
+        _selectAboutView: function(e) {
+
+            if(typeof e.path[0] !== 'undefined') {
+
+                if(typeof e.path[0].view !== 'undefined') {
+
+                    this._currentAboutView = e.path[0].view;
+                    return;
+                }
+            }
+
+            this._currentAboutView = "home";
+
+        },
+
+        _setCurrentViewFollowers: function() {
+
+            this.set('_currentProfileView', 'followers');
+        },
+
+        _setCurrentViewFollowing: function() {
+
+            this.set('_currentProfileView', 'following')
+        },
+
+        _setCurrentViewPosts: function() {
+
+            this.set('_currentProfileView', 'posts');
+        },
+
+        _refreshIsFavoriteUser: function() {
+
+            this._isUserInFavorite = document.getElementById('appshell').isFavoriteUser(this._accountName);
+        },
+
+        _toggleFavoriteUser: function() {
+
+            if(this._isUserInFavorite) {
+
+                // Remove user from favourite
+                document.getElementById('appshell').removeFavoriteUser(this._accountName);
+            }else {
+
+                // Add user to favourite
+                document.getElementById('appshell').addFavoriteUser(this._accountName);
+            }
+
+            // Invert favorite state of user
+            this._refreshIsFavoriteUser();
+        },
+
+        _computeFavoriteUserIcon: function(userIsInFavorite) {
+
+            return userIsInFavorite ?
+                    'favorite':
+                    'favorite-border';
+        },
+
+        _loadMoreHistoryEvents: function() {
+
+            //this.$.steemGetHistory.loadMoreData();
+        },
+
+        _refreshIsTabAbout: function(currentProfileView) {
+
+            this._isTabAbout = currentProfileView == 'about' ? true: false;
+            //window.scrollTo(0, 0);
+        },
+
+        _getPostTitleFromPath: function(postPath) {
+
+            var pathSplitted = postPath.split('/');
+
+            var postTitle = pathSplitted[pathSplitted.length-1];
+            var postTitleText = postTitle.split('-').join(' ');
+            postTitleText = this._capitalizeFirstLetter(postTitleText);
+
+            return postTitleText;
+        },
+
+        _capitalizeFirstLetter: function(string) {
+
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+
+        _refreshIsTopheaderShowed: function(isTabAbout) {
+
+            if(isTabAbout) {
+
+                this.$.topheader.style = "";//"height: auto;"//+this.$.topheader.clientHeight+";";
+            }else {
+
+                this.$.topheader.style = "margin-top:-2px;margin-bottom:-1px;max-height: 0;display:none;transition: all 0.6s ease-out;";//transform: translateY(-600px)"; //"height: 0;margin:-1px;visibility:hidden;opacity: 0";
+            }
+
+
+        },
+
+        _computeLinkIcon: function(link) {
+
+            if(link.includes('github.com') || link.includes('github.io')) {
+
+                return 'github';
+            }else if(link.includes('plus.google.com')) {
+
+                return 'google-plus';
+            }else if(link.includes('twitter.com')) {
+
+                return 'twitter';
+            }else if(link.includes('facebook.com')) {
+
+                return 'facebook';
+            }else if(link.includes('google') && link.includes('maps')) {
+
+                return 'map';
+            }else if(link.includes('dribbble')) {
+
+                return 'dribbble';
+            }else if(link.includes('jira')) {
+
+                return 'jira';
+            }else if(link.includes('slack.com')) {
+
+                return 'slack';
+            }else if(link.includes('snapchat')) {
+
+                return 'snapchat';
+            }else if(link.includes('soundcloud.com')) {
+
+                return 'soundcloud';
+            }else if(link.includes('twitch.tv')) {
+
+                return 'twitch';
+            }else if(link.includes('discordapp.com')) {
+
+                return 'discord';
+            }else {
+
+                return 'link';
+            }
+        },
+
+        _computeLinkText: function(link) {
+
+            if(typeof link !== 'undefined') {
+
+                var link = link.replace("https://", "")
+                        .replace("http://", "")
+                        .replace("www.", "");
+
+                return link;
+            }else {
+
+                return '';
+            }
+        },
+
+        _toJson: function(text) {
+
+            return JSON.parse(text);
+        }
+
+        /*
+         * IDEAS
+         * Pin other element or element in post
+         */
+
+    });
+</script>

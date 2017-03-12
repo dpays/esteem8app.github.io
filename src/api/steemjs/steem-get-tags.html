@@ -2,57 +2,55 @@
 
 <script src="./src/steem.min.js"></script>
 
-<dom-module id="steem-get-tags">
+<dom-module id="steem-get-tags"></dom-module>
 
-    <script>
+<script>
 
-        (function () {
+    (function () {
 
-            Polymer({
+        Polymer({
 
-                is: 'steem-get-tags',
+            is: 'steem-get-tags',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * Number of tags that must be loaded
-                     */
-                    number:  {
-                        type: Number
-                    },
-
-                    /*
-                     * Tags array loaded by query
-                     */
-                    tags: {
-                        type: Array,
-                        notify: true
-                    }
+                /*
+                 * Number of tags that must be loaded
+                 */
+                number:  {
+                    type: Number
                 },
 
-                created: function() {
-
-                    // Query tags
-                    this._updateTags();
-                },
-
-                _updateTags: function() {
-
-                    var thisElement = this;
-
-                    // Query tags
-                    this.async(function() {
-                        steem.api.getTrendingCategories('', thisElement.number, function(err, result) {
-
-                            if(!err){ // If working
-
-                                thisElement.tags = result; // Set received tags
-                            }
-                        });
-                    });
+                /*
+                 * Tags array loaded by query
+                 */
+                tags: {
+                    type: Array,
+                    notify: true
                 }
-            });
-        })();
-    </script>
+            },
 
-</dom-module>
+            created: function() {
+
+                // Query tags
+                this._updateTags();
+            },
+
+            _updateTags: function() {
+
+                var thisElement = this;
+
+                // Query tags
+                this.async(function() {
+                    steem.api.getTrendingCategories('', thisElement.number, function(err, result) {
+
+                        if(!err){ // If working
+
+                            thisElement.tags = result; // Set received tags
+                        }
+                    });
+                });
+            }
+        });
+    })();
+</script>

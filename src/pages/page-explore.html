@@ -187,207 +187,207 @@
                 is-loading="{{_showProgress}}">
         </steem-get-state>
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        Polymer({
+    Polymer({
 
-            is: 'page-explore',
+        is: 'page-explore',
 
-            properties: {
+        properties: {
 
-                // current sorting mode (hot, new, trending, created)
-                currentSortingUrl: {
-                    type: String,
-                    notify: true,
-                    observer: '_currentSortingUrlChanged'
-                },
-
-                currentSorting: {
-                    type: String,
-                    notify: true,
-                    observer: '_currentSortingChanged'
-                },
-
-                // Current filter tag (esteem8, ...)
-                currentTagUrl: {
-                    type: String,
-                    notify: true,
-                    observer: '_currentTagUrlChanged'
-                },
-
-                currentTag: {
-                    type: String,
-                    notify: true,
-                    observer: '_currentTagChanged'
-                },
-
-                settings: {
-                    type: Object
-                },
-
-                favoriteTags: {
-                    type: Array,
-                    notify: true
-                },
-
-                _posts: {
-                    type: Array
-                },
-
-                _showProgress: {
-                    type: Boolean
-                },
-
-                _isSelectCategoryOpened: {
-                    type: Boolean,
-                    notify: true
-                },
-
-                _isEsteem8Tag: {
-                    type: Boolean
-                },
-
-                _isCurrentTagInFavorite: {
-                    type: Boolean
-                }
+            // current sorting mode (hot, new, trending, created)
+            currentSortingUrl: {
+                type: String,
+                notify: true,
+                observer: '_currentSortingUrlChanged'
             },
 
-            ready: function() {
-
-                // List events
-                this.$.floatingTitle.addEventListener('tap',this._openSelectCategoryDialog.bind(this));
-                this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-                this.$.toggleFavoriteTagButton.addEventListener('tap', this._toggleFavoriteTag.bind(this));
-
-                // Default variables value
-                this._isSelectCategoryOpened = false;
-                this._showProgress = true;
-                this._isCurrentTagInFavorite = false;
-
+            currentSorting: {
+                type: String,
+                notify: true,
+                observer: '_currentSortingChanged'
             },
 
-            _openDrawer: function() {
-
-                document.getElementById('appshell')._openDrawer();
+            // Current filter tag (esteem8, ...)
+            currentTagUrl: {
+                type: String,
+                notify: true,
+                observer: '_currentTagUrlChanged'
             },
 
-            // sorting var -> sorting url
-            _currentSortingChanged: function() {
-
-                this.currentSortingUrl = this.currentSorting + '/';
+            currentTag: {
+                type: String,
+                notify: true,
+                observer: '_currentTagChanged'
             },
 
-            // sorting url -> sorting var
-            _currentSortingUrlChanged: function() {
-
-                // remove '/' and set currentSorting for tabs
-
-                var currentSortingUrl = this.currentSortingUrl || this.currentSorting  + '/' || '';
-                var currentTag = this.currentTagUrl.replace('/', '') || this.currentTag || '';
-
-                if(currentSortingUrl.includes('created') || currentSortingUrl.includes('hot') || currentSortingUrl.includes('trending') || currentSortingUrl.includes('active')) {
-
-                    this.currentSorting = currentSortingUrl.replace('/', '');
-
-                    // Set current tag because router does not support only changing first part without the second after
-                    if(currentTag != '') {
-
-                        this.currentTag = currentTag;
-                    }
-
-                }
-
+            settings: {
+                type: Object
             },
 
-            _openSelectCategoryDialog: function() {
-
-                this._isSelectCategoryOpened = true;
+            favoriteTags: {
+                type: Array,
+                notify: true
             },
 
-            // sorting var -> sorting url
-            _currentTagChanged: function() {
+            _posts: {
+                type: Array
+            },
 
-                // Add '/' and set url
-                if(this.currentTag != '') {
+            _showProgress: {
+                type: Boolean
+            },
 
-                    this.currentTagUrl = this.currentTag + '/';
-                }else {
+            _isSelectCategoryOpened: {
+                type: Boolean,
+                notify: true
+            },
 
-                    this.currentTagUrl = this.currentTagUrl || '';
+            _isEsteem8Tag: {
+                type: Boolean
+            },
+
+            _isCurrentTagInFavorite: {
+                type: Boolean
+            }
+        },
+
+        ready: function() {
+
+            // List events
+            this.$.floatingTitle.addEventListener('tap',this._openSelectCategoryDialog.bind(this));
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.toggleFavoriteTagButton.addEventListener('tap', this._toggleFavoriteTag.bind(this));
+
+            // Default variables value
+            this._isSelectCategoryOpened = false;
+            this._showProgress = true;
+            this._isCurrentTagInFavorite = false;
+
+        },
+
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        },
+
+        // sorting var -> sorting url
+        _currentSortingChanged: function() {
+
+            this.currentSortingUrl = this.currentSorting + '/';
+        },
+
+        // sorting url -> sorting var
+        _currentSortingUrlChanged: function() {
+
+            // remove '/' and set currentSorting for tabs
+
+            var currentSortingUrl = this.currentSortingUrl || this.currentSorting  + '/' || '';
+            var currentTag = this.currentTagUrl.replace('/', '') || this.currentTag || '';
+
+            if(currentSortingUrl.includes('created') || currentSortingUrl.includes('hot') || currentSortingUrl.includes('trending') || currentSortingUrl.includes('active')) {
+
+                this.currentSorting = currentSortingUrl.replace('/', '');
+
+                // Set current tag because router does not support only changing first part without the second after
+                if(currentTag != '') {
+
+                    this.currentTag = currentTag;
                 }
 
-                // Check if this is the app tag
-                this._computeIsEsteem8Tag();
-
-                // Refresh add to favorite icon
-                this._refreshIsCurrentTagInFavorite();
-            },
-
-            // sorting url -> sorting var
-            _currentTagUrlChanged: function() {
-
-                // Update current tag from url to make query and make tabs working
-
-                this.currentTag = this.currentTagUrl.replace('/', '');
-
-            },
-
-            _steemPathChanged: function() {
-
-                // Scroll to top after new posts loaded
-                window.scrollTo(0, 0);
-            },
-
-            _computeIsEsteem8Tag: function() {
-
-                this._isEsteem8Tag = (this.currentTag.includes('esteem8'));
-            },
-
-            _refreshIsCurrentTagInFavorite: function() {
-
-                if(typeof this.favoriteTags === 'undefined') {
-
-                    return false;
-                }
-
-                this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(this.currentTag);
-            },
-
-            _computeFavoriteTagIcon: function(tagIsInFavorite) {
-
-                if(typeof this.currentTag === 'undefined') { // Display no favorite icon if no tag
-
-                    return 'star';
-                }
-
-                return tagIsInFavorite ?
-                    'star':
-                    'star-border';
-            },
-
-            _toggleFavoriteTag: function() {
-
-                if(this._isCurrentTagInFavorite) {
-
-                    // Remove tag from favourite
-                    document.getElementById('appshell').removeFavoriteTag(this.currentTag);
-                }else {
-
-                    // Add tag to favourite
-                    document.getElementById('appshell').addFavoriteTag(this.currentTag);
-                }
-
-                // Refresh actual state of fav tag displayed in floating toolbar
-                this._refreshIsCurrentTagInFavorite();
             }
 
-            /*
-             * TODO
-             * Current tag change the url
-             * Steem path possible to be a username
-             */
+        },
 
-        });
-    </script>
-</dom-module>
+        _openSelectCategoryDialog: function() {
+
+            this._isSelectCategoryOpened = true;
+        },
+
+        // sorting var -> sorting url
+        _currentTagChanged: function() {
+
+            // Add '/' and set url
+            if(this.currentTag != '') {
+
+                this.currentTagUrl = this.currentTag + '/';
+            }else {
+
+                this.currentTagUrl = this.currentTagUrl || '';
+            }
+
+            // Check if this is the app tag
+            this._computeIsEsteem8Tag();
+
+            // Refresh add to favorite icon
+            this._refreshIsCurrentTagInFavorite();
+        },
+
+        // sorting url -> sorting var
+        _currentTagUrlChanged: function() {
+
+            // Update current tag from url to make query and make tabs working
+
+            this.currentTag = this.currentTagUrl.replace('/', '');
+
+        },
+
+        _steemPathChanged: function() {
+
+            // Scroll to top after new posts loaded
+            window.scrollTo(0, 0);
+        },
+
+        _computeIsEsteem8Tag: function() {
+
+            this._isEsteem8Tag = (this.currentTag.includes('esteem8'));
+        },
+
+        _refreshIsCurrentTagInFavorite: function() {
+
+            if(typeof this.favoriteTags === 'undefined') {
+
+                return false;
+            }
+
+            this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(this.currentTag);
+        },
+
+        _computeFavoriteTagIcon: function(tagIsInFavorite) {
+
+            if(typeof this.currentTag === 'undefined') { // Display no favorite icon if no tag
+
+                return 'star';
+            }
+
+            return tagIsInFavorite ?
+                    'star':
+                    'star-border';
+        },
+
+        _toggleFavoriteTag: function() {
+
+            if(this._isCurrentTagInFavorite) {
+
+                // Remove tag from favourite
+                document.getElementById('appshell').removeFavoriteTag(this.currentTag);
+            }else {
+
+                // Add tag to favourite
+                document.getElementById('appshell').addFavoriteTag(this.currentTag);
+            }
+
+            // Refresh actual state of fav tag displayed in floating toolbar
+            this._refreshIsCurrentTagInFavorite();
+        }
+
+        /*
+         * TODO
+         * Current tag change the url
+         * Steem path possible to be a username
+         */
+
+    });
+</script>

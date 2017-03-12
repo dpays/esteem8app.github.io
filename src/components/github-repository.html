@@ -118,106 +118,106 @@
         </iron-pages>
 
     </template>
+</dom-module>
 
-    <script>
+<script>
 
-        (function() {
+    (function() {
 
-            'use strict';
+        'use strict';
 
-            Polymer({
+        Polymer({
 
-                is: 'github-repository',
+            is: 'github-repository',
 
-                properties: {
+            properties: {
 
-                    /*
-                     * repository url
-                     */
-                    repository: {
-                        type: Object
-                    },
-
-                    _isMenuOpen: {
-                      type: Boolean
-                    },
-
-                    _currentRepositoryView: {
-                        type: String,
-                        observer: '_closeMenu'
-                    }
+                /*
+                 * repository url
+                 */
+                repository: {
+                    type: Object
                 },
 
-                ready: function() {
-
-                    // Set default variables
-                    this._currentRepositoryView = 'overview';
-
-                    // Set event listeners
-                    this.$.toggleMenuButton.addEventListener('tap', this._toggleMenu.bind(this));
-                    this.$.openCurrentViewButton.addEventListener('tap', this._openCurrentView.bind(this));
-
+                _isMenuOpen: {
+                    type: Boolean
                 },
 
-                _getMenuIcon: function(isMenuOpen) {
+                _currentRepositoryView: {
+                    type: String,
+                    observer: '_closeMenu'
+                }
+            },
 
-                    if(isMenuOpen) {
+            ready: function() {
 
-                        return 'close';
-                    }else {
+                // Set default variables
+                this._currentRepositoryView = 'overview';
 
-                        return 'menu';
-                    }
-                },
+                // Set event listeners
+                this.$.toggleMenuButton.addEventListener('tap', this._toggleMenu.bind(this));
+                this.$.openCurrentViewButton.addEventListener('tap', this._openCurrentView.bind(this));
 
-                _getLastUrlPart: function() {
+            },
 
-                    var view = '';
+            _getMenuIcon: function(isMenuOpen) {
 
-                    switch(this._currentRepositoryView) {
+                if(isMenuOpen) {
 
-                        case 'tasks':
-                            view = '/issues';
-                    }
+                    return 'close';
+                }else {
 
-                    return view;
-                },
+                    return 'menu';
+                }
+            },
 
-                _computeRepoName: function(url) {
+            _getLastUrlPart: function() {
 
-                    url = url.replace('https://github.com/', '');
-                    url += this._getLastUrlPart();
+                var view = '';
 
-                    return url;
-                },
+                switch(this._currentRepositoryView) {
 
-                _toggleMenu: function() {
-
-                    this._isMenuOpen = !this._isMenuOpen;
-                },
-
-                _closeMenu: function() {
-
-                    this._isMenuOpen = false;
-                },
-
-                _openCurrentView: function() {
-
-                    var view = this._getLastUrlPart();
-
-                    window.open(this.repository + view);
+                    case 'tasks':
+                        view = '/issues';
                 }
 
-                // IDEAS
-                /*
-                 * Task manager on top of github using issues (can be in a separeted tab)
-                 * Acess this element from
-                 *  * GitHub-account
-                 *  * GitHub-organization
-                 */
+                return view;
+            },
 
-                // API https://developer.github.com/v3/repos/#get
-            });
-        })();
-    </script>
-</dom-module>
+            _computeRepoName: function(url) {
+
+                url = url.replace('https://github.com/', '');
+                url += this._getLastUrlPart();
+
+                return url;
+            },
+
+            _toggleMenu: function() {
+
+                this._isMenuOpen = !this._isMenuOpen;
+            },
+
+            _closeMenu: function() {
+
+                this._isMenuOpen = false;
+            },
+
+            _openCurrentView: function() {
+
+                var view = this._getLastUrlPart();
+
+                window.open(this.repository + view);
+            }
+
+            // IDEAS
+            /*
+             * Task manager on top of github using issues (can be in a separeted tab)
+             * Acess this element from
+             *  * GitHub-account
+             *  * GitHub-organization
+             */
+
+            // API https://developer.github.com/v3/repos/#get
+        });
+    })();
+</script>
