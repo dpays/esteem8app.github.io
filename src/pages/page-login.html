@@ -137,7 +137,7 @@
                 </div>
 
                 <div class="card-actions">
-                    <paper-button id="loginButton">
+                    <paper-button id="loginButton" on-tap="_login()">
                         <a href="/@[[settings.user.name]]">
                             LOGIN
                         </a>
@@ -176,8 +176,15 @@
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
             this.$.signUpButton.addEventListener('tap', this._openSignUpDialog.bind(this));
+            this.$.loginButton.addEventListener('tap', this._login.bind(this));
 
             this.isSignUpOpen = false;
+        },
+
+        _login: function() {
+
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Sucessfully logged onto the matrix');
         },
 
         _openDrawer: function() {

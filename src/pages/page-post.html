@@ -549,7 +549,9 @@
         _addFavoritePost: function() {
 
             // Add post to favorite
-            document.getElementById('appshell').addFavoritePost(this._post);
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Post sucessfully added to favorites');
+                appShell.addFavoritePost(this._post);
 
             // Refresh favorite post state
             this._refreshIsFavoritePost();
@@ -558,7 +560,9 @@
         _addFavoriteUser: function() {
 
             // Add user to favorite
-            document.getElementById('appshell').addFavoriteUser(this.username);
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('User sucessfully added to favorites');
+                appShell.addFavoriteUser(this.username);
 
             // Refresh favorite user state
             this._refreshIsFavoriteUser();
@@ -567,7 +571,9 @@
         _addFavoriteTag: function() {
 
             // Add tag to favorite
-            document.getElementById('appshell').addFavoriteTag(this.category);
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Tag sucessfully added to favorites');
+                appShell.addFavoriteTag(this.category);
 
             // Refresh favorite tag state
             this._refreshIsFavoriteTag();
@@ -576,7 +582,9 @@
         _removeFavoritePost: function() {
 
             // remove post from favorite
-            document.getElementById('appshell').removeFavoritePost(this._post);
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Post sucessfully removed from favorites');
+                appShell.removeFavoritePost(this._post);
 
             // Refresh favorite post state
             this._refreshIsFavoritePost();
@@ -585,7 +593,9 @@
         _removeFavoriteUser: function() {
 
             // remove user from favorite
-            document.getElementById('appshell').removeFavoriteUser(this.username);
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('User sucessfully removed from favorites');
+                appShell.removeFavoriteUser(this.username);
 
             // Refresh favorite user state
             this._refreshIsFavoriteUser();
@@ -594,7 +604,9 @@
         _removeFavoriteTag: function() {
 
             // remove tag from favorite
-            document.getElementById('appshell').removeFavoriteTag(this.category);
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Tag sucessfully removed from favorites');
+                appShell.removeFavoriteTag(this.category);
 
             // Refresh favorite tag state
             this._refreshIsFavoriteTag();

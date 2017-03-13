@@ -2,6 +2,8 @@
 
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
@@ -13,7 +15,8 @@
 
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/color-select.html">
-<link rel="import" href="../api/steemjs/steem-set-web-socket.html">
+<link rel="import" href="../api/steemjs/steem-set-websocket-url.html">
+<link rel="import" href="../api/steemjs/steem-set-chain-name.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-settings">
@@ -96,6 +99,14 @@
             paper-card div a {
                 color: var(--app-primary-color);
                 text-decoration: none;
+            }
+
+            #resetSettingsButton {
+                margin-top: 16px;
+                margin-right: 0;
+                margin-left: 0;
+                margin-bottom: 0;
+                float: right;
             }
 
         </style>
@@ -227,33 +238,72 @@
                 </div>
             </paper-card>
 
+            <!--steem-set-chain-name chain-name="[[settings.network.chainName]]"
+                                     websocket-url={{settings.network.websocketUrl}}>
+            </steem-set-chain-name-->
+            <steem-set-websocket-url websocket-url="[[settings.network.websocketUrl]]">
+            </steem-set-websocket-url>
+
             <paper-card>
-                <h2>Steem</h2>
+                <h2>Network</h2>
                 <div class="card-content">
-                    <div>
-                        <paper-dropdown-menu label="Web socket">
+
+                    <paper-dropdown-menu label="Network">
+                        <paper-listbox class="dropdown-content"
+                                       selected="{{settings.network.chainName}}"
+                                       attr-for-selected="value">
+                            <paper-item value="steem">Steem</paper-item>
+                            <paper-item value="golos">Golos</paper-item>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+
+                    <div hidden="[[!_isChain(steem)]]">
+                        <paper-dropdown-menu label="Steem node">
                             <paper-listbox class="dropdown-content"
-                                           selected="{{settings.steem.webSocketUrl}}"
+                                           selected="{{settings.network.websocketUrl}}"
                                            attr-for-selected="value">
 
-                                <template is="dom-repeat" items="[[settings.steem.defaultWebSocketUrls]]">
+                                <template is="dom-repeat" items="[[settings.steem.defaultWebsocketUrls]]">
                                     <paper-item value="[[item]]">[[item]]</paper-item>
                                 </template>
-                                <template is="dom-repeat" items="[[settings.steem.customWebSocketUrls]]">
+                                <template is="dom-repeat" items="[[settings.steem.customWebsocketUrls]]">
                                     <paper-item value="[[item]]">[[item]]</paper-item>
                                 </template>
 
                             </paper-listbox>
                         </paper-dropdown-menu>
                     </div>
-                    <steem-set-web-socket web-socket="{{settings.steem.webSocketUrl}}"></steem-set-web-socket>
-                    <div>
+
+                    <div hidden="[[!_isChain(steem)]]">
                         <p>
                             <a href="https://status.steemnodes.com" target="_blank">https://status.steemnodes.com</a>
                         </p>
                     </div>
+
+                    <div hidden="[[!_isChain(golos)]]">
+                        <paper-dropdown-menu label="Golos node">
+                            <paper-listbox class="dropdown-content"
+                                           selected="{{settings.network.websocketUrl}}"
+                                           attr-for-selected="value">
+
+                                <template is="dom-repeat" items="[[settings.golos.defaultWebsocketUrls]]">
+                                    <paper-item value="[[item]]">[[item]]</paper-item>
+                                </template>
+                                <template is="dom-repeat" items="[[settings.golos.customWebsocketUrls]]">
+                                    <paper-item value="[[item]]">[[item]]</paper-item>
+                                </template>
+
+                            </paper-listbox>
+                        </paper-dropdown-menu>
+                    </div>
                 </div>
             </paper-card>
+
+            <paper-button id="resetSettingsButton"
+                          on-tap="_resetSettings()">
+                Reset settings
+            </paper-button>
+
         </div>
 
     </template>
@@ -305,6 +355,7 @@
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.resetSettingsButton.addEventListener('tap', this._resetSettings.bind(this));
 
             // Set colors variables
             this._primaryColor = this.settings.theme.primaryColor;
@@ -316,21 +367,24 @@
 
         },
 
+        // Open side drawer (menu)
         _openDrawer: function() {
 
             document.getElementById('appshell')._openDrawer();
         },
 
-        // Merge default webSocket list and custom webSocket list
-        _computeWebSocketUrls: function(customWebSocketUrls) {
+        // Return boolean, permit to test if the given chain is the used one
+        _isChain: function(givenChainName) {
 
-            var customWebSocketUrls = customWebSocketUrls || this.settings.steem.customWebSocketUrls;
-            var defaultWebSocketUrls = this.settings.steem.defaultWebSocketUrls;
+            return (givenChainName == this.settings.network.chainName.toLowerCase());
+        },
 
-            var fullWebSocketUrls = defaultWebSocketUrls.concat(customWebSocketUrls);
+        // Reset settings configuration
+        _resetSettings: function() {
 
-            this.set('_webSocketUrls', fullWebSocketUrls);
-
+            var appShell = document.getElementById('appshell');
+                appShell.setDefaultSettings();
+                appShell.showToast('Setting successfully reset');
         },
 
         // Change theme background

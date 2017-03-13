@@ -180,8 +180,8 @@
                 </paper-button>
                 <paper-button dialog-confirm
                               autofocus
-                              id="removeFavoriteButton"
-                              on-tap="_removeFavoriteTag()">
+                              id="removePostFavoriteButton"
+                              on-tap="_removeFavoritePost()">
                     Yes
                 </paper-button>
             </div>
@@ -259,16 +259,16 @@
                             <span class="posted-ago">
                                 [[_computeTimeFromNow(post.created)]]
                                 <span hidden="[[_isInFavorite]]">
-                                    <paper-icon-button id="addFavoriteButton"
+                                    <paper-icon-button id="addFavoritePostButton"
                                                        icon="my-icons:bookmark-border"
-                                                       on-tap="_addFavoriteTag()">
+                                                       on-tap="_addFavoritePost()">
                                     </paper-icon-button>
                                 </span>
 
                                 <span hidden="[[!_isInFavorite]]">
-                                    <paper-icon-button id="openConfirmationButton"
+                                    <paper-icon-button id="openConfirmationRemovePostButton"
                                                        icon="my-icons:bookmark"
-                                                       on-tap="_openConfirmationRemove()">
+                                                       on-tap="_openConfirmationRemovePost()">
                                     </paper-icon-button>
                                 </span>
                             </span>
@@ -373,16 +373,18 @@
 
             // List events
             this.$.toggleContentData.addEventListener('tap', this._toggleContentDataHeight.bind(this));
-            this.$.addFavoriteButton.addEventListener('tap', this._addFavoriteTag.bind(this));
-            this.$.openConfirmationButton.addEventListener('tap', this._openConfirmationRemove.bind(this));
-            this.$.removeFavoriteButton.addEventListener('tap', this._removeFavoriteTag.bind(this));
+
+            this.$.addFavoritePostButton.addEventListener('tap', this._addFavoritePost.bind(this));
+            this.$.openConfirmationRemovePostButton.addEventListener('tap', this._openConfirmationRemovePost.bind(this));
+            this.$.removePostFavoriteButton.addEventListener('tap', this._removeFavoritePost.bind(this));
+
             this.$.openShareDialogButton.addEventListener('tap', this._openShareDialog.bind(this));
 
 
             this.rf = new IntlRelativeFormat('en-us');
             this._contentToggled = false;
             this._domainName = window.location.hostname;
-            this._refreshIsFavorite();
+            this._refreshIsFavoritePost();
         },
 
         _toggleContentDataHeight: function() {
@@ -432,26 +434,32 @@
             return '@'+author;
         },
 
-        _refreshIsFavorite: function() {
+        _refreshIsFavoritePost: function() {
 
-            this._isInFavorite = document.getElementById('appshell').isFavoriteTag(this.post);
+            this._isInFavorite = document.getElementById('appshell').isFavoritePost(this.post);
         },
 
-        _addFavoriteTag: function() {
+        _addFavoritePost: function() {
 
             // Add to favorite
-            document.getElementById('appshell').addFavoriteTag(this.post);
-            this._refreshIsFavorite();
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Post sucessfully added to favorites');
+                appShell.addFavoritePost(this.post);
+
+            this._refreshIsFavoritePost();
         },
 
-        _removeFavoriteTag: function() {
+        _removeFavoritePost: function() {
 
             // remove from favorite
-            document.getElementById('appshell').removeFavoriteTag(this.post);
-            this._refreshIsFavorite();
+            var appShell = document.getElementById('appshell');
+                appShell.showToast('Post sucessfully removed from favorites');
+                appShell.removeFavoritePost(this.post);
+
+            this._refreshIsFavoritePost();
         },
 
-        _openConfirmationRemove: function() {
+        _openConfirmationRemovePost: function() {
 
             this.$.confirmationRemove.open();
         },

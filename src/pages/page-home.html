@@ -30,7 +30,8 @@
                 background: transparent;
                 /*background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
 
-                --home-background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
+                /* https://s24.postimg.org/3nxum2ztv/mdcontract.jpg */
+                --home-background-image: url('https://s28.postimg.org/gq2u4cznf/image.jpg');
                 background-image: var(--home-background-image);
                 background-size: cover;
                 background-position: center center;
@@ -119,7 +120,8 @@
             #headersection {
                 margin-top: 56px;
                 padding: 32px;
-                color: #333;
+                color: #eee;
+                text-transform: uppercase;
             }
 
             #presentation-center, #presentation-cards {
@@ -133,6 +135,7 @@
             }
 
             #presentation-button {
+                padding-top: 32px;
                 text-align: center;
             }
 
@@ -234,6 +237,7 @@
 
             #contributors a {
                 color: #eee;
+                text-decoration: none;
             }
             
         </style>
@@ -244,7 +248,9 @@
                                on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
-            <div main-title><a href="/@esteem8">ES8</a></div>
+            <div main-title>
+                <img src="https://s9.postimg.org/igk2o0v8t/Esteem8_logo_center_3.png" height="64px" width="64px">
+            </div>
             <paper-button id="loginButton">
                 <a href="/login">Login</a>
             </paper-button>
@@ -253,8 +259,8 @@
         <!-- HEADER SECTION -->
         <div id="headersection">
             <div id="presentation-center">
-                <h1>Access now to the world first blockchain based social media platform without any ads.</h1>
-                <h2>Everyone get rewarded to use it !</h2>
+                <h1>Access now to the world first blockchain based social network without any ads.</h1>
+                <h2>And get rewarded to create and like content !</h2>
                 <div id="presentation-button">
                     <a href="https://youtu.be/xZmpCAqD7hs"
                        target="_blank">
@@ -420,7 +426,8 @@
 
             if(document.referrer.match('github.com')){
 
-                this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
+                // https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg
+                this.customStyle['--home-background-image'] = 'url("' + 'https://s28.postimg.org/gq2u4cznf/image.jpg' + '")';
                 this.$.headersection.style.color = '#eee';
                 this.updateStyles();
             }

@@ -287,6 +287,11 @@
             var currentSortingUrl = this.currentSortingUrl || this.currentSorting  + '/' || '';
             var currentTag = this.currentTagUrl.replace('/', '') || this.currentTag || '';
 
+            if(currentTag.includes('@')) {
+
+                currentTag = '';
+            }
+
             if(currentSortingUrl.includes('created') || currentSortingUrl.includes('hot') || currentSortingUrl.includes('trending') || currentSortingUrl.includes('active')) {
 
                 this.currentSorting = currentSortingUrl.replace('/', '');
@@ -295,6 +300,9 @@
                 if(currentTag != '') {
 
                     this.currentTag = currentTag;
+                }else {
+
+                    this.currentTag = '';
                 }
 
             }

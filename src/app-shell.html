@@ -7,6 +7,8 @@
 <link rel="import" href="./../bower_components/app-route/app-location.html">
 <link rel="import" href="./../bower_components/app-route/app-route.html">
 
+<link rel="import" href="./../bower_components/paper-toast/paper-toast.html">
+
 <link rel="import" href="api/steemjs/steem-get-account.html">
 <link rel="import" href="components/drawer-content.html">
 
@@ -162,6 +164,9 @@
                       settings="[[settings]]">
             </page-404>
         </iron-pages>
+
+        <paper-toast id="toast" text=""></paper-toast>
+
     </template>
 
     <script>
@@ -242,8 +247,7 @@
 
                 '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
                 '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)',
-                '_userNameChanged(settings.user.name)',
-                '_webSocketChanged(settings.steem.webSocketUrl)'
+                '_userNameChanged(settings.user.name)'
             ],
 
             ready: function() {
@@ -260,72 +264,7 @@
 
                 if(typeof this.settings == 'undefined') {
 
-                    this.settings = {
-
-                        user: {
-                            name: '',
-                            password: '',
-                            account: {
-                                profileImage: '',
-                                coverImage: '',
-                                followers: [],
-                                following: []
-                            }
-                        },
-
-                        theme: {
-                            primaryColor: '#F44336',
-                            secondaryColor: '#3F51B5',
-                            darkPrimaryColor: '#c3362b',
-                            lightPrimaryColor: '#ff5041',
-                            ultraDarkPrimaryColor: '#7a221b',
-                            primaryTextColor: '#eeeeee',
-                            secondaryTextColor: '#eeeeee',
-                            dividerColor: '#BDBDBD',
-                            primaryBackgroundColor: '#eeeeee',
-                            secondaryBackgroundColor: '#ffffff',
-                            backgroundPrimaryTextColor: '#282828',
-                            backgroundSecondaryTextColor: '#666666'
-                        },
-
-                        display: {
-                            showCardContent: false,
-                            showCardTags: true,
-                            showCardImage: true,
-                            imageResolution: 'medium'
-                        },
-
-                        content: {
-                            emojiSheet: 'emojione',
-
-                            imageProxyUrl: 'https://steemitimages.com/',
-                            customImageProxyUrls: [],
-                            defaultImageProxyUrls: [
-                                'https://steemitimages.com/'
-                            ],
-
-                            textAlign: 'left'
-                        },
-
-                        support: {
-                            enableSupportApplication: false,
-                            enableSupportUpdates: false
-                        },
-
-                        steem: {
-
-                            webSocketUrl: 'wss://steemd.steemit.com/',
-                            customWebSocketUrls: [],
-                            defaultWebSocketUrls: [
-                                'wss://steemd.steemit.com/',
-                                'wss://steemd.steemitdev.com',
-                                'wss://node.steem.ws ',
-                                'wss://this.piston.rocks',
-                                'wss://seed.bitcoiner.me'
-                            ]
-
-                        }
-                    };
+                    this.setDefaultSettings();
                 }
 
             },
@@ -333,6 +272,14 @@
             attached: function() {
 
                 this._themeChanged();
+
+                // Update settings on new version and notify user
+                var defaultSettings = this.getDefaultSettings();
+                if(this.settings.appVersion != defaultSettings.appVersion) {
+
+                    this._mergeDefaultSettings();
+                    this.showToast('App version ' + defaultSettings.appVersion + ' successfully updated');
+                }
             },
 
             // URL has changed
@@ -530,6 +477,14 @@
                 this._username = username;
             },
 
+            showToast: function(text) {
+
+                var toast = this.$.toast;
+                    toast.close();
+                    toast.setAttribute('text', text);
+                    toast.open();
+            },
+
             isFavoritePost: function(post) {
 
                 // Refresh favorite post state
@@ -542,10 +497,10 @@
                 return (this.favoriteUsers.indexOf(username) != -1);
             },
 
-            isFavoriteTag: function(category) {
+            isFavoriteTag: function(tag) {
 
                 // Refresh favorite tag state
-                return (this.favoriteTags.indexOf(category) != -1);
+                return (this.favoriteTags.indexOf(tag) != -1);
             },
 
             addFavoritePost: function(post) {
@@ -560,10 +515,10 @@
                 this.push('favoriteUsers', username);
             },
 
-            addFavoriteTag: function(category) {
+            addFavoriteTag: function(tag) {
 
                 // Add tag to favorite
-                this.push('favoriteTags', category);
+                this.push('favoriteTags', tag);
             },
 
             addFavoriteFile: function(file) {
@@ -586,10 +541,10 @@
                 this.splice('favoriteUsers', index, 1); // Delete index found
             },
 
-            removeFavoriteTag: function(category) {
+            removeFavoriteTag: function(tag) {
 
                 // remove tag from favorite
-                var index = this.favoritePosts.indexOf(category); // index to delete
+                var index = this.favoriteTags.indexOf(tag); // index to delete
                 this.splice('favoriteTags', index, 1); // Delete index found
             },
 
@@ -608,6 +563,104 @@
             setSettings: function(settings) {
 
                 this.settings = settings;
+            },
+
+            getDefaultSettings: function() {
+
+                return {
+
+                    appVersion: '0.0.4.1',
+
+                    user: {
+                        name: '',
+                        password: '',
+                        account: {
+                            profileImage: '',
+                            coverImage: '',
+                            followers: [],
+                            following: []
+                        }
+                    },
+
+                    theme: {
+                        primaryColor: "#673AB7",
+                        secondaryColor: "#FF5722",
+                        darkPrimaryColor: "#522e92",
+                        lightPrimaryColor: "#7c46dc",
+                        ultraDarkPrimaryColor: "#341d5c",
+                        primaryTextColor: "#eeeeee",
+                        secondaryTextColor: "#eeeeee",
+                        dividerColor: "#BDBDBD",
+                        primaryBackgroundColor: "#eeeeee",
+                        secondaryBackgroundColor: "#ffffff",
+                        backgroundPrimaryTextColor: "#282828",
+                        backgroundSecondaryTextColor: "#666666"
+                    },
+
+                    display: {
+                        showCardContent: false,
+                        showCardTags: true,
+                        showCardImage: true,
+                        imageResolution: 'medium'
+                    },
+
+                    content: {
+                        emojiSheet: 'emojione',
+
+                        imageProxyUrl: 'https://steemitimages.com/',
+                        customImageProxyUrls: [],
+                        defaultImageProxyUrls: [
+                            'https://steemitimages.com/'
+                        ],
+
+                        textAlign: 'left'
+                    },
+
+                    support: {
+                        enableSupportApplication: false,
+                        enableSupportUpdates: false
+                    },
+
+                    network: {
+                        websocketUrl: 'wss://steemd.steemit.com',
+                        chainName: 'steem'
+                    },
+
+                    steem: {
+                        customWebsocketUrls: [],
+                        defaultWebsocketUrls: [
+                            'wss://steemd.steemit.com',
+                            'wss://steemd.steemitdev.com',
+                            'wss://node.steem.ws ',
+                            'wss://this.piston.rocks',
+                            'wss://seed.bitcoiner.me'
+                        ]
+
+                    },
+
+                    golos: {
+                        customWebsocketUrls: [],
+                        defaultWebsocketUrls: [
+                            'wss://ws.golos.io'
+                        ]
+                    }
+                };
+
+            },
+
+            setDefaultSettings: function() {
+
+                this.settings = this.getDefaultSettings();
+            },
+
+            _mergeDefaultSettings: function() {
+
+                var defaultSettings = this.getDefaultSettings();
+                var actualSettings = this.settings;
+
+                    actualSettings.appVersion = defaultSettings.appVersion;
+
+                this.set('settings', Object.assign(defaultSettings, actualSettings));
             }
 
             // TODO

@@ -1,0 +1,107 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+<dom-module id="steem-set-chain-name"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-set-chain-name',
+
+            properties: {
+
+                /*
+                 * Chain name 'steem' or 'golos'
+                 */
+                chainName:  {
+                    type: String,
+                    observer: '_setChainId'
+                },
+
+                /*
+                 * Optional default websocket
+                 */
+                websockets: {
+                    type: Array
+                },
+
+                /*
+                 * Notify change on websocket here
+                 */
+                websocketUrl: {
+                    type: String
+                }
+            },
+
+            _ready: function() {
+
+                if(typeof this.websockets === 'undefined') {
+
+                    this.websockets = [
+                        {
+                            name: 'steem',
+                            defaultWebsocket: 'wss://steemd.steemit.com',
+                            chainID: '0000000000000000000000000000000000000000000000000000000000000000',
+                            chainPrefix: 'STM'
+                        },
+                        {
+                            name: 'golos',
+                            defaultWebsocket: 'wss://ws.golos.io',
+                            chainID: '782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12',
+                            chainPrefix: 'GLS'
+                        }
+                    ];
+                }
+            },
+
+            _setChainId: function() {
+
+                if(typeof this.chainName !== 'undefined') {
+
+                    if(this.chainName != '') {
+
+                        // Does chain have changed ?
+                        var chainHaveChanged = (steem.config.get('chain_id') == chainID);
+
+                        if(chainHaveChanged) {
+
+                            var chainID = '';
+                            var chainPrefix = '';
+                            var defaultChainWebsocket = '';
+
+                            // Get chain config
+                            for (var i = 0; i < this.websockets.length; i++) {
+
+                                var websocketObj = this.websockets[i];
+
+                                if(websocketObj.name == this.chainName) {
+
+                                    chainID = websocketObj.chainID;
+                                    chainPrefix = websocketObj.chainPrefix;
+                                    defaultChainWebsocket = websocketObj.defaultWebsocket;
+
+                                }
+
+                            }
+
+                            // Set chain id
+                            steem.config.set('chain_id', chainID);
+
+                            // Set chain prefix
+                            steem.config.set('address_prefix', chainPrefix);
+
+                            // Set websocket (node)
+                            steem.config.set('websocket', defaultChainWebsocket);
+                            this.websocketUrl = defaultChainWebsocket;
+                        }
+                    }
+
+                }
+            }
+        });
+    })();
+</script>
