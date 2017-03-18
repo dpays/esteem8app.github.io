@@ -26,11 +26,11 @@ Please read first the project [work the system](https://github.com/esteem8app/es
 
 **Development can be rewarded** by publishing your features with the [New feature template](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/contributing-kit/publications-template/new-feature.md) on the Steem/Golos network using the "esteem8-features" tag.
 
-### What can i do ?
+### Work in progress
 
-* Fix some [bugs](https://github.com/esteem8app/esteem8app.github.io/labels/bug).
-* Work on a [project](https://github.com/esteem8app/esteem8app.github.io/milestones).
-* Create a new project from [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
+* [Issues](https://github.com/esteem8app/esteem8app.github.io/labels/bug) fix.
+* [Project](https://github.com/esteem8app/esteem8app.github.io/milestones) advancement.
+* New project created from [strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies).
 
 or
 
