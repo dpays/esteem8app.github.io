@@ -118,7 +118,7 @@
         }
 
         .markdown-html th:hover, .markdown-html td:hover {
-            background-color: #888;
+            background-color: rgba(128, 128, 128, .10);
         }
 
         .markdown-html th {
@@ -126,7 +126,7 @@
         }
 
         .markdown-html tr:hover {
-            background-color: #777;
+            background-color: rgba(128, 128, 128, .15);
         }
 
         .markdown-html th:empty, .markdown-html td:empty {
@@ -505,17 +505,24 @@
                 });
 
                 // Custom element ( [iframe$ratio=1:3&url=https://primerz.github.io/])
-                var customElementRegex = /\[(iframe|steem tag)(\$)?([\/.=&:a-z0-9]+)?]/gm;
+                var customElementRegex = /\[(iframe|steem tag)(\$)?([\/.=&:a-z0-9\?\-]+)?]/gm;
                 html = html.replace(customElementRegex, function(match) {
 
+                    // Clean match
                     var match = match.replace(/ /g, "");
                     var match = match.replace("[", "");
                     var match = match.replace("]", "");
 
+                    // Element type (iframe, ...)
                     var rawElement = match.split("$")[0];
+
+                    // Parameters (ratio, url, ...)
                     var options = match.split("$")[1].split("&") || [];
 
+                    // Parameters pre-defined (B.E. for iframe prompt-user)
                     var preDefinedAttributes = [];
+
+                    // Element type for app (iframe -> responsive-iframe)
                     var appElement = '';
 
                     // Get element type
@@ -532,7 +539,14 @@
 
                     for(var i = 0; i < options.length;i++) {
 
-                        var attribute = options[i].split('='); // [attribute, value]
+                        var attribute = []; // Attribute [attributeName, value]
+
+                        var attr = options[i].split('=')[0]; // attr
+                        var val = options[i].replace(attr, '').replace('=', ''); // value = (attr + val) - attr
+
+                        attribute.push(attr);
+                        attribute.push(val);
+
                         attributes.push(attribute);
 
                     }

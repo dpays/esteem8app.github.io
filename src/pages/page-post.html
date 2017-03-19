@@ -253,7 +253,7 @@
         <paper-dialog id="confirmationRemovePost">
 
             <h2>Confirmation</h2>
-            <p>Remove this publication from favorite ?</p>
+            <p>Remove <span class="secondary-color">"[[_post.title]]"</span> from favorite ?</p>
 
             <div class="buttons">
                 <paper-button dialog-dismiss>
@@ -515,7 +515,21 @@
         _previousUrl: function() {
 
             // Back to previous URL or explore page
-            window.history.go(-1);
+            var currentDomain = document.location.host;
+
+            if(document.referrer.includes(currentDomain)) { // Was on the application
+
+                // History back
+                window.history.go(-1);
+            }else { // Come from an exteriors url
+
+                // Change url -> go on explore page
+                window.history.pushState({}, null, '/hot/' + this.category + '/');
+                window.dispatchEvent(new CustomEvent('location-changed'));
+
+            }
+
+
         },
 
         _openConfirmationRemovePost: function() {
@@ -531,7 +545,7 @@
         _refreshIsFavoritePost: function() {
 
             // Refresh favorite post state
-            this._isInFavoritePost = document.getElementById('appshell').isFavoritePost(this.post);
+            this._isInFavoritePost = document.getElementById('appshell').isFavoritePost(this._post);
         },
 
         _refreshIsFavoriteUser: function() {

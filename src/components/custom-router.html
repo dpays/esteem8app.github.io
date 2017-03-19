@@ -1,0 +1,133 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+
+<dom-module id="custom-router">
+    <style>
+
+        /* GENERAL */
+
+
+    </style>
+    <template>
+
+    </template>
+</dom-module>
+
+<script>
+    (function () {
+
+        Polymer({
+
+            is: 'custom-router',
+
+            properties: {
+
+                // '/A/B/C'
+                route: {
+                    type: Object,
+                    notify: true
+                },
+
+                // 'A'
+                pathOne: {
+                    type: String,
+                    notify: true
+                },
+
+                // 'B'
+                pathTwo: {
+                    type: String,
+                    notify: true
+                },
+
+                // 'C'
+                pathTree: {
+                    type: String,
+                    notify: true
+                }
+            },
+
+            observers: [
+                '_setRoute(pathOne, pathTwo, pathTree)',
+                '_setPaths(route.path)'
+            ],
+
+            ready: function() {
+
+                if(typeof this.pathOne === 'undefined') {
+
+                    this.set('pathOne', '');
+                }
+
+                if(typeof this.pathTwo === 'undefined') {
+
+                    this.set('pathTwo', '');
+                }
+
+                if(typeof this.pathTree === 'undefined') {
+
+                    this.set('pathTree', '');
+                }
+
+            },
+
+            _setRoute: function(pathOne, pathTwo, pathTree) {
+
+                var pathOne = pathOne || '';
+                var pathTwo = pathTwo || '';
+                var pathTree = pathTree || '';
+
+                var path = '';
+
+                if(pathOne.length) {
+
+                    path += '/' + pathOne;
+                }
+
+                if(pathTwo.length) {
+
+                    path += '/' + pathTwo;
+                }
+
+                if(pathTree.length) {
+
+                    path += '/' + pathTree;
+                }
+
+                this.set('route.path', path);
+
+            },
+
+            _setPaths: function(path) {
+
+                if(typeof path !== 'undefined') {
+
+                    if(path != '') {
+
+                        var paths = path.split('/');
+
+                        if(typeof paths[0] !== 'undefined') {
+
+                            this.set('pathOne', paths[0]);
+                        }
+
+                        if(typeof paths[1] !== 'undefined') {
+
+                            this.set('pathTwo', paths[1]);
+                        }
+
+                        if(typeof paths[2] !== 'undefined') {
+
+                            this.set('pathTree', paths[2]);
+                        }
+                    }
+
+                    console.log(path);
+                }
+
+            }
+
+        });
+    })();
+</script>

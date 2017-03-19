@@ -11,6 +11,7 @@
 
 <link rel="import" href="api/steemjs/steem-get-account.html">
 <link rel="import" href="components/drawer-content.html">
+<link rel="import" href="components/custom-router.html">
 
 <script src="scripts/intl-relativeformat-with-locales.min.js"></script>
 
@@ -26,17 +27,15 @@
                 --app-dark-primary-color: #c3362b;
                 --app-ultra-dark-primary-color: #7a221b;
                 --app-primary-text-color: #eeeeee;
-
                 --app-secondary-color: #3F51B5;
                 --app-secondary-text-color: #eeeeee;
-
                 --app-icon-color: #FFFFFF;
                 --app-divider-color: #BDBDBD;
-
                 --app-primary-background-color: #eeeeee;
                 --app-secondary-background-color: #ffffff;
                 --app-background-primary-text-color: #282828;
                 --app-background-secondary-text-color: #666666;
+
 
                 display: block;
             }
@@ -44,6 +43,13 @@
             #drawer {
                 z-index: 2;
             }
+
+            #copyTextInput {
+                position: absolute;
+                z-index: -1;
+                visibility: hidden;
+            }
+
         </style>
 
         <meta name="theme-color" content="[[settings.theme.darkPrimaryColor]]">
@@ -167,6 +173,8 @@
 
         <paper-toast id="toast" text=""></paper-toast>
 
+        <input type="text" id="copyTextInput" value="">
+
     </template>
 
     <script>
@@ -226,7 +234,7 @@
                 },
 
                 /*
-                 * favorite files array
+                 * Favorite files array
                  * Stored in browser
                  */
                 favoriteFiles: {
@@ -260,13 +268,25 @@
                 if(typeof this.favoritePosts == 'undefined') { this.favoritePosts = [];}
                 if(typeof this.favoriteUsers == 'undefined') { this.favoriteUsers = ['esteem8'];}
                 if(typeof this.favoriteTags == 'undefined') { this.favoriteTags = ['esteem8'];}
-                if(typeof this.favoriteFiles == 'undefined') { this.favoriteFiles = [{name: 'ESTEEM8 Logo', url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true'}];}
+                if(typeof this.favoriteFiles == 'undefined') {
+                    var files = [];
+                    for (var i = 0; i < 8; i++) {
+                        files.push({
+                            name: 'ESTEEM8 Logo',
+                            url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true'
+                        });
+                    }
+                    files.push({name: 'ES8 Presentation', url: 'https://docs.google.com/presentation/d/1xEWJQGMOGEVvNVW0Rf245TE4nYsRVOge29H4V6OERJ0/edit#slide=id.p'});
+                    files.push({name: 'Welcome', url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/articles/welcome.md'});
+                    files.push({name: 'esteem8app.github.io', url: 'https://github.com/esteem8app/esteem8app.github.io'});
+                    files.push({name: 'ES8 Docs', url: '[iframe$ratio=1:1&url=https://esteem8app.github.io/doc-viewer/index.html?repository=https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit]'});
 
-                if(typeof this.settings == 'undefined') {
-
-                    this.setDefaultSettings();
+                    this.favoriteFiles = files;
                 }
 
+                if(typeof this.settings == 'undefined') {
+                    this.setDefaultSettings();
+                }
             },
 
             attached: function() {
@@ -448,7 +468,6 @@
 
             // Change theme color
             _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, primaryBackgroundColor, secondaryBackgroundColor, backgroundPrimaryTextColor, backgroundSecondaryTextColor) {
-
                 // Set style
                 this.customStyle['--app-primary-color'] = primaryColor || this.settings.theme.primaryColor;
                 this.customStyle['--app-secondary-color'] = secondaryColor || this.settings.theme.secondaryColor;
@@ -480,9 +499,17 @@
             showToast: function(text) {
 
                 var toast = this.$.toast;
-                    toast.close();
-                    toast.setAttribute('text', text);
-                    toast.open();
+                toast.close();
+                toast.setAttribute('text', text);
+                toast.open();
+            },
+
+            copyToClipboard: function(text) {
+
+                var copyInput = document.getElementById('copyTextInput');
+                copyInput.setAttribute('value', text);
+                copyInput.focus();
+                document.execCommand('copy');
             },
 
             isFavoritePost: function(post) {
@@ -569,7 +596,7 @@
 
                 return {
 
-                    appVersion: '0.0.4.1',
+                    appVersion: '0.0.4.2',
 
                     user: {
                         name: '',
@@ -658,7 +685,7 @@
                 var defaultSettings = this.getDefaultSettings();
                 var actualSettings = this.settings;
 
-                    actualSettings.appVersion = defaultSettings.appVersion;
+                actualSettings.appVersion = defaultSettings.appVersion;
 
                 this.set('settings', Object.assign(defaultSettings, actualSettings));
             }

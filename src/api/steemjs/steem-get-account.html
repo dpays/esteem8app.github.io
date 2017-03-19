@@ -59,6 +59,8 @@
             // Query Steem for account data when name change
             _accountNameChanged: function(accountName) {
 
+                console.log(accountName);
+
                 var accountName = accountName || this.accountName;
 
                 if(accountName != '') {

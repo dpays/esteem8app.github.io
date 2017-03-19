@@ -16,7 +16,6 @@
         <style include="shared-styles">
 
             /* GENERAL */
-
             #steemTool {
                 width: 400px;
                 margin-top: 12px;
@@ -57,16 +56,15 @@
                 color: var(--app-background-primary-text-color);
             }
 
-
         </style>
 
-        <paper-card id="steemTool"
+        <paper-card id="steemTool" on-tap="_openLink()"
                     heading="[[tool.title]]"
                     image="[[tool.image]]">
-            <div class="card-content">
+            <div class="card-content" hidden>
                 [[tool.description]]
             </div>
-            <div class="card-actions">
+            <div class="card-actions" hidden>
                 <paper-button id="openToolButton">open</paper-button>
             </div>
         </paper-card>
@@ -92,12 +90,19 @@
 
         ready: function() {
 
-            this.$.openToolButton.addEventListener('tap', this._openLink.bind(this));
+            this.$.steemTool.addEventListener('tap', this._openLink.bind(this));
         },
 
         _openLink: function() {
 
-            window.open(this.tool.link);
+            if(this.tool.link.includes('http')) {
+
+                window.open(this.tool.link);
+            }else {
+
+                window.history.pushState({}, null, this.tool.link);
+                window.dispatchEvent(new CustomEvent('location-changed'));
+            }
         }
 
     });

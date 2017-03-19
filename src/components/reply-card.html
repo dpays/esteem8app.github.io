@@ -5,12 +5,12 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
-<link rel="import" href="../../bower_components/marked-element/marked-element.html">
-
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../api/steemjs/steem-get-comment-replies.html">
 <link rel="import" href="../components/comment-content.html">
 <link rel="import" href="../shared-styles.html">
+<link rel="import" href="../components/html-echo.html">
+<link rel="import" href="../components/my-icons.html">
 
 <dom-module id="reply-card">
 
@@ -31,7 +31,7 @@
                 margin-left: auto;
                 margin-right: auto;
                 padding: 0px;
-                border-bottom: solid 1px var(--app-background-secondary-text-color);
+                border-bottom: solid 1px rgba(128, 128, 128, .2);
                 background-color: var(--app-secondary-background-color);
                 color: var(--app-background-primary-text-color);
             }
@@ -105,9 +105,7 @@
                 <span class="date">[[_timeFromNow(reply.created)]]</span>
             </div>
             <div class="body">
-                <marked-element markdown="[[reply.body]]">
-                    <div class="markdown-html"></div>
-                </marked-element>
+                <html-echo html="[[reply.body]]"></html-echo>
             </div>
             <div class="bottom">
                 <span class="votes">[[reply.votes]]</span>

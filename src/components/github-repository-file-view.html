@@ -31,8 +31,6 @@
             .currentFile {
                 border-top: 1px solid var(--app-background-secondary-text-color);
                 padding: 8px;
-                max-width: 550px;
-                max-height: 500px;
                 overflow: auto;
             }
 
@@ -43,6 +41,8 @@
         </style>
 
         <url-get-file url="[[file.download_url]]" response-text="{{_fileText}}"></url-get-file>
+
+        <a id="downloadFileA" href="" download></a>
 
         <paper-item class="currentFileInfo">
 
@@ -112,11 +112,11 @@
                 /*
                  * Github repository file url to load
                  */
-                /*fileUrl: {
-                 type: String,
-                 observer: '_createFileObject'
-                 },
-                 */
+                fileUrl: {
+                    type: String,
+                    observer: '_createFileObject'
+                },
+
                 _fileText: {
                     type: Object
                 },
@@ -145,24 +145,35 @@
                 this.$.githubLinkEdit.addEventListener('tap', this._openFileInGithub.bind(this));
                 this.$.githubLinkHistory.addEventListener('tap', this._openFileInGithub.bind(this));
                 this.$.githubLinkView.addEventListener('tap', this._openFileInGithub.bind(this));
+                this.$.githubLinkDownload.addEventListener('tap', this._downloadFile.bind(this));
 
             },
 
-            /*_createFileObject: function() {
+            _createFileObject: function() {
 
              var fileObject = {};
-             var htmlFileUrl = this.fileUrl
+             var download_url = this.fileUrl
              .replace("github.com", "raw.githubusercontent.com")
-             .replace("/blob", "")
+             .replace("/blob", "");
 
-             fileObject.download_url = htmlFileUrl;
-             fileObject.name = /((?:[\. %a-zA-Z0-9-]+)?.\w+)$/gm.exec(htmlFileUrl)[0];
+             fileObject.html_url = this.fileUrl;
+             fileObject.download_url = download_url;
+             fileObject.name = /((?:[\. %a-zA-Z0-9-]+)?.\w+)$/gm.exec(download_url)[0];
              fileObject.type = 'file';
 
              this.file = fileObject;
              this._computeFileType();
 
-             },*/
+             },
+
+            _downloadFile: function() {
+
+                var downloadFileA = this.$.downloadFileA;
+                downloadFileA.setAttribute('href', this.file.download_url);
+                downloadFileA.setAttribute('download', this.file.name);
+                downloadFileA.click();
+
+            },
 
             _computeFileType: function() {
 

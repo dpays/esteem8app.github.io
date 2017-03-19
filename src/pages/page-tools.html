@@ -26,20 +26,28 @@
                 position: absolute;
                 /*background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
                 background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
-                background-position: center;
-                background-attachment: fixed;
-                background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
-                background-size: cover;
+                background-color: var(--app-primary-background-color);
+                /*background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');*/
 
             }
 
+            a {
+                text-decoration: none;
+            }
 
             #steemTools {
-                margin-top: 80px !important;
+                margin-top: 62px !important;
                 margin-bottom: 32px !important;
                 text-align: center;
                 margin: auto;
                 max-width: 900px;
+            }
+
+            @media screen and (max-width: 600px) {
+                .tool {
+
+                }
+
             }
 
             @media screen and (max-width: 600px) {
@@ -107,7 +115,7 @@
 
         <div id="steemTools">
 
-            <paper-card id="plugins" heading="Plugins">
+            <!--paper-card id="plugins" heading="Plugins">
                 <div class="card-content">
                     <a href="/favorites">
                         <paper-button>
@@ -122,7 +130,7 @@
                         </paper-button>
                     </a>
                 </div>
-            </paper-card>
+            </paper-card-->
 
             <template is="dom-if" if="[[_steemState.name]]">
 
@@ -180,7 +188,6 @@
 
         </div>
 
-
     </template>
 </dom-module>
 
@@ -193,8 +200,7 @@
         properties: {
 
             _steemStateResponse: {
-                type: String,
-                observer: '_computeSteemStatesResponse'
+                type: String
             },
 
             _steemState: {
@@ -207,6 +213,10 @@
 
         },
 
+        observers: [
+            '_computeSteemStatesResponse(_steemStateResponse)'
+        ],
+
         ready: function() {
 
             // List event
@@ -214,6 +224,18 @@
 
             // Set tools
             this._tools = [
+                {
+                    title: 'Favorites',
+                    description: 'A favorites manager.',
+                    image: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center%203%202048x1266.png?raw=true',
+                    link: '/favorites'
+                },
+                {
+                    title: 'Files',
+                    description: 'A file manager to easily clip your content to a post.',
+                    image: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center%203%202048x1266.png?raw=true',
+                    link: '/files'
+                },
                 {
                     title: 'Steem map',
                     description: 'An Interactive World Map showing the Steem Statistics in a visual way.',
@@ -241,10 +263,10 @@
             ];
         },
 
-        _computeSteemStatesResponse: function() {
+        _computeSteemStatesResponse: function(_steemStateResponse) {
 
             // Set steem currencie data
-            this._steemState = JSON.parse(this._steemStateResponse)[0];
+            this._steemState = JSON.parse(_steemStateResponse)[0];
 
         },
 

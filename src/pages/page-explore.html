@@ -101,7 +101,7 @@
 
             <div class="floatingToolbar">
                 <div id="floatingTitle"
-                      on-tap="_openSelectCategoryDialog()">
+                     on-tap="_openSelectCategoryDialog()">
                     <!-- current category -->
                     <span class="middle floatingToolbarTitle"
                           id="selectOtherCategoryButton"
@@ -257,7 +257,7 @@
         ready: function() {
 
             // List events
-            this.$.floatingTitle.addEventListener('tap',this._openSelectCategoryDialog.bind(this));
+            this.$.floatingTitle.addEventListener('tap', this._openSelectCategoryDialog.bind(this));
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
             this.$.toggleFavoriteTagButton.addEventListener('tap', this._toggleFavoriteTag.bind(this));
 

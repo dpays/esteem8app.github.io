@@ -1,13 +1,22 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/file-card.html">
+<link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-files">
@@ -18,7 +27,7 @@
 
             /* GENERAL */
             :host {
-                height: 100%;
+                min-height: calc(100% - 16px);
                 margin: 0;
                 position: absolute;
                 width: 100%;
@@ -35,13 +44,83 @@
                 width: 100%;
             }
 
+            .mainToolbar .bottom div {
+                display: inline;
+            }
+
+            .mainToolbar .bottom div[hidden] {
+                display: none;
+            }
+
             .dark-primary {
                 text-align: right;
                 width: 100%;
             }
 
-            .page-content {
+            .scrollable {
+                overflow: auto;
+                max-height: calc(100% - 72px);
+            }
+
+            #files {
                 margin-top: 128px;
+                text-align: center;
+            }
+
+            .file-cards {
+                @apply(--layout-horizontal);
+                display: inline;
+            }
+
+            file-card {
+                background-color: rgba(128, 128, 128, 0);
+                transition: background-color ease-out .1s;
+            }
+
+            file-card.iron-selected {
+                background-color: rgba(128, 128, 128, 0.4);
+                transition: background-color ease-in .1s;
+            }
+
+            #addFileFab {
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+            }
+
+            paper-dialog {
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-primary-text-color)
+            }
+
+            paper-input {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            @media (max-width: 400px) {
+                #viewFileDialog {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                }
+            }
+
+            #viewFileDialog {
+                min-width: 80%;
+                height: 100%;
+            }
+
+            #closeViewButton {
+                color: var(--app-background-primary-text-color);
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding: 8px;
+                margin: 16px;
             }
 
 
@@ -49,9 +128,12 @@
 
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar medium-tall">
-            <a href="/tools">
-                <paper-icon-button icon="my-icons:arrow-back"></paper-icon-button>
-            </a>
+
+            <paper-icon-button icon="my-icons:menu"
+                               id="toggleDrawerMenu"
+                               on-tap="_openDrawer()">
+            </paper-icon-button>
+
             <div class="floatingToolbar">
                 <span class="floatingToolbarTitle">
                     My files
@@ -61,23 +143,128 @@
                 <paper-icon-button icon="my-icons:explore"></paper-icon-button>
             </a>
             <div class="bottom right dark-primary">
-                <paper-icon-button id="copyFileLinkButton"
-                                   on-tap="_copyFileLink()"
-                                   icon="my-icons:copy">
-                </paper-icon-button>
 
-                <paper-icon-button id="openFileLinkButton"
-                                   on-tap="_openLink()"
-                                   icon="my-icons:link">
-                </paper-icon-button>
-                <paper-icon-button id="editFileLinkButton"
-                                   icon="my-icons:edit"
-                                   on-tap="_editFileLink()">
-                </paper-icon-button>
+                <div hidden="[[!_oneSelected(selectedFiles.length)]]">
+                    <paper-icon-button id="openViewFileButton"
+                                       on-tap="_openViewFile()"
+                                       icon="my-icons:visibility">
+                    </paper-icon-button>
+                </div>
+
+                <div hidden="[[!_oneSelected(selectedFiles.length)]]">
+                    <paper-icon-button id="openEditFileButton"
+                                       icon="my-icons:edit"
+                                       on-tap="_openEditFile()">
+                    </paper-icon-button>
+                </div>
+
+                <div hidden="[[!_multipleSelected(selectedFiles.length)]]">
+                    <paper-icon-button id="openConfirmationDeleteFileButton"
+                                       on-tap="_openConfirmationDeleteFile()"
+                                       icon="my-icons:delete">
+                    </paper-icon-button>
+                </div>
+
+                <div hidden="[[!_multipleSelected(selectedFiles.length)]]">
+                    <paper-icon-button id="openFileLinkButton"
+                                       on-tap="_openFileLink()"
+                                       icon="my-icons:link">
+                    </paper-icon-button>
+                </div>
+
+                <div hidden="[[!_multipleSelected(selectedFiles.length)]]">
+                    <paper-icon-button id="copyFileLinkButton"
+                                       on-tap="_copyFileLink()"
+                                       icon="my-icons:copy">
+                    </paper-icon-button>
+                </div>
             </div>
         </paper-toolbar>
 
-        <div class="page-content">
+        <!-- Confirmation remove from favorite -->
+        <paper-dialog id="confirmationRemoveFilesDialog">
+
+            <h2>Confirmation</h2>
+            <p>Remove <span class="secondary-color">[[selectedFiles.length]]</span> files from favorite ?</p>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="deleteFileButton"
+                              on-tap="_deleteFile()">
+                    Yes
+                </paper-button>
+            </div>
+        </paper-dialog>
+
+        <!-- Add a file to favorite -->
+        <paper-dialog id="addFilesDialog">
+
+            <h2>Add a file</h2>
+
+            <paper-input label="Url" value="{{currentFile.url}}">
+                <iron-icon icon="my-icons:link" prefix></iron-icon>
+            </paper-input>
+
+            <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="addFileButton"
+                              on-tap="_addFile()">
+                    Add
+                </paper-button>
+            </div>
+        </paper-dialog>
+
+        <!-- Edit a file from favorite -->
+        <paper-dialog id="editFileDialog">
+
+            <h2>Edit a file</h2>
+
+            <paper-input label="Url" value="{{currentFile.url}}">
+                <iron-icon icon="my-icons:link" prefix></iron-icon>
+            </paper-input>
+
+            <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="saveFileButton"
+                              on-tap="_saveFile()">
+                    Save
+                </paper-button>
+            </div>
+        </paper-dialog>
+
+        <!-- View a file -->
+        <paper-dialog id="viewFileDialog">
+
+            <h2>[[currentFile.name]]</h2>
+
+            <paper-icon-button id="closeViewButton"
+                               icon="my-icons:close"
+                               dialog-dismiss>
+            </paper-icon-button>
+
+            <div class="scrollable">
+                <html-echo html=" [[currentFile.url]] "></html-echo>
+            </div>
+
+        </paper-dialog>
+
+        <div id="files">
 
             <template is="dom-if" if="[[!favoriteFiles.length]]">
                 <h1>You don't have any files</h1>
@@ -85,13 +272,21 @@
 
             <template is="dom-if" if="[[favoriteFiles.length]]">
                 <div class="file-cards">
-                    <template is="dom-repeat" items="[[favoriteFiles]]">
-                        <file-card file="[[item]]"></file-card>
-                    </template>
+                    <iron-selector multi selected-values="{{selectedFiles}}"
+                                   in items="[[favoriteFiles]]">
+                        <template is="dom-repeat" items="[[favoriteFiles]]">
+                            <file-card file="[[item]]"></file-card>
+                        </template>
+                    </iron-selector>
                 </div>
             </template>
 
         </div>
+
+        <paper-fab id="addFileFab"
+                   on-tap="_openAddFileDialog()"
+                   icon="my-icons:add">
+        </paper-fab>
 
     </template>
 </dom-module>
@@ -109,9 +304,192 @@
                 notify: true
             },
 
+            currentFile: {
+                type: Object
+            },
+
+            selectedFiles: {
+                type: Array
+            },
+
+            pastFiles: {
+                type: Array
+            },
+
             settings: {
                 type: Object
+            },
+
+            editFileIndex: {
+                type: String
             }
+        },
+
+        observers: [
+            '_setCurrentFileName(currentFile.url)'
+        ],
+
+        ready: function() {
+
+            this.pastFiles = this.favoriteFiles;
+            this.selectedFiles = [];
+            this.currentFile = {name: '', url: ''};
+
+            this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
+            this.$.deleteFileButton.addEventListener('tap', this._deleteFile.bind(this));
+            this.$.openFileLinkButton.addEventListener('tap', this._openFileLink.bind(this));
+            this.$.addFileFab.addEventListener('tap', this._openAddFileDialog.bind(this));
+            this.$.addFileButton.addEventListener('tap', this._addFile.bind(this));
+
+            this.$.openViewFileButton.addEventListener('tap', this._openViewFile.bind(this));
+            this.$.openEditFileButton.addEventListener('tap', this._openEditFile.bind(this));
+            this.$.openConfirmationDeleteFileButton.addEventListener('tap', this._openConfirmationDeleteFile.bind(this));
+
+            this.$.saveFileButton.addEventListener('tap', this._saveFile.bind(this));
+            this.$.copyFileLinkButton.addEventListener('tap', this._copyFileLink.bind(this));
+        },
+
+        // Open side drawer (menu)
+        _openDrawer: function() {
+
+            document.getElementById('appshell')._openDrawer();
+        },
+
+        _oneSelected: function(selectedFilesLength) {
+
+            return (selectedFilesLength == 1);
+        },
+
+        _multipleSelected: function(selectedFilesLength) {
+
+            return (selectedFilesLength >= 1);
+        },
+
+        _resetSelection: function() {
+
+            this.selectedFiles = [];
+        },
+
+        // Copy selected images url to clipboard
+        _copyFileLink: function() {
+            var textToCopy = " ";
+
+            var selectedFiles = this.selectedFiles;
+            var favoriteFiles = this.favoriteFiles;
+
+            // Add each selected image url
+            for(var i = 0; i < selectedFiles.length; i++) {
+
+                var fileIndex = selectedFiles[i];
+                var file = favoriteFiles[fileIndex];
+
+                var url = file.url;
+
+                textToCopy += url + " ";
+
+            }
+
+            var appShell = document.getElementById('appshell');
+
+            appShell.showToast('Successfully copied to your clipboard');
+            appShell.copyToClipboard(textToCopy);
+
+        },
+
+        _openConfirmationDeleteFile: function() {
+
+            this.$.confirmationRemoveFilesDialog.open();
+        },
+
+        _openViewFile: function() {
+
+            var currentFileIndex = this.selectedFiles[0];
+            this.currentFile = this.favoriteFiles[currentFileIndex];
+
+            this.$.viewFileDialog.open();
+
+        },
+
+        _openEditFile: function() {
+
+            this.editFileIndex = this.selectedFiles[0];
+            this.currentFile = this.favoriteFiles[this.editFileIndex];
+
+            this.$.editFileDialog.open();
+        },
+
+        // Delete selected images
+        _deleteFile: function() {
+
+            // Save previous file statements
+            this.pastFiles = this.favoriteFiles;
+
+            // Delete selected index
+            var indexToDelete = this.selectedFiles;
+            for(var i = 0; i < indexToDelete.length; i++) {
+
+                var index = indexToDelete[i];
+                this.splice('favoriteFiles', index, 1);
+            }
+
+            this.selectedFiles = [];
+
+        },
+
+        _undoDeleteFile: function() {
+
+            this.set('favoriteFiles', this.favoriteFiles);
+        },
+
+        _saveFile: function() {
+
+            var indexToUpdate = this.editFileIndex;
+            var pathToUpdate = 'favoriteFiles.' + indexToUpdate;
+
+            this.set(pathToUpdate, this.currentFile);
+
+            this._resetCurrentFile();
+
+        },
+
+        _openFileLink: function() {
+
+            var filesIndex = this.selectedFiles;
+            var favoriteFiles = this.favoriteFiles;
+
+            for(var i = 0; i < filesIndex.length; i++) {
+
+                var index = filesIndex[i];
+                var file = favoriteFiles[index];
+
+                this.async(function() {
+                    window.open(file.url);
+                });
+            }
+
+        },
+
+        _openAddFileDialog: function() {
+
+            this._resetCurrentFile();
+            this.$.addFilesDialog.open();
+        },
+
+        // Add one image
+        _addFile: function() {
+
+            this.push('favoriteFiles', this.currentFile);
+            this._resetCurrentFile();
+        },
+
+        _setCurrentFileName: function(url) {
+
+        },
+
+        _resetCurrentFile: function() {
+
+            this.set('currentFile', {name: '', url: ''});
         }
 
         //http://uploads.im/apidocs

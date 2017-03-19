@@ -1,10 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
-
-<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -18,8 +17,7 @@
 
             /* GENERAL */
             :host {
-                display: inline-flex;
-                background-color: var(--app-primary-background-color);
+                @apply(--layout-flex);
             }
 
             * {
@@ -27,9 +25,9 @@
             }
 
             #fileCard {
-                display: block;
+                display: inline-block;
                 margin: 12px;
-                background: var(--app-secondary-background-color)
+                background: var(--app-secondary-background-color);
                 --paper-card-background-color: var(--app-secondary-background-color);
                 --paper-card-header-color: var(--app-background-primary-text-color);
                 --paper-card-header-image: {
@@ -44,17 +42,23 @@
                     margin: 0;
                     padding: 12px;
                     color: #eee;
-
                 };
             }
 
-
+            @media (max-width: 400px) {
+                #fileCard {
+                    margin: 8px;
+                    --paper-card-header-image: {
+                        width: 142px;
+                        height: 88px;
+                    };
+                }
+            }
 
         </style>
 
 
         <!-- post cards -->
-
         <paper-card id="fileCard"
                     heading="[[file.name]]"
                     image="[[file.url]]">
@@ -68,10 +72,6 @@
     Polymer({
 
         is: 'file-card',
-
-        behaviors: [
-            Polymer.AppLocalizeBehavior
-        ],
 
         properties: {
 
@@ -88,26 +88,31 @@
             '_computeImageUrl(file)'
         ],
 
-        ready: function() {
-
-            // List events
-            this.rf = new IntlRelativeFormat('en-us');
-        },
-
         _computeImageUrl: function(file) {
 
             if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
 
                 this._imageUrl = file.url;
+
             }else if(file.url.includes('docs.google.com/document')) {
 
-                this._imageUrl =  'https://lh4.ggpht.com/-wROmWQVYTcjs3G6H0lYkBK2nPGYsY75Ik2IXTmOO2Oo0SMgbDtnF0eqz-BRR1hRQg=w300';
+                this._imageUrl =  './src/images/google/docs.png';
+            }else if(file.url.includes('docs.google.com/drawings')) {
+
+                this._imageUrl =  './src/images/google/drawing.png';
+            }else if(file.url.includes('docs.google.com/forms')) {
+
+                this._imageUrl =  './src/images/google/forms.png';
+            }else if(file.url.includes('docs.google.com/spreadsheets')) {
+
+                this._imageUrl =  './src/images/google/sheets.png';
+            }else if(file.url.includes('docs.google.com/presentation')) {
+
+                this._imageUrl =  './src/images/google/slides.png';
+            }else if(file.url.includes('github.com')) {
+
+                this._imageUrl =  './src/images/github/octocat.png';
             }
-        },
-
-        _timeFromNow: function(date) {
-
-            return new IntlRelativeFormat('en-us').format(new Date(date));
         }
 
     });
