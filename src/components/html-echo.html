@@ -274,7 +274,7 @@
                 });
 
                 // RENDER Direct image link -> https://a.domain.org/
-                var directImageLinkRegex = /.?http[ :.=_\-a-zA-Z0-9\/]*.(jpg|png|gif|jpeg)[ \/%&=a-zA-Z0-9]*/gm;
+                var directImageLinkRegex = /.?http[ :.=_\-a-zA-Z0-9\/\%]*.(jpg|png|gif|jpeg)[ \/\%&=a-zA-Z0-9\?\.]*/gm;
                 html = html.replace(directImageLinkRegex, function(match){
 
                     var firstChar = match.substring(0, 1);

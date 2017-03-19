@@ -61,7 +61,7 @@
         <!-- post cards -->
         <paper-card id="fileCard"
                     heading="[[file.name]]"
-                    image="[[file.url]]">
+                    image="[[_imageUrl]]">
         </paper-card>
 
     </template>
@@ -84,9 +84,10 @@
             }
         },
 
-        observer: [
-            '_computeImageUrl(file)'
-        ],
+        ready: function() {
+
+            this._computeImageUrl(this.file);
+        },
 
         _computeImageUrl: function(file) {
 
@@ -96,22 +97,22 @@
 
             }else if(file.url.includes('docs.google.com/document')) {
 
-                this._imageUrl =  './src/images/google/docs.png';
+                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/docs.png?raw=true';
             }else if(file.url.includes('docs.google.com/drawings')) {
 
-                this._imageUrl =  './src/images/google/drawing.png';
+                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/drawing.png?raw=true';
             }else if(file.url.includes('docs.google.com/forms')) {
 
-                this._imageUrl =  './src/images/google/forms.png';
+                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/forms.png?raw=true';
             }else if(file.url.includes('docs.google.com/spreadsheets')) {
 
-                this._imageUrl =  './src/images/google/sheets.png';
+                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/sheets.png?raw=true';
             }else if(file.url.includes('docs.google.com/presentation')) {
 
-                this._imageUrl =  './src/images/google/slides.png';
+                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/slides.png?raw=true';
             }else if(file.url.includes('github.com')) {
 
-                this._imageUrl =  './src/images/github/octocat.png';
+                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true';
             }
         }
 
