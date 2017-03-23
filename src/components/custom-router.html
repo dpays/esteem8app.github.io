@@ -1,16 +1,37 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-route-converter.html">
 
 <dom-module id="custom-router">
-    <style>
-
-        /* GENERAL */
-
-
-    </style>
     <template>
 
+        <app-route-converter route="{{route}}" path="{{path}}">
+        </app-route-converter>
+
+        <!-- URL level 1 -->
+        <app-route
+                route="{{route}}"
+                pattern="/:data"
+                data="{{dataUrl1}}"
+                tail="{{subRoute}}">
+        </app-route>
+
+        <!-- URL level 2 -->
+        <app-route
+                route="{{subRoute}}"
+                pattern="/:data"
+                data="{{dataUrl2}}"
+                tail="{{subSubRoute}}">
+        </app-route>
+
+        <!-- URL level 3 -->
+        <app-route
+                route="{{subSubRoute}}"
+                pattern="/:data"
+                data="{{dataUrl3}}"
+                tail="{{subSubSubRoute}}">
+        </app-route>
     </template>
 </dom-module>
 
@@ -23,7 +44,7 @@
 
             properties: {
 
-                // '/A/B/C'
+                // '/A/B/C' object
                 route: {
                     type: Object,
                     notify: true
@@ -42,15 +63,18 @@
                 },
 
                 // 'C'
-                pathTree: {
+                pathThree: {
                     type: String,
                     notify: true
                 }
             },
 
             observers: [
-                '_setRoute(pathOne, pathTwo, pathTree)',
-                '_setPaths(route.path)'
+                '_setPathOne(dataUrl1.data)',
+                '_setPathTwo(dataUrl2.data)',
+                '_setPathThree(dataUrl3.data)',
+
+                '_setRoute(pathOne, pathTwo, pathThree)'
             ],
 
             ready: function() {
@@ -67,36 +91,54 @@
 
                 if(typeof this.pathTree === 'undefined') {
 
-                    this.set('pathTree', '');
+                    this.set('pathThree', '');
                 }
 
             },
 
-            _setRoute: function(pathOne, pathTwo, pathTree) {
+            _setPathOne: function(data) {
+
+                this.pathOne = data;
+            },
+
+            _setPathTwo: function(data) {
+
+                this.pathTwo = data;
+            },
+
+            _setPathThree: function(data) {
+
+                this.pathThree = data;
+            },
+
+            _setRoute: function(pathOne, pathTwo, pathThree) {
 
                 var pathOne = pathOne || '';
                 var pathTwo = pathTwo || '';
-                var pathTree = pathTree || '';
+                var pathThree = pathThree || '';
 
-                var path = '';
+                var path = '/';
 
-                if(pathOne.length) {
+                if(pathOne) {
 
-                    path += '/' + pathOne;
+                    path += pathOne;
                 }
 
-                if(pathTwo.length) {
+                if(pathTwo) {
 
                     path += '/' + pathTwo;
                 }
 
-                if(pathTree.length) {
+                if(pathThree) {
 
-                    path += '/' + pathTree;
+                    path += '/' + pathThree;
                 }
 
-                this.set('route.path', path);
+                if(this.path != path) {
 
+                    window.history.pushState({}, null, path);
+                    //window.dispatchEvent(new CustomEvent('location-changed'));
+                }
             },
 
             _setPaths: function(path) {
@@ -105,29 +147,37 @@
 
                     if(path != '') {
 
-                        var paths = path.split('/');
+                        var paths = path.replace('/', '').split('/');
 
                         if(typeof paths[0] !== 'undefined') {
 
                             this.set('pathOne', paths[0]);
+
+                        }else {
+
+                            this.set('pathOne', '');
                         }
 
                         if(typeof paths[1] !== 'undefined') {
 
                             this.set('pathTwo', paths[1]);
+
+                        }else {
+
+                            this.set('pathTwo', '');
                         }
 
                         if(typeof paths[2] !== 'undefined') {
 
                             this.set('pathTree', paths[2]);
+
+                        }else {
+
+                            this.set('pathTree', '');
                         }
                     }
-
-                    console.log(path);
                 }
-
             }
-
         });
     })();
 </script>

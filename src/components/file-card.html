@@ -113,6 +113,13 @@
             }else if(file.url.includes('github.com')) {
 
                 this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true';
+            }else if(file.url.includes("youtube.com")) {
+
+                var videoId = file.url
+                        .replace('https://www.youtube.com/watch?v=', '')
+                        .replace('https://youtu.be/', '');
+
+                this._imageUrl = 'https://img.youtube.com/vi/' + videoId + '/0.jpg';
             }
         }
 

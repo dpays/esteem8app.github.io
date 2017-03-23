@@ -1,0 +1,49 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+<dom-module id="steem-get-account-number"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-account-number',
+
+            properties: {
+
+                /*
+                 * Account number
+                 */
+                number: {
+                    type: Number,
+                    notify: true
+                }
+            },
+
+            created: function() {
+
+                // Query Current Median History Price
+                this.getAccountNumber();
+            },
+
+            getAccountNumber: function() {
+
+                var thisElement = this;
+
+                // Query tags
+                this.async(function() {
+                    steem.api.getAccountCount(function(err, result) {
+
+                        if(!err){ // If working
+
+                            thisElement.number = result; // Set account number
+                        }
+                    });
+                });
+            }
+        });
+    })();
+</script>

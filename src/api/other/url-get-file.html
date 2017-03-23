@@ -20,6 +20,10 @@
                     observer: '_loadFile'
                 },
 
+                _lastUrl: {
+                    type: String
+                },
+
                 /*
                  * File
                  */
@@ -33,7 +37,7 @@
 
                 if(typeof this.url !== 'undefined') {
 
-                    if(this.url !== ''){
+                    if(this.url !== '' && this.url != this._lastUrl){
 
                         var thisElement = this;
 
@@ -53,6 +57,8 @@
                             // Lunch the request
                             fileRequest.send();
                         });
+
+                        this._lastUrl = this.url;
                     }
                 }
             }

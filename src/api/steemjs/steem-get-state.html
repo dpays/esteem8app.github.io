@@ -158,7 +158,10 @@
                     post.category = postRecived.category;
                     post.title = postRecived.title;
                     post.author = postRecived.author;
-                    post.dollarValue = parseFloat(postRecived.total_pending_payout_value.split(" ")[0]) + parseFloat(postRecived.total_payout_value.split(" ")[0]);
+                    post.dollarValue =
+                            parseFloat(postRecived.pending_payout_value.split(" ")[0]) +
+                            parseFloat(postRecived.total_payout_value.split(" ")[0]) +
+                            parseFloat(postRecived.curator_payout_value.split(" ")[0]);
                     post.net_votes = postRecived.net_votes;
                     post.children = postRecived.children;
                     post.activeVotes = postRecived.active_votes;

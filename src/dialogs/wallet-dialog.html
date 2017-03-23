@@ -1,0 +1,422 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../api/steemjs/steem-get-account.html">
+<link rel="import" href="../api/steemjs/steem-get-value.html">
+<link rel="import" href="../api/steemjs/steem-get-transfers.html">
+<link rel="import" href="../components/currency-transfer.html">
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="wallet-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            :host {
+                padding: 16px;
+            }
+
+            #walletDialog {
+                min-width: 488px;
+                background-color: var(--app-primary-background-color);
+                color: var(--app-background-primary-text-color);
+            }
+            
+            @media (max-width: 568px) {
+                #walletDialog {
+                    min-width: 0;
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                }
+            }
+
+            #walletToolbar {
+                margin: 0;
+                padding: 0;
+                background-color: var(--app-primary-color);
+                color: var(--app-primary-text-color);
+            }
+
+            #walletToolbar span.title {
+
+                padding-left: 16px;
+            }
+
+            #walletHeader {
+                margin: 0;
+                padding: 16px;
+                background-color: var(--app-dark-primary-color);
+                color: var(--app-primary-text-color);
+            }
+
+            .walletImage {
+                padding: 16px;
+                text-align: center;
+            }
+
+            .profileRepresentation {
+                width: 96px;
+                height: 96px;
+                border-radius: 96px;
+            }
+
+            #walletValue {
+                text-align: center;
+                margin-bottom: 16px;
+            }
+
+            #walletAction {
+                text-align: center;
+            }
+
+            #walletBody {
+                margin: 0;
+                padding: 24px;
+                overflow: auto;
+            }
+
+           #walletSend .actions-buttons {
+               text-align: right;
+               margin-top: 16px;
+           }
+
+            #walletSend .actions-buttons paper-button {
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+            }
+
+            paper-input {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            .right {
+                float: right;
+            }
+
+        </style>
+
+        <steem-get-account account-name="[[_accountName]]"
+                           account="{{_account}}">
+        </steem-get-account>
+
+        <steem-get-value value="{{steemValue}}">
+        </steem-get-value>
+
+        <paper-dialog id="walletDialog"
+                      opened="{{isOpen}}">
+
+        <paper-toolbar id="walletToolbar">
+            <paper-icon-button icon="my-icons:wallet"
+                               id="setViewHomeButton"
+                               on-tap="_setViewHome()">
+            </paper-icon-button>
+            <span class="title">[[userName]]</span>
+            <paper-icon-button icon="my-icons:close" dialog-dismiss>
+            </paper-icon-button>
+        </paper-toolbar>
+
+        <div id="walletHeader">
+
+            <template is="dom-if" if="[[_isViewHome(_view)]]">
+
+                <div class="walletImage">
+                    <template is="dom-if" if="[[_account.profileImage]]">
+                        <iron-image class="profileRepresentation"
+                                    sizing="cover"
+                                    src="https://steemitimages.com/124x124/[[_account.profileImage]]">
+                        </iron-image>
+                    </template>
+                    <template is="dom-if" if="[[!_account.profileImage]]">
+                        <iron-icon class="profileRepresentation"
+                                   icon="my-icons:person-circle">
+                        </iron-icon>
+                    </template>
+                </div>
+
+                <div id="walletValue">
+                    <h2>[[_computeTotalAmmount(steemValue, _account.sbdNumber, _account.steemNumber)]] $</h2>
+                </div>
+
+            </template>
+
+            <div id="walletAction">
+
+                <paper-icon-button icon="my-icons:wallet-send"
+                                   id="setViewSendButton"
+                                   on-tap="_setViewSend()">
+                </paper-icon-button>
+                <paper-icon-button icon="my-icons:wallet-request"
+                                   id="setViewRequestButton"
+                                   on-tap="_setViewRequest()">
+                </paper-icon-button>
+                <paper-icon-button icon="my-icons:wallet-fund"
+                                   id="setViewFundButton"
+                                   on-tap="_setViewFund()">
+                </paper-icon-button>
+                <paper-icon-button icon="my-icons:wallet-activity"
+                                   id="setViewActivityButton"
+                                   on-tap="_setViewActivity()">
+                </paper-icon-button>
+
+            </div>
+
+        </div>
+
+        <div id="walletBody">
+            <iron-pages attr-for-selected="view"
+                        selected="[[_view]]">
+
+                <div id="walletCurrency" view="home">
+                <span role="listbox">
+                    <paper-item>
+
+                        1 STEEM = [[_roundAmmount(steemValue, 3)]] SBD ($)
+
+                    </paper-item>
+
+                    <paper-item>
+                        <paper-item-body two-line>
+                            <div>
+                                VEST <span class="secondary-color right">[[_roundAmmount(_account.vestNumber, 0)]]</span>
+                            </div>
+                            <div secondary>A power ammount</div>
+                        </paper-item-body>
+                    </paper-item>
+
+                    <paper-item>
+                        <paper-item-body two-line>
+                            <div>
+                                STEEM <span class="secondary-color right">[[_roundAmmount(_account.steemNumber, 2)]]</span>
+                            </div>
+                            <div secondary>An exchangable currency <span class="right">[[_steemToDollar(_account.steemNumber, steemValue)]] $</span></div>
+                        </paper-item-body>
+                    </paper-item>
+
+                    <paper-item>
+                        <paper-item-body two-line>
+                            <div>
+                                SBD <span class="secondary-color right">[[_roundAmmount(_account.sbdNumber, 2)]]</span>
+                            </div>
+                            <div secondary>An exchangable currency with the dollar value</div>
+                        </paper-item-body>
+                    </paper-item>
+                </div>
+
+                <div id="walletSend" view="send">
+
+                    <paper-input label="Ammount" type="number">
+                        <div suffix>STEEM</div>
+                        <paper-icon-button
+                                suffix
+                                icon="my-icons:arrow-dropdown">
+                        </paper-icon-button>
+                    </paper-input>
+
+                    <template is="dom-if" if="[[_isMyAccount(userName)]]">
+
+                        <paper-input label="To">
+                            <div prefix>@</div>
+                            <paper-icon-button
+                                    suffix
+                                    icon="my-icons:arrow-dropdown">
+                            </paper-icon-button>
+                        </paper-input>
+
+                    </template>
+
+                    <paper-input label="Optional comment">
+
+                    </paper-input>
+
+                    <div class="actions-buttons">
+                        <paper-button raised>PAY</paper-button>
+                    </div>
+
+                </div>
+
+                <div id="walletSend" view="request">
+                    <!-- give 0.001 Steem with memo as "{value} {currency} | {memo}" -->
+                    <paper-input label="Ammount" type="number">
+                        <div suffix>STEEM</div>
+                        <paper-icon-button
+                                suffix
+                                icon="my-icons:arrow-dropdown">
+                        </paper-icon-button>
+                    </paper-input>
+
+                    <paper-input label="Optional comment">
+
+                    </paper-input>
+
+                    <div class="actions-buttons">
+                        <paper-button raised>REQUEST</paper-button>
+                    </div>
+
+                </div>
+
+                <div id="walletActivity" view="fund">
+
+                    <h2>Buy steem using blocktrade</h2>
+
+                </div>
+
+                <div id="walletActivity" view="activity">
+
+                    <steem-get-transfers account-name="[[_accountName]]"
+                                         transfers="{{_transfers}}" type="transfer">
+                    </steem-get-transfers>
+
+                    <div role="listbox">
+
+                        <template is="dom-repeat" items="[[_transfers]]">
+                            <currency-transfer transfer="[[item]]"></currency-transfer>
+                        </template>
+                    </div>
+
+                </div>
+
+            </iron-pages>
+        </div>
+
+        </paper-dialog>
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'wallet-dialog',
+
+        properties: {
+
+            isOpen: {
+                type: Boolean,
+                notify: true
+            },
+
+            userName: {
+                type: String
+            },
+
+            settings: {
+                type: Object
+            },
+
+            _accountName: {
+                type: String
+            },
+
+            _account: {
+                type: Object
+            },
+
+            _view: {
+                type: String
+            }
+        },
+
+        observers: ['userNameChanged(userName)'],
+
+        ready: function() {
+
+            // Set default var
+            this._view = 'home';
+
+            // List events
+            this.$.setViewHomeButton.addEventListener('tap', this._setViewHome.bind(this));
+            this.$.setViewSendButton.addEventListener('tap', this._setViewSend.bind(this));
+            this.$.setViewRequestButton.addEventListener('tap', this._setViewRequest.bind(this));
+            this.$.setViewFundButton.addEventListener('tap', this._setViewFund.bind(this));
+            this.$.setViewActivityButton.addEventListener('tap', this._setViewActivity.bind(this));
+
+        },
+
+        open: function() {
+
+            this.isOpen = true;
+        },
+
+        userNameChanged: function(userName) {
+
+            this.set('_accountName', userName.replace('@', ''));
+        },
+
+        _isMyAccount: function(userName) {
+
+            if(typeof this.settings !== 'undefined') {
+
+                return (this.settings.user.name.replace('@', '') == userName.replace('@', ''));
+            }
+        },
+
+        _steemToDollar: function(steemNumber, steemDolarValue) {
+
+            var value = steemNumber * steemDolarValue;
+
+            return this._roundAmmount(value, 2);
+        },
+
+        _isViewHome: function(view) {
+
+            return (view == 'home');
+        },
+
+        _setViewHome: function() {
+
+            this._view = 'home';
+        },
+
+        _setViewSend: function() {
+
+            this._view = 'send';
+        },
+
+        _setViewRequest: function() {
+
+            this._view = 'request';
+        },
+
+        _setViewFund: function() {
+
+            this._view = 'fund';
+        },
+
+        _setViewActivity: function() {
+
+            this._view = 'activity';
+        },
+
+        _roundAmmount: function(value, decimals) {
+
+            return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        },
+
+        _computeTotalAmmount: function(steemValue, sbd, steem, vest) {
+
+            var totalSbd = Number(sbd);
+            var steemInSbd = steemValue * steem;
+
+            totalSbd += Number(steemInSbd);
+
+            return this._roundAmmount(totalSbd, 2);
+        }
+
+    });
+</script>

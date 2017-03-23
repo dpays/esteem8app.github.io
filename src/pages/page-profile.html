@@ -17,6 +17,7 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-menu/paper-submenu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
 <link rel="import" href="../components/post-card-light.html">
@@ -26,6 +27,8 @@
 <link rel="import" href="../components/user-card.html">
 <link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../components/post-wrapper.html">
+
+<link rel="import" href="../dialogs/wallet-dialog.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
@@ -55,6 +58,10 @@
                 padding-bottom: 16px;
                 display: block;
                 background-color: var(--app-primary-background-color);
+            }
+
+            #wallet {
+                min-width: 420px;
             }
 
             /* TOOLBAR */
@@ -89,12 +96,12 @@
                 color: var(--app-primary-text-color);
                 width: 100%;
                 padding-top: 16px;
-                margin-top: 48px;
+                margin-top: 44px;
             }
 
             @media (max-width: 600px) {
                 #profileheader {
-                    margin-top: 40px;
+                    margin-top: 36px;
                 }
             }
 
@@ -274,6 +281,14 @@
                 color: var(--app-background-primary-text-color);
             }
 
+            #openWalletButton {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+            }
+
         </style>
 
         <steem-get-account account-name="[[_accountName]]"
@@ -289,6 +304,11 @@
                              following="{{_following}}">
         </steem-get-following>
 
+        <wallet-dialog id="wallet"
+                       user-name="{{userName}}"
+                       settings="[[settings]]">
+        </wallet-dialog>
+
         <!-- IDEA: Clip a post permlink in profile json that is display in a tabs added + clip a post dedicated to be rendered in profile about tabs -->
 
         <!--div id="pageprofile"-->
@@ -303,7 +323,7 @@
             <div class="floatingToolbar">
             <span class="floatingToolbarTitle">
                 <span>
-                    [[user]]
+                    [[userName]]
                     <span class="reputation">[[_account.reputation]]</span>
                 </span>
                 <span></span>
@@ -485,8 +505,8 @@
                           </div-->
 
                         <!-- LATEST POST -->
-                        <paper-card heading="Latest [[user]] publications" class="homeCard">
-                            <post-path-list steem-path="[[user]]" post-type="card-light"></post-path-list>
+                        <paper-card heading="Latest [[userName]] publications" class="homeCard">
+                            <post-path-list steem-path="[[userName]]" post-type="card-light"></post-path-list>
                         </paper-card>
 
                         <!-- PINED POSTS (presentation) -->
@@ -518,13 +538,13 @@
 
             <!-- POSTS -->
             <div name="posts">
-                <steem-get-state path="[[user]]"
+                <steem-get-state path="[[userName]]"
                                  posts="{{_posts}}">
                 </steem-get-state>
                 <div id="posts-list">
 
                     <template is="dom-if" if="[[!_posts.length]]">
-                        <h1 class="nothingText">[[user]] has not posted anything</h1>
+                        <h1 class="nothingText">[[userName]] has not posted anything</h1>
                     </template>
 
                     <template is="dom-if" if="[[_posts.length]]">
@@ -546,7 +566,7 @@
                 <div id="replies-list">
 
                     <template is="dom-if" if="[[!_replies.length]]">
-                        <h1 class="nothingText">[[user]] has no replies</h1>
+                        <h1 class="nothingText">[[userName]] has no replies</h1>
                     </template>
 
                     <template is="dom-if" if="[[_replies.length]]">
@@ -567,7 +587,7 @@
                 <div id="events-list">
 
                     <template is="dom-if" if="[[!_events.length]]">
-                        <h1 class="nothingText">[[user]] has no history</h1>
+                        <h1 class="nothingText">[[userName]] has no history</h1>
                     </template>
 
                     <template is="dom-if" if="[[_events.length]]">
@@ -586,7 +606,7 @@
                 <div id="followers-list">
 
                     <template is="dom-if" if="[[!_followers.length]]">
-                        <h1 class="nothingText">[[user]] has no follower</h1>
+                        <h1 class="nothingText">[[userName]] has no follower</h1>
                     </template>
 
                     <template is="dom-if" if="[[_followers.length]]">
@@ -603,7 +623,7 @@
                 <div id="following-list">
 
                     <template is="dom-if" if="[[!_following.length]]">
-                        <h1 class="nothingText">[[user]] is not following anyone</h1>
+                        <h1 class="nothingText">[[userName]] is not following anyone</h1>
                     </template>
 
                     <template is="dom-if" if="[[_following.length]]">
@@ -615,6 +635,12 @@
                 </div>
             </div>
         </iron-pages>
+
+        <paper-fab id="openWalletButton"
+                   on-tap="_openWallet()"
+                   icon="my-icons:wallet">
+        </paper-fab>
+
         <!--/div-->
     </template>
 </dom-module>
@@ -631,7 +657,7 @@
                 type: Object
             },
 
-            user: {
+            userName: {
                 type: String
             },
 
@@ -660,7 +686,8 @@
             },
 
             _accountName: {
-                type: String
+                type: String,
+                notify: true
             },
 
             _followers: {
@@ -694,7 +721,7 @@
 
         observers: [
             '_updateCoverImage(_account.coverImage)',
-            '_userChanged(user)',
+            '_userChanged(userName)',
             '_refreshIsTabAbout(_currentProfileView)',
             '_refreshIsTopheaderShowed(_isTabAbout)'
         ],
@@ -712,6 +739,7 @@
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.openWalletButton.addEventListener('tap', this._openWallet.bind(this));
             this.$.followersButton.addEventListener('tap', this._setCurrentViewFollowers.bind(this));
             this.$.followingButton.addEventListener('tap', this._setCurrentViewFollowing.bind(this));
             this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
@@ -733,9 +761,9 @@
          });
          },*/
 
-        _userChanged: function(user) {
+        _userChanged: function(userName) {
 
-            if(user.includes('@')) {
+            if(userName.includes('@')) {
 
                 // Reset account related data
                 this.set('_posts', []);
@@ -754,7 +782,7 @@
                  */
 
                 // Remove '@' at user and put it into _accountName
-                this.set('_accountName', user.replace('@', ''));
+                this._accountName = userName.replace('@', '');
 
                 this._refreshIsFavoriteUser();
             }
@@ -763,6 +791,11 @@
         _openDrawer: function() {
 
             document.getElementById('appshell')._openDrawer();
+        },
+
+        _openWallet: function() {
+
+            this.$.wallet.open();
         },
 
         _updateCoverImage: function(url) {
@@ -869,7 +902,7 @@
                 this.$.topheader.style = "";//"height: auto;"//+this.$.topheader.clientHeight+";";
             }else {
 
-                this.$.topheader.style = "margin-top:-2px;margin-bottom:-1px;max-height: 0;display:none;transition: all 0.6s ease-out;";//transform: translateY(-600px)"; //"height: 0;margin:-1px;visibility:hidden;opacity: 0";
+                //this.$.topheader.style = "margin-top:-2px;margin-bottom:-1px;max-height: 0;display:none;transition: all 0.6s ease-out;";//transform: translateY(-600px)"; //"height: 0;margin:-1px;visibility:hidden;opacity: 0";
             }
 
 

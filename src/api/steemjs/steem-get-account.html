@@ -89,7 +89,7 @@
                     var thisElement = this;
                     var steemAPI = this._steemAPI;
 
-                    var module = (function() {
+                    /*var module = (function() {
 
                         return {
 
@@ -120,10 +120,10 @@
                     /*
                      *  Theses query are triggered on accountName change but return no results
                      */
-                    module.getAccounts(steemAPI, thisElement);
-                    module.getFollowCount(steemAPI, thisElement);
+                    /*module.getAccounts(steemAPI, thisElement);
+                    module.getFollowCount(steemAPI, thisElement);*/
 
-                    /*// Query account data
+                    // Query account data
                     this.async(function() {
                         console.log(accountName);
                         // Query basic information
@@ -141,7 +141,8 @@
 
                             thisElement._computeAccountFollowCount(err, result);
                         });
-                    });*/
+                    });
+
                 }
             },
 
@@ -188,9 +189,17 @@
                     // last vote
                     this.set('account.lastVoteTime', accountReceived.last_vote_time);
 
-
                     // last interaction
                     this.set('account.lastInteraction', accountReceived.last_bandwidth_update);
+
+                    // Set account STEEM
+                    this.set('account.steemNumber', accountReceived.balance.replace(' STEEM', ''));
+
+                    // Set account VEST (Steem power)
+                    this.set('account.vestNumber', accountReceived.vesting_shares.replace(' VESTS', ''));
+
+                    // Set account SBD (Steem dolar)
+                    this.set('account.sbdNumber', accountReceived.savings_sbd_balance.replace(' SBD', ''));
 
                     // Set first pinned post
                     if(typeof accountJsonObject.profile.pinned_post === 'undefined'){

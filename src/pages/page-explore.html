@@ -11,6 +11,8 @@
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 
+<link rel="import" href="../api/other/url-get-file.html">
+
 <link rel="import" href="../dialogs/select-tag-dialog.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/my-icons.html">
@@ -55,9 +57,50 @@
                 cursor: pointer;
             }
 
+            #tagheader {
+                margin-top: 72px;
+                width: 100%;
+                height: 400px;
+                background-color: transparent; /*var(--app-dark-primary-color);*/
+                background-size: cover;
+                position: fixed;
+            }
+
+            #tagheader h1 {
+                padding-top: 300px;
+                padding-left: 64px;
+                color: var(--app-primary-text-color);
+                text-transform: uppercase;
+                display: none;
+            }
+
+            @media (max-width: 800px) {
+                #tagheader {
+                    height: 300px;
+                }
+
+                #tagheader h1 {
+                    padding-top: 136px;
+                }
+            }
+
+            @media (max-width: 400px) {
+                #tagheader {
+                    height: 250px;
+                }
+                #tagheader h1 {
+                    padding-top: 186px;
+                    padding-left: 32px;
+                }
+                #posts-list {
+                    padding-top: 126px;
+                }
+            }
+
             #posts-list {
                 min-height: 100%;
-                margin-top: 134px;
+                padding-top: 126px;
+                margin-top: 32px;
                 margin-right: auto;
                 margin-left: auto
             }
@@ -164,6 +207,14 @@
 
         <div id="content-page">
 
+            <!--url-get-file url="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=71b641039138d8854effa0b13a1c15d1&tags=[[currentTag]]&text=[[currentTag]]&sort=relevance&format=json&nojsoncallback=1"
+                          response-text="{{_photosTagListTxt}}">
+            </url-get-file-->
+
+            <div id="tagheader">
+                <h1>#[[currentTag]]</h1>
+            </div>
+
             <!-- Publications lists -->
             <div id="posts-list">
                 <template is="dom-if" if="[[_isEsteem8Tag]]">
@@ -198,25 +249,12 @@
         properties: {
 
             // current sorting mode (hot, new, trending, created)
-            currentSortingUrl: {
-                type: String,
-                notify: true,
-                observer: '_currentSortingUrlChanged'
-            },
-
             currentSorting: {
                 type: String,
-                notify: true,
-                observer: '_currentSortingChanged'
+                notify: true
             },
 
             // Current filter tag (esteem8, ...)
-            currentTagUrl: {
-                type: String,
-                notify: true,
-                observer: '_currentTagUrlChanged'
-            },
-
             currentTag: {
                 type: String,
                 notify: true,
@@ -251,8 +289,16 @@
 
             _isCurrentTagInFavorite: {
                 type: Boolean
+            },
+
+            _photosTagListTxt: {
+                type: String
             }
         },
+
+        observers: [
+            //'_renderImageTagHeader(_photosTagListTxt)'
+        ],
 
         ready: function() {
 
@@ -273,42 +319,6 @@
             document.getElementById('appshell')._openDrawer();
         },
 
-        // sorting var -> sorting url
-        _currentSortingChanged: function() {
-
-            this.currentSortingUrl = this.currentSorting + '/';
-        },
-
-        // sorting url -> sorting var
-        _currentSortingUrlChanged: function() {
-
-            // remove '/' and set currentSorting for tabs
-
-            var currentSortingUrl = this.currentSortingUrl || this.currentSorting  + '/' || '';
-            var currentTag = this.currentTagUrl.replace('/', '') || this.currentTag || '';
-
-            if(currentTag.includes('@')) {
-
-                currentTag = '';
-            }
-
-            if(currentSortingUrl.includes('created') || currentSortingUrl.includes('hot') || currentSortingUrl.includes('trending') || currentSortingUrl.includes('active')) {
-
-                this.currentSorting = currentSortingUrl.replace('/', '');
-
-                // Set current tag because router does not support only changing first part without the second after
-                if(currentTag != '') {
-
-                    this.currentTag = currentTag;
-                }else {
-
-                    this.currentTag = '';
-                }
-
-            }
-
-        },
-
         _openSelectCategoryDialog: function() {
 
             this._isSelectCategoryOpened = true;
@@ -317,29 +327,11 @@
         // sorting var -> sorting url
         _currentTagChanged: function() {
 
-            // Add '/' and set url
-            if(this.currentTag != '') {
-
-                this.currentTagUrl = this.currentTag + '/';
-            }else {
-
-                this.currentTagUrl = this.currentTagUrl || '';
-            }
-
             // Check if this is the app tag
             this._computeIsEsteem8Tag();
 
             // Refresh add to favorite icon
             this._refreshIsCurrentTagInFavorite();
-        },
-
-        // sorting url -> sorting var
-        _currentTagUrlChanged: function() {
-
-            // Update current tag from url to make query and make tabs working
-
-            this.currentTag = this.currentTagUrl.replace('/', '');
-
         },
 
         _steemPathChanged: function() {
@@ -389,7 +381,25 @@
 
             // Refresh actual state of fav tag displayed in floating toolbar
             this._refreshIsCurrentTagInFavorite();
-        }
+        },
+
+        _renderImageTagHeader: function(tagListTxt) {
+
+            //https://www.flickr.com/services/api/explore/flickr.photos.search
+
+            var photoObjectList = JSON.parse(tagListTxt).photos.photo;
+            var min = 0;
+            var max = photoObjectList.length -1;
+
+            var index = Math.trunc(Math.random() * (max - min) + min);
+
+            var photoObject = photoObjectList[0];
+
+            var tagHeader = this.$.tagheader;
+
+            tagHeader.setAttribute('style', 'background-image: url("https://c1.staticflickr.com/' + photoObject.farm + '/' + photoObject.server + '/' + photoObject.id + '_' + photoObject.secret + '.jpg");');
+
+        },
 
         /*
          * TODO

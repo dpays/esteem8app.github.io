@@ -1,0 +1,56 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+<dom-module id="steem-get-transaction"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-transaction',
+
+            properties: {
+
+                /*
+                 * Transaction ID to query
+                 */
+                transactionId:  {
+                    type: String
+                },
+
+                /*
+                 * Transaction object received
+                 */
+                transaction: {
+                    type: Object,
+                    notify: true
+                }
+            },
+
+            created: function() {
+
+                // Query transaction
+                this._updateTransaction();
+            },
+
+            _updateTransaction: function() {
+
+                var thisElement = this;
+
+                // Query transaction
+                this.async(function() {
+                    steem.api.getTransaction('', thisElement.transactionId, function(err, result) {
+
+                        if(!err){ // If working
+
+                            thisElement.transaction = result; // Set received tags
+                        }
+                    });
+                });
+            }
+        });
+    })();
+</script>

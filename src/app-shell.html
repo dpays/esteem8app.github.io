@@ -69,29 +69,11 @@
         <!-- ROUTER -->
         <app-location route="{{route}}"></app-location>
 
-        <!-- URL level 1 -->
-        <app-route
-                route="{{route}}"
-                pattern="/:data"
-                data="{{dataUrl1}}"
-                tail="{{subRoute}}">
-        </app-route>
-
-        <!-- URL level 2 -->
-        <app-route
-                route="{{subRoute}}"
-                pattern="/:data"
-                data="{{dataUrl2}}"
-                tail="{{subSubRoute}}">
-        </app-route>
-
-        <!-- URL level 3 -->
-        <app-route
-                route="{{subSubRoute}}"
-                pattern="/:data"
-                data="{{dataUrl3}}"
-                tail="{{subSubSubRoute}}">
-        </app-route>
+        <custom-router route="{{route}}"
+                       path-one="{{dataUrl1}}"
+                       path-two="{{dataUrl2}}"
+                       path-three="{{dataUrl3}}">
+        </custom-router>
 
         <!-- DRAWER -->
         <app-drawer id="drawer" opened="{{_isDrawerOpen}}" swipe-open>
@@ -105,28 +87,22 @@
                     fallback-selection="404"
                     role="main">
 
-            <page-home name="home"
-                       route="{{route}}"
-                       page="{{selectedPage}}"
-                       path-one="{{dataUrl1.data}}"
-                       path-two="{{dataUrl2.data}}"
-                       settings="[[settings]]">
-            </page-home>
+            <page-home name="home"></page-home>
 
             <page-explore name="explore"
                           favorite-posts="{{favoritePosts}}"
                           favorite-tags="{{favoriteTags}}"
                           id="explorePage"
-                          current-sorting-url="{{dataUrl1.data}}"
-                          current-tag="{{dataUrl2.data}}"
+                          current-sorting="{{dataUrl1}}"
+                          current-tag="{{dataUrl2}}"
                           settings="[[settings]]">
             </page-explore>
 
             <page-post name="post"
                        settings="[[settings]]"
-                       category="[[dataUrl1.data]]"
-                       author="{{dataUrl2.data}}"
-                       post-name="[[dataUrl3.data]]">
+                       category="[[dataUrl1]]"
+                       author="[[dataUrl2]]"
+                       post-name="[[dataUrl3]]">
             </page-post>
 
             <page-favorites name="favorites"
@@ -142,7 +118,7 @@
 
             <page-profile name="profile"
                           settings="[[settings]]"
-                          user="[[dataUrl1.data]]">
+                          user-name="[[dataUrl1]]">
             </page-profile>
 
             <page-files name="files"
@@ -197,8 +173,7 @@
                  * Current url after domain name.
                  */
                 route: {
-                    type: Object,
-                    observer: '_routeChanged'
+                    type: Object
                 },
 
                 /*
@@ -252,10 +227,10 @@
             },
 
             observers: [
-
-                '_routePageChanged(dataUrl0.data, dataUrl1.data, dataUrl2.data, dataUrl3.data, route)',
+                '_routePageChanged(dataUrl1, dataUrl2, dataUrl3)',
                 '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)',
-                '_userNameChanged(settings.user.name)'
+                '_userNameChanged(settings.user.name)',
+                '_notifyChangeRoute(route)'
             ],
 
             ready: function() {
@@ -270,12 +245,13 @@
                 if(typeof this.favoriteTags == 'undefined') { this.favoriteTags = ['esteem8'];}
                 if(typeof this.favoriteFiles == 'undefined') {
                     var files = [];
-                    for (var i = 0; i < 8; i++) {
+                    for (var i = 0; i < 7; i++) {
                         files.push({
                             name: 'ESTEEM8 Logo',
                             url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true'
                         });
                     }
+                    files.push({name: 'Steem presentation', url: 'https://www.youtube.com/watch?v=xZmpCAqD7hs'});
                     files.push({name: 'ES8 Presentation', url: 'https://docs.google.com/presentation/d/1xEWJQGMOGEVvNVW0Rf245TE4nYsRVOge29H4V6OERJ0/edit#slide=id.p'});
                     files.push({name: 'Welcome', url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/articles/welcome.md'});
                     files.push({name: 'esteem8app.github.io', url: 'https://github.com/esteem8app/esteem8app.github.io'});
@@ -287,6 +263,11 @@
                 if(typeof this.settings == 'undefined') {
                     this.setDefaultSettings();
                 }
+            },
+
+            _notifyChangeRoute: function(route) {
+
+                  console.log(route);
             },
 
             attached: function() {
@@ -302,18 +283,6 @@
                 }
             },
 
-            // URL has changed
-            _routeChanged: function() {
-
-                // Get url splited
-                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
-                var dataUrl2 = typeof this.dataUrl2 !== 'undefined' ? this.dataUrl2.data : '';
-                var dataUrl3 = typeof this.dataUrl3 !== 'undefined' ? this.dataUrl3.data : '';
-
-                // Transmit url splited -> choose page
-                this._routePageChanged(dataUrl1, dataUrl2, dataUrl3);
-            },
-
             // Choose page
             _routePageChanged: function(dataUrl1, dataUrl2, dataUrl3) {
 
@@ -325,65 +294,63 @@
                 // Choose page
                 if(dataUrl1 == ''){
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage ='home';// HOME
                 }else if(dataUrl1 == 'login'){
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'login'; // LOGIN
                 }else if(dataUrl1 == 'favorites') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'favorites'; //FAVORITES
                 }else if(dataUrl1 == 'settings') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'settings'; // SETTINGS
                 }else if(dataUrl1 == 'info') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'info'; // INFO
                 }else if(dataUrl1 == 'tools') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'tools'; // TOOLS
                 }else if(dataUrl1 == 'support') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'support'; // SUPPORT
                 }else if(dataUrl1 == 'files') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'files'; // FILES
                 }else if(dataUrl1 == 'tips') {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'tips'; // TIPS
                 }else if(this._isPageProfile()){
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
+                    this.dataUrl2 = '';
+                    this.dataUrl3 = '';
                     this.selectedPage = 'profile'; // PROFILE
                 }else if(this._isPageExplore()) {
 
-                    this._resetDataUrl3();
+                    this.dataUrl3 = '';
                     this.selectedPage = 'explore'; // EXPLORE
                 }else if(this._isPagePost()){
 
                     this.selectedPage = 'post'; // SINGLE PUBLICATION
                 }else {
 
-                    this._resetDataUrl1();
-                    this._resetDataUrl2();
                     this.selectedPage = '404'; // PAGE 404
                 }
 
@@ -393,7 +360,7 @@
 
             _isPageExplore: function() {
 
-                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
+                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1 : '';
 
                 return (dataUrl1 == 'created' || dataUrl1 == 'created/'
                         || dataUrl1 == 'hot' || dataUrl1 == 'hot/'
@@ -404,49 +371,16 @@
 
             _isPagePost: function(){
 
-                var dataUrl2 = typeof this.dataUrl2 !== 'undefined' ? this.dataUrl2.data : '';
+                var dataUrl2 = typeof this.dataUrl2 !== 'undefined' ? this.dataUrl2 : '';
 
                 return (dataUrl2.charAt(0) ==  '@');
             },
 
             _isPageProfile: function() {
 
-                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1.data : '';
+                var dataUrl1 = typeof this.dataUrl1 !== 'undefined' ? this.dataUrl1 : '';
 
                 return (dataUrl1.charAt(0) == '@');
-            },
-
-            _resetDataUrl1: function() {
-
-                if(typeof this.dataUrl1 === 'undefined'){
-
-                    this.dataUrl1 = {data: ''};
-                }else {
-
-                    this.dataUrl1.data = '';
-                }
-            },
-
-            _resetDataUrl2: function() {
-
-                if(typeof this.dataUrl2 === 'undefined'){
-
-                    this.dataUrl2 = {data: ''};
-                }else {
-
-                    this.dataUrl2.data = '';
-                }
-            },
-
-            _resetDataUrl3: function() {
-
-                if(typeof this.dataUrl3 === 'undefined'){
-
-                    this.dataUrl3 = {data: ''};
-                }else {
-
-                    this.dataUrl3.data = '';
-                }
             },
 
             // Load and display page
@@ -596,7 +530,7 @@
 
                 return {
 
-                    appVersion: '0.0.4.2',
+                    appVersion: '0.0.5.0',
 
                     user: {
                         name: '',

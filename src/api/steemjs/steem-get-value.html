@@ -1,0 +1,52 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+<dom-module id="steem-get-value"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-value',
+
+            properties: {
+
+                /*
+                 * One steem value in dollar (SBD)
+                 */
+                value: {
+                    type: Number,
+                    notify: true
+                }
+            },
+
+            created: function() {
+
+                // Query Current Median History Price
+                this.getSteemValue();
+            },
+
+            getSteemValue: function() {
+
+                var thisElement = this;
+
+                // Query tags
+                this.async(function() {
+                    steem.api.getCurrentMedianHistoryPrice(function(err, result) {
+
+                        if(!err){ // If working
+
+                            var base = result.base.replace(' SBD', '');
+                            var quote = result.quote.replace(' STEEM', '');
+
+                            thisElement.value = base/quote; // Set received tags
+                        }
+                    });
+                });
+            }
+        });
+    })();
+</script>

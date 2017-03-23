@@ -1,0 +1,107 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+<dom-module id="steem-get-transfers"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-transfers',
+
+            properties: {
+
+                /*
+                 * account name to query
+                 */
+                accountName:  {
+                    type: String
+                },
+
+
+                /*
+                 * Optional
+                 *  transfer || author_reward || curation_reward
+                 */
+                type: {
+                    type: String
+                },
+
+                /*
+                 * Transfers Array received
+                 */
+                transfers: {
+                    type: Array,
+                    notify: true
+                }
+            },
+
+            observers: ['_updateTransfers(accountName)'],
+
+            _updateTransfers: function(accountName) {
+
+                var thisElement = this;
+                var path = '@' + accountName.replace('@', '') + '/transfers';
+                var restrictToTransferType = this.type || '';
+
+                // Query transfers
+                this.async(function() {
+                    steem.api.getState(path, function(err, result) {
+
+                        if(!err){ // If working
+
+                            var content = result.accounts;
+                            var transfer_history = [];
+
+                            // Get account (it's an object property)
+                            for (var key in content) {
+                                // skip loop if the property is from prototype
+                                if (!content.hasOwnProperty(key)) continue;
+
+                                // Set it's transfer history
+                                var account = content[key];
+                                transfer_history = account.transfer_history;
+                            }
+
+                            // Compute transfers
+                            var computedTransfers = [];
+
+                            for(var i = 0; i < transfer_history.length; i++) {
+
+                                // Get
+                                var transfer = transfer_history[i];
+
+                                // Compute
+                                var computedTransfer = {
+                                    type: transfer[1].op[0],
+                                    created: transfer[1].timestamp,
+                                    operation: transfer[1].op[1]
+                                };
+
+                                // Filter
+                                if(restrictToTransferType == '') { // No filter
+
+                                    // Push
+                                    computedTransfers.push(computedTransfer);
+                                }else {
+
+                                    if(restrictToTransferType == computedTransfer.type) { // Same transaction type as mentioned
+
+                                        // Push
+                                        computedTransfers.push(computedTransfer);
+                                    }
+                                }
+
+                            }
+
+                            thisElement.set('transfers', computedTransfers);
+                        }
+                    });
+                });
+            }
+        });
+    })();
+</script>
