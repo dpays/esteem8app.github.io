@@ -116,7 +116,7 @@
 
                 --paper-tags-item: {
                     padding-left: 8px !important;
-                    border: 1px solid var(--app-secondary-color) !important;;
+                    color: var(--app-secondary-color) !important;
                 };
 
                 --paper-tag-text-color: var(--app-background-secondary-text-color);
@@ -245,8 +245,8 @@
 
             <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
 
-            <paper-tags-input label="Tags"
-                              value="{{currentFile.manualTags}}"></paper-tags-input>
+            <paper-tags-input label="Tags" value="{{currentFile.manualTags}}">
+            </paper-tags-input>
 
             <div class="defaultTags">
                 <paper-tags items="{{currentFile.defaultTags}}"></paper-tags>
@@ -276,8 +276,8 @@
 
             <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
 
-            <paper-tags-input label="Tags"
-                              value="{{currentFile.manualTags}}"></paper-tags-input>
+            <paper-tags-input label="Tags" value="{{currentFile.manualTags}}">
+            </paper-tags-input>
 
             <div class="defaultTags">
                 <paper-tags items="{{currentFile.defaultTags}}"></paper-tags>
