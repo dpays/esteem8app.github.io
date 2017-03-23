@@ -154,12 +154,12 @@
                         fit-container
                         no-slide>
 
-                <paper-tab name="trending">
-                    <iron-icon icon="my-icons:trending-up"></iron-icon>
+                <paper-tab name="basic">
+                    <iron-icon icon="my-icons:folder"></iron-icon>
                 </paper-tab>
 
                 <paper-tab name="favorites">
-                    <iron-icon icon="my-icons:star"></iron-icon>
+                    <iron-icon icon="my-icons:folder-favorite"></iron-icon>
                 </paper-tab>
             </paper-tabs>
 
@@ -170,8 +170,8 @@
 
                     <!-- BEST TAGS -->
                     <div role="listbox"
-                         name="trending"
-                         id="trendingFolders">
+                         name="basic"
+                         id="basicFolders">
 
                         <template is="dom-repeat"
                                   items="[[folders]]">
@@ -215,7 +215,7 @@
         is: 'select-folder-dialog',
 
         listeners: {
-            'trendingFolders.tap': '_selectThisFolder',
+            'basicFolders.tap': '_selectThisFolder',
             'favoriteFolders.tap': '_selectThisFolder'
         },
 
@@ -261,7 +261,7 @@
             this.selectedFolder = '';
             this.opened = false;
             this._icon = 'done';
-            this._currentSortingFolders = 'trending';
+            this._currentSortingFolders = 'basic';
 
             this.folders = [
                 {name: 'file'},
@@ -290,7 +290,7 @@
         _selectInputedFolder: function() {
 
             // Select folder that is in input or push it in favorite
-            if(this._currentSortingFolders == 'trending'){
+            if(this._currentSortingFolders == 'basic'){
 
                 this.opened = false;
             }else if(this._currentSortingFolders == 'favorites') {
@@ -318,7 +318,7 @@
         _currentSortingFoldersChanged: function() {
 
             // Change icon when tabs change
-            if(this._currentSortingFolders == 'trending'){
+            if(this._currentSortingFolders == 'basic'){
                 this._icon = 'done';
             }else {
                 this._icon = 'add';

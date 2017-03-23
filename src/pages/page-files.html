@@ -321,10 +321,10 @@
             <template is="dom-if" if="[[favoriteFiles.length]]">
                 <div class="file-cards">
                     <iron-selector multi selected-values="{{selectedFiles}}"
-                                   items="[[favoriteFiles]]">
+                                   attr-for-selected="file-id">
                         <template is="dom-repeat" items="[[favoriteFiles]]"
                                   filter="{{computeFilter(_selectedFolder)}}">
-                            <file-card file="[[item]]"></file-card>
+                            <file-card file="[[item]]" file-id="[[item.id]]"></file-card>
                         </template>
                     </iron-selector>
                 </div>
@@ -439,11 +439,42 @@
             this.selectedFiles = [];
         },
 
+        _getSelectedFileIndexFromId: function(idList) {
+
+            var indexList = [];
+
+            var idList = idList || this.selectedFiles;
+            var idListLength = idList.length;
+
+            var files = this.favoriteFiles;
+            var filesLength = files.length;
+
+            for(var id = 0; id < idListLength; id++) { // For each file id
+
+                var fileId = idList[id];
+
+                for(var index = 0; index < filesLength; index++) { // Check in each file
+
+                    var file = files[index];
+
+                    if(file.id == fileId) { // If the file has the desired id
+
+                        indexList.push(index); // Save the id
+                    }
+
+                }
+
+            }
+
+            return indexList;
+
+        },
+
         // Copy selected images url to clipboard
         _copyFileLink: function() {
             var textToCopy = " ";
 
-            var selectedFiles = this.selectedFiles;
+            var selectedFiles = this._getSelectedFileIndexFromId();
             var favoriteFiles = this.favoriteFiles;
 
             // Add each selected image url
@@ -472,7 +503,7 @@
 
         _openViewFile: function() {
 
-            var currentFileIndex = this.selectedFiles[0];
+            var currentFileIndex = this._getSelectedFileIndexFromId()[0];
             this.currentFile = this.favoriteFiles[currentFileIndex];
 
             this.$.viewFileDialog.open();
@@ -481,7 +512,7 @@
 
         _openEditFile: function() {
 
-            this.editFileIndex = this.selectedFiles[0];
+            this.editFileIndex = this._getSelectedFileIndexFromId()[0];
             this.currentFile = this.favoriteFiles[this.editFileIndex];
 
             this.$.editFileDialog.open();
@@ -494,7 +525,7 @@
             this.pastFiles = this.favoriteFiles;
 
             // Delete selected index
-            var indexToDelete = this.selectedFiles;
+            var indexToDelete = this._getSelectedFileIndexFromId();
             for(var i = 0; i < indexToDelete.length; i++) {
 
                 var index = indexToDelete[i];
@@ -517,7 +548,8 @@
 
             var file = this.currentFile;
             var image = this._computeImageFromFile(file);
-            file.image = image;
+                file.image = image;
+                file.created = Date.now();
 
             this.set(pathToUpdate, file);
 
@@ -527,7 +559,7 @@
 
         _openFileLink: function() {
 
-            var filesIndex = this.selectedFiles;
+            var filesIndex = this._getSelectedFileIndexFromId();
             var favoriteFiles = this.favoriteFiles;
 
             for(var i = 0; i < filesIndex.length; i++) {
@@ -555,6 +587,8 @@
             var image = this._computeImageFromFile(file);
 
             file.image = image;
+            file.id = Date.now() * Math.random();
+            file.created = Date.now();
 
             alert(JSON.stringify(file));
 
@@ -771,43 +805,81 @@
                      * Only one keyword can be used to search on name, but the keyword can be in the middle of the array
                      */
 
-                    var keywordMissedInRestrictiveSearch = 0;
+                    if(keysLength == 1) { // One keyword in string
 
-                    // First keyword test not restrictive
-                    if(fileName.includes(string)) { // String part of the name
+                        /*
+                         * The keyword need to be equals to a tag or contained in name
+                         */
 
-                        statement = true;
-                    }
+                        // First keyword
+                        if(fileName.includes(keys[0])) { // String part of the name
 
-                    for(var i = 0; i < tagsLength; i++) { // String equal to a tag
-
-                        var tag = tags[i].toLowerCase();
-
-                        if(tag == keys[0]) {
                             statement = true;
                         }
-                    }
-
-                    // Other keyword test restrictive
-                    for(var i = 1; i < keysLength; i++) {
-
-                        var key = keys[i];
 
                         for(var i = 0; i < tagsLength; i++) { // String equal to a tag
 
                             var tag = tags[i].toLowerCase();
 
-                            if(tag != key) {
-                                keywordMissedInRestrictiveSearch += 1;
+                            if(tag == keys[0]) {
+                                statement = true;
+                            }
+                        }
+                    }else {
+
+                        /*
+                         * All first keyword need to be equals to a tag
+                         * The last keyword of the keyword set need to be equals to a tag or contained in the name
+                         */
+
+                        var allFirstKeywordMatch = true;
+
+                        // All first keyword
+                        for(var i = 0; i < keysLength-1; i++) { // For all keyword
+
+                            var key = keys[i];
+
+                            var keyXYStatement = false;
+
+                            for(var j = 0; j < tagsLength; j++) { // keyword equal to a tag
+
+                                var tag = tags[j].toLowerCase();
+
+                                if(tag == key) {
+                                    keyXYStatement = true;
+                                }
+                            }
+
+                            if(!keyXYStatement) {
+
+                                allFirstKeywordMatch = false;
+                            }
+
+                        }
+
+                        var lastKeywordOfTheListMatch = false;
+                        var lastKeywordOfTheList = keys[keysLength-1];
+
+                        for(var i = 0; i < tagsLength; i++) { // String equal to a tag
+
+                            var tag = tags[i].toLowerCase();
+
+                            if(tag == lastKeywordOfTheList) {
+                                lastKeywordOfTheListMatch = true;
                             }
                         }
 
-                    }
+                        if(fileName.includes(lastKeywordOfTheList)) { // String part of the name
 
-                    if(keywordMissedInRestrictiveSearch > 2) {
-                        statement = false;
-                    }
+                            lastKeywordOfTheListMatch = true;
+                        }
 
+                        if(lastKeywordOfTheListMatch && allFirstKeywordMatch) {
+
+                            statement = true;
+                        }
+
+                    }
 
                     return statement;
                 };
