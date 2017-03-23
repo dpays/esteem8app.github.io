@@ -248,21 +248,70 @@
                     return '<img src="' + url + '" ></img>';
                 });*/
 
-                // Tag #tag
-                var tagRegex = /#[a-zA-Z0-9-]+/gm;
-                html = html.replace(tagRegex, function(match){
+                // Custom element ( [iframe$ratio=1:3&url=https://primerz.github.io/] [postWrapper$post-path=/introduceyourself/@fayehalliday/an-introduction-with-love-from-faye-halliday-artist-and-travel-junkie])
+                var customElementRegex = /\[(iframe|steem tag)(\$)?([\/.=&:a-z0-9\?\-]+)?]/gm;
+                html = html.replace(customElementRegex, function(match) {
 
-                    var url = match.replace('#', '');
+                    // Clean match
+                    var match = match.replace(/ /g, "");
+                    var match = match.replace("[", "");
+                    var match = match.replace("]", "");
 
-                    return '<a href="/hot/' + url + '" >' + match + '</a>';
+                    // Element type (iframe, ...)
+                    var rawElement = match.split("$")[0];
+
+                    // Parameters (ratio, url, ...)
+                    var options = match.split("$")[1].split("&") || [];
+
+                    // Parameters pre-defined (B.E. for iframe prompt-user)
+                    var preDefinedAttributes = [];
+
+                    // Element type for app (iframe -> responsive-iframe)
+                    var appElement = '';
+
+                    // Get element type
+                    switch (rawElement) {
+
+                        case 'iframe':
+                            appElement = 'responsive-iframe';
+                            preDefinedAttributes.push(['prompt-user', 'true']);
+                            break;
+
+                        case 'postWrapper':
+                            appElement = 'post-wrapper';
+                            break;
+                    }
+
+                    //Add parameters (attribute and value)
+                    var attributes = preDefinedAttributes; // Array of attributes & value
+
+                    for(var i = 0; i < options.length;i++) {
+
+                        var attribute = []; // Attribute [attributeName, value]
+
+                        var attr = options[i].split('=')[0]; // attr
+                        var val = options[i].replace(attr, '').replace('=', ''); // value = (attr + val) - attr
+
+                        attribute.push(attr);
+                        attribute.push(val);
+
+                        attributes.push(attribute);
+
+                    }
+
+                    // Create html
+                    var html = '<'+ appElement + ' ';
+
+                    for (var i = 0; i < attributes.length; i++) {
+
+                        html += attributes[i][0] + '="' + attributes[i][1] + '" ';
+                    }
+
+                    html += '></' + appElement + '>';
+
+                    return html;
                 });
 
-                // User @username
-                var userRegex = /@[a-zA-Z0-9-]+/gm;
-                html = html.replace(userRegex, function(match){
-
-                    return '<a href="/' + match + '" >' + match + '</a>';
-                });
 
                 // RENDER Markdown image -> ![image alt text](src)
                 var markdwonImageRegex = /!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;
@@ -504,64 +553,20 @@
                     return '<responsive-iframe url="' + url + '" ratio="3:1" ></responsive-iframe>';
                 });
 
-                // Custom element ( [iframe$ratio=1:3&url=https://primerz.github.io/])
-                var customElementRegex = /\[(iframe|steem tag)(\$)?([\/.=&:a-z0-9\?\-]+)?]/gm;
-                html = html.replace(customElementRegex, function(match) {
+                // Tag #tag
+                var tagRegex = /#[a-zA-Z0-9-]+/gm;
+                html = html.replace(tagRegex, function(match){
 
-                    // Clean match
-                    var match = match.replace(/ /g, "");
-                    var match = match.replace("[", "");
-                    var match = match.replace("]", "");
+                    var url = match.replace('#', '');
 
-                    // Element type (iframe, ...)
-                    var rawElement = match.split("$")[0];
+                    return '<a href="/hot/' + url + '" >' + match + '</a>';
+                });
 
-                    // Parameters (ratio, url, ...)
-                    var options = match.split("$")[1].split("&") || [];
+                // User @username
+                var userRegex = /@[a-zA-Z0-9-]+/gm;
+                html = html.replace(userRegex, function(match){
 
-                    // Parameters pre-defined (B.E. for iframe prompt-user)
-                    var preDefinedAttributes = [];
-
-                    // Element type for app (iframe -> responsive-iframe)
-                    var appElement = '';
-
-                    // Get element type
-                    switch (rawElement) {
-
-                        case 'iframe':
-                            appElement = 'responsive-iframe';
-                            preDefinedAttributes.push(['prompt-user', 'true']);
-
-                    }
-
-                    //Add parameters (attribute and value)
-                    var attributes = preDefinedAttributes; // Array of attributes & value
-
-                    for(var i = 0; i < options.length;i++) {
-
-                        var attribute = []; // Attribute [attributeName, value]
-
-                        var attr = options[i].split('=')[0]; // attr
-                        var val = options[i].replace(attr, '').replace('=', ''); // value = (attr + val) - attr
-
-                        attribute.push(attr);
-                        attribute.push(val);
-
-                        attributes.push(attribute);
-
-                    }
-
-                    // Create html
-                    var html = '<'+ appElement + ' ';
-
-                    for (var i = 0; i < attributes.length; i++) {
-
-                        html += attributes[i][0] + '="' + attributes[i][1] + '" ';
-                    }
-
-                    html += '></' + appElement + '>';
-
-                    return html;
+                    return '<a href="/' + match + '" >' + match + '</a>';
                 });
 
                 // REGEX tester https://regex101.com/

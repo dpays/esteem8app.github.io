@@ -61,7 +61,7 @@
         <!-- post cards -->
         <paper-card id="fileCard"
                     heading="[[file.name]]"
-                    image="[[_imageUrl]]">
+                    image="[[file.image]]">
         </paper-card>
 
     </template>
@@ -77,52 +77,8 @@
 
             file: {
                 type: Object
-            },
-
-            _imageUrl: {
-                type: String
-            }
-        },
-
-        ready: function() {
-
-            this._computeImageUrl(this.file);
-        },
-
-        _computeImageUrl: function(file) {
-
-            if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
-
-                this._imageUrl = file.url;
-
-            }else if(file.url.includes('docs.google.com/document')) {
-
-                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/docs.png?raw=true';
-            }else if(file.url.includes('docs.google.com/drawings')) {
-
-                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/drawing.png?raw=true';
-            }else if(file.url.includes('docs.google.com/forms')) {
-
-                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/forms.png?raw=true';
-            }else if(file.url.includes('docs.google.com/spreadsheets')) {
-
-                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/sheets.png?raw=true';
-            }else if(file.url.includes('docs.google.com/presentation')) {
-
-                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/slides.png?raw=true';
-            }else if(file.url.includes('github.com')) {
-
-                this._imageUrl =  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true';
-            }else if(file.url.includes("youtube.com")) {
-
-                var videoId = file.url
-                        .replace('https://www.youtube.com/watch?v=', '')
-                        .replace('https://youtu.be/', '');
-
-                this._imageUrl = 'https://img.youtube.com/vi/' + videoId + '/0.jpg';
             }
         }
-
     });
 
 </script>

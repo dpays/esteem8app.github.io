@@ -60,6 +60,7 @@
         <app-localstorage-document key="favoriteUsers" data="{{favoriteUsers}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteTags" data="{{favoriteTags}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteFiles" data="{{favoriteFiles}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteFolders" data="{{favoriteFolders}}"></app-localstorage-document>
 
         <!-- GET ACCOUNT -->
         <steem-get-account account-name="[[_username]]"
@@ -123,7 +124,8 @@
 
             <page-files name="files"
                         settings="[[settings]]"
-                        favorite-files="{{favoriteFiles}}">
+                        favorite-files="{{favoriteFiles}}"
+                        favorite-folders="{{favoriteFolders}}">
             </page-files>
 
             <page-settings name="settings"
@@ -216,6 +218,14 @@
                     type: Array
                 },
 
+                /*
+                 * Favorite folders array
+                 * Stored in browser
+                 */
+                favoriteFolders: {
+                    type: Array
+                },
+
                 _isDrawerOpen: {
                     type: Boolean
                 },
@@ -243,21 +253,203 @@
                 if(typeof this.favoritePosts == 'undefined') { this.favoritePosts = [];}
                 if(typeof this.favoriteUsers == 'undefined') { this.favoriteUsers = ['esteem8'];}
                 if(typeof this.favoriteTags == 'undefined') { this.favoriteTags = ['esteem8'];}
+                if(typeof this.favoriteFolders == 'undefined') { this.favoriteFolders = [{name: 'esteem8'}];}
                 if(typeof this.favoriteFiles == 'undefined') {
-                    var files = [];
-                    for (var i = 0; i < 7; i++) {
-                        files.push({
-                            name: 'ESTEEM8 Logo',
-                            url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true'
-                        });
-                    }
-                    files.push({name: 'Steem presentation', url: 'https://www.youtube.com/watch?v=xZmpCAqD7hs'});
-                    files.push({name: 'ES8 Presentation', url: 'https://docs.google.com/presentation/d/1xEWJQGMOGEVvNVW0Rf245TE4nYsRVOge29H4V6OERJ0/edit#slide=id.p'});
-                    files.push({name: 'Welcome', url: 'https://github.com/esteem8app/esteem8app.github.io/blob/master/articles/welcome.md'});
-                    files.push({name: 'esteem8app.github.io', url: 'https://github.com/esteem8app/esteem8app.github.io'});
-                    files.push({name: 'ES8 Docs', url: '[iframe$ratio=1:1&url=https://esteem8app.github.io/doc-viewer/index.html?repository=https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit]'});
 
-                    this.favoriteFiles = files;
+                    this.favoriteFiles = [
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "ESTEEM8 Logo",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                            "defaultTags": [
+                                "github.com",
+                                "media",
+                                "image",
+                                "images",
+                                "photo",
+                                "photos"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                        },
+                        {
+                            "name": "Steem presentation",
+                            "url": "https:\/\/www.youtube.com\/watch?v=xZmpCAqD7hs",
+                            "defaultTags": [
+                                "www.youtube.com",
+                                "media",
+                                "video",
+                                "youtube",
+                                "google"
+                            ],
+                            "image": "https:\/\/img.youtube.com\/vi\/xZmpCAqD7hs\/0.jpg"
+                        },
+                        {
+                            "name": "ES8 Presentation",
+                            "url": "https:\/\/docs.google.com\/presentation\/d\/1xEWJQGMOGEVvNVW0Rf245TE4nYsRVOge29H4V6OERJ0\/edit#slide=id.p",
+                            "defaultTags": [
+                                "docs.google.com",
+                                "file",
+                                "doc",
+                                "docs",
+                                "documents",
+                                "document",
+                                "files",
+                                "google",
+                                "presentation"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/google\/slides.png?raw=true"
+                        },
+                        {
+                            "name": "Welcome",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/articles\/welcome.md",
+                            "defaultTags": [
+                                "github.com",
+                                "file",
+                                "files",
+                                "doc",
+                                "docs",
+                                "documents",
+                                "document",
+                                "github",
+                                "it"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
+                        },
+                        {
+                            "name": "esteem8app.github.io",
+                            "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io",
+                            "defaultTags": [
+                                "github.com",
+                                "file",
+                                "files",
+                                "doc",
+                                "docs",
+                                "documents",
+                                "document",
+                                "github",
+                                "it"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
+                        },
+                        {
+                            "name": "ES8 Docs",
+                            "url": "[iframe$ratio=1:1&url=https:\/\/esteem8app.github.io\/doc-viewer\/index.html?repository=https:\/\/github.com\/esteem8app\/esteem8app.github.io\/tree\/master\/docs\/contributing-kit]",
+                            "defaultTags": [
+                                "esteem8app.github.io",
+                                "file",
+                                "files",
+                                "doc",
+                                "docs",
+                                "documents",
+                                "document",
+                                "github",
+                                "it"
+                            ],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
+                        },
+                        {
+                            "name": "faxcool",
+                            "url": "https:\/\/www.youtube.com\/watch?v=zEi-NZY0fG4",
+                            "defaultTags": [
+                                "www.youtube.com",
+                                "media",
+                                "video",
+                                "youtube",
+                                "google"
+                            ],
+                            "manualTags": "",
+                            "image": "https:\/\/img.youtube.com\/vi\/zEi-NZY0fG4\/0.jpg"
+                        },
+                        {
+                            "name": "dot matrix",
+                            "url": "https:\/\/soundcloud.com\/viperrecordings\/mob-tactics-dot-matrix?in=420-matias\/sets\/faster-than-light-dnb",
+                            "defaultTags": [
+                                "soundcloud.com",
+                                "media",
+                                "sound",
+                                "soundcloud"
+                            ],
+                            "manualTags": ["matrix"],
+                            "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/soundcloud.png?raw=true"
+                        }
+                    ];
                 }
 
                 if(typeof this.settings == 'undefined') {
@@ -530,7 +722,7 @@
 
                 return {
 
-                    appVersion: '0.0.5.0',
+                    appVersion: '0.0.5.1',
 
                     user: {
                         name: '',
@@ -622,6 +814,201 @@
                 actualSettings.appVersion = defaultSettings.appVersion;
 
                 this.set('settings', Object.assign(defaultSettings, actualSettings));
+
+                this.favoriteFiles = [
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "ESTEEM8 Logo",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true",
+                        "defaultTags": [
+                            "github.com",
+                            "media",
+                            "image",
+                            "images",
+                            "photo",
+                            "photos"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true"
+                    },
+                    {
+                        "name": "Steem presentation",
+                        "url": "https:\/\/www.youtube.com\/watch?v=xZmpCAqD7hs",
+                        "defaultTags": [
+                            "www.youtube.com",
+                            "media",
+                            "video",
+                            "youtube",
+                            "google"
+                        ],
+                        "image": "https:\/\/img.youtube.com\/vi\/xZmpCAqD7hs\/0.jpg"
+                    },
+                    {
+                        "name": "ES8 Presentation",
+                        "url": "https:\/\/docs.google.com\/presentation\/d\/1xEWJQGMOGEVvNVW0Rf245TE4nYsRVOge29H4V6OERJ0\/edit#slide=id.p",
+                        "defaultTags": [
+                            "docs.google.com",
+                            "file",
+                            "doc",
+                            "docs",
+                            "documents",
+                            "document",
+                            "files",
+                            "google",
+                            "presentation"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/google\/slides.png?raw=true"
+                    },
+                    {
+                        "name": "Welcome",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/articles\/welcome.md",
+                        "defaultTags": [
+                            "github.com",
+                            "file",
+                            "files",
+                            "doc",
+                            "docs",
+                            "documents",
+                            "document",
+                            "github",
+                            "it"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
+                    },
+                    {
+                        "name": "esteem8app.github.io",
+                        "url": "https:\/\/github.com\/esteem8app\/esteem8app.github.io",
+                        "defaultTags": [
+                            "github.com",
+                            "file",
+                            "files",
+                            "doc",
+                            "docs",
+                            "documents",
+                            "document",
+                            "github",
+                            "it"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
+                    },
+                    {
+                        "name": "ES8 Docs",
+                        "url": "[iframe$ratio=1:1&url=https:\/\/esteem8app.github.io\/doc-viewer\/index.html?repository=https:\/\/github.com\/esteem8app\/esteem8app.github.io\/tree\/master\/docs\/contributing-kit]",
+                        "defaultTags": [
+                            "esteem8app.github.io",
+                            "file",
+                            "files",
+                            "doc",
+                            "docs",
+                            "documents",
+                            "document",
+                            "github",
+                            "it"
+                        ],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
+                    },
+                    {
+                        "name": "faxcool",
+                        "url": "https:\/\/www.youtube.com\/watch?v=zEi-NZY0fG4",
+                        "defaultTags": [
+                            "www.youtube.com",
+                            "media",
+                            "video",
+                            "youtube",
+                            "google"
+                        ],
+                        "manualTags": "",
+                        "image": "https:\/\/img.youtube.com\/vi\/zEi-NZY0fG4\/0.jpg"
+                    },
+                    {
+                        "name": "dot matrix",
+                        "url": "https:\/\/soundcloud.com\/viperrecordings\/mob-tactics-dot-matrix?in=420-matias\/sets\/faster-than-light-dnb",
+                        "defaultTags": [
+                            "soundcloud.com",
+                            "media",
+                            "sound",
+                            "soundcloud"
+                        ],
+                        "manualTags": ["matrix"],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/soundcloud.png?raw=true"
+                    }
+                ];
             }
 
             // TODO

@@ -14,9 +14,15 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
+<link rel="import" href="../../bower_components/paper-tags/paper-tags.html">
+<link rel="import" href="../../bower_components/paper-tags/paper-tags-input.html">
+
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/file-card.html">
 <link rel="import" href="../components/html-echo.html">
+
+<link rel="import" href="../dialogs/select-folder-dialog.html">
+
 <link rel="import" href="../shared-styles.html">
 
 <dom-module id="page-files">
@@ -42,6 +48,10 @@
                 background-color: var(--app-dark-primary-color);
                 color: var(--app-primary-text-color);
                 width: 100%;
+            }
+
+            .floatingToolbarTitle div {
+                display: inline;
             }
 
             .mainToolbar .bottom div {
@@ -95,23 +105,41 @@
                 color: var(--app-background-primary-text-color)
             }
 
-            paper-input {
+            paper-input, paper-tags-input {
                 --paper-input-container-focus-color: var(--app-secondary-color);
                 --paper-input-container-input-color: var(--app-background-primary-text-color);
                 --paper-input-container-color: var(--app-background-secondary-text-color);
             }
 
-            @media (max-width: 400px) {
+            paper-tags, paper-tags-input {
+                --paper-tag-margin: 4px;
+
+                --paper-tags-item: {
+                    padding-left: 8px !important;
+                    border: 1px solid var(--app-secondary-color) !important;;
+                };
+
+                --paper-tag-text-color: var(--app-background-secondary-text-color);
+            }
+
+            #viewFileDialog {
+                width: 800px;
+                height: 100%;
+            }
+
+            @media (max-width: 800px) {
+                #viewFileDialog {
+                    width: 80%;
+                }
+            }
+
+
+            @media (max-width: 600px) {
                 #viewFileDialog {
                     width: 100%;
                     height: 100%;
                     margin: 0;
                 }
-            }
-
-            #viewFileDialog {
-                min-width: 80%;
-                height: 100%;
             }
 
             #closeViewButton {
@@ -126,6 +154,11 @@
 
         </style>
 
+        <select-folder-dialog id="selectFolderDialog"
+                              selected-folder="{{_selectedFolder}}"
+                              favorite-folders="{{favoriteFolders}}">
+        </select-folder-dialog>
+
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar medium-tall">
 
@@ -133,10 +166,11 @@
                                id="toggleDrawerMenu"
                                on-tap="_openDrawer()">
             </paper-icon-button>
-
-            <div class="floatingToolbar">
+            <div id="floatingToolbar"
+                 on-tap="_openSelectFolderDialog()"
+                 class="floatingToolbar">
                 <span class="floatingToolbarTitle">
-                    My files
+                    <div>#[[_selectedFolder]]</div>
                 </span>
             </div>
             <a href="/trending">
@@ -211,6 +245,13 @@
 
             <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
 
+            <paper-tags-input label="Tags"
+                              value="{{currentFile.manualTags}}"></paper-tags-input>
+
+            <div class="defaultTags">
+                <paper-tags items="{{currentFile.defaultTags}}"></paper-tags>
+            </div>
+
             <div class="buttons">
                 <paper-button dialog-dismiss>
                     Cancel
@@ -234,6 +275,13 @@
             </paper-input>
 
             <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
+
+            <paper-tags-input label="Tags"
+                              value="{{currentFile.manualTags}}"></paper-tags-input>
+
+            <div class="defaultTags">
+                <paper-tags items="{{currentFile.defaultTags}}"></paper-tags>
+            </div>
 
             <div class="buttons">
                 <paper-button dialog-dismiss>
@@ -273,8 +321,9 @@
             <template is="dom-if" if="[[favoriteFiles.length]]">
                 <div class="file-cards">
                     <iron-selector multi selected-values="{{selectedFiles}}"
-                                   in items="[[favoriteFiles]]">
-                        <template is="dom-repeat" items="[[favoriteFiles]]">
+                                   items="[[favoriteFiles]]">
+                        <template is="dom-repeat" items="[[favoriteFiles]]"
+                                  filter="{{computeFilter(_selectedFolder)}}">
                             <file-card file="[[item]]"></file-card>
                         </template>
                     </iron-selector>
@@ -304,6 +353,16 @@
                 notify: true
             },
 
+            favoriteFolders: {
+                type: Array,
+                notify: true
+            },
+
+            _selectedFolder: {
+                type: String,
+                notify: true
+            },
+
             currentFile: {
                 type: Object
             },
@@ -326,16 +385,20 @@
         },
 
         observers: [
-            '_setCurrentFileName(currentFile.url)'
+            '_setCurrentFileName(currentFile.url)',
+            '_setCurrentFileDefaultTags(currentFile.url)'
         ],
 
         ready: function() {
 
             this.pastFiles = this.favoriteFiles;
+            this._selectedFolder = '';
             this.selectedFiles = [];
             this.currentFile = {name: '', url: ''};
 
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
+            this.$.floatingToolbar.addEventListener('tap', this._openSelectFolderDialog.bind(this));
 
             this.$.deleteFileButton.addEventListener('tap', this._deleteFile.bind(this));
             this.$.openFileLinkButton.addEventListener('tap', this._openFileLink.bind(this));
@@ -354,6 +417,11 @@
         _openDrawer: function() {
 
             document.getElementById('appshell')._openDrawer();
+        },
+
+        _openSelectFolderDialog: function () {
+
+            this.$.selectFolderDialog.open();
         },
 
         _oneSelected: function(selectedFilesLength) {
@@ -447,7 +515,11 @@
             var indexToUpdate = this.editFileIndex;
             var pathToUpdate = 'favoriteFiles.' + indexToUpdate;
 
-            this.set(pathToUpdate, this.currentFile);
+            var file = this.currentFile;
+            var image = this._computeImageFromFile(file);
+            file.image = image;
+
+            this.set(pathToUpdate, file);
 
             this._resetCurrentFile();
 
@@ -479,17 +551,290 @@
         // Add one image
         _addFile: function() {
 
-            this.push('favoriteFiles', this.currentFile);
+            var file = this.currentFile;
+            var image = this._computeImageFromFile(file);
+
+            file.image = image;
+
+            alert(JSON.stringify(file));
+
+            this.push('favoriteFiles', file);
             this._resetCurrentFile();
+        },
+
+        _resetCurrentFile: function() {
+
+            this.set('currentFile', {name: '', url: ''});
+        },
+
+        _computeTagsFromFile: function(file) {
+
+            var url = file.url;
+            var tags = [];
+
+            function extractDomain(url) {
+                var domain;
+                //find & remove protocol (http, ftp, etc.) and get domain
+                if (url.indexOf("://") > -1) {
+                    domain = url.split('/')[2];
+                }
+                else {
+                    domain = url.split('/')[0];
+                }
+
+                //find & remove port number
+                domain = domain.split(':')[0];
+
+                return domain;
+            }
+
+            var domain = extractDomain(url);
+
+            tags.push(domain);
+
+            if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
+
+                tags.push('media');
+                tags.push('image');
+                tags.push('images');
+                tags.push('photo');
+                tags.push('photos');
+
+            }else if(file.url.includes('docs.google.com/document')) {
+
+                tags.push('file');
+                tags.push('files');
+                tags.push('doc');
+                tags.push('docs');
+                tags.push('google');
+                tags.push('documents');
+                tags.push('document');
+            }else if(file.url.includes('docs.google.com/drawings')) {
+
+                tags.push('file');
+                tags.push('files');
+                tags.push('doc');
+                tags.push('docs');
+                tags.push('documents');
+                tags.push('document');
+                tags.push('google');
+                tags.push('drawings');
+                tags.push('drawing');
+            }else if(file.url.includes('docs.google.com/forms')) {
+
+                tags.push('file');
+                tags.push('files');
+                tags.push('google');
+                tags.push('forms');
+                tags.push('form');
+            }else if(file.url.includes('docs.google.com/spreadsheets')) {
+
+                tags.push('file');
+                tags.push('files');
+                tags.push('doc');
+                tags.push('docs');
+                tags.push('documents');
+                tags.push('document');
+                tags.push('google');
+                tags.push('spreadsheet');
+                tags.push('sheet');
+                tags.push('spreadsheets');
+                tags.push('sheets');
+            }else if(file.url.includes('docs.google.com/presentation')) {
+
+                tags.push('file');
+                tags.push('doc');
+                tags.push('docs');
+                tags.push('documents');
+                tags.push('document');
+                tags.push('files');
+                tags.push('google');
+                tags.push('presentation');
+            }else if(file.url.includes('github.com')) {
+
+                tags.push('file');
+                tags.push('files');
+                tags.push('doc');
+                tags.push('docs');
+                tags.push('documents');
+                tags.push('document');
+                tags.push('github');
+                tags.push('it');
+            }else if(file.url.includes("soundcloud.com")) {
+
+                tags.push('media');
+                tags.push('sound');
+                tags.push('soundcloud');
+            }else if(file.url.includes("youtube.com")) {
+
+                tags.push('media');
+                tags.push('video');
+                tags.push('youtube');
+                tags.push('google');
+            }
+
+            return tags;
+
+        },
+
+        _computeImageFromFile: function(file) {
+
+            if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
+
+                return file.url;
+
+            }else if(file.url.includes('docs.google.com/document')) {
+
+                return  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/docs.png?raw=true';
+            }else if(file.url.includes('docs.google.com/drawings')) {
+
+                return  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/drawing.png?raw=true';
+            }else if(file.url.includes('docs.google.com/forms')) {
+
+                return  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/forms.png?raw=true';
+            }else if(file.url.includes('docs.google.com/spreadsheets')) {
+
+                return  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/sheets.png?raw=true';
+            }else if(file.url.includes('docs.google.com/presentation')) {
+
+                return  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/slides.png?raw=true';
+            }else if(file.url.includes('github.com')) {
+
+                return  'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true';
+            }else if(file.url.includes("soundcloud.com")) {
+
+                return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/soundcloud.png?raw=true';
+            }else if(file.url.includes("youtube.com")) {
+
+                var videoId = file.url
+                        .replace('https://www.youtube.com/watch?v=', '')
+                        .replace('https://youtu.be/', '');
+
+                return 'https://img.youtube.com/vi/' + videoId + '/0.jpg';
+            }
+
+            return file.url;
         },
 
         _setCurrentFileName: function(url) {
 
         },
 
-        _resetCurrentFile: function() {
+        _setCurrentFileDefaultTags: function(url) {
 
-            this.set('currentFile', {name: '', url: ''});
+            var defaultTags = this._computeTagsFromFile(this.currentFile);
+
+            this.set('currentFile.defaultTags', defaultTags);
+        },
+
+        computeFilter: function(string) {
+            if (!string) {
+                // set filter to null to disable filtering
+                return null;
+            } else {
+
+                // return a filter function for the current search string
+                string = string.toLowerCase();
+
+                return function(item) {
+
+                    // Set variables
+                    var statement = false;
+                    var fileName = item.name.toLowerCase();
+
+                    var keys = string.split(' ');
+                    var keysLength = keys.length;
+
+                    var manualTags = [];
+                    var defaultTags = [];
+
+                    if(typeof item.manualTags !== 'undefined') {
+
+                        manualTags = item.manualTags;
+                    }
+
+                    if(typeof item.defaultTags !== 'undefined') {
+
+                        defaultTags = item.defaultTags || [];
+                    }
+
+                    var tags = manualTags.concat(defaultTags);
+                    var tagsLength = tags.length;
+
+
+
+                    /* If mutliples key, restrictive filter (image + esteem8 = not only image but image with esteem8) */
+
+                    /*
+                     * This function search on tags and name,
+                     * the queryString is composed of multiples keywords
+                     * Only one keyword can be used to search on name, but the keyword can be in the middle of the array
+                     */
+
+                    var keywordMissedInRestrictiveSearch = 0;
+
+                    // First keyword test not restrictive
+                    if(fileName.includes(string)) { // String part of the name
+
+                        statement = true;
+                    }
+
+                    for(var i = 0; i < tagsLength; i++) { // String equal to a tag
+
+                        var tag = tags[i].toLowerCase();
+
+                        if(tag == keys[0]) {
+                            statement = true;
+                        }
+                    }
+
+                    // Other keyword test restrictive
+                    for(var i = 1; i < keysLength; i++) {
+
+                        var key = keys[i];
+
+                        for(var i = 0; i < tagsLength; i++) { // String equal to a tag
+
+                            var tag = tags[i].toLowerCase();
+
+                            if(tag != key) {
+                                keywordMissedInRestrictiveSearch += 1;
+                            }
+                        }
+
+                    }
+
+                    if(keywordMissedInRestrictiveSearch > 2) {
+                        statement = false;
+                    }
+
+
+                    return statement;
+                };
+            }
+        },
+
+        _arrayAsString: function(list) {
+
+            var text = '';
+
+            if(typeof list !== 'undefined') {
+
+                var listLength = list.length || 0;
+
+                for(var i = 0;i < listLength; i++) {
+
+                    text += list[i];
+
+                    if(i < listLength-1) {
+
+                        text += ', ';
+                    }
+
+                }
+            }
+
+            return text;
         }
 
         //http://uploads.im/apidocs
