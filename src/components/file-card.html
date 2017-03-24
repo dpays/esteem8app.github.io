@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -24,9 +25,26 @@
                 font-weight: 300;
             }
 
+            #viewFileButton {
+                position: absolute;
+                margin-top: -38px;
+                margin-left: -40px;
+                color: #eee;
+                z-index: 3;
+            }
+
+            #editFileButton {
+                position: absolute;
+                margin-top: -38px;
+                margin-left: -80px;
+                color: #eee;
+                z-index: 3;
+            }
+
             #fileCard {
                 display: inline-block;
                 margin: 12px;
+                text-align: right;
                 background: var(--app-secondary-background-color);
                 --paper-card-background-color: var(--app-secondary-background-color);
                 --paper-card-header-color: var(--app-background-primary-text-color);
@@ -38,6 +56,7 @@
                 --paper-card-header-text: {
                     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .8));
                     font-size: 12px;
+                    text-align: left;
                     width: 100%;
                     margin: 0;
                     padding: 12px;
@@ -61,7 +80,18 @@
         <!-- post cards -->
         <paper-card id="fileCard"
                     heading="[[file.name]]"
-                    image="[[file.image]]">
+                    image="[[file.image]]"><div class="fileActions">
+
+                <paper-icon-button id="editFileButton"
+                                   on-tap="_editFile()"
+                                   icon="my-icons:edit">
+                </paper-icon-button>
+
+                <paper-icon-button id="viewFileButton"
+                                   on-tap="_viewFile()"
+                                   icon="my-icons:visibility">
+                </paper-icon-button>
+
         </paper-card>
 
     </template>
@@ -77,8 +107,30 @@
 
             file: {
                 type: Object
+            },
+
+            action: {
+                type: Object,
+                notify: true
             }
+        },
+
+        ready: function() {
+
+            this.$.editFileButton.addEventListener('tap', this._editFile.bind(this));
+            this.$.viewFileButton.addEventListener('tap', this._viewFile.bind(this));
+        },
+
+        _editFile: function() {
+
+            this.set('action', {type: 'edit', id: this.file.id});
+        },
+
+        _viewFile: function() {
+
+            this.set('action', {type: 'view', id: this.file.id});
         }
+
     });
 
 </script>

@@ -178,14 +178,16 @@
             </a>
             <div class="bottom right dark-primary">
 
-                <div hidden="[[!_oneSelected(selectedFiles.length)]]">
+                <!-- [[!_oneSelected(selectedFiles.length)]] -->
+                <div hidden="true">
                     <paper-icon-button id="openViewFileButton"
                                        on-tap="_openViewFile()"
                                        icon="my-icons:visibility">
                     </paper-icon-button>
                 </div>
 
-                <div hidden="[[!_oneSelected(selectedFiles.length)]]">
+                <!-- [[!_oneSelected(selectedFiles.length)]] -->
+                <div hidden="true">
                     <paper-icon-button id="openEditFileButton"
                                        icon="my-icons:edit"
                                        on-tap="_openEditFile()">
@@ -324,7 +326,10 @@
                                    attr-for-selected="file-id">
                         <template is="dom-repeat" items="[[favoriteFiles]]"
                                   filter="{{computeFilter(_selectedFolder)}}">
-                            <file-card file="[[item]]" file-id="[[item.id]]"></file-card>
+                            <file-card file="[[item]]"
+                                       file-id="[[item.id]]"
+                                       action="{{_action}}">
+                            </file-card>
                         </template>
                     </iron-selector>
                 </div>
@@ -381,12 +386,17 @@
 
             editFileIndex: {
                 type: String
+            },
+
+            _action: {
+                type: Object
             }
         },
 
         observers: [
             '_setCurrentFileName(currentFile.url)',
-            '_setCurrentFileDefaultTags(currentFile.url)'
+            '_setCurrentFileDefaultTags(currentFile.url)',
+            '_doAction(_action.type, _action.id)'
         ],
 
         ready: function() {
@@ -516,6 +526,25 @@
             this.currentFile = this.favoriteFiles[this.editFileIndex];
 
             this.$.editFileDialog.open();
+        },
+
+        _doAction: function(type, id) {
+
+            this.set('selectedFiles', [id]);
+
+            switch(type) {
+
+                case 'edit':
+                    this._openEditFile();
+                    break;
+
+                case 'view':
+                    this._openViewFile();
+                    break;
+            }
+
+            this._action = {};
+
         },
 
         // Delete selected images

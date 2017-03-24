@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+<dom-module id="es8-button">
+
+    <template>
+
+        <style include="shared-styles">
+
+            #openUrlButton {
+                font-weight: 500;
+            }
+
+        </style>
+
+        <paper-button id="openUrlButton"
+                      on-tap="_openUrl()">
+            <template is="dom-if" if="[[icon]]">
+                <iron-icon icon="my-icons:[[icon]]"></iron-icon>&nbsp;
+            </template>
+            [[text]]
+        </paper-button>
+
+    </template>
+
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'es8-button',
+
+        properties: {
+
+            /*
+             * Text to display inside button
+             */
+            text: {
+                type: String
+            },
+
+            /*
+             * Url to open on click
+             */
+            url: {
+                type: String
+            },
+
+            /*
+             * Optional icon
+             */
+            icon: {
+                type: String
+            },
+
+            /*
+             * Optional style [primary, secondary]
+             */
+            style: {
+                type: String
+            }
+        },
+
+        ready: function() {
+
+            //List event
+            this.$.openUrlButton.addEventListener('tap', this._openUrl.bind(this));
+
+        },
+
+        _openUrl: function() {
+
+            window.open(this.url);
+        }
+    });
+</script>

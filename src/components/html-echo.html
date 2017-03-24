@@ -7,6 +7,7 @@
 <link rel="import" href="github-repository.html">
 <link rel="import" href="github-repository-file-view.html">
 <link rel="import" href="google-docs-embedded.html">
+<link rel="import" href="es8-button.html">
 <link rel="import" href="prism-render.html">
 
 <dom-module id="html-echo">
@@ -142,6 +143,19 @@
             width: 100%;
         }
 
+        /* CUSTOM */
+        .markdown-html .hidden {
+            display: none;
+        }
+
+        .markdown-html .secondary-color {
+            color: var(--app-secondary-color);
+        }
+
+        .markdown-html .primary-color {
+            color: var(--app-primary-color);
+        }
+
     </style>
     <template>
         <marked-element markdown="[[_htmlDisplayed]]">
@@ -248,12 +262,17 @@
                     return '<img src="' + url + '" ></img>';
                 });*/
 
-                // Custom element ( [iframe$ratio=1:3&url=https://primerz.github.io/] [postWrapper$post-path=/introduceyourself/@fayehalliday/an-introduction-with-love-from-faye-halliday-artist-and-travel-junkie])
-                var customElementRegex = /\[(iframe|steem tag)(\$)?([\/.=&:a-z0-9\?\-]+)?]/gm;
+                // Custom element
+                /* [iframe$ratio=1:3&url=https://primerz.github.io/]
+                 * [postWrapper$post-path=/introduceyourself/@fayehalliday/an-introduction-with-love-from-faye-halliday-artist-and-travel-junkie]
+                 * [button$text=my github&url=https://primerz.github.io/]
+                 */
+
+                var customElementRegex = /\[(iframe|steem tag|button|postWrapper)(\$)?([\/.=&@:a-zA-Z0-9\?\- ]+)?]/gm;
                 html = html.replace(customElementRegex, function(match) {
 
                     // Clean match
-                    var match = match.replace(/ /g, "");
+                    //var match = match.replace(/ /g, "");
                     var match = match.replace("[", "");
                     var match = match.replace("]", "");
 
@@ -279,6 +298,10 @@
 
                         case 'postWrapper':
                             appElement = 'post-wrapper';
+                            break;
+
+                        case 'button':
+                            appElement = 'es8-button';
                             break;
                     }
 
@@ -398,8 +421,13 @@
                  });
                  */
                 // Post path -> <post>
-                var postPathRegex = /[^("|'|\[)](\/)?[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
+                var postPathRegex = /.?(\/)?[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
                 html = html.replace(postPathRegex, function(match){
+
+                    if(match.charAt(0) !== ' '){
+
+                        return match;
+                    }
 
                     var match = match.replace(/ /g, "");
                     return '<post-wrapper steem-path="' + match + '" post-type="content-minimal"></post-wrapper>';
@@ -414,8 +442,13 @@
                 });
 
                 // Github file view -> <github-repository-file-view>
-                var gitHubRepositoryFileRegex = /[^("|'|\[)](https:\/\/github.com\/\w+\/([\.a-zA-Z0-9]+)\/blob\/\w+\/[\.\/a-zA-Z0-9-]+)/gm
+                var gitHubRepositoryFileRegex = /.?https:\/\/github.com\/[a-zA-Z0-9]+\/[\.a-zA-Z0-9-]+\/blob\/\w+\/[\.\/a-zA-Z0-9-]+/gm
                 html = html.replace(gitHubRepositoryFileRegex, function(match){
+
+                    if(match.includes('"') || match.includes('\'') || match.includes('[')) {
+
+                        return match;
+                    }
 
                     var match = match.replace(/ /g, "");
                     return '<github-repository-file-view file-url="' + match + '" ></github-repository-file-view>';
@@ -554,8 +587,13 @@
                 });
 
                 // Tag #tag
-                var tagRegex = /#[a-zA-Z0-9-]+/gm;
+                /*var tagRegex = /.?#[a-zA-Z0-9-]+/gm;
                 html = html.replace(tagRegex, function(match){
+
+                    if(match.charAt(0) != ' ') {
+
+                        return match;
+                    }
 
                     var url = match.replace('#', '');
 
@@ -563,11 +601,16 @@
                 });
 
                 // User @username
-                var userRegex = /@[a-zA-Z0-9-]+/gm;
+                var userRegex = /.?@[a-zA-Z0-9-]+/gm;
                 html = html.replace(userRegex, function(match){
 
+                    if(match.charAt(0) != ' ') {
+
+                        return match;
+                    }
+
                     return '<a href="/' + match + '" >' + match + '</a>';
-                });
+                });*/
 
                 // REGEX tester https://regex101.com/
 
