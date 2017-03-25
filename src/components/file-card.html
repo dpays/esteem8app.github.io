@@ -5,6 +5,7 @@
 
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -22,75 +23,77 @@
             }
 
             * {
-                font-weight: 300;
+                font-weight: 500;
             }
 
-            #viewFileButton {
-                position: absolute;
-                margin-top: -38px;
-                margin-left: -40px;
-                color: #eee;
-                z-index: 3;
-            }
+            paper-checkbox {
+                --paper-checkbox-checked-color: var(--app-secondary-color);
+                --paper-checkbox-checked-ink-color: var(--app-secondary-color);
 
-            #editFileButton {
-                position: absolute;
-                margin-top: -38px;
-                margin-left: -80px;
-                color: #eee;
-                z-index: 3;
+                --paper-checkbox-unchecked-color: var(--app-background-primary-text-color);
+                --paper-checkbox-unchecked-ink-color: var(--app-secondary-text-color);
+                --paper-checkbox-label-color: var(--app-secondary-text-color);
             }
 
             #fileCard {
                 display: inline-block;
                 margin: 12px;
-                text-align: right;
-                background: var(--app-secondary-background-color);
-                --paper-card-background-color: var(--app-secondary-background-color);
-                --paper-card-header-color: var(--app-background-primary-text-color);
-                --paper-card-header-image: {
-                    width: 216px;
-                    height: 133px;
-                };
-
-                --paper-card-header-text: {
-                    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .8));
-                    font-size: 12px;
-                    text-align: left;
-                    width: 100%;
-                    margin: 0;
-                    padding: 12px;
-                    color: #eee;
-                };
+                background-color: var(--app-secondary-background-color);
+                background-size: cover;
+                color: var(--app-background-primary-text-color);
+                width: 216px;
+                height: 133px;
             }
 
             @media (max-width: 400px) {
                 #fileCard {
                     margin: 8px;
-                    --paper-card-header-image: {
-                        width: 142px;
-                        height: 88px;
-                    };
+                    width: 142px;
+                    height: 88px;
                 }
+            }
+
+            #headerImage {
+                @apply(--layout-vertical);
+                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .8));
+                text-align: left;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                color: #eee;
+            }
+
+            #headerImage .vertical-space {
+                @apply(--layout-flex);
+            }
+
+            #headerImage .heading {
+                padding: 8px;
+            }
+
+            #selectFileCheckbox {
+                position: absolute;
+                top: 10px;
+                right: 2px;
+                z-index: 3;
             }
 
         </style>
 
 
         <!-- post cards -->
-        <paper-card id="fileCard"
-                    heading="[[file.name]]"
-                    image="[[file.image]]"><div class="fileActions">
+        <paper-card id="fileCard">
 
-                <paper-icon-button id="editFileButton"
-                                   on-tap="_editFile()"
-                                   icon="my-icons:edit">
-                </paper-icon-button>
+                <div id="headerImage" on-tap="_fileTaped()">
+                    <div class="vertical-space"></div>
+                    <div class="heading">
+                        [[file.name]]
+                    </div>
+                </div>
 
-                <paper-icon-button id="viewFileButton"
-                                   on-tap="_viewFile()"
-                                   icon="my-icons:visibility">
-                </paper-icon-button>
+                <paper-checkbox id="selectFileCheckbox"
+                                checked="{{_isSelected}}">
+                </paper-checkbox>
 
         </paper-card>
 
@@ -105,30 +108,96 @@
 
         properties: {
 
+            /*
+             * File Object
+             */
             file: {
                 type: Object
             },
 
+            /*
+             * Action object
+             */
             action: {
                 type: Object,
                 notify: true
+            },
+
+            /*
+             * Selected files arrays
+             */
+            selectedFiles: {
+                type: Array,
+                notify: true
+            },
+
+            _isSelected: {
+                type: Boolean
             }
         },
 
+        observers: [
+            '_computeIsSelectedFile(selectedFiles, selectedFiles.length)',
+            '_updateSelectFile(_isSelected)',
+            '_updateImage(file.image)'
+        ],
+
         ready: function() {
 
-            this.$.editFileButton.addEventListener('tap', this._editFile.bind(this));
-            this.$.viewFileButton.addEventListener('tap', this._viewFile.bind(this));
+            // List events
+            this.$.headerImage.addEventListener('tap', this._fileTaped.bind(this));
+
+            // set default var
+            this._isSelected = false;
         },
 
-        _editFile: function() {
+        _fileTaped: function() {
 
-            this.set('action', {type: 'edit', id: this.file.id});
+            if(!this._isSelected) {
+
+                // One click -> select
+                this._isSelected = true;
+            }else {
+
+                // Two click -> open
+                this.set('action', {type: 'view', id: this.file.id});
+            }
+
         },
 
-        _viewFile: function() {
+        _updateImage: function(imageUrl) {
 
-            this.set('action', {type: 'view', id: this.file.id});
+            this.$.fileCard.setAttribute('style', 'background-image: url("' + imageUrl + '");');
+        },
+
+        _computeIsSelectedFile: function(selectedFiles, length) {
+
+            // If file id is in file list
+            if(selectedFiles.indexOf(this.file.id) >= 0) {
+
+                this._isSelected = true;
+            }else {
+
+                this._isSelected = false;
+            }
+
+        },
+
+        _updateSelectFile: function(_isSelected) {
+
+            if(_isSelected) {
+
+                this.push('selectedFiles', this.file.id);
+            }else {
+
+                var selectedFileIndex = this.selectedFiles.indexOf(this.file.id);
+
+                if(selectedFileIndex >= 0) {
+
+                    this.splice('selectedFiles', selectedFileIndex, 1);
+                }
+            }
+
         }
 
     });

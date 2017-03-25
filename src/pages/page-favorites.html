@@ -67,19 +67,20 @@
             }
 
             paper-input {
-                --paper-input-container-color: var(--app-background-primary-text-color);
                 margin: auto;
                 padding-left: 16px;
                 padding-right: 16px;
                 --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
             }
 
-            #favoriteTagsList, #favoriteUsersList {
+            #favoriteTagsList, #favoriteUsersList, #favoriteFoldersList {
                 overflow-y: scroll;
                 height: calc(100vh - 250px);
             }
 
-            #users, #tags {
+            #users, #tags, #folders {
                 max-width: 600px;
                 margin: auto;
             }
@@ -93,7 +94,7 @@
                     margin-top: 108px;
                 }
 
-                #favoriteTagsList, #favoriteUsersList {
+                #favoriteTagsList, #favoriteUsersList, #favoriteFoldersList {
                     overflow-y: scroll;
                     height: calc(100vh - 230px);
                 }
@@ -122,11 +123,22 @@
                 Cancel
             </paper-button>
         </paper-toast>
+
         <paper-toast id="toastDeleteUser"
                      text="User @[[deletedUser]] deleted"
                      class="fit-bottom">
             <paper-button id="cancelDeleteUserButton"
                           on-tap="_cancelDeleteUser()"
+                          class="cancel-button">
+                Cancel
+            </paper-button>
+        </paper-toast>
+
+        <paper-toast id="toastDeleteFolder"
+                     text="Folder #[[deletedFolder.name]] deleted"
+                     class="fit-bottom">
+            <paper-button id="cancelDeleteFolderButton"
+                          on-tap="_cancelDeleteFolder()"
                           class="cancel-button">
                 Cancel
             </paper-button>
@@ -165,6 +177,10 @@
                 <paper-tab name="tags">
                     <iron-icon icon="my-icons:label"></iron-icon>
                     [[favoriteTags.length]]
+                </paper-tab>
+                <paper-tab name="folders">
+                    <iron-icon icon="my-icons:folder-favorite"></iron-icon>
+                    [[favoriteFolders.length]]
                 </paper-tab>
             </paper-tabs>
         </div>
@@ -251,6 +267,35 @@
                     </template>
                 </div>
             </div>
+
+            <div name="folders" id="folders">
+
+                <paper-input label="Add a folder"
+                             value="{{addFolderInput}}"
+                             on-keydown="_checkForEnterOnTagInput">
+                    <span prefix>#</span>
+                    <paper-icon-button id="addFolderButton"
+                                       icon="my-icons:add"
+                                       on-tap="_addFolder()"
+                                       suffix>
+                    </paper-icon-button>
+                </paper-input>
+                <div role="listbox"
+                     id="favoriteFoldersList">
+                    <template is="dom-repeat"
+                              items="[[favoriteFolders]]">
+                        <paper-item>
+                            <paper-item-body>
+                                <a href="/files/[[item.name]]">#[[item.name]]</a>
+                            </paper-item-body>
+                            <paper-icon-button icon="my-icons:delete"
+                                               id="deleteFolder"
+                                               on-tap="_deleteFolder()">
+                            </paper-icon-button>
+                        </paper-item>
+                    </template>
+                </div>
+            </div>
         </iron-pages>
 
         <app-drawer id="drawer">
@@ -266,7 +311,8 @@
 
         listeners: {
             'tags.tap': '_deleteTag',
-            'users.tap': '_deleteUser'
+            'users.tap': '_deleteUser',
+            'folders.tap': '_deleteFolder'
         },
 
         properties: {
@@ -286,6 +332,11 @@
                 notify: true
             },
 
+            favoriteFolders: {
+                type: Array,
+                notify: true
+            },
+
             currentView: {
                 type: String
             },
@@ -298,11 +349,19 @@
                 type: String
             },
 
+            addFolderInput: {
+                type: String
+            },
+
             deletedUser: {
                 type: String
             },
 
             deletedTag: {
+                type: String
+            },
+
+            deletedFolder: {
                 type: String
             }
         },
@@ -311,10 +370,14 @@
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+
             this.$.addTagButton.addEventListener('tap', this._addTag.bind(this));
             this.$.addUserButton.addEventListener('tap', this._addUser.bind(this));
+            this.$.addFolderButton.addEventListener('tap', this._addFolder.bind(this));
+
             this.$.cancelDeleteUserButton.addEventListener('tap', this._cancelDeleteUser.bind(this));
             this.$.cancelDeleteTagButton.addEventListener('tap', this._cancelDeleteTag.bind(this));
+            this.$.cancelDeleteFolderButton.addEventListener('tap', this._cancelDeleteFolder.bind(this));
 
             // Default view
             this.currentView = 'publications';
@@ -340,6 +403,14 @@
 
             this.push('favoriteTags', this.addTagInput.toLowerCase());
             this.addTagInput = '';
+        },
+
+        _addFolder: function() {
+
+            var folder = {name: this.addFolderInput.toLowerCase()};
+
+            this.push('favoriteFolders', folder);
+            this.addFolderInput = '';
         },
 
         _deleteUser: function(e) {
@@ -378,6 +449,24 @@
             }
         },
 
+        _deleteFolder: function(e) {
+
+            // Get FOLDER to delete
+            var folder = e.model.item;
+
+            // Open toast
+            this.deletedFolder = folder;
+            this.$.toastDeleteFolder.open();
+
+            // Delete FOLDER
+            if(typeof e.model !== 'undefined') {
+                var index = this.favoriteFolders.indexOf(folder);
+                if (index > -1) {
+                    this.splice('favoriteFolders', index, 1);
+                }
+            }
+        },
+
         _cancelDeleteUser: function() {
 
             this.push('favoriteUsers', this.deletedUser);
@@ -388,6 +477,12 @@
 
             this.push('favoriteTags', this.deletedTag);
             this.$.toastDeleteTag.close();
+        },
+
+        _cancelDeleteFolder: function() {
+
+            this.push('favoriteFolders', this.deletedFolder);
+            this.$.toastDeleteFolder.close();
         },
 
         _checkForEnterOnUserInput: function(e) {
@@ -402,6 +497,14 @@
             // check if 'enter' was pressed
             if (e.keyCode === 13) {
                 this._addTag();
+            }
+        },
+
+        _checkForEnterOnFolderInput: function(e) {
+
+            // check if 'enter' was pressed
+            if (e.keyCode === 13) {
+                this._addFolder();
             }
         }
 

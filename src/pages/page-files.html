@@ -12,6 +12,7 @@
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <link rel="import" href="../../bower_components/paper-tags/paper-tags.html">
@@ -67,11 +68,6 @@
                 width: 100%;
             }
 
-            .scrollable {
-                overflow: auto;
-                max-height: calc(100% - 72px);
-            }
-
             #files {
                 margin-top: 128px;
                 text-align: center;
@@ -98,6 +94,7 @@
                 position: fixed;
                 bottom: 16px;
                 right: 16px;
+                z-index: 4;
             }
 
             paper-dialog {
@@ -105,7 +102,7 @@
                 color: var(--app-background-primary-text-color)
             }
 
-            paper-input, paper-tags-input {
+            paper-input, paper-tags-input, paper-textarea {
                 --paper-input-container-focus-color: var(--app-secondary-color);
                 --paper-input-container-input-color: var(--app-background-primary-text-color);
                 --paper-input-container-color: var(--app-background-secondary-text-color);
@@ -122,40 +119,58 @@
                 --paper-tag-text-color: var(--app-background-secondary-text-color);
             }
 
-            #viewFileDialog {
+            .bigDialog {
                 width: 800px;
                 height: 100%;
             }
 
             @media (max-width: 800px) {
-                #viewFileDialog {
+                .bigDialog {
                     width: 80%;
                 }
             }
 
 
             @media (max-width: 600px) {
-                #viewFileDialog {
+                .bigDialog {
                     width: 100%;
                     height: 100%;
                     margin: 0;
                 }
             }
 
-            #closeViewButton {
+            .bigDialog .scrollable {
+                overflow: auto;
+                max-height: calc(100% - 72px);
+            }
+
+            .bigDialog.withBottomAction .scrollable {
+
+                max-height: calc(100% - 128px);
+            }
+
+            .closeViewButton {
                 color: var(--app-background-primary-text-color);
                 position: absolute;
                 right: 0;
                 top: 0;
-                padding: 8px;
+                padding: 8px !important;
                 margin: 16px;
+            }
+
+            #viewFileDialog h2 {
+                display: inline;
+            }
+
+            #openEditFileButton {
+                padding: 8px;
             }
 
 
         </style>
 
         <select-folder-dialog id="selectFolderDialog"
-                              selected-folder="{{_selectedFolder}}"
+                              selected-folder="{{query}}"
                               favorite-folders="{{favoriteFolders}}">
         </select-folder-dialog>
 
@@ -170,7 +185,7 @@
                  on-tap="_openSelectFolderDialog()"
                  class="floatingToolbar">
                 <span class="floatingToolbarTitle">
-                    <div>#[[_selectedFolder]]</div>
+                    <div>#[[query]]</div>
                 </span>
             </div>
             <a href="/trending">
@@ -178,37 +193,21 @@
             </a>
             <div class="bottom right dark-primary">
 
-                <!-- [[!_oneSelected(selectedFiles.length)]] -->
-                <div hidden="true">
-                    <paper-icon-button id="openViewFileButton"
-                                       on-tap="_openViewFile()"
-                                       icon="my-icons:visibility">
-                    </paper-icon-button>
-                </div>
-
-                <!-- [[!_oneSelected(selectedFiles.length)]] -->
-                <div hidden="true">
-                    <paper-icon-button id="openEditFileButton"
-                                       icon="my-icons:edit"
-                                       on-tap="_openEditFile()">
-                    </paper-icon-button>
-                </div>
-
-                <div hidden="[[!_multipleSelected(selectedFiles.length)]]">
+                <div hidden="[[!_multipleSelected(_selectedFilesId.length)]]">
                     <paper-icon-button id="openConfirmationDeleteFileButton"
-                                       on-tap="_openConfirmationDeleteFile()"
+                                       on-tap="_openConfirmationRemoveFilesDialog()"
                                        icon="my-icons:delete">
                     </paper-icon-button>
                 </div>
 
-                <div hidden="[[!_multipleSelected(selectedFiles.length)]]">
+                <div hidden="[[!_multipleSelected(_selectedFilesId.length)]]">
                     <paper-icon-button id="openFileLinkButton"
                                        on-tap="_openFileLink()"
                                        icon="my-icons:link">
                     </paper-icon-button>
                 </div>
 
-                <div hidden="[[!_multipleSelected(selectedFiles.length)]]">
+                <div hidden="[[!_multipleSelected(_selectedFilesId.length)]]">
                     <paper-icon-button id="copyFileLinkButton"
                                        on-tap="_copyFileLink()"
                                        icon="my-icons:copy">
@@ -221,7 +220,10 @@
         <paper-dialog id="confirmationRemoveFilesDialog">
 
             <h2>Confirmation</h2>
-            <p>Remove <span class="secondary-color">[[selectedFiles.length]]</span> files from favorite ?</p>
+            <p>Remove
+                <span class="secondary-color">[[_selectedFilesId.length]]</span>
+                files from favorite ?
+            </p>
 
             <div class="buttons">
                 <paper-button dialog-dismiss>
@@ -237,21 +239,33 @@
         </paper-dialog>
 
         <!-- Add a file to favorite -->
-        <paper-dialog id="addFilesDialog">
+        <paper-dialog id="addFileDialog" class="bigDialog withBottomAction">
 
             <h2>Add a file</h2>
 
-            <paper-input label="Url" value="{{currentFile.url}}">
-                <iron-icon icon="my-icons:link" prefix></iron-icon>
-            </paper-input>
+            <paper-icon-button class="closeViewButton"
+                               icon="my-icons:close"
+                               dialog-dismiss>
+            </paper-icon-button>
 
-            <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
+            <div class="scrollable">
 
-            <paper-tags-input label="Tags" value="{{currentFile.manualTags}}">
-            </paper-tags-input>
+                <paper-input label="Name"
+                             value="{{_currentFile.name}}">
+                </paper-input>
 
-            <div class="defaultTags">
-                <paper-tags items="{{currentFile.defaultTags}}"></paper-tags>
+                <paper-textarea label="Url or Text"
+                                value="{{_currentFile.content}}">
+                </paper-textarea>
+
+                <paper-tags-input label="Tags"
+                                  value="{{_currentFile.manualTags}}">
+                </paper-tags-input>
+
+                <div class="defaultTags">
+                    <paper-tags items="{{_currentFile.defaultTags}}"></paper-tags>
+                </div>
+
             </div>
 
             <div class="buttons">
@@ -268,21 +282,32 @@
         </paper-dialog>
 
         <!-- Edit a file from favorite -->
-        <paper-dialog id="editFileDialog">
+        <paper-dialog id="editFileDialog" class="bigDialog withBottomAction">
 
             <h2>Edit a file</h2>
 
-            <paper-input label="Url" value="{{currentFile.url}}">
-                <iron-icon icon="my-icons:link" prefix></iron-icon>
-            </paper-input>
+            <paper-icon-button class="closeViewButton"
+                               icon="my-icons:close"
+                               dialog-dismiss>
+            </paper-icon-button>
 
-            <paper-input label="Name" value="{{currentFile.name}}"></paper-input>
+            <div class="scrollable">
 
-            <paper-tags-input label="Tags" value="{{currentFile.manualTags}}">
-            </paper-tags-input>
+                <paper-input label="Name"
+                             value="{{_currentFile.name}}">
+                </paper-input>
 
-            <div class="defaultTags">
-                <paper-tags items="{{currentFile.defaultTags}}"></paper-tags>
+                <paper-textarea label="Url or Text"
+                                value="{{_currentFile.content}}">
+                </paper-textarea>
+
+                <paper-tags-input label="Tags"
+                                  value="{{_currentFile.manualTags}}">
+                </paper-tags-input>
+
+                <div class="defaultTags">
+                    <paper-tags items="{{_currentFile.defaultTags}}"></paper-tags>
+                </div>
             </div>
 
             <div class="buttons">
@@ -299,17 +324,22 @@
         </paper-dialog>
 
         <!-- View a file -->
-        <paper-dialog id="viewFileDialog">
+        <paper-dialog id="viewFileDialog" class="bigDialog">
 
-            <h2>[[currentFile.name]]</h2>
+            <h2>[[_currentFile.name]]</h2>
 
-            <paper-icon-button id="closeViewButton"
+            <paper-icon-button icon="my-icons:edit"
+                          id="openEditFileButton"
+                          on-tap="_openEditFileDialog()">
+            </paper-icon-button>
+
+            <paper-icon-button class="closeViewButton"
                                icon="my-icons:close"
                                dialog-dismiss>
             </paper-icon-button>
 
             <div class="scrollable">
-                <html-echo html=" [[currentFile.url]] "></html-echo>
+                <html-echo html=" [[_currentFile.content]] "></html-echo>
             </div>
 
         </paper-dialog>
@@ -322,16 +352,14 @@
 
             <template is="dom-if" if="[[favoriteFiles.length]]">
                 <div class="file-cards">
-                    <iron-selector multi selected-values="{{selectedFiles}}"
-                                   attr-for-selected="file-id">
                         <template is="dom-repeat" items="[[favoriteFiles]]"
-                                  filter="{{computeFilter(_selectedFolder)}}">
+                                  filter="{{computeFilter(query)}}">
                             <file-card file="[[item]]"
                                        file-id="[[item.id]]"
-                                       action="{{_action}}">
+                                       action="{{_action}}"
+                                       selected-files="{{_selectedFilesId}}">
                             </file-card>
                         </template>
-                    </iron-selector>
                 </div>
             </template>
 
@@ -353,9 +381,17 @@
 
         properties: {
 
+            settings: {
+                type: Object
+            },
+
             favoriteFiles: {
                 type: Array,
                 notify: true
+            },
+
+            _previousFavoriteFiles: {
+                type: Array
             },
 
             favoriteFolders: {
@@ -363,48 +399,40 @@
                 notify: true
             },
 
-            _selectedFolder: {
+            // Selected folder (query)
+            query: {
                 type: String,
                 notify: true
             },
 
-            currentFile: {
+            // Current file
+            _currentFile: {
                 type: Object
             },
 
-            selectedFiles: {
+            // Selected files id
+            _selectedFilesId: {
                 type: Array
             },
 
-            pastFiles: {
-                type: Array
-            },
-
-            settings: {
-                type: Object
-            },
-
-            editFileIndex: {
-                type: String
-            },
-
+            // Action object {type: "type", id: "id"}
             _action: {
                 type: Object
             }
         },
 
         observers: [
-            '_setCurrentFileName(currentFile.url)',
-            '_setCurrentFileDefaultTags(currentFile.url)',
+            '_setCurrentFileName(_currentFile.content)',
+            '_setCurrentFileDefaultTags(_currentFile.content)',
             '_doAction(_action.type, _action.id)'
         ],
 
         ready: function() {
 
             this.pastFiles = this.favoriteFiles;
-            this._selectedFolder = '';
-            this.selectedFiles = [];
-            this.currentFile = {name: '', url: ''};
+            this.query = '';
+            this._selectedFilesId = [];
+            this._resetCurrentFile();
 
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
 
@@ -415,13 +443,14 @@
             this.$.addFileFab.addEventListener('tap', this._openAddFileDialog.bind(this));
             this.$.addFileButton.addEventListener('tap', this._addFile.bind(this));
 
-            this.$.openViewFileButton.addEventListener('tap', this._openViewFile.bind(this));
-            this.$.openEditFileButton.addEventListener('tap', this._openEditFile.bind(this));
-            this.$.openConfirmationDeleteFileButton.addEventListener('tap', this._openConfirmationDeleteFile.bind(this));
+            this.$.openEditFileButton.addEventListener('tap', this._openEditFileDialog.bind(this));
+            this.$.openConfirmationDeleteFileButton.addEventListener('tap', this._openConfirmationRemoveFilesDialog.bind(this));
 
             this.$.saveFileButton.addEventListener('tap', this._saveFile.bind(this));
             this.$.copyFileLinkButton.addEventListener('tap', this._copyFileLink.bind(this));
         },
+
+        /* OPEN SOMETHING FUNCTIONS */
 
         // Open side drawer (menu)
         _openDrawer: function() {
@@ -434,68 +463,100 @@
             this.$.selectFolderDialog.open();
         },
 
-        _oneSelected: function(selectedFilesLength) {
+        _openConfirmationRemoveFilesDialog: function() {
 
-            return (selectedFilesLength == 1);
+            this.$.confirmationRemoveFilesDialog.open();
         },
 
-        _multipleSelected: function(selectedFilesLength) {
+        _openViewFileDialog: function(id) {
 
-            return (selectedFilesLength >= 1);
+            var id = id || this._currentFile.id;
+
+            // Get file from id
+            var fileIndex = this._getFileIndexFromId(id);
+
+            // Set file object from index
+            this.set('_currentFile', this.favoriteFiles[fileIndex]);
+
+            // Open dialog
+            this.$.viewFileDialog.open();
+
+            // Reset selected files
+            this._selectedFilesId = [];
         },
 
-        _resetSelection: function() {
+        _openEditFileDialog: function(id) {
 
-            this.selectedFiles = [];
+            /*var id = id || this._currentFile.id;
+
+            // Get file from id
+            var fileIndex = this._getFileIndexFromId(id);
+
+            // Set file object from index
+            this.set('_currentFile', this.favoriteFiles[fileIndex]);*/
+
+            // Open dialog
+            this.$.editFileDialog.open();
+
+            // Reset selected files
+            this._selectedFilesId = [];
         },
 
-        _getSelectedFileIndexFromId: function(idList) {
+        _openAddFileDialog: function() {
 
-            var indexList = [];
+            this._resetCurrentFile();
+            this.$.addFileDialog.open();
+        },
 
-            var idList = idList || this.selectedFiles;
-            var idListLength = idList.length;
+        /* TEST FUNCTION */
 
-            var files = this.favoriteFiles;
-            var filesLength = files.length;
+        _oneSelected: function(_selectedFilesIdLength) {
 
-            for(var id = 0; id < idListLength; id++) { // For each file id
+            return (_selectedFilesIdLength == 1);
+        },
 
-                var fileId = idList[id];
+        _multipleSelected: function(_selectedFilesIdLength) {
 
-                for(var index = 0; index < filesLength; index++) { // Check in each file
+            return (_selectedFilesIdLength >= 1);
+        },
 
-                    var file = files[index];
+        /* ACTIONS FUNCTION */
 
-                    if(file.id == fileId) { // If the file has the desired id
+        _doAction: function(type, id) {
 
-                        indexList.push(index); // Save the id
-                    }
 
-                }
 
+            switch(type) {
+
+                case 'edit':
+                    this._openEditFileDialog(id);
+                    break;
+
+                case 'view':
+                    this._openViewFileDialog(id);
+                    break;
             }
 
-            return indexList;
+            this._action = {};
 
         },
 
-        // Copy selected images url to clipboard
+        // Copy selected file content (url or text) to clipboard
         _copyFileLink: function() {
             var textToCopy = " ";
 
-            var selectedFiles = this._getSelectedFileIndexFromId();
+            var selectedFilesIds = this._getFileIndexFromIds();
             var favoriteFiles = this.favoriteFiles;
 
-            // Add each selected image url
-            for(var i = 0; i < selectedFiles.length; i++) {
+            // Add each selected file content
+            for(var i = 0; i < selectedFilesIds.length; i++) {
 
-                var fileIndex = selectedFiles[i];
+                var fileIndex = selectedFilesIds[i];
                 var file = favoriteFiles[fileIndex];
 
-                var url = file.url;
+                var content = file.content;
 
-                textToCopy += url + " ";
+                textToCopy += content + " ";
 
             }
 
@@ -506,79 +567,45 @@
 
         },
 
-        _openConfirmationDeleteFile: function() {
-
-            this.$.confirmationRemoveFilesDialog.open();
-        },
-
-        _openViewFile: function() {
-
-            var currentFileIndex = this._getSelectedFileIndexFromId()[0];
-            this.currentFile = this.favoriteFiles[currentFileIndex];
-
-            this.$.viewFileDialog.open();
-
-        },
-
-        _openEditFile: function() {
-
-            this.editFileIndex = this._getSelectedFileIndexFromId()[0];
-            this.currentFile = this.favoriteFiles[this.editFileIndex];
-
-            this.$.editFileDialog.open();
-        },
-
-        _doAction: function(type, id) {
-
-            this.set('selectedFiles', [id]);
-
-            switch(type) {
-
-                case 'edit':
-                    this._openEditFile();
-                    break;
-
-                case 'view':
-                    this._openViewFile();
-                    break;
-            }
-
-            this._action = {};
-
-        },
-
         // Delete selected images
         _deleteFile: function() {
 
             // Save previous file statements
-            this.pastFiles = this.favoriteFiles;
+            this._previousFavoriteFiles = this.favoriteFiles;
 
             // Delete selected index
-            var indexToDelete = this._getSelectedFileIndexFromId();
+            var indexToDelete = this._getFileIndexFromIds();
+
             for(var i = 0; i < indexToDelete.length; i++) {
 
                 var index = indexToDelete[i];
                 this.splice('favoriteFiles', index, 1);
             }
 
-            this.selectedFiles = [];
+            this._selectedFilesId = [];
 
         },
 
         _undoDeleteFile: function() {
 
-            this.set('favoriteFiles', this.favoriteFiles);
+            this.set('favoriteFiles', this._previousFavoriteFiles);
         },
 
         _saveFile: function() {
 
-            var indexToUpdate = this.editFileIndex;
+            var idToUpdate = this.currentFile.id
+            var indexToUpdate = this._getFileIndexFromId(idToUpdate);
             var pathToUpdate = 'favoriteFiles.' + indexToUpdate;
 
-            var file = this.currentFile;
+            var file = this._currentFile;
             var image = this._computeImageFromFile(file);
                 file.image = image;
                 file.created = Date.now();
+
+            if(typeof file.manualTags !== "object") {
+
+                file.manualTags = [""];
+            }
 
             this.set(pathToUpdate, file);
 
@@ -588,7 +615,7 @@
 
         _openFileLink: function() {
 
-            var filesIndex = this._getSelectedFileIndexFromId();
+            var filesIndex = this._getFileIndexFromIds();
             var favoriteFiles = this.favoriteFiles;
 
             for(var i = 0; i < filesIndex.length; i++) {
@@ -596,144 +623,168 @@
                 var index = filesIndex[i];
                 var file = favoriteFiles[index];
 
-                this.async(function() {
-                    window.open(file.url);
-                });
+                var isLink = this._isFileALink(file);
+
+                if(isLink) {
+
+                    // Open link
+                    window.open(fileContent);
+                }else {
+
+                    // Open file
+                    this._openViewFileDialog(file.id);
+                }
+
             }
 
-        },
-
-        _openAddFileDialog: function() {
-
-            this._resetCurrentFile();
-            this.$.addFilesDialog.open();
         },
 
         // Add one image
         _addFile: function() {
 
-            var file = this.currentFile;
+            var file = this._currentFile;
             var image = this._computeImageFromFile(file);
 
             file.image = image;
-            file.id = Date.now() * Math.random();
+            file.id = this._generateId();
             file.created = Date.now();
 
-            alert(JSON.stringify(file));
+            if(typeof file.manualTags !== "object") {
+
+                file.manualTags = [""];
+            }
 
             this.push('favoriteFiles', file);
             this._resetCurrentFile();
         },
 
-        _resetCurrentFile: function() {
-
-            this.set('currentFile', {name: '', url: ''});
-        },
+        /* ACTIONS FUNCTION UTILS */
 
         _computeTagsFromFile: function(file) {
 
-            var url = file.url;
-            var tags = [];
+            if(typeof file === 'undefined') {
 
-            function extractDomain(url) {
-                var domain;
-                //find & remove protocol (http, ftp, etc.) and get domain
-                if (url.indexOf("://") > -1) {
-                    domain = url.split('/')[2];
-                }
-                else {
-                    domain = url.split('/')[0];
-                }
-
-                //find & remove port number
-                domain = domain.split(':')[0];
-
-                return domain;
+                return [];
             }
 
-            var domain = extractDomain(url);
+            var tags = [];
 
-            tags.push(domain);
+            if(this._isFileALink(file)) { // File is a link
 
-            if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
+                var url = file.content;
 
-                tags.push('media');
-                tags.push('image');
-                tags.push('images');
-                tags.push('photo');
-                tags.push('photos');
+                function extractDomain(url) {
+                    var domain;
+                    //find & remove protocol (http, ftp, etc.) and get domain
+                    if (url.indexOf("://") > -1) {
+                        domain = url.split('/')[2];
+                    }
+                    else {
+                        domain = url.split('/')[0];
+                    }
 
-            }else if(file.url.includes('docs.google.com/document')) {
+                    //find & remove port number
+                    domain = domain.split(':')[0];
 
+                    return domain;
+                }
+
+                var domain = extractDomain(url);
+
+                tags.push(domain);
+
+                if(url.includes('.png') || url.includes('.jpg') || url.includes('.jpeg') || url.includes('.gif')){
+
+                    tags.push('media');
+                    tags.push('image');
+                    tags.push('images');
+                    tags.push('photo');
+                    tags.push('photos');
+
+                }else if(url.includes('docs.google.com/document')) {
+
+                    tags.push('file');
+                    tags.push('files');
+                    tags.push('doc');
+                    tags.push('docs');
+                    tags.push('google');
+                    tags.push('documents');
+                    tags.push('document');
+                }else if(url.includes('docs.google.com/drawings')) {
+
+                    tags.push('file');
+                    tags.push('files');
+                    tags.push('doc');
+                    tags.push('docs');
+                    tags.push('documents');
+                    tags.push('document');
+                    tags.push('google');
+                    tags.push('drawings');
+                    tags.push('drawing');
+                }else if(url.includes('docs.google.com/forms')) {
+
+                    tags.push('file');
+                    tags.push('files');
+                    tags.push('google');
+                    tags.push('forms');
+                    tags.push('form');
+                }else if(url.includes('docs.google.com/spreadsheets')) {
+
+                    tags.push('file');
+                    tags.push('files');
+                    tags.push('doc');
+                    tags.push('docs');
+                    tags.push('documents');
+                    tags.push('document');
+                    tags.push('google');
+                    tags.push('spreadsheet');
+                    tags.push('sheet');
+                    tags.push('spreadsheets');
+                    tags.push('sheets');
+                }else if(url.includes('docs.google.com/presentation')) {
+
+                    tags.push('file');
+                    tags.push('doc');
+                    tags.push('docs');
+                    tags.push('documents');
+                    tags.push('document');
+                    tags.push('files');
+                    tags.push('google');
+                    tags.push('presentation');
+                }else if(url.includes('github.com')) {
+
+                    tags.push('file');
+                    tags.push('files');
+                    tags.push('doc');
+                    tags.push('docs');
+                    tags.push('documents');
+                    tags.push('document');
+                    tags.push('github');
+                    tags.push('it');
+                }else if(url.includes("soundcloud.com")) {
+
+                    tags.push('media');
+                    tags.push('sound');
+                    tags.push('soundcloud');
+                }else if(url.includes("youtube.com")) {
+
+                    tags.push('media');
+                    tags.push('video');
+                    tags.push('youtube');
+                    tags.push('google');
+                }
+
+            }else {  // File is a md/html file
+
+                tags.push(name);
                 tags.push('file');
                 tags.push('files');
                 tags.push('doc');
                 tags.push('docs');
-                tags.push('google');
                 tags.push('documents');
                 tags.push('document');
-            }else if(file.url.includes('docs.google.com/drawings')) {
-
-                tags.push('file');
-                tags.push('files');
-                tags.push('doc');
-                tags.push('docs');
-                tags.push('documents');
-                tags.push('document');
-                tags.push('google');
-                tags.push('drawings');
-                tags.push('drawing');
-            }else if(file.url.includes('docs.google.com/forms')) {
-
-                tags.push('file');
-                tags.push('files');
-                tags.push('google');
-                tags.push('forms');
-                tags.push('form');
-            }else if(file.url.includes('docs.google.com/spreadsheets')) {
-
-                tags.push('file');
-                tags.push('files');
-                tags.push('doc');
-                tags.push('docs');
-                tags.push('documents');
-                tags.push('document');
-                tags.push('google');
-                tags.push('spreadsheet');
-                tags.push('sheet');
-                tags.push('spreadsheets');
-                tags.push('sheets');
-            }else if(file.url.includes('docs.google.com/presentation')) {
-
-                tags.push('file');
-                tags.push('doc');
-                tags.push('docs');
-                tags.push('documents');
-                tags.push('document');
-                tags.push('files');
-                tags.push('google');
-                tags.push('presentation');
-            }else if(file.url.includes('github.com')) {
-
-                tags.push('file');
-                tags.push('files');
-                tags.push('doc');
-                tags.push('docs');
-                tags.push('documents');
-                tags.push('document');
-                tags.push('github');
-                tags.push('it');
-            }else if(file.url.includes("soundcloud.com")) {
-
-                tags.push('media');
-                tags.push('sound');
-                tags.push('soundcloud');
-            }else if(file.url.includes("youtube.com")) {
-
-                tags.push('media');
-                tags.push('video');
-                tags.push('youtube');
-                tags.push('google');
+                tags.push('md');
+                tags.push('markdown');
             }
 
             return tags;
@@ -741,6 +792,8 @@
         },
 
         _computeImageFromFile: function(file) {
+
+            file.url = file.content;
 
             if(file.url.includes('.png') || file.url.includes('.jpg') || file.url.includes('.jpeg') || file.url.includes('.gif')){
 
@@ -774,6 +827,9 @@
                         .replace('https://youtu.be/', '');
 
                 return 'https://img.youtube.com/vi/' + videoId + '/0.jpg';
+            }else {
+
+                return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/txt.png?raw=true';
             }
 
             return file.url;
@@ -783,12 +839,102 @@
 
         },
 
-        _setCurrentFileDefaultTags: function(url) {
+        _setCurrentFileDefaultTags: function(content) {
 
-            var defaultTags = this._computeTagsFromFile(this.currentFile);
+            var defaultTags = this._computeTagsFromFile(this._currentFile);
 
-            this.set('currentFile.defaultTags', defaultTags);
+            this.set('_currentFile.defaultTags', defaultTags);
         },
+
+        /* UTILS FUNCTION */
+
+        _resetSelection: function() {
+
+            this._selectedFilesId = [];
+        },
+
+        _resetCurrentFile: function() {
+
+            this.set('_currentFile', {name: '', content: ''});
+        },
+
+        _generateId: function() {
+
+            var random = Date.now() * Math.random();
+
+            return random;
+        },
+
+        _arrayAsString: function(list) {
+
+            var text = '';
+
+            if(typeof list !== 'undefined') {
+
+                var listLength = list.length || 0;
+
+                for(var i = 0;i < listLength; i++) {
+
+                    text += list[i];
+
+                    if(i < listLength-1) {
+
+                        text += ', ';
+                    }
+
+                }
+            }
+
+            return text;
+        },
+
+        _isFileALink: function(file) {
+
+            // is file a link or a content
+            var fileContent = file.content.replace(/ /gm, '');
+            return fileContent.match(/(https?:\/\/)?[a-zA-Z0-9]*\.[a-zA-Z0-9\.]*\/[a-zA-Z0-9-\.\/\%\&\=\?\+]*/);
+        },
+
+        _getFileIndexFromIds: function(idList) {
+
+            var indexList = [];
+
+            var idList = idList || this._selectedFilesId;
+            var idListLength = idList.length;
+
+            var files = this.favoriteFiles;
+            var filesLength = files.length;
+
+            for(var id = 0; id < idListLength; id++) { // For each file id
+
+                var fileId = idList[id];
+
+                for(var index = 0; index < filesLength; index++) { // Check in each file
+
+                    var file = files[index];
+
+                    if(file.id == fileId) { // If the file has the desired id
+
+                        indexList.push(index); // Save the id
+                    }
+
+                }
+
+            }
+
+            return indexList;
+
+        },
+
+        _getFileIndexFromId: function(id) {
+
+            var idList = [id];
+            var indexList = this._getFileIndexFromIds(idList);
+
+            return indexList[0];
+        },
+
+        /* SEARCH (FILTER) */
 
         computeFilter: function(string) {
             if (!string) {
@@ -841,7 +987,7 @@
                          */
 
                         // First keyword
-                        if(fileName.includes(keys[0])) { // String part of the name
+                        if(fileName.includes(keys[0].replace(/\-/gm, ' '))) { // String part of the name
 
                             statement = true;
                         }
@@ -887,7 +1033,7 @@
                         }
 
                         var lastKeywordOfTheListMatch = false;
-                        var lastKeywordOfTheList = keys[keysLength-1];
+                        var lastKeywordOfTheList = keys[keysLength-1].replace(/\-/gm, ' ');
 
                         for(var i = 0; i < tagsLength; i++) { // String equal to a tag
 
@@ -913,29 +1059,6 @@
                     return statement;
                 };
             }
-        },
-
-        _arrayAsString: function(list) {
-
-            var text = '';
-
-            if(typeof list !== 'undefined') {
-
-                var listLength = list.length || 0;
-
-                for(var i = 0;i < listLength; i++) {
-
-                    text += list[i];
-
-                    if(i < listLength-1) {
-
-                        text += ', ';
-                    }
-
-                }
-            }
-
-            return text;
         }
 
         //http://uploads.im/apidocs

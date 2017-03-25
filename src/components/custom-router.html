@@ -6,32 +6,10 @@
 <dom-module id="custom-router">
     <template>
 
-        <app-route-converter route="{{route}}" path="{{path}}">
+        <app-route-converter route="{{route}}"
+                             path="{{path}}">
         </app-route-converter>
 
-        <!-- URL level 1 -->
-        <app-route
-                route="{{route}}"
-                pattern="/:data"
-                data="{{dataUrl1}}"
-                tail="{{subRoute}}">
-        </app-route>
-
-        <!-- URL level 2 -->
-        <app-route
-                route="{{subRoute}}"
-                pattern="/:data"
-                data="{{dataUrl2}}"
-                tail="{{subSubRoute}}">
-        </app-route>
-
-        <!-- URL level 3 -->
-        <app-route
-                route="{{subSubRoute}}"
-                pattern="/:data"
-                data="{{dataUrl3}}"
-                tail="{{subSubSubRoute}}">
-        </app-route>
     </template>
 </dom-module>
 
@@ -44,139 +22,153 @@
 
             properties: {
 
-                // '/A/B/C' object
+                // '/A/B/C' Object
                 route: {
                     type: Object,
                     notify: true
                 },
 
+                // '/A/B/C' String
+                path: {
+                    type: String,
+                    notify: true
+                },
+
                 // 'A'
-                pathOne: {
+                dataUrl1: {
                     type: String,
                     notify: true
                 },
 
                 // 'B'
-                pathTwo: {
+                dataUrl2: {
                     type: String,
                     notify: true
                 },
 
                 // 'C'
-                pathThree: {
+                dataUrl3: {
                     type: String,
                     notify: true
                 }
             },
 
             observers: [
-                '_setPathOne(dataUrl1.data)',
-                '_setPathTwo(dataUrl2.data)',
-                '_setPathThree(dataUrl3.data)',
-
-                '_setRoute(pathOne, pathTwo, pathThree)'
+                '_setPath(dataUrl1, dataUrl2, dataUrl3)',
+                '_setDataUrl(path)'
             ],
 
             ready: function() {
 
-                if(typeof this.pathOne === 'undefined') {
+                if(typeof this.dataUrl1 === 'undefined') {
 
-                    this.set('pathOne', '');
+                    this.set('dataUrl1', '');
                 }
 
-                if(typeof this.pathTwo === 'undefined') {
+                if(typeof this.dataUrl2 === 'undefined') {
 
-                    this.set('pathTwo', '');
+                    this.set('dataUrl2', '');
                 }
 
-                if(typeof this.pathTree === 'undefined') {
+                if(typeof this.dataUrl3 === 'undefined') {
 
-                    this.set('pathThree', '');
+                    this.set('dataUrl3', '');
                 }
 
             },
 
-            _setPathOne: function(data) {
+            _setPath: function(dataUrl1, dataUrl2, dataUrl3) {
 
-                this.pathOne = data;
-            },
-
-            _setPathTwo: function(data) {
-
-                this.pathTwo = data;
-            },
-
-            _setPathThree: function(data) {
-
-                this.pathThree = data;
-            },
-
-            _setRoute: function(pathOne, pathTwo, pathThree) {
-
-                var pathOne = pathOne || '';
-                var pathTwo = pathTwo || '';
-                var pathThree = pathThree || '';
+                var dataUrl1 = dataUrl1 || '';
+                var dataUrl2 = dataUrl2 || '';
+                var dataUrl3 = dataUrl3 || '';
 
                 var path = '/';
 
-                if(pathOne) {
+                if(dataUrl1) {
 
-                    path += pathOne;
+                    path += dataUrl1;
                 }
 
-                if(pathTwo) {
+                if(dataUrl2) {
 
-                    path += '/' + pathTwo;
+                    path += '/' + dataUrl2;
                 }
 
-                if(pathThree) {
+                if(dataUrl3) {
 
-                    path += '/' + pathThree;
+                    path += '/' + dataUrl3;
                 }
 
                 if(this.path != path) {
 
-                    window.history.pushState({}, null, path);
+                    /*
+                     * For now path can not be set from params
+                     */
+
+                    //alert(path);
+
+                    //window.history.pushState({}, null, path);
                     //window.dispatchEvent(new CustomEvent('location-changed'));
                 }
             },
 
-            _setPaths: function(path) {
+            _setDataUrl: function(path) {
 
-                if(typeof path !== 'undefined') {
+                // From url (path) set params
 
-                    if(path != '') {
+                if(path != '') {
 
-                        var paths = path.replace('/', '').split('/');
+                    var dataUrls = path.replace('/', '').split('/');
 
-                        if(typeof paths[0] !== 'undefined') {
+                    if(typeof dataUrls[0] !== 'undefined') {
 
-                            this.set('pathOne', paths[0]);
+                        if(this.dataUrl1 != dataUrls[0]) {
 
+                            this.set('dataUrl1', dataUrls[0]);
                         }else {
 
-                            this.set('pathOne', '');
+                            this.set('dataUrl1', '');
                         }
 
-                        if(typeof paths[1] !== 'undefined') {
+                    }else {
 
-                            this.set('pathTwo', paths[1]);
-
-                        }else {
-
-                            this.set('pathTwo', '');
-                        }
-
-                        if(typeof paths[2] !== 'undefined') {
-
-                            this.set('pathTree', paths[2]);
-
-                        }else {
-
-                            this.set('pathTree', '');
-                        }
+                        this.set('dataUrl1', '');
                     }
+
+                    if(typeof dataUrls[1] !== 'undefined') {
+
+                        if(this.dataUrl2 != dataUrls[1]) {
+
+                            this.set('dataUrl2', dataUrls[1]);
+                        }else{
+
+                            this.set('dataUrl2', '');
+                        }
+
+                    }else {
+
+                        this.set('pathTwo', '');
+                    }
+
+                    if(typeof dataUrls[2] !== 'undefined') {
+
+                        if(this.dataUrl3 != dataUrls[2]) {
+
+                            this.set('dataUrl3', dataUrls[2]);
+                        }else {
+
+                            this.set('dataUrl3', '');
+                        }
+
+                    }else {
+
+                        this.set('dataUrl3', '');
+                    }
+
+                    console.log(this.dataUrl1+'/'+this.dataUrl2+'/'+this.dataUrl3);
                 }
+
             }
         });
     })();

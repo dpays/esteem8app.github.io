@@ -233,7 +233,7 @@
 
         <!-- GET POSTS -->
         <steem-get-state
-                path="[[currentSorting]]/[[currentTag]]"
+                path="/[[currentSorting]]/[[currentTag]]"
                 posts="{{_posts}}"
                 is-loading="{{_showProgress}}">
         </steem-get-state>
@@ -251,7 +251,8 @@
             // current sorting mode (hot, new, trending, created)
             currentSorting: {
                 type: String,
-                notify: true
+                notify: true,
+                observer: '_currentSortingChanged'
             },
 
             // Current filter tag (esteem8, ...)
@@ -324,8 +325,19 @@
             this._isSelectCategoryOpened = true;
         },
 
+        _currentSortingChanged: function() {
+
+            var path = '/' + this.currentSorting;
+
+            window.history.pushState({}, null, path);
+        },
+
         // sorting var -> sorting url
         _currentTagChanged: function() {
+
+            var path = '/' + this.currentSorting + '/' + this.currentTag;
+
+            window.history.pushState({}, null, path);
 
             // Check if this is the app tag
             this._computeIsEsteem8Tag();

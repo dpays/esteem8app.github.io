@@ -115,6 +115,16 @@
                 background-color: white;
             }
 
+            #myFavorites {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            #myFavorites a {
+                text-decoration: none;
+                color: var(--app-secondary-color);
+            }
+
         </style>
 
         <paper-dialog id="selectFolderDialog"
@@ -200,6 +210,10 @@
                                 </paper-item-body>
                             </paper-item>
                         </template>
+
+                        <div id="myFavorites">
+                            <a href="/favorites">My favorites</a>
+                        </div>
 
                     </div>
                 </iron-pages>

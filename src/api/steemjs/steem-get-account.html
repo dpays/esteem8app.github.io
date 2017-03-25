@@ -91,37 +91,37 @@
 
                     /*var module = (function() {
 
-                        return {
+                     return {
 
-                            getAccounts: function(steemApi, thisElement) {
+                     getAccounts: function(steemApi, thisElement) {
 
-                                steemApi.api.getAccounts([thisElement.accountName], function(err, result) {
+                     steemApi.api.getAccounts([thisElement.accountName], function(err, result) {
 
-                                    thisElement._computeAccount(err, result);
+                     thisElement._computeAccount(err, result);
 
-                                });
+                     });
 
-                            },
+                     },
 
-                            getFollowCount: function(steemApi, thisElement) {
+                     getFollowCount: function(steemApi, thisElement) {
 
-                                steemApi.api.getFollowCount(thisElement.accountName, function(err, result){
+                     steemApi.api.getFollowCount(thisElement.accountName, function(err, result){
 
-                                    thisElement._computeAccountFollowCount(err, result);
-                                });
+                     thisElement._computeAccountFollowCount(err, result);
+                     });
 
 
-                            }
+                     }
 
-                        };
+                     };
 
-                    })();
+                     })();
 
-                    /*
+                     /*
                      *  Theses query are triggered on accountName change but return no results
                      */
                     /*module.getAccounts(steemAPI, thisElement);
-                    module.getFollowCount(steemAPI, thisElement);*/
+                     module.getFollowCount(steemAPI, thisElement);*/
 
                     // Query account data
                     this.async(function() {
