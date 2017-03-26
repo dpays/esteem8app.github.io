@@ -41,18 +41,12 @@
                 isLoading: {
                     type: Boolean,
                     notify: true
-                },
-
-                _steemAPI: {
-                    type: Object
                 }
             },
 
             observers: ['_accountNameChanged(accountName)'],
 
             ready: function() {
-
-                this.set('_steemAPI', cloneObj(steem));
 
             },
 
@@ -71,23 +65,21 @@
                     if(typeof account == 'undefined') {
 
                         this.set('account', {
-                            /*reputation: 0,
+                             reputation: 0,
                              profileImage: '', // Url
                              coverImage: '', // Url
                              followerCount: 0,
                              followingCount: 0,
-                             pinnedPosts: '[]', // Array of post list [{name: 'name', posts: ['tag/author/title', '...']}, {...}]
+                             pinnedPosts: [], // Array of post list [{name: 'name', posts: ['tag/author/title', '...']}, {...}]
                              about: '', // Texte for presentation
                              location: '', // Texte for location
                              website: '', // Website links 'https://...'
-                             webLinks: '', // Other links ['', '', '']
-                             customValues: '' // [{name: 'name', value: 'value'}, {...}]*/
+                             webLinks: [], // Other links ['', '', '']
+                             customValues: [] // [{name: 'name', value: 'value'}, {...}]*/
                         });
-
                     }
 
                     var thisElement = this;
-                    var steemAPI = this._steemAPI;
 
                     /*var module = (function() {
 
@@ -127,7 +119,7 @@
                     this.async(function() {
                         console.log(accountName);
                         // Query basic information
-                        steemAPI.api.getAccounts([accountName], function(err, result) {
+                        steem.api.getAccounts([accountName], function(err, result) {
                             console.log(err, result);
                             thisElement._computeAccount(err, result);
 
@@ -137,7 +129,7 @@
 
                     // Query follow number
                     this.async(function(){
-                        steemAPI.api.getFollowCount(accountName, function(err, result){
+                        steem.api.getFollowCount(accountName, function(err, result){
 
                             thisElement._computeAccountFollowCount(err, result);
                         });
@@ -164,7 +156,7 @@
 
             _computeAccount: function(err, result) {
 
-                var steemFormatter = this._steemAPI.formatter;
+                var steemFormatter = steem.formatter;
 
                 if(!err){
 

@@ -15,6 +15,8 @@
 
 <link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
+<link rel="import" href="../../bower_components/polymer-sortablejs/polymer-sortablejs.html">
+
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../shared-styles.html">
@@ -282,18 +284,20 @@
                 </paper-input>
                 <div role="listbox"
                      id="favoriteFoldersList">
-                    <template is="dom-repeat"
-                              items="[[favoriteFolders]]">
-                        <paper-item>
-                            <paper-item-body>
-                                <a href="/files/[[item.name]]">#[[item.name]]</a>
-                            </paper-item-body>
-                            <paper-icon-button icon="my-icons:delete"
-                                               id="deleteFolder"
-                                               on-tap="_deleteFolder()">
-                            </paper-icon-button>
-                        </paper-item>
-                    </template>
+                    <!--sortable-js-->
+                        <template is="dom-repeat"
+                                  items="[[favoriteFolders]]">
+                            <paper-item draggable="true">
+                                <paper-item-body>
+                                    <a href="/files/[[item.name]]">#[[item.name]]</a>
+                                </paper-item-body>
+                                <paper-icon-button icon="my-icons:delete"
+                                                   id="deleteFolder"
+                                                   on-tap="_deleteFolder()">
+                                </paper-icon-button>
+                            </paper-item>
+                        </template>
+                    <!--/sortable-js-->
                 </div>
             </div>
         </iron-pages>

@@ -70,12 +70,11 @@
 
             #files {
                 margin-top: 128px;
-                text-align: center;
             }
 
             .file-cards {
                 @apply(--layout-horizontal);
-                display: inline;
+                @apply(--layout-wrap);
             }
 
             file-card {
@@ -110,13 +109,12 @@
 
             paper-tags, paper-tags-input {
                 --paper-tag-margin: 4px;
-
+                --paper-tag-focus-color: var(--app-secondary-color);
+                --paper-tag-text-color: var(--app-background-primary-text-color);
                 --paper-tags-item: {
                     padding-left: 8px !important;
                     color: var(--app-secondary-color) !important;
                 };
-
-                --paper-tag-text-color: var(--app-background-secondary-text-color);
             }
 
             .bigDialog {
@@ -141,7 +139,7 @@
 
             .bigDialog .scrollable {
                 overflow: auto;
-                max-height: calc(100% - 72px);
+                max-height: calc(100% - 96px);
             }
 
             .bigDialog.withBottomAction .scrollable {
@@ -164,6 +162,11 @@
 
             #openEditFileButton {
                 padding: 8px;
+            }
+
+            #noFileText {
+                padding-top: 36px;
+                color: var(--app-background-primary-text-color);
             }
 
 
@@ -259,7 +262,7 @@
                 </paper-textarea>
 
                 <paper-tags-input label="Tags"
-                                  value="{{_currentFile.manualTags}}">
+                                  items="{{_currentFile.manualTags}}">
                 </paper-tags-input>
 
                 <div class="defaultTags">
@@ -302,7 +305,7 @@
                 </paper-textarea>
 
                 <paper-tags-input label="Tags"
-                                  value="{{_currentFile.manualTags}}">
+                                  items="{{_currentFile.manualTags}}">
                 </paper-tags-input>
 
                 <div class="defaultTags">
@@ -347,7 +350,7 @@
         <div id="files">
 
             <template is="dom-if" if="[[!favoriteFiles.length]]">
-                <h1>You don't have any files</h1>
+                <h2 id="noFileText">You don't have any files</h2>
             </template>
 
             <template is="dom-if" if="[[favoriteFiles.length]]">
@@ -576,6 +579,12 @@
             // Delete selected index
             var indexToDelete = this._getFileIndexFromIds();
 
+            // Sort array from bigger to smaller
+            indexToDelete.sort(function(a, b){
+
+                return b - a;
+            });
+
             for(var i = 0; i < indexToDelete.length; i++) {
 
                 var index = indexToDelete[i];
@@ -593,13 +602,13 @@
 
         _saveFile: function() {
 
-            var idToUpdate = this.currentFile.id
+            var idToUpdate = this._currentFile.id
             var indexToUpdate = this._getFileIndexFromId(idToUpdate);
             var pathToUpdate = 'favoriteFiles.' + indexToUpdate;
 
             var file = this._currentFile;
             var image = this._computeImageFromFile(file);
-                file.image = image;
+                file.c = image;
                 file.created = Date.now();
 
             if(typeof file.manualTags !== "object") {
@@ -607,10 +616,12 @@
                 file.manualTags = [""];
             }
 
+            // Update file object
             this.set(pathToUpdate, file);
 
-            this._resetCurrentFile();
-
+            // Notify change on image and name
+            this.set(pathToUpdate + '.name', file.name);
+            this.set(pathToUpdate + '.image', file.image);
         },
 
         _openFileLink: function() {
@@ -855,7 +866,13 @@
 
         _resetCurrentFile: function() {
 
-            this.set('_currentFile', {name: '', content: ''});
+            var file = {
+                name: '',
+                content: '',
+                manualTags: []
+            };
+
+            this.set('_currentFile', file);
         },
 
         _generateId: function() {
@@ -971,6 +988,12 @@
                     var tagsLength = tags.length;
 
 
+                    /*
+                     *
+                     *      Tag can contain anything exept "," and ", "
+                     *      Tag are separated by "," or ", "
+                     *
+                     */
 
                     /* If mutliples key, restrictive filter (image + esteem8 = not only image but image with esteem8) */
 

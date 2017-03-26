@@ -126,8 +126,7 @@
             <page-files name="files"
                         settings="[[settings]]"
                         favorite-files="{{favoriteFiles}}"
-                        favorite-folders="{{favoriteFolders}}"
-                        query="[[dataUrl2]]">
+                        favorite-folders="{{favoriteFolders}}">
             </page-files>
 
             <page-settings name="settings"
@@ -537,7 +536,8 @@
                         "manualTags": [
                             "es8",
                             "logo",
-                            "red"
+                            "red",
+                            "/esteem8"
                         ],
                         "defaultTags": [
                             "github.com",
@@ -556,7 +556,8 @@
                         "manualTags": [
                             "es8",
                             "logo",
-                            "purple"
+                            "purple",
+                            "/esteem8"
                         ],
                         "defaultTags": [
                             "github.com",
@@ -595,7 +596,8 @@
                             "esteem8",
                             "presentation",
                             "what",
-                            "a thing"
+                            "a thing",
+                            "/esteem8/docs"
                         ],
                         "defaultTags": [
                             "docs.google.com",
@@ -626,7 +628,8 @@
                             "documents",
                             "document",
                             "github",
-                            "it"
+                            "it",
+                            "/esteem8/docs"
                         ],
                         "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
                     },
@@ -637,7 +640,7 @@
                             "esteem8",
                             "welcome"
                         ],
-                        "content": "https:\/\/github.com\/esteem8app\/esteem8app.github.io",
+                        "content": "# ESTEEM8 GitHub \n \n https://github.com/esteem8app/esteem8app.github.io \n \n [button$text=open&icon=visibility&url=https://github.com/esteem8app/esteem8app.github.io]",
                         "manualTags": [
                             "esteem8",
                             "repository"
@@ -671,21 +674,81 @@
                             "documents",
                             "document",
                             "github",
-                            "it"
+                            "it",
+                            "/esteem8/docs"
                         ],
                         "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/github\/octocat.png?raw=true"
                     },
                     {
-                        "name": "dot matrix",
+                        "name": "Dot matrix",
                         "id": "8",
-                        "content": "https:\/\/soundcloud.com\/viperrecordings\/mob-tactics-dot-matrix?in=420-matias\/sets\/faster-than-light-dnb",
+                        "content": "https://soundcloud.com/viperrecordings/mob-tactics-dot-matrix?in=420-matias/sets/faster-than-light-dnb",
                         "defaultTags": [
                             "soundcloud.com",
                             "media",
                             "sound",
                             "soundcloud"
                         ],
-                        "manualTags": ["matrix"],
+                        "manualTags": ["you", "are", "dot", "/my-sound"],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/soundcloud.png?raw=true"
+                    },
+                    {
+                        "name": "Holy call",
+                        "id": "9",
+                        "content": "https://soundcloud.com/bad-taste-recordings/aeph-holy-call",
+                        "defaultTags": [
+                            "soundcloud.com",
+                            "media",
+                            "sound",
+                            "soundcloud"
+                        ],
+                        "manualTags": ["holy"],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/soundcloud.png?raw=true"
+                    },
+                    {
+                        "name": "Forward Thought",
+                        "id": "10",
+                        "content": "# Sounds \n \n https://soundcloud.com/techitch/forward-thought-clip  \n \n **We have the ability to think forward to the future.**",
+                        "defaultTags": [
+                            "file",
+                            "media",
+                            "sound",
+                            "file",
+                            "files",
+                            "doc",
+                            "docs",
+                            "documents",
+                            "document",
+                            "md",
+                            "markdown"
+                        ],
+                        "manualTags": ["future", "/my-sound"],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/txt.png?raw=true"
+                    },
+                    {
+                        "name": "Sytem Failure",
+                        "id": "11",
+                        "content": "https://soundcloud.com/futuresickness/difend-incube-sytem-failure?in=420-matias/sets/faster-than-light-dnb",
+                        "defaultTags": [
+                            "soundcloud.com",
+                            "media",
+                            "sound",
+                            "soundcloud"
+                        ],
+                        "manualTags": ["/my-sound"],
+                        "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/soundcloud.png?raw=true"
+                    },
+                    {
+                        "name": "Soundsystem Heavyweight ",
+                        "id": "12",
+                        "content": "https://soundcloud.com/eatbrain/hypoxia-feat-mc-seko-soundsystem-heavyweight-eatbrain025",
+                        "defaultTags": [
+                            "soundcloud.com",
+                            "media",
+                            "sound",
+                            "soundcloud"
+                        ],
+                        "manualTags": ["/my-sound", "heavyweight"],
                         "image": "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/src\/images\/other\/soundcloud.png?raw=true"
                     }
                 ];
@@ -704,7 +767,7 @@
 
                 return {
 
-                    appVersion: '0.0.5.4',
+                    appVersion: '0.0.6.1',
 
                     user: {
                         name: '',
@@ -799,7 +862,7 @@
 
                 // update files
                 this.favoriteFiles = this.getDefaultFiles();
-                this.favoriteFolders = [{name: 'esteem8'}, {name: 'media steem'}, {name: 'media image esteem8'}];
+                this.favoriteFolders = [{name: 'esteem8'}, {name: 'media steem'}, {name: 'media image esteem8'}, {name: '/esteem8/docs'}, {name: '/my-sound'}];
             }
 
             // TODO
