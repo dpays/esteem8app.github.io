@@ -5,4 +5,3 @@ These are much more **tools** than guidelines, the goal is to provide an efficie
 * [Material design guidline](https://material.io/guidelines/)
 * Code must be as simple as possible, well commented and following ~actual coding style.
 * Code must be well working, have good performances and have been tested.
-* Code must be not written by an illuminati and/or reptilian alliance member.
