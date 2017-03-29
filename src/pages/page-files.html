@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
+<link rel="import" href="../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
@@ -14,9 +15,12 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
 
 <link rel="import" href="../../bower_components/paper-tags/paper-tags.html">
 <link rel="import" href="../../bower_components/paper-tags/paper-tags-input.html">
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
 
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/file-card.html">
@@ -43,6 +47,21 @@
                 padding-bottom: 16px;
                 display: block;
                 background-color: var(--app-primary-background-color);
+                overflow: hidden;
+            }
+
+            #appsDrawer {
+                z-index: 6;
+                --app-drawer-content-container: {
+                    text-align: left;
+                    color: var(--app-background-secondary-text-color);
+                    background-color: var(--app-secondary-background-color);
+                }
+
+            }
+
+            #appsDrawer .title {
+                padding-left: 16px;
             }
 
             #fileOptionToolbar {
@@ -53,6 +72,10 @@
 
             .floatingToolbarTitle div {
                 display: inline;
+            }
+
+            #mainToolbar {
+                z-index: 5;
             }
 
             .mainToolbar .bottom div {
@@ -99,6 +122,22 @@
             paper-dialog {
                 background-color: var(--app-secondary-background-color);
                 color: var(--app-background-primary-text-color)
+            }
+
+            .toggle {
+                height: 64px;
+                line-height: 64px;
+            }
+
+            .toggle paper-toggle-button {
+                float: right;
+                margin-top: 18px;
+            }
+
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
+                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
+                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
             }
 
             paper-input, paper-tags-input, paper-textarea {
@@ -177,8 +216,24 @@
                               favorite-folders="{{favoriteFolders}}">
         </select-folder-dialog>
 
+        <app-drawer id="appsDrawer"
+                    align="right">
+            <h2 class="title">Tools</h2>
+
+            <template is="dom-repeat" items="[[_externalApps]]">
+                <paper-icon-item>
+                    <iron-icon icon="my-icons:[[item.icon]]"
+                               item-icon>
+                    </iron-icon>
+                    [[item.name]]
+                </paper-icon-item>
+            </template>
+
+        </app-drawer>
+
         <!-- TOOLBAR -->
-        <paper-toolbar class="mainToolbar medium-tall">
+        <paper-toolbar id="mainToolbar"
+                       class="mainToolbar medium-tall">
 
             <paper-icon-button icon="my-icons:menu"
                                id="toggleDrawerMenu"
@@ -191,9 +246,12 @@
                     <div>#[[query]]</div>
                 </span>
             </div>
-            <a href="/trending">
-                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
-            </a>
+
+            <paper-icon-button id="appsDrawerButton"
+                               on-tap="_openAppsDrawer()"
+                               icon="my-icons:apps">
+            </paper-icon-button>
+
             <div class="bottom right dark-primary">
 
                 <div hidden="[[!_multipleSelected(_selectedFilesId.length)]]">
@@ -265,6 +323,11 @@
                                   items="{{_currentFile.manualTags}}">
                 </paper-tags-input>
 
+                <div class="toggle">
+                    <span>Share file</span>
+                    <paper-toggle-button checked="{{_currentFile.shared}}"></paper-toggle-button>
+                </div>
+
                 <div class="defaultTags">
                     <paper-tags items="{{_currentFile.defaultTags}}"></paper-tags>
                 </div>
@@ -308,9 +371,15 @@
                                   items="{{_currentFile.manualTags}}">
                 </paper-tags-input>
 
+                <div class="toggle">
+                    <span>Share file</span>
+                    <paper-toggle-button checked="{{_currentFile.shared}}"></paper-toggle-button>
+                </div>
+
                 <div class="defaultTags">
                     <paper-tags items="{{_currentFile.defaultTags}}"></paper-tags>
                 </div>
+
             </div>
 
             <div class="buttons">
@@ -393,6 +462,11 @@
                 notify: true
             },
 
+            favoriteSharedFiles: {
+                type: Array,
+                notify: true
+            },
+
             _previousFavoriteFiles: {
                 type: Array
             },
@@ -421,6 +495,10 @@
             // Action object {type: "type", id: "id"}
             _action: {
                 type: Object
+            },
+
+            _externalApps: {
+                type: Array
             }
         },
 
@@ -437,7 +515,12 @@
             this._selectedFilesId = [];
             this._resetCurrentFile();
 
+            this._externalApps = [
+                {name: 'Google docs', icon: 'text-file'}
+            ];
+
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
+            this.$.appsDrawerButton.addEventListener('tap', this._openAppsDrawer.bind(this));
 
             this.$.floatingToolbar.addEventListener('tap', this._openSelectFolderDialog.bind(this));
 
@@ -459,6 +542,11 @@
         _openDrawer: function() {
 
             document.getElementById('appshell')._openDrawer();
+        },
+
+        _openAppsDrawer: function() {
+
+            this.$.appsDrawer.open();
         },
 
         _openSelectFolderDialog: function () {
@@ -602,6 +690,7 @@
 
         _saveFile: function() {
 
+            // Save change
             var idToUpdate = this._currentFile.id
             var indexToUpdate = this._getFileIndexFromId(idToUpdate);
             var pathToUpdate = 'favoriteFiles.' + indexToUpdate;
@@ -622,6 +711,41 @@
             // Notify change on image and name
             this.set(pathToUpdate + '.name', file.name);
             this.set(pathToUpdate + '.image', file.image);
+
+
+            // Update shared if needed
+            if(typeof file.shared !== 'undefined') {
+
+                if(file.shared) {
+
+                    var sharedFileIndex = this._getSharedFileIndexFromId(file.id);
+
+                    if(sharedFileIndex >= 0){
+
+                        // Update shared file
+                        var path = 'favoriteSharedFiles' + sharedFileIndex;
+                        this.set(path, file);
+
+                    }else {
+
+                        // Add shared file
+                        this.push('favoriteSharedFiles', file);
+                    }
+
+                }else {
+
+                    var sharedFileIndex = this._getSharedFileIndexFromId(file.id);
+
+                    if(sharedFileIndex >= 0) {
+
+                        // Remove shared file
+                        this.splice('favoriteSharedFiles', sharedFileIndex, 1);
+                    }
+
+                }
+
+            }
+
         },
 
         _openFileLink: function() {
@@ -783,6 +907,12 @@
                     tags.push('video');
                     tags.push('youtube');
                     tags.push('google');
+                }else if(url.includes("twitch.tv")) {
+
+                    tags.push('media');
+                    tags.push('video');
+                    tags.push('gaming');
+                    tags.push('streaming');
                 }
 
             }else {  // File is a md/html file
@@ -838,6 +968,9 @@
                         .replace('https://youtu.be/', '');
 
                 return 'https://img.youtube.com/vi/' + videoId + '/0.jpg';
+            }else if(file.url.includes("twitch.tv")) {
+
+                return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/twitch.png?raw=true';
             }else {
 
                 return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/txt.png?raw=true';
@@ -943,10 +1076,49 @@
 
         },
 
+        _getSharedFileIndexFromIds: function(idList) {
+
+            var indexList = [];
+
+            var idList = idList || this._selectedFilesId;
+            var idListLength = idList.length;
+
+            var files = this.favoriteSharedFiles;
+            var filesLength = files.length;
+
+            for(var id = 0; id < idListLength; id++) { // For each file id
+
+                var fileId = idList[id];
+
+                for(var index = 0; index < filesLength; index++) { // Check in each file
+
+                    var file = files[index];
+
+                    if(file.id == fileId) { // If the file has the desired id
+
+                        indexList.push(index); // Save the id
+                    }
+
+                }
+
+            }
+
+            return indexList;
+
+        },
+
         _getFileIndexFromId: function(id) {
 
             var idList = [id];
             var indexList = this._getFileIndexFromIds(idList);
+
+            return indexList[0];
+        },
+
+        _getSharedFileIndexFromId: function(id) {
+
+            var idList = [id];
+            var indexList = this._getSharedFileIndexFromIds(idList);
 
             return indexList[0];
         },

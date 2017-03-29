@@ -77,6 +77,11 @@
 
             },
 
+            _matchParam: function(param) {
+
+                return true;
+            },
+
             _setPath: function(dataUrl1, dataUrl2, dataUrl3) {
 
                 var dataUrl1 = dataUrl1 || '';
@@ -123,7 +128,7 @@
 
                     if(typeof dataUrls[0] !== 'undefined') {
 
-                        if(this.dataUrl1 != dataUrls[0]) {
+                        if(this.dataUrl1 != dataUrls[0] && this._matchParam(dataUrls[2])) {
 
                             this.set('dataUrl1', dataUrls[0]);
                         }else {
@@ -138,7 +143,7 @@
 
                     if(typeof dataUrls[1] !== 'undefined') {
 
-                        if(this.dataUrl2 != dataUrls[1]) {
+                        if(this.dataUrl2 != dataUrls[1] && this._matchParam(dataUrls[1])) {
 
                             this.set('dataUrl2', dataUrls[1]);
                         }else{
@@ -153,7 +158,7 @@
 
                     if(typeof dataUrls[2] !== 'undefined') {
 
-                        if(this.dataUrl3 != dataUrls[2]) {
+                        if(this.dataUrl3 != dataUrls[2] && this._matchParam(dataUrls[2])) {
 
                             this.set('dataUrl3', dataUrls[2]);
                         }else {

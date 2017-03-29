@@ -1,15 +1,20 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">">
 
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../components/share-button.html">
+<link rel="import" href="../components/post-card.html">
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
+<link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/other/url-get-file.html">
 
 <dom-module id="page-home">
@@ -18,58 +23,55 @@
 
         <style include="shared-styles">
 
+            /* --home-background-image: url("https://s23.postimg.org/o0gvcil17/mdcontract_2_mobile.png");*/
+            /* --home-background-image: url("https://s24.postimg.org/zfssz1kad/mdcontract_2_mobile_2.png");*/
+            /*background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
+            /*https://s28.postimg.org/vhmxzavsb/mdcontract.jpg*/
+            /* https://s24.postimg.org/3nxum2ztv/mdcontract.jpg */
 
 
             /* GENERAL */
 
             :host {
-                /*https://s28.postimg.org/vhmxzavsb/mdcontract.jpg*/
                 min-height: 100%;
                 width: 100%;
                 position: absolute;
-                background: transparent;
-                /*background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
+                background-color: var(--app-primary-background-color);
+            }
 
-                /* https://s24.postimg.org/3nxum2ztv/mdcontract.jpg */
-                --home-background-image: url('https://s28.postimg.org/gq2u4cznf/image.jpg');
-                background-image: var(--home-background-image);
+
+            #loginButton {
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+                --paper-button-ink-color: var(--app-secondary-text-color);
+            }
+
+            /* TOOLBAR */
+
+            /* HEADER SECTION */
+            #headersection {
+                --home-background-image: '';
+                background-image:  var(--home-background-image);
                 background-size: cover;
                 background-position: center center;
-                background-attachment: fixed;
+                margin-top: 56px;
+                padding-top: 64px;
+                padding-bottom: 64px;
+                padding-left: 32px;
+                padding-right: 32px;
+                color: #eee;
+                @apply(--shadow-elevation-2dp);
+            }
+
+            #headersection h1 {
+                text-transform: uppercase;
+                padding-bottom: 32px;
             }
 
             @media screen and (max-width: 400px) {
 
-                :host {
-                   /* --home-background-image: url("https://s23.postimg.org/o0gvcil17/mdcontract_2_mobile.png");*/
-                    --home-background-image: url("https://s24.postimg.org/zfssz1kad/mdcontract_2_mobile_2.png");
-                    background: transparent;
-                }
-
-                :host:before {
-                    content: "";
-                    display: block;
-                    position: fixed;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                    height: 100%;
-                    z-index: -10;
-
-                    background-image: var(--home-background-image);
-                    background-position: center;
-                    background-attachment: fixed;
-                    background-size: cover;
-                }
-
-
-
                 #headersection {
-                    padding-top: 6px;
-                }
-
-                #headersection h1 {
-                    margin-top: 0;
+                    padding-top: 24px;
                 }
 
                 #shareButtons {
@@ -81,47 +83,6 @@
                     right: 0 !important;
                 }
 
-            }
-
-            #loginButton {
-                position:absolute;
-                right: 12px;
-                top: 12px;
-                --paper-button-ink-color: var(--app-primary-text-color);
-            }
-
-            #loginButton a {
-                text-decoration: none;
-            }
-
-            @media screen and (max-width: 600px) {
-                #loginButton {  top: 8px;  }
-            }
-
-            #loginButton a {
-                color: var(--app-primary-text-color);
-            }
-
-            #presentation-button a {
-                text-decoration: none !important;
-            }
-
-            /* TOOLBAR */
-            div[main-title] a {
-                font-size: 28px;
-                text-decoration: underline;
-                color: var(--app-primary-text-color);
-                font-weight: 800;
-                cursor: pointer;
-            }
-
-
-            /* HEADER SECTION */
-            #headersection {
-                margin-top: 56px;
-                padding: 32px;
-                color: #eee;
-                text-transform: uppercase;
             }
 
             #presentation-center, #presentation-cards {
@@ -166,10 +127,12 @@
                 padding: 0;
                 text-align: left;
                 display: inline-table;
+                background-color: #fff;
+                color: #333;
             }
 
             #presentation-cards .card-content {
-                font-family: 'Lato', sans-serif;
+                font-family: 'Open Sans', sans-serif;
             }
 
             #whatsThat {
@@ -187,11 +150,11 @@
             #joinTheMovement {
                 /*background-image: url('https://steemitimages.com/280x280/https://quantoz.com/wp-content/uploads/2016/02/blockchain-technology-professional-services_transparent-XL-1030x610.png');*/
 
-                box-shadow: inset 0px 315px 80px -18px rgb(255, 255, 255);
+                /*box-shadow: inset 0px 315px 80px -18px rgb(255, 255, 255);
                 background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");
                 background-size: contain;
                 background-repeat: no-repeat;
-                background-position: bottom;
+                background-position: bottom;*/
             }
 
             #best-tags .card-content paper-listbox {
@@ -203,6 +166,8 @@
             #best-tags .card-content paper-listbox {
                 margin-top: 0;
             }
+
+            /* SHARES BUTTONS */
 
             #shareButtons {
                 position: fixed;
@@ -223,12 +188,14 @@
                 --iron-icon-width: 18px;   
             }
 
+            /* CONTRIBUTOR */
+
             #contributors {
                 position: absolute;
                 bottom: 16px;
                 left: 16px;
                 font-size: 12px;
-                color: #eee;
+                color: #333;
             }
 
             #contributors span::after {
@@ -236,7 +203,7 @@
             }
 
             #contributors a {
-                color: #eee;
+                color: #222;
                 text-decoration: none;
             }
             
@@ -248,27 +215,30 @@
                                on-tap="_openDrawer()"
                                icon="my-icons:menu">
             </paper-icon-button>
-            <div main-title>
-                <img src="https://s9.postimg.org/igk2o0v8t/Esteem8_logo_center_3.png" height="64px" width="64px">
+
+            <div main-title class="title">
+                <span id="appTitle"
+                      on-tap="_openEsteem8Account()">
+                    ESTEEM8
+                </span>
             </div>
-            <paper-button id="loginButton">
-                <a href="/login">Login</a>
+            <paper-button id="loginButton"
+                          on-tap="_openLoginPage()" raised>
+                LOGIN
             </paper-button>
         </paper-toolbar>
 
         <!-- HEADER SECTION -->
         <div id="headersection">
             <div id="presentation-center">
-                <h1>Access now to the world first blockchain based social network without any ads.</h1>
-                <h2>And get rewarded to create and like content !</h2>
+                <h1 id="headerSectionTitle">Access now to the world first blockchain based social network without any ads.</h1>
+                <h2>Get rewarded to create and like content.</h2>
                 <div id="presentation-button">
-                    <a href="https://youtu.be/xZmpCAqD7hs"
-                       target="_blank">
-                        <paper-button>play video</paper-button>
-                    </a>
-                    <a href="/trending/">
-                        <paper-button id="exploreButton" raised>What's trending ?</paper-button>
-                    </a>
+
+                    <paper-button id="videoButton" on-tap="_openVideoDialog()">play video</paper-button>
+
+                    <paper-button id="exploreButton" on-tap="_openExplorePage()" raised>What's trending ?</paper-button>
+
                 </div>
             </div>
         </div>
@@ -278,7 +248,7 @@
 
             <paper-card id="best-tags">
                 <div class="card-content">
-                    <h2>Trending tags</h2>
+                    <h2>Browse</h2>
                     <paper-listbox>
                         <template is="dom-if" if="[[_tags.length]]">
                             <template is="dom-repeat" items="[[_tags]]">
@@ -291,7 +261,7 @@
 
             <paper-card id="whatsThat">
                 <div class="card-content">
-                    <h2>What's that ?</h2>
+                    <h2>Discover</h2>
                     <p>STEEM is a social media platform based on a currency where everyone is rewarded to use it.</p>
                     <p>ESTEEM8 is a free web application that let you interact with the Steem blockchain.</p>
                     <p>You can pin this app on your home screen by going into your browser page options.</p>
@@ -309,6 +279,17 @@
                 </div>
             </paper-card>
 
+        </div>
+
+        <!-- 20 posts -->
+        <steem-get-state path="hot/"
+                         posts="{{_posts}}">
+        </steem-get-state>
+
+        <div id="presentation-posts">
+            <template is="dom-repeat" items="[[_posts]]">
+                <post-card post="[[item]]"></post-card>
+            </template>
         </div>
 
         <div id="shareButtons">
@@ -346,7 +327,22 @@
 
         is: 'page-home',
 
+        behaviors: [
+            Polymer.NeonAnimationRunnerBehavior
+        ],
+
         properties: {
+
+            headersectionTitleAnimationConfig: {
+                value: function() {
+                    return {
+                        // provided by neon-animation/animations/scale-down-animation.html
+                        name: 'fade-in-animation',
+                        node: this.$.headerSectionTitle,
+                        timing: {delay: 500}
+                    }
+                }
+            },
 
             _tags: {
                 type: Array
@@ -360,6 +356,10 @@
             _contributors: {
                 type: Array,
                 notify: true
+            },
+
+            _posts: {
+                type: Array
             }
 
         },
@@ -370,12 +370,20 @@
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
             this.$.githubButton.addEventListener('tap', this._openGithub.bind(this));
 
+            this.$.videoButton.addEventListener('tap', this._openVideoDialog.bind(this));
+            this.$.exploreButton.addEventListener('tap', this._openExplorePage.bind(this));
+            this.$.loginButton.addEventListener('tap', this._openLoginPage.bind(this));
+            this.$.appTitle.addEventListener('tap', this._openEsteem8Account.bind(this));
+
             // Default var
+            this._posts = [];
             this._tags = [{name: "You"}, {name: "Are"}, {name: "Amazing"}, {name: "Thanks"}, {name: "For"}, {name: "Support"}];
             this._contributors = [];
 
             // Change background
             this._updateBackground();
+
+            this.playAnimation();
         },
 
         _openDrawer: function() {
@@ -420,14 +428,45 @@
 
         _updateBackground: function () {
 
+            var now = new Date();
+
             if(document.referrer.match('github.com')){
 
                 // https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg
                 this.customStyle['--home-background-image'] = 'url("' + 'https://s28.postimg.org/gq2u4cznf/image.jpg' + '")';
                 this.$.headersection.style.color = '#eee';
-                this.updateStyles();
+
+            }else {
+
+                this.customStyle['--home-background-image'] = 'url("https://s23.postimg.org/4ywp6zvw9/bg-028.jpg")'; //https://s28.postimg.org/gq2u4cznf/image.jpg
             }
-        }
+
+            this.updateStyles();
+        },
+
+        _openVideoDialog: function() {
+
+            //window.open('https://youtu.be/xZmpCAqD7hs');
+
+        },
+
+        _openExplorePage: function() {
+
+            window.history.pushState({}, null, '/trending');
+            window.dispatchEvent(new CustomEvent('location-changed'));
+        },
+
+        _openLoginPage: function() {
+
+            window.history.pushState({}, null, '/login');
+            window.dispatchEvent(new CustomEvent('location-changed'));
+        },
+
+        _openEsteem8Account: function() {
+
+            window.history.pushState({}, null, '/@esteem8');
+            window.dispatchEvent(new CustomEvent('location-changed'));
+        },
 
     });
 </script>

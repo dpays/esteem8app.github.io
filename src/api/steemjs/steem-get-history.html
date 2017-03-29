@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <script src="./src/steem.min.js"></script>
+<script src="./src/steem-parser.js"></script>
 
 <dom-module id="steem-get-history"></dom-module>
 
@@ -20,8 +21,7 @@
                  * Component will query account data with this name.
                  */
                 userName:  {
-                    type: String,
-                    observer: '_userNameChanged'
+                    type: String
                 },
 
                 /*
@@ -34,136 +34,32 @@
                 }
             },
 
-            ready: function() {
+            observers: ['_userNameChanged(userName)'],
 
-                // Update account if empty
-                if(typeof this.userName !== 'undefined') {
-                    this._userNameChanged();
-                }
-
-                //Set default variables
-                this.set('events', []);
-            },
-
-            _userNameChanged: function() {
+            _userNameChanged: function(userName) {
 
                 // Update events
-                if(typeof this.userName === 'undefined') {
-                    this.set('events', []);
-                }else {
-                    var thisElement = this;
-
-                    // Query events
-                    this.async(function() {
-
-                        // request events history
-                        steem.api.getAccountHistory(thisElement.userName, 999999999, 100, function(err, result) {
-                            if(!err){
-
-                                thisElement._computeEvents(result);
-                            }else {
-                                console.error(err);
-                            }
-                        });
-
-                    });
-                }
-            },
-
-            loadMoreData: function() {
-
+                var userName = userName.replace('@', '');
                 var thisElement = this;
 
                 // Query events
                 this.async(function() {
 
                     // request events history
-                    steem.api.getAccountHistory(thisElement.userName, 999999999, thisElement.events.length+100, function(err, result) {
+                    window.steem.api.getAccountHistory(userName, 99999999, 100, function(err, result) {
+
                         if(!err){
 
-                            thisElement._computeEvents(result);
+                            var events = computeEvents(result);
+
+                            thisElement.set('events', events);
                         }else {
-                            console.error(err);
+
+                            console.error('Load steem-get-history error');
                         }
                     });
 
                 });
-            },
-
-            _computeEvents: function (events) {
-
-                var length = events.length;
-
-                var computedEvents = [];
-
-                // Compute each event
-                for(var i = 0; i < length; i++) {
-
-                    var event = events[i][1];
-
-                    // Default value
-                    var when = event.timestamp;
-                    var what = 'what undefined';
-                    var who = 'who undefined';
-                    var atLink = 'atLink undefined';
-                    var atName = 'atNam undefined';
-
-                    // Operation
-                    var operationName = event.op[0];
-                    var op = event.op[1];
-
-                    // Compute depend operation type
-                    switch(operationName) {
-                        case 'vote':
-
-                            // Vote compute
-                            what = 'upvote';
-                            who = op.voter;
-                            atLink = '@' + op.author + '/' + op.permlink;
-                            atName = '@' + op.author + '/' + op.permlink.replace(/-/g, ' ');
-                            break;
-                        case 'comment':
-
-                            // Comment compute
-                            what = 'replied to';
-                            who = op.author;
-                            atLink = '@' + op.parent_userName + '/' + op.parent_permlink;
-                            atName = op.parent_permlink.replace(/-/g, ' ');
-                            break;
-                        case 'curation_reward':
-
-                            // Curation reward compute
-                            what = 'get rewarded for curation';
-                            who = op.curator;
-                            atLink = '@' + op.comment_userName + '/' + op.comment_permlink;
-                            atName = op.comment_permlink.replace(/-/g, ' ');
-                            break;
-                    }
-
-                    // Put computed properties into an object
-                    var computedEvent = {
-                        who: who,
-                        what: what,
-                        atLink: atLink,
-                        atName: atName,
-                        when: when
-                    };
-
-                    //Put object into an array
-                    computedEvents.push(computedEvent);
-
-                    //Revert array
-                    computedEvents.reverse();
-                }
-
-                //Put array into components
-                if(this.events.length == 0) {
-
-                    this.set('events', computedEvents);
-                }else {
-
-                    this.push('events', computedEvents);
-                }
 
             }
         });

@@ -10,3 +10,4 @@ function cloneObj(obj) {
     }
     return copy;
 }
+

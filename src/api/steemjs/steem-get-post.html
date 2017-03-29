@@ -61,14 +61,16 @@
             // Update posts list when path changed
             _pathChanged: function(path) {
 
-                if(/[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/.test(path)) {
+                var path = path.replace(/ /g, '');
+
+                if(/(\/)?[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/.test(path)) {
 
                     this.isLoading = true;
                     var thisElement = this;
 
                     this.async(function() {
 
-                        steem.api.getState(path, function(err, result) {
+                        window.steem.api.getState(path, function(err, result) {
 
                             if(!err){
 

@@ -1,10 +1,10 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <script src="./src/steem.min.js"></script>
-<script src="../../scripts/functions.js"></script>
+<script src="./src/steem-parser.js"></script>
 
 <dom-module id="steem-get-account">
-    <!--steem-js steem-js="{{_steemAPI}}"></steem-js-->
+    <template></template>
 </dom-module>
 
 <script>
@@ -36,6 +36,14 @@
                 },
 
                 /*
+                 * Account blog posts.
+                 */
+                posts: {
+                    type: Array,
+                    notify: true
+                },
+
+                /*
                  * Is loading statement
                  */
                 isLoading: {
@@ -48,264 +56,99 @@
 
             ready: function() {
 
+                this.isLoading = true;
+
+                // init account data
+                if(typeof this.account == 'undefined') {
+
+                    this.account = {};
+                }
+
+                if(typeof this.posts == 'undefined') {
+
+                    this.posts = [];
+                }
+            },
+
+            _resetAccount: function() {
+
+                this.account = {
+                    reputation: 0,
+                    created: '',
+                    postCount: 0,
+                    votingPower: 0,
+                    lastPostTime: '',
+                    lastVoteTime: '',
+                    steemNumber: 0,
+                    vestNumber: 0,
+                    sbdNumber: 0,
+                    lastInteraction: '',
+                    pinnedPost: '',
+                    pinnedPosts: [], // Array of post list [{name: 'name', posts: ['tag/author/title', '...']}, {...}]
+                    profileImage: '', // Url
+                    coverImage: '', // Url
+                    website: '', // Website links 'https://...'
+                    webLinks: [], // Other links ['', '', '']
+                    customValues: [], // [{name: 'name', value: 'value'}, {...}]*/
+                    location: '', // Texte for presentation
+                    about: '' // Texte for location
+                };
             },
 
             // Query Steem for account data when name change
             _accountNameChanged: function(accountName) {
 
-                console.log(accountName);
-
-                var accountName = accountName || this.accountName;
-
                 if(accountName != '') {
+
+                    var path = '/@' + accountName.replace('@', '');
 
                     this.isLoading = true;
 
-                    // init account data
-                    if(typeof account == 'undefined') {
-
-                        this.set('account', {
-                             reputation: 0,
-                             profileImage: '', // Url
-                             coverImage: '', // Url
-                             followerCount: 0,
-                             followingCount: 0,
-                             pinnedPosts: [], // Array of post list [{name: 'name', posts: ['tag/author/title', '...']}, {...}]
-                             about: '', // Texte for presentation
-                             location: '', // Texte for location
-                             website: '', // Website links 'https://...'
-                             webLinks: [], // Other links ['', '', '']
-                             customValues: [] // [{name: 'name', value: 'value'}, {...}]*/
-                        });
-                    }
-
+                    // Query account data
                     var thisElement = this;
 
-                    /*var module = (function() {
-
-                     return {
-
-                     getAccounts: function(steemApi, thisElement) {
-
-                     steemApi.api.getAccounts([thisElement.accountName], function(err, result) {
-
-                     thisElement._computeAccount(err, result);
-
-                     });
-
-                     },
-
-                     getFollowCount: function(steemApi, thisElement) {
-
-                     steemApi.api.getFollowCount(thisElement.accountName, function(err, result){
-
-                     thisElement._computeAccountFollowCount(err, result);
-                     });
-
-
-                     }
-
-                     };
-
-                     })();
-
-                     /*
-                     *  Theses query are triggered on accountName change but return no results
-                     */
-                    /*module.getAccounts(steemAPI, thisElement);
-                     module.getFollowCount(steemAPI, thisElement);*/
-
-                    // Query account data
                     this.async(function() {
-                        console.log(accountName);
+
                         // Query basic information
-                        steem.api.getAccounts([accountName], function(err, result) {
-                            console.log(err, result);
-                            thisElement._computeAccount(err, result);
+                        window.steem.api.getState(path, function(err, result) {
+
+                            if(!err){
+
+                                /* ACCOUNT */
+                                var accounts = result.accounts;
+                                var accountRecieved = {};
+
+                                for (var key in accounts) {
+
+                                    // skip loop if the property is from prototype
+                                    if (!accounts.hasOwnProperty(key)) continue;
+
+                                    accountRecieved = accounts[key];
+                                }
+
+                                var account = computeAccount(accountRecieved, window.steem.formatter, accountName);
+                                thisElement.set('account', account);
+
+                                /*  POSTS */
+                                var posts = result.content;
+                                var postsRecieved = [];
+                                    postsRecieved = computePosts(posts);
+                                thisElement.set('posts', postsRecieved);
+
+                                /* Loading finish */
+                                thisElement.isLoading = false;
+
+                            }else {
+
+                                console.log('account query error: '+err);
+                            }
 
                         });
 
                     });
-
-                    // Query follow number
-                    this.async(function(){
-                        steem.api.getFollowCount(accountName, function(err, result){
-
-                            thisElement._computeAccountFollowCount(err, result);
-                        });
-                    });
-
                 }
-            },
-
-            _computeAccountFollowCount: function(err, result) {
-
-                if(!err){
-
-                    this.set('account.followerCount', result.follower_count);
-                    this.set('account.followingCount', result.following_count);
-                }else {
-
-                    this.set('account.followerCount', 0);
-                    this.set('account.followingCount', 0);
-                }
-
-                this.isLoading = false;
-
-            },
-
-            _computeAccount: function(err, result) {
-
-                var steemFormatter = steem.formatter;
-
-                if(!err){
-
-                    var accountReceived = result[0];
-                    var accountJsonObject = JSON.parse(accountReceived.json_metadata) || {};
-
-                    // Reputation on 100
-                    this.set('account.reputation', steemFormatter.reputation(accountReceived.reputation));
-
-                    // Set account created date
-                    this.set('account.created', accountReceived.created);
-
-                    // Post number
-                    this.set('account.postCount', accountReceived.post_count);
-
-                    // Voting power on 100
-                    this.set('account.votingPower', accountReceived.voting_power/100);
-
-                    // last post
-                    this.set('account.lastPostTime', accountReceived.last_post);
-
-                    // last vote
-                    this.set('account.lastVoteTime', accountReceived.last_vote_time);
-
-                    // last interaction
-                    this.set('account.lastInteraction', accountReceived.last_bandwidth_update);
-
-                    // Set account STEEM
-                    this.set('account.steemNumber', accountReceived.balance.replace(' STEEM', ''));
-
-                    // Set account VEST (Steem power)
-                    this.set('account.vestNumber', accountReceived.vesting_shares.replace(' VESTS', ''));
-
-                    // Set account SBD (Steem dolar)
-                    this.set('account.sbdNumber', accountReceived.savings_sbd_balance.replace(' SBD', ''));
-
-                    // Set first pinned post
-                    if(typeof accountJsonObject.profile.pinned_post === 'undefined'){
-
-                        if(this.accountName == 'esteem8') {
-                            this.set('account.pinnedPost', 'esteem8/@esteem8/what-the-esteem8-is-fuck');
-                        }else {
-                            this.set('account.pinnedPost', '');
-                        }
-
-                    }else {
-
-                        this.set('account.pinnedPost', accountJsonObject.profile.pinned_post);
-                    }
-
-                    // Set pinned post array
-                    if(typeof accountJsonObject.profile.pinned_posts === 'undefined'){
-
-                        if(this.accountName == 'esteem8') {
-                            // Nested menu support later
-                            this.set('account.pinnedPosts', '[{"name": "Ask & Chat", "posts": ["steem/@esteem8/esteem8-community-questions", "esteem8-chat/@esteem8/esteem8-community-chat"]}, {"name": "Feedback", "posts": ["esteem8/@esteem8/esteem8-community-feedback"]}, {"name": "Purpose", "posts": ["steem/@esteem8/esteem8-community-proposals"]}, {"name": "Contribute", "posts": ["esteem8/@esteem8/how-to-support-esteem8", "esteem8/@esteem8/how-to-develop-a-new-feature"]}]');
-                        }else {
-                            this.set('account.pinnedPosts', '');
-                        }
-
-                    }else {
-
-                        this.set('account.pinnedPosts', accountJsonObject.profile.pinned_posts);
-                    }
-
-                    // Set profile image
-                    if(typeof accountJsonObject.profile.profile_image === 'undefined'){
-
-                        this.set('account.profileImage', '');
-                    }else {
-
-                        this.set('account.profileImage', accountJsonObject.profile.profile_image);
-                    }
-
-
-                    // Set cover image
-                    if(typeof accountJsonObject.profile.cover_image === 'undefined'){
-
-                        this.set('account.coverImage', '');
-                    }else {
-
-                        this.set('account.coverImage', accountJsonObject.profile.cover_image);
-                    }
-
-                    // Set website
-                    if(typeof accountJsonObject.profile.website === 'undefined'){
-
-                        this.set('account.website', '');
-                    }else {
-
-                        this.set('account.website', accountJsonObject.profile.website);
-                    }
-
-                    // Set other accounts
-                    if(typeof accountJsonObject.profile.web_links === 'undefined'){
-
-                        if(this.accountName == 'esteem8') {
-
-                            this.set('account.webLinks', '["https://github.com/esteem8", "https://discordapp.com/invite/5nqRwbf"]');
-                        }else {
-
-                            this.set('account.webLinks', '');
-                        }
-                    }else {
-
-                        this.set('account.webLinks', accountJsonObject.profile.web_links);
-                    }
-
-                    // Set custom values
-                    if(typeof accountJsonObject.profile.custom_values === 'undefined'){
-
-                        if(this.accountName == 'esteem8') {
-
-                            this.set('account.customValues', '[{"name": "Product type", "value": "Application"}, {"name": "Software type", "value": "Open-source"}, {"name": "Organization type", "value": "Decentralized"}]');
-                        }else {
-
-                            this.set('account.customValues', '');
-                        }
-                    }else {
-
-                        this.set('account.customValues', accountJsonObject.profile.custom_values);
-                    }
-
-                    // Set location
-                    if(typeof accountJsonObject.profile.location === 'undefined'){
-
-                        this.set('account.location', '');
-                    }else {
-
-                        this.set('account.location', accountJsonObject.profile.location);
-                    }
-
-                    // Set about
-                    if(typeof accountJsonObject.profile.about === 'undefined'){
-
-                        this.set('account.about', '');
-                    }else {
-
-                        this.set('account.about', accountJsonObject.profile.about);
-                    }
-
-
-                }else {
-
-                    console.log('account query error: '+err)
-                    this.set('account', {});
-                }
-
             }
+
         });
     })();
 </script>

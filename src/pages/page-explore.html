@@ -328,22 +328,30 @@
         _currentSortingChanged: function() {
 
             var path = '/' + this.currentSorting;
+            var pathRegex = /\/(created|hot|trending|active)[a-z\/]*/;
 
-            window.history.pushState({}, null, path);
+            if(pathRegex.test(path)) {
+
+                window.history.pushState({}, null, path);
+            }
         },
 
         // sorting var -> sorting url
         _currentTagChanged: function() {
 
             var path = '/' + this.currentSorting + '/' + this.currentTag;
+            var pathRegex = /\/(created|hot|trending|active)[a-z\/]*/;
 
-            window.history.pushState({}, null, path);
+            if(pathRegex.test(path)) {
 
-            // Check if this is the app tag
-            this._computeIsEsteem8Tag();
+                window.history.pushState({}, null, path);
 
-            // Refresh add to favorite icon
-            this._refreshIsCurrentTagInFavorite();
+                // Check if this is the app tag
+                this._computeIsEsteem8Tag();
+
+                // Refresh add to favorite icon
+                this._refreshIsCurrentTagInFavorite();
+            }
         },
 
         _steemPathChanged: function() {

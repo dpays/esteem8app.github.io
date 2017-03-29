@@ -380,10 +380,16 @@
 
             this.$.openShareDialogButton.addEventListener('tap', this._openShareDialog.bind(this));
 
-
             this.rf = new IntlRelativeFormat('en-us');
             this._contentToggled = false;
             this._domainName = window.location.hostname;
+
+            if(typeof this.settings == 'undefined') {
+
+                this.settings.display.imageResolution = 'medium';
+                this.settings.display.showCardContent = 'false';
+            }
+
             this._refreshIsFavoritePost();
         },
 

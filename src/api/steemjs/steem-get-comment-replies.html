@@ -69,7 +69,7 @@
 
                     var thisElement = this;
                     this.async(function() {
-                        steem.api.getContentReplies(this.parentAuthor, this.parentPermlink, function(err, result) {
+                        window.steem.api.getContentReplies(this.parentAuthor, this.parentPermlink, function(err, result) {
                             if(result !== 'undefined' && !err){
                                 thisElement._computeComments(result);
                             }else {

@@ -1,10 +1,10 @@
 {
   "name": "ESTEEM8",
   "short_name": "ESTEEM8",
-  "start_url": "/?homescreen=1",
+  "start_url": "/trending",
   "display": "standalone",
-  "theme_color": "#F44336",
-  "background_color": "#F44336",
+  "theme_color": "#673AB7",
+  "background_color": "#673AB7",
   "icons": [
     {
       "src": "images/manifest/icon-192x192.png",

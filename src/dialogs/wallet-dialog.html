@@ -1,11 +1,15 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
@@ -28,16 +32,17 @@
         <style include="shared-styles">
 
             :host {
-                padding: 16px;
+                padding: 0;
             }
 
             #walletDialog {
-                min-width: 488px;
+                min-width: 500px;
+                margin: 32px;
                 background-color: var(--app-primary-background-color);
                 color: var(--app-background-primary-text-color);
             }
             
-            @media (max-width: 568px) {
+            @media (max-width: 564px) {
                 #walletDialog {
                     min-width: 0;
                     width: 100%;
@@ -134,238 +139,241 @@
         </steem-get-value>
 
         <paper-dialog id="walletDialog"
-                      opened="{{isOpen}}">
+                      opened="{{isOpen}}"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
 
-        <paper-toolbar id="walletToolbar">
-            <paper-icon-button icon="my-icons:wallet"
-                               id="setViewHomeButton"
-                               on-tap="_setViewHome()">
-            </paper-icon-button>
-            <span class="title">[[userName]]</span>
-            <paper-icon-button icon="my-icons:close" dialog-dismiss>
-            </paper-icon-button>
-        </paper-toolbar>
-
-        <div id="walletHeader">
-
-            <template is="dom-if" if="[[_isViewHome(_view)]]">
-
-                <div class="walletImage">
-                    <template is="dom-if" if="[[_account.profileImage]]">
-                        <iron-image class="profileRepresentation"
-                                    sizing="cover"
-                                    src="https://steemitimages.com/124x124/[[_account.profileImage]]">
-                        </iron-image>
-                    </template>
-                    <template is="dom-if" if="[[!_account.profileImage]]">
-                        <iron-icon class="profileRepresentation"
-                                   icon="my-icons:person-circle">
-                        </iron-icon>
-                    </template>
-                </div>
-
-                <div id="walletValue">
-                    <h2>[[_computeTotalAmmount(steemValue, _account.sbdNumber, _account.steemNumber)]] $</h2>
-                </div>
-
-            </template>
-
-            <div id="walletAction">
-
-                <paper-icon-button icon="my-icons:wallet-send"
-                                   id="setViewSendButton"
-                                   on-tap="_setViewSend()">
+            <paper-toolbar id="walletToolbar">
+                <paper-icon-button icon="my-icons:wallet"
+                                   id="setViewHomeButton"
+                                   on-tap="_setViewHome()">
                 </paper-icon-button>
-                <paper-icon-button icon="my-icons:wallet-request"
-                                   id="setViewRequestButton"
-                                   on-tap="_setViewRequest()">
+                <span class="title">[[userName]]</span>
+                <paper-icon-button icon="my-icons:close" dialog-dismiss>
                 </paper-icon-button>
-                <paper-icon-button icon="my-icons:wallet-fund"
-                                   id="setViewFundButton"
-                                   on-tap="_setViewFund()">
-                </paper-icon-button>
-                <paper-icon-button icon="my-icons:wallet-activity"
-                                   id="setViewActivityButton"
-                                   on-tap="_setViewActivity()">
-                </paper-icon-button>
+            </paper-toolbar>
 
-            </div>
+            <div id="walletHeader">
 
-        </div>
+                <template is="dom-if" if="[[_isViewHome(_view)]]">
 
-        <div id="walletBody">
-            <iron-pages attr-for-selected="view"
-                        selected="[[_view]]">
-
-                <div id="walletCurrency" view="home" class="walletSectionBody">
-                    <span role="listbox">
-                        <paper-item>
-
-                            1 STEEM = [[_roundAmmount(steemValue, 3)]] SBD ($)
-
-                        </paper-item>
-
-                        <paper-item>
-                            <paper-item-body two-line>
-                                <div>
-                                    VEST <span class="secondary-color right">[[_roundAmmount(_account.vestNumber, 0)]]</span>
-                                </div>
-                                <div secondary>A power ammount</div>
-                            </paper-item-body>
-                        </paper-item>
-
-                        <paper-item>
-                            <paper-item-body two-line>
-                                <div>
-                                    STEEM <span class="secondary-color right">[[_roundAmmount(_account.steemNumber, 2)]]</span>
-                                </div>
-                                <div secondary>An exchangable currency <span class="right">[[_steemToDollar(_account.steemNumber, steemValue)]] $</span></div>
-                            </paper-item-body>
-                        </paper-item>
-
-                        <paper-item>
-                            <paper-item-body two-line>
-                                <div>
-                                    SBD <span class="secondary-color right">[[_roundAmmount(_account.sbdNumber, 2)]]</span>
-                                </div>
-                                <div secondary>An exchangable currency with the dollar value</div>
-                            </paper-item-body>
-                        </paper-item>
-                    </span>
-                </div>
-
-                <div id="walletSend" view="send" class="walletSectionBody">
-
-                    <paper-input label="Ammount" type="number">
-                        <paper-menu-button suffix>
-
-                            <paper-button class="dropdown-trigger">
-                                [[_currencySelected]]&nbsp;
-                                <iron-icon icon="my-icons:arrow-dropdown">
-                                </iron-icon>
-                            </paper-button>
-
-                            <paper-menu class="dropdown-content"
-                                        selected="{{_currencySelected}}"
-                                        attr-for-selected="currency">
-                                <paper-item currency="STEEM">STEEM</paper-item>
-                                <paper-item currency="SBD">SBD</paper-item>
-                            </paper-menu>
-
-                        </paper-menu-button>
-
-                    </paper-input>
-
-                    <template is="dom-if" if="[[_isMyAccount(userName)]]">
-
-                        <paper-input label="To @">
-                            <paper-icon-button
-                                    suffix
-                                    icon="my-icons:arrow-dropdown">
-                            </paper-icon-button>
-
-                            <!-- Trigger a dialog with:
-                              * A list of users groups togglable that appears like button
-                              * A paper-input
-                              * A list of users chip by groups toggled
-
-                              All groups are toggled by default
-                              When user input, list is filtered by input and groups toggled
-                              -->
-
-                            <!-- LOKKING LIKE http://webpaperelements.github.io/paper-input-autocomplete-chips/components/paper-input-autocomplete-chips/demo/index-grouped-suggestions.html -->
-
-                            <!-- GITHUB https://www.webcomponents.org/element/WebPaperElements/paper-input-autocomplete-chips/paper-input-autocomplete-chips -->
-                            <!-- webcomponents.org https://www.webcomponents.org/element/WebPaperElements/paper-input-autocomplete-chips/paper-input-autocomplete-chips -->
-
-                            <!-- Groups will be :
-                           * 1. Steem: steem-lookup-account
-                           * 2. Follower: logged user follower
-                           * 3.x Multiple favorite groups: grouped by first favorite user tag (favorite user will have tags to make group/list)
-                              * A favorite user tag will be pre-set for wallet named
-                            -->
-
-                        </paper-input>
-
-                    </template>
-
-                    <paper-input label="Optional comment">
-
-                    </paper-input>
-
-                    <div class="actions-buttons">
-                        <paper-button raised>PAY</paper-button>
-                    </div>
-
-                </div>
-
-                <div id="walletRequest" view="request"  class="walletSectionBody">
-                    <!-- give 0.001 Steem with memo as "{value} {currency} | {memo}" -->
-                    <paper-input label="Ammount" type="number">
-                        <paper-menu-button suffix>
-
-                            <paper-button class="dropdown-trigger">
-                                [[_currencySelected]]&nbsp;
-                                <iron-icon icon="my-icons:arrow-dropdown">
-                                </iron-icon>
-                            </paper-button>
-
-                            <paper-menu class="dropdown-content"
-                                        selected="{{_currencySelected}}"
-                                        attr-for-selected="currency">
-                                <paper-item currency="STEEM">STEEM</paper-item>
-                                <paper-item currency="SBD">SBD</paper-item>
-                            </paper-menu>
-
-                        </paper-menu-button>
-                    </paper-input>
-
-                    <template is="dom-if" if="[[_isMyAccount(userName)]]">
-
-                        <paper-input label="To @">
-                            <paper-icon-button
-                                    suffix
-                                    icon="my-icons:arrow-dropdown">
-                            </paper-icon-button>
-                        </paper-input>
-
-
-                    </template>
-
-                    <paper-input label="Optional comment">
-
-                    </paper-input>
-
-                    <div class="actions-buttons">
-                        <paper-button raised>REQUEST</paper-button>
-                    </div>
-
-                </div>
-
-                <div id="walletFund" view="fund" class="walletSectionBody">
-
-                    <h2>Buy steem using API of blocktrade, bittrex or changelly</h2>
-
-                </div>
-
-                <div id="walletActivity" view="activity">
-
-                    <steem-get-transfers account-name="[[_accountName]]"
-                                         transfers="{{_transfers}}" type="transfer">
-                    </steem-get-transfers>
-
-                    <div role="listbox" class="overflow-">
-
-                        <template is="dom-repeat" items="[[_transfers]]">
-                            <currency-transfer transfer="[[item]]"></currency-transfer>
+                    <div class="walletImage">
+                        <template is="dom-if" if="[[_account.profileImage]]">
+                            <iron-image class="profileRepresentation"
+                                        sizing="cover"
+                                        src="https://steemitimages.com/124x124/[[_account.profileImage]]">
+                            </iron-image>
+                        </template>
+                        <template is="dom-if" if="[[!_account.profileImage]]">
+                            <iron-icon class="profileRepresentation"
+                                       icon="my-icons:person-circle">
+                            </iron-icon>
                         </template>
                     </div>
 
+                    <div id="walletValue">
+                        <h2>[[_computeTotalAmmount(steemValue, _account.sbdNumber, _account.steemNumber)]] $</h2>
+                    </div>
+
+                </template>
+
+                <div id="walletAction">
+
+                    <paper-icon-button icon="my-icons:wallet-send"
+                                       id="setViewSendButton"
+                                       on-tap="_setViewSend()">
+                    </paper-icon-button>
+                    <paper-icon-button icon="my-icons:wallet-request"
+                                       id="setViewRequestButton"
+                                       on-tap="_setViewRequest()">
+                    </paper-icon-button>
+                    <paper-icon-button icon="my-icons:wallet-fund"
+                                       id="setViewFundButton"
+                                       on-tap="_setViewFund()">
+                    </paper-icon-button>
+                    <paper-icon-button icon="my-icons:wallet-activity"
+                                       id="setViewActivityButton"
+                                       on-tap="_setViewActivity()">
+                    </paper-icon-button>
+
                 </div>
 
-            </iron-pages>
-        </div>
+            </div>
+            <paper-dialog-scrollable>
+                <div id="walletBody">
+                    <iron-pages attr-for-selected="view"
+                                selected="[[_view]]">
 
+                        <div id="walletCurrency" view="home" class="walletSectionBody">
+                            <span role="listbox">
+                                <paper-item>
+
+                                    1 STEEM = [[_roundAmmount(steemValue, 3)]] SBD ($)
+
+                                </paper-item>
+
+                                <paper-item>
+                                    <paper-item-body two-line>
+                                        <div>
+                                            VEST <span class="secondary-color right">[[_roundAmmount(_account.vestNumber, 0)]]</span>
+                                        </div>
+                                        <div secondary>A power ammount</div>
+                                    </paper-item-body>
+                                </paper-item>
+
+                                <paper-item>
+                                    <paper-item-body two-line>
+                                        <div>
+                                            STEEM <span class="secondary-color right">[[_roundAmmount(_account.steemNumber, 2)]]</span>
+                                        </div>
+                                        <div secondary>An exchangable currency <span class="right">[[_steemToDollar(_account.steemNumber, steemValue)]] $</span></div>
+                                    </paper-item-body>
+                                </paper-item>
+
+                                <paper-item>
+                                    <paper-item-body two-line>
+                                        <div>
+                                            SBD <span class="secondary-color right">[[_roundAmmount(_account.sbdNumber, 2)]]</span>
+                                        </div>
+                                        <div secondary>An exchangable currency with the dollar value</div>
+                                    </paper-item-body>
+                                </paper-item>
+                            </span>
+                        </div>
+
+                        <div id="walletSend" view="send" class="walletSectionBody">
+
+                            <paper-input label="Ammount" type="number">
+                                <paper-menu-button suffix>
+
+                                    <paper-button class="dropdown-trigger">
+                                        [[_currencySelected]]&nbsp;
+                                        <iron-icon icon="my-icons:arrow-dropdown">
+                                        </iron-icon>
+                                    </paper-button>
+
+                                    <paper-menu class="dropdown-content"
+                                                selected="{{_currencySelected}}"
+                                                attr-for-selected="currency">
+                                        <paper-item currency="STEEM">STEEM</paper-item>
+                                        <paper-item currency="SBD">SBD</paper-item>
+                                    </paper-menu>
+
+                                </paper-menu-button>
+
+                            </paper-input>
+
+                            <template is="dom-if" if="[[_isMyAccount(userName)]]">
+
+                                <paper-input label="To">
+                                    <paper-icon-button
+                                            suffix
+                                            icon="my-icons:arrow-dropdown">
+                                    </paper-icon-button>
+
+                                    <!-- Trigger a dialog with:
+                                      * A list of users groups togglable that appears like button
+                                      * A paper-input
+                                      * A list of users chip by groups toggled
+
+                                      All groups are toggled by default
+                                      When user input, list is filtered by input and groups toggled
+                                      -->
+
+                                    <!-- LOKKING LIKE http://webpaperelements.github.io/paper-input-autocomplete-chips/components/paper-input-autocomplete-chips/demo/index-grouped-suggestions.html -->
+
+                                    <!-- GITHUB https://www.webcomponents.org/element/WebPaperElements/paper-input-autocomplete-chips/paper-input-autocomplete-chips -->
+                                    <!-- webcomponents.org https://www.webcomponents.org/element/WebPaperElements/paper-input-autocomplete-chips/paper-input-autocomplete-chips -->
+
+                                    <!-- Groups will be :
+                                   * 1. Steem: steem-lookup-account
+                                   * 2. Follower: logged user follower
+                                   * 3.x Multiple favorite groups: grouped by first favorite user tag (favorite user will have tags to make group/list)
+                                      * A favorite user tag will be pre-set for wallet named
+                                    -->
+
+                                </paper-input>
+
+                            </template>
+
+                            <paper-input label="Optional comment">
+
+                            </paper-input>
+
+                            <div class="actions-buttons">
+                                <paper-button raised>PAY</paper-button>
+                            </div>
+
+                        </div>
+
+                        <div id="walletRequest" view="request"  class="walletSectionBody">
+                            <!-- give 0.001 Steem with memo as "{value} {currency} | {memo}" -->
+                            <paper-input label="Ammount" type="number">
+                                <paper-menu-button suffix>
+
+                                    <paper-button class="dropdown-trigger">
+                                        [[_currencySelected]]&nbsp;
+                                        <iron-icon icon="my-icons:arrow-dropdown">
+                                        </iron-icon>
+                                    </paper-button>
+
+                                    <paper-menu class="dropdown-content"
+                                                selected="{{_currencySelected}}"
+                                                attr-for-selected="currency">
+                                        <paper-item currency="STEEM">STEEM</paper-item>
+                                        <paper-item currency="SBD">SBD</paper-item>
+                                    </paper-menu>
+
+                                </paper-menu-button>
+                            </paper-input>
+
+                            <template is="dom-if" if="[[_isMyAccount(userName)]]">
+
+                                <paper-input label="To">
+                                    <paper-icon-button
+                                            suffix
+                                            icon="my-icons:arrow-dropdown">
+                                    </paper-icon-button>
+                                </paper-input>
+
+
+                            </template>
+
+                            <paper-input label="Optional comment">
+
+                            </paper-input>
+
+                            <div class="actions-buttons">
+                                <paper-button raised>REQUEST</paper-button>
+                            </div>
+
+                        </div>
+
+                        <div id="walletFund" view="fund" class="walletSectionBody">
+
+                            <h2>Buy steem using API of blocktrade, bittrex or changelly</h2>
+
+                        </div>
+
+                        <div id="walletActivity" view="activity">
+
+                            <steem-get-transfers account-name="[[_accountName]]"
+                                                 transfers="{{_transfers}}" type="transfer">
+                            </steem-get-transfers>
+
+                            <div role="listbox" class="overflow-">
+
+                                <template is="dom-repeat" items="[[_transfers]]">
+                                    <currency-transfer transfer="[[item]]"></currency-transfer>
+                                </template>
+                            </div>
+
+                        </div>
+
+                    </iron-pages>
+                </div>
+            </paper-dialog-scrollable>
         </paper-dialog>
     </template>
 </dom-module>

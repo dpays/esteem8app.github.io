@@ -9,11 +9,9 @@
 
     <template>
 
-        <template is="dom-if" if="[[postPath]]">
-            <steem-get-post path="[[postPath]]"
-                            post="{{post}}">
-            </steem-get-post>
-        </template>
+        <steem-get-post path="[[postPath]]"
+                        post="{{post}}">
+        </steem-get-post>
 
         <div id="post"></div>
 
@@ -32,8 +30,7 @@
              * Post object
              */
             post: {
-                type: Object,
-                observer: '_postChanged'
+                type: Object
             },
 
             /*
@@ -51,6 +48,8 @@
             }
         },
 
+        observers: ['_displayPost(post, postType)'],
+
         ready: function () {
 
             if(typeof this.postPath === 'undefined'){
@@ -59,44 +58,41 @@
             }
         },
 
-        _postChanged: function() {
+        _displayPost: function(post, postType) {
 
-            this._displayPost();
-        },
+            if(typeof post !== 'undefined') {
 
-        _displayPost: function() {
+                var postType = postType || 'post-card-light';
 
-            if(typeof this.postType === 'undefined') {
+                var elementName = 'post-card-light';
 
-                this.postType = 'post-card-light';
+                switch (postType) {
+
+                    case 'card':
+
+                        elementName = 'post-card';
+                        break;
+
+                    case 'card-light':
+
+                        elementName = 'post-card-light';
+                        break;
+
+                    case 'content-minimal':
+
+                        elementName = 'post-content-minimal';
+                        break;
+                }
+
+                this.$.post.innerHTML = '';
+
+                // Create Element
+                var element = document.createElement(elementName);
+                // Set data
+                element.setAttribute('post', JSON.stringify(post));
+
+                Polymer.dom(this.$.post).appendChild(element);
             }
-
-            var elementName = 'post-card-light';
-
-            switch (this.postType) {
-
-                case 'card':
-
-                    elementName = 'post-card';
-                    break;
-
-                case 'card-light':
-
-                    elementName = 'post-card-light';
-                    break;
-
-                case 'content-minimal':
-
-                    elementName = 'post-content-minimal';
-                    break;
-            }
-
-            // Create Element
-            var element = document.createElement(elementName);
-            // Set data
-            element.setAttribute('post', JSON.stringify(this.post));
-
-            Polymer.dom(this.$.post).appendChild(element);
 
             // TODO
             /*

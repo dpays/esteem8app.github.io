@@ -1,68 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>ESTEEM8 Application</title>
-    <meta name="description" content="Community-driven open-source light, design, and private web application to browse Steem, the world first social media platform where everyone is rewarded to use it. Give power back to people.">
-    <link rel="icon" href="/images/favicon.ico">
+        <title>ESTEEM8 Application</title>
+        <meta name="description" content="Light, design, and private web application to browse Steem, the world first social media platform where everyone is rewarded to use it. Explore the highest quality content on the internet and get rewarded to create and curate content. We, the people are taking back our power.">
+        <link rel="icon" href="/images/favicon.ico">
 
-    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="ESTEEM8">
+        <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+        <link rel="manifest" href="/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="application-name" content="ESTEEM8">
 
-    <!-- Add to homescreen for Safari on iOS -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ESTEEM8">
+        <!-- Add to homescreen for Safari on iOS -->
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="ESTEEM8">
 
-    <!-- Homescreen icons -->
-    <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png">
+        <!-- Homescreen icons -->
+        <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png">
 
-    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#333333">
-    <meta name="msapplication-tap-highlight" content="no">
+        <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+        <meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png">
+        <meta name="msapplication-TileColor" content="#333333">
+        <meta name="msapplication-tap-highlight" content="no">
 
-    <!-- Open graph metadata -->
-    <meta property="og:title" content="ESTEEM8 Application"/>
-    <meta property="og:description" content="Community-driven open-source light, design, and private web application to browse Steem, the world first social media platform where everyone is rewarded to use it. Give power back to people."/>
-    <meta property="og:url" content="https://esteem8app.github.io"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:image" content="https://github.com/esteem8app/esteem8app.github.io/blob/master/screenshots/ES8%20Home%20desktop.png?raw=true"/>
+        <!-- Open graph metadata -->
+        <meta property="og:title" content="ESTEEM8 APP"/>
+        <meta property="og:description" content="Light, design, and private web application to browse Steem, the world first social media platform where everyone is rewarded to use it. Explore the highest quality content on the internet and get rewarded to create and curate content. We, the people are taking back our power."/>
+        <meta property="og:url" content="https://esteem8.com"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="https://github.com/esteem8app/ES8-branding/blob/master/backgrounds/ESTEEM8%20background%202%20APP.png?raw=true"/>
 
-    <!-- Load must have script -->
-    <script src="/index.js"></script> <!-- web compoment -->
+        <!-- Load must have script -->
+        <script src="/index.js"></script> <!-- web compoment -->
 
-    <!-- Main components -->
-    <link rel="import" href="/bower_components/paper-spinner/paper-spinner-lite.html">
-    <link rel="import" href="/src/app-shell.html">
+        <!-- Main components -->
+        <link rel="import" href="/src/app-shell.html">
 
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Lato|Open+Sans');
-        body {
-            margin: 0;
-            font-family: 'Roboto', 'Open Sans', 'Lato', sans-serif;
-            font-weight: 500;
-            min-height: 100%;
-            background-color: #eee;
-        }
-
-        paper-spinner-lite {
-            --paper-spinner-layer-1-color: #222;
-        }
-
-    </style>
-</head>
-<body>
-    <app-shell id="appshell">
-        <paper-spinner-lite active></paper-spinner-lite>
-    </app-shell>
-</body>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+            body {
+                margin: 0;
+                font-family: 'Roboto', 'Open Sans', sans-serif;
+                font-weight: 500;
+                min-height: 100%;
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <app-shell id="appshell"></app-shell>
+    </body>
 </html>

@@ -1,0 +1,66 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="profile-about">
+
+    <template>
+
+        <style include="shared-styles">
+            /* GENERAL */
+            paper-card {
+                margin-top: 16px;
+                min-width: 100%;
+            }
+
+            .aboutValues {
+                display: block;
+                font-family: 'Roboto', 'Open Sans', 'Lato', sans-serif;
+                padding-bottom: 4px;
+            }
+
+            .aboutValues .name {
+                color: var(--app-secondary-color);
+            }
+
+        </style>
+
+        <template is="dom-if" if="[[account.customValues.length]]">
+
+            <paper-card heading="ABOUT">
+                <div class="card-content">
+                    <template is="dom-repeat" items="[[account.customValues]]">
+
+                        <div class="aboutValues">
+                            <span class="name">[[item.name]]:</span>
+                            <span class="value">&nbsp;[[item.value]]</span>
+                        </div>
+
+                    </template>
+                </div>
+            </paper-card>
+
+        </template>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'profile-about',
+
+        properties: {
+
+            account: {
+                type: Object
+            }
+
+        }
+
+    });
+</script>

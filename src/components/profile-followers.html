@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="profile-followers">
+
+    <template>
+
+        <style include="shared-styles">
+            /* GENERAL */
+            :host{
+                color: ;
+            }
+
+        </style>
+
+        <template is="dom-if" if="[[account.customValues.length]]">
+
+            <steem-get-followers account-name="[[_accountName]]"
+                                 followers="{{_followers}}">
+            </steem-get-followers>
+
+            <div id="followers-list">
+
+                <template is="dom-if" if="[[!_followers.length]]">
+                    <h2>[[userName]] has no follower</h2>
+                </template>
+
+                <template is="dom-if" if="[[_followers.length]]">
+                    <template is="dom-repeat" items="[[_followers]]">
+                        <user-card user="[[item]]"></user-card>
+                    </template>
+                </template>
+
+            </div>
+
+        </template>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'profile-followers',
+
+        properties: {
+
+            account: {
+                type: Object
+            },
+
+            _followers:{
+                type: Array
+            }
+
+        }
+
+    });
+</script>

@@ -33,8 +33,7 @@
                  * f.e "/sorting/tag
                  */
                 path: {
-                    type: String,
-                    observer: '_pathChanged'
+                    type: String
                 },
 
                 /*
@@ -51,50 +50,32 @@
                 isLoading: {
                     type: Boolean,
                     notify: true
-                },
-
-                _steemAPI: {
-                    type: Object
                 }
             },
 
-            ready: function() {
-
-                // Set default value
-                if(typeof this.queryError === 'undefined') {
-                    this.queryError = false;
-                }
-
-                if(typeof this.path === 'undefined'){
-                    this.path = '';
-                }
-
-                if(typeof this.isLoading === 'undefined') {
-
-                    this.isLoading = true;
-                }
-
-                this.set('_steemAPI', cloneObj(steem));
-            },
+            observers: ['_pathChanged(path)'],
 
             // Update posts list when path changed
-            _pathChanged: function() {
+            _pathChanged: function(path) {
 
-                this.isLoading = true;
+                if(path != '') {
 
-                var thisElement = this;
+                    this.isLoading = true;
+                    var thisElement = this;
 
-                steem.api.getState(this.path, function(err, result) {
+                    window.steem.api.getState(path, function(err, result) {
 
-                    if(!err){
+                        if(!err){
 
-                        thisElement._computePosts(result.content);
+                            thisElement._computePosts(result.content);
 
-                    }else {
+                        }else {
 
-                        thisElement._showErrorToast();
-                    }
-                });
+                            thisElement._showErrorToast();
+                        }
+                    });
+
+                }
 
             },
 

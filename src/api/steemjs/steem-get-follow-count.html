@@ -1,0 +1,103 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+<script src="../../scripts/functions.js"></script>
+
+<dom-module id="steem-get-follow-count">
+    <template></template>
+</dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-follow-count',
+
+            properties: {
+
+                /*
+                 * Account name.
+                 * B.E. "you"
+                 * Component will query account data with this name.
+                 */
+                accountName:  {
+                    type: String,
+                    notify: true
+                },
+
+                /*
+                 * FollowCount object.
+                 * Component will provide account data in this object.
+                 */
+                followCount: {
+                    type: Object,
+                    notify: true
+                },
+
+                /*
+                 * Is loading statement
+                 */
+                isLoading: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
+
+            observers: ['_accountNameChanged(accountName)'],
+
+            ready: function() {
+
+                this.isLoading = true;
+
+                // init account data
+                if(typeof this.followCount == 'undefined') {
+
+                    this.set('followCount', {
+                        followerCount: 0,
+                        followingCount: 0
+                    });
+                }
+            },
+
+            // Query Steem for account data when name change
+            _accountNameChanged: function(accountName) {
+
+                if(accountName != '') {
+
+                    this.isLoading = true;
+
+
+                    // Query follow number
+                    var thisElement = this;
+
+                    this.async(function(){
+                        window.steem.api.getFollowCount(accountName, function(err, result){
+
+                            thisElement._computeAccountFollowCount(err, result);
+                        });
+                    });
+
+                }
+            },
+
+            // Compute results
+            _computeAccountFollowCount: function(err, result) {
+
+                if(!err){
+
+                    this.set('followCount.followerCount', result.follower_count);
+                    this.set('followCount.followingCount', result.following_count);
+                }else {
+
+                    this.set('followCount.followerCount', 0);
+                    this.set('followCount.followingCount', 0);
+                }
+
+                this.isLoading = false;
+
+            }
+        });
+    })();
+</script>

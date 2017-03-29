@@ -1,0 +1,126 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+<script src="./src/steem-parser.js"></script>
+
+<dom-module id="steem-get-account-lite"></dom-module>
+
+<script>
+
+    (function () {
+
+        Polymer({
+
+            is: 'steem-get-account-lite',
+
+            properties: {
+
+                /*
+                 * Account name.
+                 * f.e. "you"
+                 * Component will query account data with this name.
+                 */
+                accountName:  {
+                    type: String
+                },
+
+                /*
+                 * Account object.
+                 * Component will provide account data in this object.
+                 */
+                account: {
+                    type: Object,
+                    notify: true
+                },
+
+                /*
+                 * Is loading statement
+                 */
+                isLoading: {
+                    type: Boolean,
+                    notify: true
+                }
+            },
+
+            observers: ['_accountNameChanged(accountName)'],
+
+            ready: function() {
+
+                this.isLoading = true;
+
+                // init account data
+                if(typeof this.account == 'undefined') {
+
+                    this.account = {};
+                }
+            },
+
+            _resetAccount: function() {
+
+                this.account = {
+                    reputation: 0,
+                    created: '',
+                    postCount: 0,
+                    votingPower: 0,
+                    lastPostTime: '',
+                    lastVoteTime: '',
+                    steemNumber: 0,
+                    vestNumber: 0,
+                    sbdNumber: 0,
+                    lastInteraction: '',
+                    pinnedPost: '',
+                    pinnedPosts: [], // Array of post list [{name: 'name', posts: ['tag/author/title', '...']}, {...}]
+                    profileImage: '', // Url
+                    coverImage: '', // Url
+                    website: '', // Website links 'https://...'
+                    webLinks: [], // Other links ['', '', '']
+                    customValues: [], // [{name: 'name', value: 'value'}, {...}]*/
+                    location: '', // Texte for presentation
+                    about: '' // Texte for location
+                };
+            },
+
+            // Query Steem for account data when name change
+            _accountNameChanged: function(accountName) {
+
+                if(accountName != '') {
+
+                    var accountName = accountName.replace('@', '');
+
+                    this.isLoading = true;
+
+                    // Query account data
+                    var thisElement = this;
+
+                    this.async(function() {
+
+                        // Query basic information
+                        window.steem.api.getAccounts([accountName], function(err, result) {
+
+                            if(!err){
+
+                                /* ACCOUNT */
+                                var account = {};
+                                var accountRecieved = result[0];
+
+                                var account = computeAccount(accountRecieved, window.steem.formatter, accountName);
+                                thisElement.set('account', account);
+                                alert(JSON.parse(account));
+
+                                /* Loading finish */
+                                thisElement.isLoading = false;
+
+                            }else {
+
+                                console.log('account query lite error: '+err);
+                            }
+
+                        });
+
+                    });
+                }
+            }
+
+        });
+    })();
+</script>

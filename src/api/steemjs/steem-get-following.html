@@ -24,7 +24,7 @@
                 },
 
                 /*
-                 * Followers array.
+                 * Following array.
                  * Component will provide following list in this array.
                  */
                 following: {
@@ -34,32 +34,26 @@
             },
 
             observers: [
-                '_accountNameChanged(accountName)',
-                '_followerChanged(following)'
+                '_accountNameChanged(accountName)'
             ],
 
             _accountNameChanged: function(accountName) { // When account change
 
                 this.following = []; // Reset following
-                this._loadFollowers();
+                this._loadFollowing(accountName);
             },
 
-            _loadFollowers: function(accountName, lastFollowerLoaded) {
+            _loadFollowing: function(accountName, lastFollowerLoaded) {
 
                 var thisElement = this;
-                var accountName = accountName || this.accountName;
+                var accountName = accountName.replace('@', '');
                 var lastFollowerLoaded = lastFollowerLoaded || '';
 
                 // Query following
                 this.async(function () {
 
                     // !!! Need api to provide load more than 100 following to load full list
-                    steem.api.getFollowing(accountName, lastFollowerLoaded, null, 100, function(err, result) {
-
-                        if(typeof thisElement.following === 'undefined') {
-
-                            thisElement.following = [];
-                        }
+                    window.steem.api.getFollowing(accountName, lastFollowerLoaded, null, 100, function(err, result) {
 
                         if (!err) {
 
@@ -72,17 +66,21 @@
                                 thisElement.push('following', user);
 
                             }
+                        }else {
+
+                            console.log('steem-get-following error');
                         }
                     });
-
                 });
-
-
             },
 
-            _loadMore: function() { // load more following if needed
+            // load more 100 following
+            _loadMore: function() {
 
-                this._loadFollowers(this.accountName, this.following[this.following.length -1]);
+                var followerLength = this.following.length;
+                var lastFollowerLoaded = this.following[followerLength-1];
+
+                this._loadFollowing(this.accountName, lastFollowerLoaded);
 
             }
         });

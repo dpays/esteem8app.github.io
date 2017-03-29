@@ -8,6 +8,7 @@
 <link rel="import" href="github-repository-file-view.html">
 <link rel="import" href="google-docs-embedded.html">
 <link rel="import" href="es8-button.html">
+<link rel="import" href="email-form.html">
 <link rel="import" href="prism-render.html">
 
 <dom-module id="html-echo">
@@ -227,10 +228,10 @@
                 /*html = this._emoji.replace_unified(html); // \u{1F604}
                 html = this._emoji.replace_colons(html); // :smile:*/
 
-                if(html.includes('― Leonardo da Vinci')){
+                if(html.includes('wait for rewards.')){
 
                     //html += ' created/esteem8-features ';
-                    html += ' https://github.com/esteem8app/esteem8app.github.io ';
+                    //html += ' https://github.com/esteem8app/esteem8app.github.io ';
                     //html += '  https://github.com/esteem8app/esteem8app.github.io/blob/master/src/scripts/intl-relativeformat-with-locales.min.js ';
                     //html += ' steem/@esteem8/esteem8-community-proposals ';
                     //html += ' steem/@primerz/what-is-steem ';
@@ -247,8 +248,8 @@
                 }
 
                 // Relative link
-                html = html.replace('https://steemit.com', '')
-                           .replace('https://busy.org', '');
+                /*html = html.replace('https://steemit.com', '')
+                           .replace('https://busy.org', '');*/
 
                 // RENDER <a href into <img>
                 /*var imageLinkARegex = /<a([ ="'a-zA-Z0-9-]+)? href=('|")[ .:_\/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??[ \/%&=a-zA-Z0-9-]*("|')>[ .:_\/%&a-zA-Z0-9-]+.(jpg|png|gif|jpeg)\??[ \/%&=a-zA-Z0-9-]*<\/a>/gm;
@@ -262,13 +263,17 @@
                     return '<img src="' + url + '" ></img>';
                 });*/
 
+
+
+
                 // Custom element
                 /* [iframe$ratio=1:3&url=https://primerz.github.io/]
                  * [postWrapper$post-path=/introduceyourself/@fayehalliday/an-introduction-with-love-from-faye-halliday-artist-and-travel-junkie]
                  * [button$text=my github&url=https://primerz.github.io/]
+                 * [form$email=contact@esteem8.com]
                  */
 
-                var customElementRegex = /\[(iframe|steem tag|button|postWrapper)(\$)?([\/.=&@:a-zA-Z0-9\?\- ]+)?]/gm;
+                var customElementRegex = /\[(iframe|steem tag|button|postWrapper|form)(\$)?([\/.=&@:a-zA-Z0-9\?\- ]+)?]/gm;
                 html = html.replace(customElementRegex, function(match) {
 
                     // Clean match
@@ -302,6 +307,9 @@
 
                         case 'button':
                             appElement = 'es8-button';
+                            break;
+                        case 'form':
+                            appElement = 'email-form';
                             break;
                     }
 
@@ -337,8 +345,8 @@
 
 
                 // RENDER Markdown image -> ![image alt text](src)
-                var markdwonImageRegex = /!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;
-                html = html.replace(markdwonImageRegex, function(match){
+                var markdownImageRegex = /!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;
+                html = html.replace(markdownImageRegex, function(match){
 
                     var url = match.replace(/!\[[ a-zA-Z0-9]*\]\(/g, '').replace(')', '').replace(/ /gm, '');
 
@@ -381,20 +389,10 @@
                 });
 
                 // RENDER `` -> prism-render
-                var markdownCodeRegex = /`+[a-zA-Z0-9 \(\)\{\}\/\\\<\>\n\r\t\:\;\.\=\'\"\^\?\+\-\,\*\%\&\@\~\[\]\#\|\$\°\§\!\£]*`+/gm;
+                var markdownCodeRegex = /(`+|<code>)[a-zA-Z0-9 \(\)\{\}\/\\\<\>\n\r\t\:\;\.\=\'\"\^\?\+\-\,\*\%\&\@\~\[\]\#\|\$\°\§\!\£]*(`+|<\/code>)/gm;
                 html = html.replace(markdownCodeRegex, function(match){
 
-                    var code = match.replace(/`/g, '');
-
-                    return '<prism-render code="' + code + '" background-color="rgba(128, 128, 128, .2)"></prism-render>';
-                });
-
-
-                // RENDER <pre><code></code></pre> -> prims-render
-                var htmlCodeRegex = /<pre>[\n \t \r]*<code>[a-zA-Z0-9 \(\)\{\}\/\\\<\>\n\r\t\:\;\.\=\'\"\^\?\+\-\,\*\%\&\@\~\[\]\#\|\$\°\§\!\£]*<\/code>[\n \t \r]*<\/pre>/gm;
-                html = html.replace(markdownCodeRegex, function(match){
-
-                    var code = match.replace(/<pre>[\n \t \r]*<code>/g, '').replace(/<\/code>[\n \t \r]*<\/pre>/g, '');
+                    var code = match.replace(/(`+|code)/g, '');
 
                     return '<prism-render code="' + code + '" background-color="rgba(128, 128, 128, .2)"></prism-render>';
                 });
@@ -420,7 +418,8 @@
                  return '<post-path-list steem-path="' + match + '" post-type="card-light"></post-path-list>';
                  });
                  */
-                // Post path -> <post>
+
+                /*// Post path -> <post>
                 var postPathRegex = /.?(\/)?[a-zA-Z0-9-]+\/@[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+/gm;
                 html = html.replace(postPathRegex, function(match){
 
@@ -431,7 +430,7 @@
 
                     var match = match.replace(/ /g, "");
                     return '<post-wrapper steem-path="' + match + '" post-type="content-minimal"></post-wrapper>';
-                });
+                });*/
 
                 // Github repository path -> <github-repository>
                 var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+ /gm
@@ -512,6 +511,38 @@
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
+                // Twitch video link
+                var twitchVideoLinkregex = /(https?:\/\/)?(www\.)?twitch\.tv\/[_a-zA-Z0-9-]+/gm
+                html = html.replace(twitchVideoLinkregex, function(match){
+
+                    var match = match.replace(/ /g, "");
+                    var channel = match.replace(/(https?:\/\/)?(www\.)?twitch\.tv\//g, '');
+                    var url = "https://player.twitch.tv/?channel=" + channel;
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                // Pornhub video link
+                var pornhubVideoLinkregex = /(https?:\/\/)?(www\.)?pornhub\.com\/view_video\.php\?viewkey=[_a-zA-Z0-9-]+/gm
+                html = html.replace(pornhubVideoLinkregex, function(match){
+
+                    var match = match.replace(/ /g, "");
+                    var videoKey = match.replace(/(https?:\/\/)?(www\.)?pornhub\.com\/view\_video\.php\?viewkey\=/g, "");
+                    var url = "https://www.pornhub.com/embed/" + videoKey;
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                // Tube8 video link
+                var tube8VideoLinkregex = /(https?:\/\/)?(www\.)?tube8\.com\/[_a-zA-Z0-9-]+\/[_a-zA-Z0-9-]+\/[0-9]+\//gm
+                html = html.replace(tube8VideoLinkregex, function(match){
+
+                    var match = match.replace(/ /g, "");
+                    var url = match.replace('http://www.tube8.com/', 'http://www.tube8.com/embed/');
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
                 // Soundcloud track + maybe other soundcloud elements
                 var soundcloudSoundRegex = /https:\/\/soundcloud.com\/[a-zA-Z0-9-]*\/[a-zA-Z0-9-?=\/]*/gm;
                 html = html.replace(soundcloudSoundRegex, function(match){
@@ -523,6 +554,46 @@
                 });
 
                 // PDF
+                var pdfRegex = /https:\/\/[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+\/[a-zA-Z0-9\/\$\&\?\=]+\.pdf(\&raw\=true)?/gm;
+                html = html.replace(pdfRegex, function(match){
+
+                    var url = match.replace(/ /g, "");
+
+                    return '<responsive-iframe ratio="1:1" url="' + url + '" ></responsive-iframe>';
+                });
+
+                // DISCORD IFRAME
+                var discordIframeRegex = /\<iframe src\=\"((https?)?\:\/\/)?(www\.)?discordapp\.com\/widget\?id\=[0-9]+(\&theme\=[a-z]+)?\"[a-z0-9\=\" ]*\>\<\/iframe>/gm;
+                html = html.replace(discordIframeRegex, function(match){
+
+                    var urlDiscordRegex = /((https?)?\:\/\/)?(www\.)?discordapp\.com\/widget\?id\=[0-9]+(\&theme\=[a-z]+)/g;
+                    var url = match.match(urlDiscordRegex);
+
+                    return '<responsive-iframe ratio="16:9" url="' + url + '" ></responsive-iframe>';
+                });
+
+                // RAW GOOGLE MAP
+                /*var googleMapsRegex = /((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+/gm;
+                html = html.replace(googleMapsRegex, function(match){
+
+                    var url = match.replace(/ /g, "");
+
+                    return '<responsive-iframe ratio="1:1" url="' + url + '" ></responsive-iframe>';
+                });*/
+
+                // GOOGLE MAP IFRAME
+
+                var googleMapsIframeRegex = /\<iframe src\=\"((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+\"[a-z0-9 \=\"\:]+\>\<\/iframe>/gm;
+                     html = html.replace(googleMapsIframeRegex, function(match){
+
+                     var urlMapsRegex = /((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+/g;
+                     var url = match.match(urlMapsRegex);
+
+                     return '<responsive-iframe ratio="1:1" url="' + url + '" ></responsive-iframe>';
+                 });
+
+
+
                 // https://customelements.io/streetturtle/pdf-element/
 
                 // Google docs -> <google-docs-embedded>

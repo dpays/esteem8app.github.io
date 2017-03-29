@@ -9,7 +9,7 @@
 
 <link rel="import" href="./../bower_components/paper-toast/paper-toast.html">
 
-<link rel="import" href="api/steemjs/steem-get-account.html">
+<link rel="import" href="api/steemjs/steem-get-account-lite.html">
 <link rel="import" href="components/drawer-content.html">
 <link rel="import" href="components/custom-router.html">
 
@@ -41,7 +41,7 @@
             }
 
             #drawer {
-                z-index: 2;
+                z-index: 8;
             }
 
             #copyTextInput {
@@ -60,12 +60,13 @@
         <app-localstorage-document key="favoriteUsers" data="{{favoriteUsers}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteTags" data="{{favoriteTags}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteFiles" data="{{favoriteFiles}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedFiles" data="{{favoriteSharedFiles}}"></app-localstorage-document>
         <app-localstorage-document key="favoriteFolders" data="{{favoriteFolders}}"></app-localstorage-document>
 
         <!-- GET ACCOUNT -->
-        <steem-get-account account-name="[[_username]]"
-                           account="{{settings.user.account}}">
-        </steem-get-account>
+        <steem-get-account-lite account-name="[[_username]]"
+                                account="{{settings.user.account}}">
+        </steem-get-account-lite>
 
         <!-- ROUTER -->
         <app-location route="{{route}}"></app-location>
@@ -116,7 +117,7 @@
 
             <page-tools name="tools"></page-tools>
 
-            <page-files name="tips"></page-files>
+            <page-tips name="tips"></page-tips>
 
             <page-profile name="profile"
                           settings="[[settings]]"
@@ -126,7 +127,8 @@
             <page-files name="files"
                         settings="[[settings]]"
                         favorite-files="{{favoriteFiles}}"
-                        favorite-folders="{{favoriteFolders}}">
+                        favorite-folders="{{favoriteFolders}}"
+                        favorite-shared-files="{{favoriteSharedFiles}}">
             </page-files>
 
             <page-settings name="settings"
@@ -220,6 +222,14 @@
                 },
 
                 /*
+                 * Favorite shared files array
+                 * Stored in browser
+                 */
+                favoriteSharedFiles: {
+                    type: Array
+                },
+
+                /*
                  * Favorite folders array
                  * Stored in browser
                  */
@@ -255,16 +265,9 @@
                 if(typeof this.favoriteUsers == 'undefined') { this.favoriteUsers = ['esteem8'];}
                 if(typeof this.favoriteTags == 'undefined') { this.favoriteTags = ['esteem8'];}
                 if(typeof this.favoriteFolders == 'undefined') { this.favoriteFolders = [{name: 'esteem8'}, {name: 'media steem'}, {name: 'media image esteem8'}];}
-
-                if(typeof this.favoriteFiles == 'undefined') {
-
-                    this.favoriteFiles = this.getDefaultFiles();
-                }
-
-                if(typeof this.settings == 'undefined') {
-
-                    this.setDefaultSettings();
-                }
+                if(typeof this.favoriteFiles == 'undefined') { this.favoriteFiles = this.getDefaultFiles();}
+                if(typeof this.favoriteSharedFiles == 'undefined'){ this.favoriteSharedFiles = []; }
+                if(typeof this.settings == 'undefined') { this.setDefaultSettings();}
             },
 
             _notifyChangeRoute: function(route) {
@@ -392,6 +395,9 @@
                 // Load page import on demand. Show 404 page if fails
                 var resolvedPageUrl = this.resolveUrl('pages/page-' + page + '.html');
                 this.importHref(resolvedPageUrl, null, this._showPage404, true);
+
+                // Render page in this component
+
             },
 
             // Load and display 404 page
@@ -767,7 +773,7 @@
 
                 return {
 
-                    appVersion: '0.0.6.1',
+                    appVersion: '0.0.6.0',
 
                     user: {
                         name: '',

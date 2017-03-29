@@ -34,32 +34,26 @@
             },
 
             observers: [
-                '_accountNameChanged(accountName)',
-                '_followerChanged(followers)'
+                '_accountNameChanged(accountName)'
             ],
 
             _accountNameChanged: function(accountName) { // When account change
 
                 this.followers = []; // Reset followers
-                this._loadFollowers();
+                this._loadFollowers(accountName);
             },
 
             _loadFollowers: function(accountName, lastFollowerLoaded) {
                 
                 var thisElement = this;
-                var accountName = accountName || this.accountName;
+                var accountName = accountName.replace('@', '');
                 var lastFollowerLoaded = lastFollowerLoaded || '';
 
                 // Query followers
                 this.async(function () {
 
                     // !!! Need api to provide load more than 100 followers to load full list
-                    steem.api.getFollowers(accountName, lastFollowerLoaded, null, 100, function(err, result) {
-
-                        if(typeof thisElement.followers === 'undefined') {
-
-                            thisElement.followers = [];
-                        }
+                    window.steem.api.getFollowers(accountName, lastFollowerLoaded, null, 100, function(err, result) {
 
                         if (!err) {
 
@@ -72,17 +66,21 @@
                                 thisElement.push('followers', user);
 
                             }
+                        }else {
+
+                            console.log('steem-get-followers error');
                         }
                     });
-
                 });
-
-
             },
 
-            _loadMore: function() { // load more followers if needed
+            // load more 100 followers
+            _loadMore: function() {
 
-                this._loadFollowers(this.accountName, this.followers[this.followers.length -1]);
+                var followerLength = this.followers.length;
+                var lastFollowerLoaded = this.followers[followerLength-1];
+
+                this._loadFollowers(this.accountName, lastFollowerLoaded);
 
             }
         });

@@ -1,0 +1,141 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="profile-informations">
+
+    <template>
+
+        <style include="shared-styles">
+            /* GENERAL */
+
+            a {
+                color: var(--app-secondary-color) !important;
+            }
+
+            paper-card {
+                margin-top: 16px;
+                min-width: 100%;
+            }
+
+        </style>
+
+        <paper-card heading="INFORMATIONS">
+
+            <div class="card-content">
+                
+                <template is="dom-if" if="[[account.about.length]]">
+                    <div class="about">
+                        <p>[[account.about]]</p>
+                    </div>
+                </template>
+
+                <template is="dom-if" if="[[account.location.length]]">
+                    <div class="location">
+                        <iron-icon icon="my-icons:map"></iron-icon>
+                        <span>[[account.location]]</span>
+                    </div>
+                </template>
+
+                <template is="dom-if" if="[[account.website.length]]">
+                    <div class="link website">
+                        <iron-icon icon="my-icons:web"></iron-icon>
+                        <a target="_blank" href="[[account.website]]">[[_computeLinkText(account.website)]]</a>
+                    </div>
+                </template>
+
+                <template is="dom-if" if="[[account.webLinks.length]]">
+                    <template is="dom-repeat" items="[[account.webLinks]]">
+                        <div class="link">
+                            <iron-icon icon="my-icons:[[_computeLinkIcon(item)]]"></iron-icon>
+                            <a target="_blank" href="[[item]]">[[_computeLinkText(item)]]</a>
+                        </div>
+                    </template>
+                </template>
+
+            </div>
+        </paper-card>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'profile-informations',
+
+        properties: {
+
+            account: {
+                type: Object
+            }
+
+        },
+
+        _computeLinkIcon: function(link) {
+
+            if(link.includes('github.com') || link.includes('github.io')) {
+
+                return 'github';
+            }else if(link.includes('plus.google.com')) {
+
+                return 'google-plus';
+            }else if(link.includes('twitter.com')) {
+
+                return 'twitter';
+            }else if(link.includes('facebook.com')) {
+
+                return 'facebook';
+            }else if(link.includes('google') && link.includes('maps')) {
+
+                return 'map';
+            }else if(link.includes('dribbble')) {
+
+                return 'dribbble';
+            }else if(link.includes('jira')) {
+
+                return 'jira';
+            }else if(link.includes('slack.com')) {
+
+                return 'slack';
+            }else if(link.includes('snapchat')) {
+
+                return 'snapchat';
+            }else if(link.includes('soundcloud.com')) {
+
+                return 'soundcloud';
+            }else if(link.includes('twitch.tv')) {
+
+                return 'twitch';
+            }else if(link.includes('discordapp.com')) {
+
+                return 'discord';
+            }else {
+
+                return 'link';
+            }
+        },
+
+        _computeLinkText: function(link) {
+
+            if(typeof link !== 'undefined') {
+
+                var link = link.replace("https://", "")
+                        .replace("http://", "")
+                        .replace("www.", "");
+
+                return link;
+            }else {
+
+                return '';
+            }
+        }
+
+    });
+</script>

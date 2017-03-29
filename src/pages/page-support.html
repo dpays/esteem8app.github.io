@@ -2,6 +2,7 @@
 
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
@@ -90,8 +91,19 @@
                 height: 48px;
             }
 
-            .card-content span {
-                color: #222;
+            paper-slider {
+                --paper-slider-knob-color: var(--app-secondary-color);
+                --paper-slider-active-color: var(--app-secondary-color);
+
+                --paper-slider-pin-color: var(--app-primary-color);
+                --paper-slider-font-color: var(--app-primary-text-color);
+                width: 100%;
+
+                --paper-slider-input: {
+                    --paper-input-container-focus-color: var(--app-secondary-color);
+                    --paper-input-container-input-color: var(--app-background-primary-text-color);
+                    --paper-input-container-color: var(--app-background-secondary-text-color);
+                };
             }
 
 
@@ -157,16 +169,15 @@
 
                     <h2>Make a donation</h2>
                     <div class="card-content">
-                        <span>Or make a donation to support the Esteem8 team.</span>
-                        <br>
-                        <br>
-                        <a href="">Steem donation</a>
-                        <br>
-                        <a href="">Paypal donation</a>
-                        <br>
-                        <a href="">Bitcoin donation</a>
+                        <p>The application is free, you can support us as you want.</p>
+                        <paper-slider max="20" step="1" pin></paper-slider>
+                        <p>Pre-defined percentage splitting rewards on your posts with the contributors.</p>
+                        <p>This is a donation percentage as you earn rewards.</p>
+                        <a href="/@esteem8/wallet">Steem donation</a>
                         <br>
                         <a id="timeDonation" href="/created/esteem8">Time donation</a>
+                        <p>Or make a donation to support the Esteem8 team.</p>
+                        <br>
                     </div>
                 </paper-card>
             </div>

@@ -46,7 +46,8 @@
     "paper-menu": "PolymerElements/paper-menu#^1.2.2",
     "paper-tooltip": "PolymerElements/paper-tooltip#^1.1.3",
     "google-chart": "GoogleWebComponents/google-chart#^1.1.1",
-    "paper-tags": "PolymerEl/paper-tags#^1.4.0"
+    "paper-tags": "PolymerEl/paper-tags#^1.4.0",
+    "iron-form": "PolymerElements/iron-form#^1.1.4"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

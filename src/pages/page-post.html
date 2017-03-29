@@ -517,7 +517,7 @@
             // Back to previous URL or explore page
             var currentDomain = document.location.host;
 
-            if(document.referrer.includes(currentDomain)) { // Was on the application
+            /*if(document.referrer.includes(currentDomain)) { // Was on the application
 
                 // History back
                 window.history.go(-1);
@@ -527,7 +527,8 @@
                 window.history.pushState({}, null, '/hot/' + this.category + '/');
                 window.dispatchEvent(new CustomEvent('location-changed'));
 
-            }
+            }*/
+            window.history.go(-1);
 
 
         },

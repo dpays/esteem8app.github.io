@@ -9,9 +9,10 @@ See [/docs](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs)
 Feel free to read code, copy code, contribute, correct bugs or purpose a new feature.
 
 ## Interactions
-* [Discord chat](https://discord.gg/5nqRwbf) -> ES8 chat (without login required)
-* [Steemit/@esteem8](https://steemit.com/@esteem8) -> ES8 Steem account
-* [Esteem8.org](https://esteem8.org) -> ES8 organization website
+* [chat](https://discord.gg/5nqRwbf) -> ES8 chat (without login required)
+* [@esteem8](https://steemit.com/@esteem8) -> ES8 Steem account
+* [esteem8.org](https://esteem8.org) -> ES8 organization website
+* [esteem8.consider.it](https://esteem8.consider.it/) -> Decision and money management tool (help team decide)
 
 ## Contributions
 

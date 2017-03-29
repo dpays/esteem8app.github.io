@@ -1,6 +1,7 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <script src="./src/steem.min.js"></script>
+<script src="./src/steem-parser.js"></script>
 
 <dom-module id="steem-get-replies"></dom-module>
 
@@ -20,8 +21,7 @@
                  * Component will query account data with this name.
                  */
                 userName:  {
-                    type: String,
-                    observer: '_userNameChanged'
+                    type: String
                 },
 
                 /*
@@ -29,34 +29,34 @@
                  * Component will provide reply list in this array.
                  */
                 replies: {
-                    type: Object,
+                    type: Array,
                     notify: true
                 }
             },
 
+            observers: ['_userNameChanged(userName)'],
+
             ready: function() {
 
-                // Update account if empty
-                if(typeof this.userName !== 'undefined') {
-                    this._userNameChanged();
-                }
             },
 
-            _userNameChanged: function() {
+            _userNameChanged: function(userName) {
 
-                // Update replies
-                if(typeof this.userName === 'undefined') {
-                    this.set('replies', []);
-                }else {
+                if(userName != '') {
+
+                    var userName = userName.replace('@', '');
                     var thisElement = this;
 
                     // Query replies
                     this.async(function() {
 
                         // request basic information
-                        steem.api.getRepliesByLastUpdate(thisElement.userName, '', 100, function(err, result) {
+                        window.steem.api.getRepliesByLastUpdate(userName, '', 100, function(err, result) {
+
                             if(!err){
-                                thisElement._computeReplies(result);
+
+                                var replies = computeReplies(result);
+                                thisElement.set('replies', replies);
 
                             }else {
                                 console.error(err);
@@ -64,47 +64,8 @@
                         });
 
                     });
-                }
-            },
-
-            _computeReplies: function (replies) {
-
-                // Computed replies
-                var computedReplies = [];
-
-                // Process each replies
-                for(var i = 0; i < replies.length;i++) {
-
-                    // Process one reply
-                    var reply = replies[i];
-
-
-                    // Displayed data
-                    var titleArray = reply.parent_permlink.split('-');
-                    titleArray.splice(-1,1);
-                    var title = titleArray.join(' ').replace(/ re /g, ' -> ');
-
-                    var computedReply = {
-                        author: '@' + reply.author,
-                        created: reply.created,
-                        title: title,
-                        body: reply.body,
-                        votes: reply.net_votes,
-                        dollarValue: parseInt(reply.total_payout_value.split(' ')[0]) + parseInt(reply.total_pending_payout_value.split(' ')[0]),
-                        replies: reply.children,
-
-                        // Data to query reply of reply
-                        permlink: reply.permlink,
-                        authorName: reply.author
-                    };
-
-                    // Push completed reply
-                    computedReplies.push(computedReply);
 
                 }
-
-                this.set('replies', computedReplies);
-
             }
         });
     })();

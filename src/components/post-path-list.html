@@ -1,27 +1,35 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
 <link rel="import" href="../api/steemjs/steem-get-state.html">
+
 <link rel="import" href="../components/post-wrapper.html">
+
 <link rel="import" href="../shared-styles.html">
+
 <dom-module id="post-path-list">
 
     <template>
 
         <style>
+
             #posts {
-                display: flex;
+                @apply(--layout-horizontal);
                 overflow: auto;
                 padding: 16px;
             }
+
         </style>
 
         <steem-get-state path="[[steemPath]]"
-                         posts="{{_posts}}">
+                         posts="{{posts}}"
+                         query-path="[[queryPath]]">
         </steem-get-state>
 
         <div id="posts">
-            <template is="dom-if" if="[[_posts.length]]">
-                <template is="dom-repeat" items="[[_posts]]">
+            <template is="dom-if" if="[[posts.length]]">
+                <template is="dom-repeat" items="[[posts]]">
                     <post-wrapper post-type="[[postType]]"
                                   post="[[item]]">
                     </post-wrapper>
@@ -45,6 +53,10 @@
                 observer: '_computeTagName'
             },
 
+            queryPath: {
+                type: Boolean
+            },
+
             postType: {
                 type: String
             },
@@ -53,15 +65,15 @@
                 type: String
             },
 
-            _posts: {
+            posts: {
                 type: Array,
-                observer: '_postsChanged'
+                observer: 'postsChanged'
             }
         },
 
         ready: function () {
 
-            //console.log(this.steemPath);
+
         },
 
         _computeTagName: function() {
@@ -78,10 +90,10 @@
 
         },
 
-        _postsChanged: function() {
-            //console.log("For path "+this.steemPath+", posts ==="+this._posts);
+        postsChanged: function() {
+            //console.log("For path "+this.steemPath+", posts ==="+this.posts);
 
-            this.$.posts.style.maxWidth = '568px';//this.$.posts.offsetWidth + 'px';
+            this.$.posts.style.maxWidth = '768px';//this.$.posts.offsetWidth + 'px';
         }
 
     });

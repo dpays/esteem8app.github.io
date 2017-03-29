@@ -93,7 +93,8 @@
                 </div>
 
                 <paper-checkbox id="selectFileCheckbox"
-                                checked="{{_isSelected}}">
+                                checked="{{_isSelected}}"
+                                hidden="[[!allowSelect]]">
                 </paper-checkbox>
 
         </paper-card>
@@ -132,6 +133,10 @@
                 notify: true
             },
 
+            allowSelect: {
+                type: Boolean
+            },
+
             _isSelected: {
                 type: Boolean
             }
@@ -148,21 +153,39 @@
             // List events
             this.$.headerImage.addEventListener('tap', this._fileTaped.bind(this));
 
+            if(typeof this.allowSelect == 'undefined') {
+
+                this.allowSelect = true;
+            }
+
+            if(typeof this.selectedFiles == 'undefined') {
+
+                this.selectedFiles = [];
+            }
+
             // set default var
             this._isSelected = false;
         },
 
         _fileTaped: function() {
 
-            if(!this._isSelected) {
+            if(this.allowSelect) {
 
-                // One click -> select
-                this._isSelected = true;
+                if(!this._isSelected) {
+
+                    // One click -> select
+                    this._isSelected = true;
+                }else {
+
+                    // Two click -> open
+                    this.set('action', {type: 'view', id: this.file.id});
+                }
             }else {
 
-                // Two click -> open
+                // One click -> open
                 this.set('action', {type: 'view', id: this.file.id});
             }
+
 
         },
 
