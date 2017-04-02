@@ -84,7 +84,7 @@ function computeAccount(accountReceived, steemFormatter, accountName) {
     }
 
     // Set pinned files array
-    if(typeof accountJsonObject.profile.sharedFiles === 'undefined') {
+    if(typeof accountJsonObject.profile.shared_files === 'undefined') {
 
         if(accountName == 'esteem8') {
 
@@ -92,6 +92,32 @@ function computeAccount(accountReceived, steemFormatter, accountName) {
         }else {
 
             account.sharedFiles = [];
+        }
+
+    }
+
+    // Shared articles
+    if(typeof accountJsonObject.profile.shared_articles === 'undefined') {
+
+        if(accountName == 'esteem8') {
+
+            account.sharedArticles = JSON.parse('[{"name": "ESTEEM8 Logo", "id": "1", "shortDescription": "A free logo", "longDescription": "An amazing free logo", "options": [{"name": "color", "variants": [{"type": "red", "stock": "42"}, {"type": "purple", "stock": "42"}]}], "price": {"value": "0", "type": "STEEM"}, "tags": ["branding"], "contents": ["https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center.png?raw=true", "https:\/\/github.com\/esteem8app\/esteem8app.github.io\/blob\/master\/logo\/Esteem8%20logo%20center%203.png?raw=true"], "stock": "42"}]');
+        }else {
+
+            account.sharedArticles = [];
+        }
+
+    }
+
+    // Shared categories
+    if(typeof accountJsonObject.profile.shared_categories === 'undefined') {
+
+        if(accountName == 'esteem8') {
+
+            account.sharedCategories = JSON.parse('[{"name":"branding","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}, {"name":"logo","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":"branding"}, {"name":"other","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}]');
+        }else {
+
+            account.sharedCategories = [];
         }
 
     }

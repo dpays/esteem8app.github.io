@@ -1,0 +1,316 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="select-category-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+            }
+
+            .noMargin {
+                margin: 0 !important;
+            }
+
+            /* UP TOOLBAR */
+            #selectCategoryDialog {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                width: 90%;
+                max-width: 408px;
+                margin: 12px auto 20% auto;
+                background-color: transparent;
+                text-align: center;
+            }
+
+            @media screen and (max-width: 600px) {
+                #selectCategoryDialog {
+                    margin-top: 8px;
+                }
+
+                #enterCategoryToolbar {
+                    padding-top: 4px !important;
+                }
+
+            }
+
+            #closeDialogButton {
+                margin-left: -12px;
+                margin-top: -24px;
+            }
+
+            #selectInputedCategoryButton {
+                margin-top: -2px;
+                margin-right: -10px;
+            }
+
+            #enterCategoryToolbar {
+                height: 40px;
+                padding: 0;
+                border-top-left-radius: 2px;
+                border-top-right-radius: 2px;
+                background-color: var(--app-dark-primary-color);
+                color: var(--app-primary-text-color);
+                --paper-input-container-color: #fff;
+            }
+
+            #enterCategoryToolbar paper-icon-button {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            #enterCategoryInputContainer {
+                width: 100%;
+                margin-top: 4px;
+            }
+
+            #insertCategoryInput {
+                margin-top: -24px;
+                width: 100%;
+                text-align: left;
+                --paper-input-container-color: transparent;
+                --paper-input-container-input-color: var(--app-primary-text-color);
+                --paper-input-container-focus-color: transparent;
+            }
+
+            /* SORTING TABS */
+            #sortingCategoriesTabs {
+                border-radius: 2px;
+                margin-top: 0;
+                background-color: var(--app-primary-color);
+                color: var(--app-primary-text-color);
+                --paper-tabs-selection-bar-color: var(--app-secondary-color);
+            }
+
+            #sortingCategoriesTabs paper-tab {
+                --paper-tab-ink: var(--app-secondary-color);
+            }
+
+            /* BODY */
+            paper-item-body {
+                text-align: left;
+            }
+
+            paper-dialog-scrollable {
+                background-color: white;
+            }
+
+            #myFavorites {
+                height: 32px;
+                line-height: 32px;
+            }
+
+        </style>
+
+        <paper-dialog id="selectCategoryDialog"
+                      opened="{{opened}}"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+            <!-- UP TOOLBAR -->
+            <paper-toolbar id="enterCategoryToolbar"
+                           class="noMargin">
+                <paper-icon-button id="closeDialogButton"
+                                   icon="my-icons:close"
+                                   on-tap="_clearAndCloseDialog()">
+                </paper-icon-button>
+
+                <div id="enterCategoryInputContainer">
+                    <paper-input-container id="insertCategoryInput"
+                                           no-label-float>
+                        <span prefix>/ </span>
+
+                        <input is="iron-input"
+                               value="{{selectedCategory::input}}">
+
+                        <paper-icon-button
+                                suffix
+                                id="selectInputedCategoryButton"
+                                on-tap="_selectInputedCategory()"
+                                icon="my-icons:done">
+                        </paper-icon-button>
+                    </paper-input-container>
+                </div>
+            </paper-toolbar>
+
+            <!-- SORTING TABS -->
+            <paper-tabs id="sortingCategoriesTabs"
+                        selected="{{_currentSortingCategories}}"
+                        attr-for-selected="name"
+                        fit-container
+                        scrollable
+                        fit-container
+                        no-slide>
+
+                <paper-tab name="favorites">
+                    <iron-icon icon="my-icons:folder-favorite"></iron-icon>
+                </paper-tab>
+            </paper-tabs>
+
+            <!-- BODY -->
+            <paper-dialog-scrollable class="noMargin">
+                <iron-pages selected="[[_currentSortingCategories]]"
+                            attr-for-selected="name">
+
+                    <!-- FAVOURITES CATEGORIES -->
+                    <div role="listbox"
+                         name="favorites"
+                         id="favoriteCategories">
+
+                        <template is="dom-repeat"
+                                  items="[[favoriteCategories]]">
+
+                            <paper-icon-item class="selectCategoryButton"
+                                             on-tap="_selectThisCategory()">
+                                <div class="avatar"
+                                     item-icon
+                                     style="background-color: [[item.color]];">
+                                </div>
+                                <paper-item-body two-line>
+                                    <div>[[item.name]]</div>
+                                    <div secondary>[[item.parent]]</div>
+                                </paper-item-body>
+                            </paper-icon-item>
+
+                        </template>
+
+                    </div>
+
+                </iron-pages>
+
+                <paper-button id="openManageCategoryDialogButton"
+                              on-tap="_openManageCategoryDialog()">
+                    <iron-icon icon="my-icons:edit"></iron-icon>
+                    Manage categories
+                </paper-button>
+
+            </paper-dialog-scrollable>
+        </paper-dialog>
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'select-category-dialog',
+
+        listeners: {
+            'favoriteCategories.tap': '_selectThisCategory'
+        },
+
+        properties: {
+
+            opened: {
+                type: Boolean,
+                notify: true,
+                observer: '_openedChanged'
+            },
+
+            isManageCategoryDialogOpened: {
+                type: Boolean,
+                notify: true
+            },
+
+            selectedCategory: {
+                type: String,
+                notify: true
+            },
+
+            favoriteCategories: {
+                type: Array,
+                notify: true
+            },
+
+            _currentSortingCategories: {
+                type: String
+            }
+        },
+
+        ready: function() {
+
+            // List the event that close the select category dialog
+            this.$.selectInputedCategoryButton.addEventListener('tap', this._selectInputedCategory.bind(this));
+            this.$.closeDialogButton.addEventListener('tap', this._clearAndCloseDialog.bind(this));
+            this.$.openManageCategoryDialogButton.addEventListener('tap', this._openManageCategoryDialog.bind(this));
+
+            // Set default value for icon and tabs
+            this.selectedCategory = '';
+            this._currentSortingCategories = 'favorites';
+            this.opened = false;
+
+        },
+
+        open: function() {
+
+            this.opened = true;
+        },
+
+        _openManageCategoryDialog: function() {
+
+            this.isManageCategoryDialogOpened = true;
+        },
+
+        _clearAndCloseDialog: function() {
+
+            this.selectedCategory = '';
+            this.opened = false;
+        },
+
+        _selectInputedCategory: function() {
+
+            this.opened = false;
+        },
+
+        _selectThisCategory: function(e) {
+
+            // Select category in list and close dialog
+            if(typeof e.model.item.name !== 'undefined') {
+
+                var parent = '';
+                if(e.model.item.parent !== '') {
+
+                    parent = e.model.item.parent + ' ';
+                }
+
+                this.selectedCategory = parent + e.model.item.name; // name property is category (trending)
+            }
+
+            this.opened = false;
+
+        },
+
+        _checkForEnterOnCategoryInput: function(e) {
+
+            // check if 'enter' was pressed
+            if (e.keyCode === 13) {
+                this._selectThisCategory();
+            }
+        }
+
+    });
+</script>

@@ -1,5 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
@@ -60,8 +63,18 @@
 
             }
 
+            #adult {
+                position: absolute;
+                right: 16px;
+            }
+
             #appsDrawer .title {
                 padding-left: 16px;
+            }
+
+            #toolsList {
+                overflow: auto !important;
+                max-height: calc(100vh - 116px) !important;
             }
 
             #fileOptionToolbar {
@@ -156,36 +169,6 @@
                 };
             }
 
-            .bigDialog {
-                width: 800px;
-                height: 100%;
-            }
-
-            @media (max-width: 800px) {
-                .bigDialog {
-                    width: 80%;
-                }
-            }
-
-
-            @media (max-width: 600px) {
-                .bigDialog {
-                    width: 100%;
-                    height: 100%;
-                    margin: 0;
-                }
-            }
-
-            .bigDialog .scrollable {
-                overflow: auto;
-                max-height: calc(100% - 96px);
-            }
-
-            .bigDialog.withBottomAction .scrollable {
-
-                max-height: calc(100% - 128px);
-            }
-
             .closeViewButton {
                 color: var(--app-background-primary-text-color);
                 position: absolute;
@@ -204,6 +187,8 @@
             }
 
             #noFileText {
+                text-align: center;
+                width: 100%;
                 padding-top: 36px;
                 color: var(--app-background-primary-text-color);
             }
@@ -218,17 +203,25 @@
 
         <app-drawer id="appsDrawer"
                     align="right">
+
             <h2 class="title">Tools</h2>
 
-            <template is="dom-repeat" items="[[_externalApps]]">
-                <paper-icon-item>
-                    <iron-icon icon="my-icons:[[item.icon]]"
-                               item-icon>
-                    </iron-icon>
-                    [[item.name]]
-                </paper-icon-item>
-            </template>
+            <div id="externalApps">
 
+                <paper-item>
+                    <span>18+</span>
+                    <paper-toggle-button id="adult" checked="{{adult}}"></paper-toggle-button>
+                </paper-item>
+
+                <div id="toolsList">
+                    <template is="dom-repeat" items="[[_externalApps]]" filter="{{computeToolsFilter(adult)}}">
+                        <paper-item on-tap="_openThisApp()">
+                            [[item.name]]
+                        </paper-item>
+                    </template>
+                </div>
+
+            </div>
         </app-drawer>
 
         <!-- TOOLBAR -->
@@ -274,11 +267,15 @@
                                        icon="my-icons:copy">
                     </paper-icon-button>
                 </div>
+
             </div>
         </paper-toolbar>
 
         <!-- Confirmation remove from favorite -->
-        <paper-dialog id="confirmationRemoveFilesDialog">
+        <paper-dialog id="confirmationRemoveFilesDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
 
             <h2>Confirmation</h2>
             <p>Remove
@@ -300,7 +297,11 @@
         </paper-dialog>
 
         <!-- Add a file to favorite -->
-        <paper-dialog id="addFileDialog" class="bigDialog withBottomAction">
+        <paper-dialog id="addFileDialog"
+                      class="bigDialog withBottomAction"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
 
             <h2>Add a file</h2>
 
@@ -348,7 +349,8 @@
         </paper-dialog>
 
         <!-- Edit a file from favorite -->
-        <paper-dialog id="editFileDialog" class="bigDialog withBottomAction">
+        <paper-dialog id="editFileDialog"
+                      class="bigDialog withBottomAction">
 
             <h2>Edit a file</h2>
 
@@ -396,7 +398,11 @@
         </paper-dialog>
 
         <!-- View a file -->
-        <paper-dialog id="viewFileDialog" class="bigDialog">
+        <paper-dialog id="viewFileDialog"
+                      class="bigDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
 
             <h2>[[_currentFile.name]]</h2>
 
@@ -508,6 +514,10 @@
             '_doAction(_action.type, _action.id)'
         ],
 
+        listeners: {
+            'externalApps.tap': '_openThisApp'
+        },
+
         ready: function() {
 
             this.pastFiles = this.favoriteFiles;
@@ -516,7 +526,18 @@
             this._resetCurrentFile();
 
             this._externalApps = [
-                {name: 'Google docs', icon: 'text-file'}
+                {name: 'Google docs', url: 'https://docs.google.com/document/', adult: false},
+                {name: 'Google sheets', url: 'https://docs.google.com/spreadsheets/', adult: false},
+                {name: 'Google slides', url: 'https://docs.google.com/presentation/', adult: false},
+                {name: 'Google forms', url: 'https://docs.google.com/forms/', adult: false},
+                {name: 'Google drawings',  url: 'https://docs.google.com/drawings/', adult: false},
+                {name: 'Youtube', url: 'https://www.youtube.com/', adult: false},
+                {name: 'Twitch', url: 'https://www.twitch.tv/', adult: false},
+                {name: 'Soundcloud', url: 'https://soundcloud.com/', adult: false},
+                {name: 'GitHub', url: 'https://github.com/', adult: false},
+                {name: 'Discord', url: 'https://discordapp.com/', adult: false},
+                {name: 'Pornhub', url: 'http://www.pornhub.com/', adult: true},
+                {name: 'Tube8', url: 'http://www.tube8.com/', adult: true}
             ];
 
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -597,6 +618,21 @@
 
             this._resetCurrentFile();
             this.$.addFileDialog.open();
+        },
+
+        _openThisApp: function(e) {
+
+            var url = e.model.item.url;
+
+            if(url.includes('https')) {
+
+                window.open(url);
+            }else {
+
+                window.history.pushState({}, null, url);
+                window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+
         },
 
         /* TEST FUNCTION */
@@ -697,7 +733,7 @@
 
             var file = this._currentFile;
             var image = this._computeImageFromFile(file);
-                file.c = image;
+                file.image = image;
                 file.created = Date.now();
 
             if(typeof file.manualTags !== "object") {
@@ -913,6 +949,10 @@
                     tags.push('video');
                     tags.push('gaming');
                     tags.push('streaming');
+                }else if(url.includes("pornhub.com")) {
+
+                    tags.push('media');
+                    tags.push('video');
                 }
 
             }else {  // File is a md/html file
@@ -971,6 +1011,9 @@
             }else if(file.url.includes("twitch.tv")) {
 
                 return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/twitch.png?raw=true';
+            }else if(file.url.includes("pornhub.com")) {
+
+                return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/pornhub-logo.jpg?raw=true';
             }else {
 
                 return 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/txt.png?raw=true';
@@ -1121,6 +1164,26 @@
             var indexList = this._getSharedFileIndexFromIds(idList);
 
             return indexList[0];
+        },
+
+        /* TOOLS (FILTER) */
+        computeToolsFilter: function(adult) {
+
+            return function(item) {
+
+                if (!adult) { // Not adult content
+
+                    if(item.adult == false){
+
+                        return true;
+                    }
+
+                } else {
+
+                    return true;
+                }
+            }
+
         },
 
         /* SEARCH (FILTER) */

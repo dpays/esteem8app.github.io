@@ -1,0 +1,184 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<link rel="import" href="../../bower_components/l2t-paper-slider/l2t-paper-slider.html">
+
+<link rel="import" href="../shared-styles.html">
+<dom-module id="product-content">
+
+    <template>
+
+        <style include="shared-styles">
+
+            .product-add {
+                margin-top: 16px;
+            }
+
+            .product-add-number {
+                display: inline;
+            }
+
+            .product-add-number paper-button {
+                background-color: var(--app-primary-color);
+                color: var(--app-primary-text-color);
+                min-width: 48px;
+            }
+
+            .product-add-button {
+                display: inline;
+            }
+
+            .product-add-button paper-button {
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+            }
+
+            .product-header {
+                @apply(--layout-horizontal);
+            }
+
+            .product-header-flex {
+                @apply(--layout-flex);
+            }
+
+            @media (max-width: 800px) {
+
+                .product-header {
+                    @apply(--layout-vertical);
+                }
+            }
+
+            .product-header-flex, .left l2t-paper-slider {
+                --paper-slide-height: 300px;
+            }
+
+            .product-header-flex, .right {
+                padding: 16px;
+            }
+
+        </style>
+
+        <div class="product-header">
+
+            <div class="product-header-flex left">
+
+                <l2t-paper-slider total-slides="[[product.contents.length]]">
+                    <template is="dom-repeat" items="[[product.contents]]">
+                        <paper-slide>
+                            <html-echo html=" [[item]] "></html-echo>
+                        </paper-slide>
+                    </template>
+                </l2t-paper-slider>
+
+            </div>
+
+            <div class="product-header-flex right">
+
+                <html-echo html="[[product.shortDescription]]"></html-echo>
+
+                <template is="dom-if" if="[[product.options.0.name]]">
+                    <paper-dropdown-menu label="[[product.options.0.name]]">
+                        <paper-listbox class="dropdown-content" selected="1">
+                            <template is="dom-repeat" items="[[product.options.0.variants]]">
+                                <paper-item>[[item.type]]</paper-item>
+                            </template>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                </template>
+
+                <div class="product-add">
+                    <div class="product-add-number">
+                        <paper-button id="removeNumberButton"
+                                      on-tap="_removeNumber()">
+                            -
+                        </paper-button>
+                        [[product.number]]
+                        <paper-button id="addNumberButton"
+                                      on-tap="_addNumber()">
+                            +
+                        </paper-button>
+                    </div>
+                    <div class="product-add-button">
+                        <paper-button raised>ADD</paper-button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <h2>Description</h2>
+        <html-echo html="[[product.longDescription]]"></html-echo>
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'product-content',
+
+        properties: {
+
+            product: {
+                type: Object,
+                notify: true
+            }
+        },
+
+        observers: [
+            '_computeProduct(product)'
+        ],
+
+        ready: function() {
+
+            // Events
+            this.$.removeNumberButton.addEventListener('tap', this._removeNumber.bind(this));
+            this.$.addNumberButton.addEventListener('tap', this._addNumber.bind(this));
+        },
+
+        _computeProduct: function(product) {
+
+            // Price
+            if(typeof product.price == 'undefined') {
+
+                this.set('product.price', 'free');
+
+            }else {
+
+                this.set('product.price', 'free');
+            }
+
+            // Number
+            this.set('product.number', '0');
+
+        },
+
+        _removeNumber: function() {
+
+            var number = parseInt(this.product.number);
+
+            if(number) {
+
+                number --;
+            }
+
+            this.set('product.number', number)
+
+        },
+
+        _addNumber: function() {
+
+            var number = parseInt(this.product.number);
+                number ++;
+
+            this.set('product.number', number)
+
+        }
+
+    });
+</script>

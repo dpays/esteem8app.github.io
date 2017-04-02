@@ -1,0 +1,858 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+
+<link rel="import" href="../../bower_components/granite-qrcode-generator/granite-qrcode-generator.html">
+<link rel="import" href="../../bower_components/qr-code/src/qr-code.html">
+
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../components/order-card.html">
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="store-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            :host {
+                padding: 0;
+            }
+
+            #storeDialog {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                background-color: var(--app-primary-background-color);
+                color: var(--app-background-primary-text-color);
+            }
+
+            #storeToolbar {
+                margin: 0;
+                padding: 0;
+                background-color: var(--app-primary-color);
+                color: var(--app-primary-text-color);
+            }
+
+            paper-input, paper-textarea {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            .header paper-input, .header paper-textarea {
+                --paper-input-container-focus-color: var(--app-secondary-text-color);
+                --paper-input-container-input-color: var(--app-secondary-text-color);
+                --paper-input-container-color: var(--app-secondary-text-color);
+            }
+
+            paper-button {
+                height: 42px;
+            }
+
+            #scrollable {
+
+                height: calc(100% - 70px) !important;
+            }
+
+            #catalogue {
+                @apply(--layout-horizontal);
+            }
+
+            #left, #right{
+
+                @apply(--layout-flex);
+            }
+
+            #right, #left {
+                min-height: 100% !important;
+            }
+
+            #right {
+                max-width: 400px !important;
+            }
+
+            #categories {
+                padding-bottom: 16px;
+                border-bottom: 1px solid var(--app-background-secondary-text-color);
+            }
+
+            #products {
+                padding-top: 16px;
+            }
+
+            #orderCard {
+                width: calc(100% - 32px);
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+
+            #orderCard .header {
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+                padding: 16px;
+            }
+
+            .info {
+                @apply(--layout-horizontal);
+            }
+
+            .info .infoSpace {
+                @apply(--layout-flex);
+            }
+
+            #right #orderCard .body {
+                overflow: auto;
+                height: calc(100vh - 246px) !important;
+            }
+
+            .floatRight {
+                float: right;
+            }
+
+            #toggleViewfab {
+                z-index: 8;
+                display: none;
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                margin: 16px;
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+            }
+
+            @media (max-width: 700px) {
+
+                #toggleViewfab {
+                    display: block;
+                }
+
+            }
+
+            div[name="orders"] {
+                width: 100%;
+                height: calc(100vh - 70px);
+                overflow: auto;
+                text-align: center;
+            }
+
+            #deleteOrderDialog {
+                padding: 16px;
+            }
+
+        </style>
+
+        <!-- SELECT OPTION DIALOG -->
+        <paper-dialog id="selectOptionDialog"
+                      with-backdrop>
+
+            <h2>Select [[_optionsToSelect.name]]</h2>
+
+            <paper-listbox id="variantsList">
+                <template is="dom-repeat"
+                          items="[[_optionsToSelect.variants]]">
+
+                        <paper-item on-tap="_selectThisVariant()">
+                            [[item.type]]
+                        </paper-item>
+                </template>
+            </paper-listbox>
+
+        </paper-dialog>
+
+        <!-- EDIT ORDER PRODUCT DIALOG -->
+        <paper-dialog id="editOrderProductModal"
+                      with-backdrop>
+
+            <h2>Edit [[_productToEdit.name]]</h2>
+
+            <paper-input label="price"
+                         type="number" value="[[_productToEdit.priceValue]]">
+                <span suffix>[[_productToEdit.price.type]]</span>
+            </paper-input>
+
+            <paper-textarea label="Note"
+                            value="[[_productToEdit.note]]">
+            </paper-textarea>
+
+            <div class="productEditNumberBox">
+                Number
+                <paper-button id="removeEditedProductNumberButton"
+                              on-tap="_removeEditedProductNumber()"> - </paper-button>
+                [[_productToEdit.number]]
+                <paper-button id="addEditedProductNumberButton"
+                              on-tap="_addEditedProductNumber()"> + </paper-button>
+            </div>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="saveEditedProductButton"
+                              on-tap="_saveEditedProduct()">
+                    OK
+                </paper-button>
+            </div>
+
+        </paper-dialog>
+
+        <!-- ClOSE ORDER DIALOG -->
+        <paper-dialog id="closeOrderDialog"
+                      with-backdrop>
+
+            <h2 class="orderTotalPrice">[[_computeTotalOrder(_order.products)]] SBD</h2>
+
+            <qr-code data="https://esteem8.com/@esteem8/wallet/send/SBD"></qr-code>
+
+            <paper-input label="Request" value="{{_order.who}}">
+                <span prefix>@</span>
+                <paper-icon-button
+                        icon="my-icons:wallet-request">
+                </paper-icon-button>
+            </paper-input>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="closeOrderButton"
+                              on-tap="_closeOrder()">
+                    OK
+                </paper-button>
+            </div>
+
+        </paper-dialog>
+
+        <!-- ClOSE ORDER DIALOG -->
+        <paper-dialog id="deleteOrderDialog"
+                      with-backdrop>
+
+            <h2>Confirmation</h2>
+
+            Are you sure to delete this order ?
+
+            <div class="buttons">
+                <paper-button dialog-dismiss>
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm
+                              autofocus
+                              id="deleteOrderButton"
+                              on-tap="_deleteOrder()">
+                    OK
+                </paper-button>
+            </div>
+
+        </paper-dialog>
+
+        <!-- THIS DIALOG -->
+        <paper-dialog id="storeDialog"
+                      opened="{{isOpen}}"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+
+            <paper-toolbar id="storeToolbar">
+
+                <paper-icon-button icon="my-icons:close"
+                                   dialog-dismiss>
+                </paper-icon-button>
+
+                <span class="title">My store</span>
+
+                <paper-button id="setViewOrdersButton"
+                              on-tap="_setViewOrders()"
+                              hidden="[[_isViewOrders(_view)]]">
+                    past orders
+                </paper-button>
+                <paper-button id="setViewPosButton"
+                              on-tap="_setViewPos()"
+                              hidden="[[_isViewPos(_view)]]">
+                    new order
+                </paper-button>
+
+                <paper-icon-button id="toggleFullscreenButton"
+                                   on-tap="_toggleFullscreen()"
+                                   icon="my-icons:fullscreen">
+                </paper-icon-button>
+
+            </paper-toolbar>
+
+            <paper-fab id="toggleViewfab">
+                <iron-icon icon="my-icon:visibility"></iron-icon>
+            </paper-fab>
+
+            <div id="scrollable">
+
+                <iron-pages selected="[[_view]]"
+                            attr-for-selected="name">
+
+                    <div id="catalogue" name="pos">
+
+                        <div id="left">
+
+                            <div id="categories">
+
+                                <paper-icon-button id="previousCategoryButton"
+                                                   icon="my-icons:arrow-back"
+                                                   on-tap="_previousCategory()">
+                                </paper-icon-button>
+
+                                <template is="dom-repeat"
+                                          items="[[favoriteCategories]]"
+                                          filter="{{_categoriesFilter(_query)}}">
+                                    <paper-button on-tap="_changeCategory()"
+                                                  style="background-color: [[item.color]]; color: [[item.textColor]];">
+                                        [[item.name]]
+                                    </paper-button>
+                                </template>
+
+                            </div>
+
+                            <div id="products">
+
+                                <template is="dom-repeat"
+                                          items="[[favoriteProducts]]"
+                                          filter="{{_productsFilter(_query)}}">
+                                    <paper-button on-tap="_addProduct()">
+                                        [[item.name]]
+                                    </paper-button>
+                                </template>
+
+                            </div>
+
+                        </div>
+
+                        <div id="right">
+
+                            <paper-card id="orderCard">
+
+                                <div class="header">
+
+                                    <paper-textarea label="Note"
+                                                    value="{{_order.note}}">
+                                    </paper-textarea>
+
+                                    <paper-input label="Place"
+                                                 value="{{_order.place}}">
+                                    </paper-input>
+
+                                    <paper-item class="info">
+                                        <span>[[_order.products.length]] products</span>
+
+                                        <div class="infoSpace"></div>
+
+                                        <span>[[_computeTotalOrder(_order.products)]] SBD</span>
+                                        <paper-button id="openCloseOrderDialogButton"
+                                                      on-tap="_openCloseOrderDialog()">
+                                            Pay
+                                        </paper-button>
+                                    </paper-item>
+                                </div>
+
+                                <div class="body">
+
+                                    <paper-listbox id="orderProducts">
+
+                                        <template is="dom-repeat" items="[[_order.products]]">
+                                            <paper-item on-tap="_editOrderProduct()">
+                                                <paper-item-body two-line>
+                                                    <div>
+                                                    <span>[[item.number]] x [[item.name]]<span>
+                                                    <span class="floatRight">[[_computeProductPrice(item)]]<span>
+                                                    </div>
+                                                    <div secondary>
+                                                        [[item.selectedVariant]] [[_computeNote(item.note)]]
+                                                    </div>
+                                                </paper-item-body>
+                                            </paper-item>
+                                        </template>
+
+                                    </paper-listbox>
+
+                                </div>
+                            </paper-card>
+
+                        </div>
+
+                    </div>
+
+                    <div name="orders">
+
+                        <template is="dom-repeat" items="[[manualOrdersHistory]]">
+
+                            <order-card order="[[item]]"
+                                        action="{{_action}}">
+                            </order-card>
+
+                        </template>
+
+                    </div>
+
+                </iron-pages>
+
+            </div>
+
+        </paper-dialog>
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'store-dialog',
+
+        properties: {
+
+            isOpen: {
+                type: Boolean,
+                notify: true
+            },
+
+            favoriteCategories: {
+                type: Array,
+                notify: true
+            },
+
+            favoriteProducts: {
+                type: Array,
+                notify: true
+            },
+
+            manualOrdersHistory: {
+                type: Array,
+                notify: true
+            },
+
+            _query: {
+                type: String
+            },
+
+            _order: {
+                type: Object
+            },
+
+            _optionsToSelect: {
+                type: Object
+            },
+
+            _productIndexToEdit: {
+                type: String
+            },
+
+            _productToEdit: {
+                type: Object
+            },
+
+            _isFullScreen: {
+                type: Boolean
+            },
+
+            _view: {
+                type: String
+            },
+
+            _action: {
+                type: Object
+            }
+        },
+
+        listeners: {
+            'categories.tap': '_changeCategory',
+            'products.tap': '_addProduct',
+            'variantsList.tap': '_selectThisVariant',
+            'orderProducts.tap': '_editOrderProduct'
+        },
+
+        observers: [
+            '_doAction(_action.id)'
+        ],
+
+
+        ready: function() {
+
+            // Set default var
+            this._query = '';
+            this._view = 'pos';
+            this._optionsToSelect = {};
+            this._productToEdit = {};
+            this._productIndexToEdit = 0;
+            this._order = { products: [] };
+            this._isFullScreen = false;
+
+            // List event
+            this.$.setViewOrdersButton.addEventListener('tap', this._setViewOrders.bind(this));
+            this.$.setViewPosButton.addEventListener('tap', this._setViewPos.bind(this));
+
+            this.$.previousCategoryButton.addEventListener('tap', this._previousCategory.bind(this));
+
+            this.$.removeEditedProductNumberButton.addEventListener('tap', this._removeEditedProductNumber.bind(this));
+            this.$.addEditedProductNumberButton.addEventListener('tap', this._addEditedProductNumber.bind(this));
+            this.$.saveEditedProductButton.addEventListener('tap', this._saveEditedProduct.bind(this));
+
+            this.$.openCloseOrderDialogButton.addEventListener('tap', this._openCloseOrderDialog.bind(this));
+            this.$.closeOrderButton.addEventListener('tap', this._closeOrder.bind(this));
+
+            this.$.deleteOrderButton.addEventListener('tap', this._deleteOrder.bind(this));
+
+            //this.$.toggleFullscreenButton.addEventListener('tap', this._toggleFullscreen.bind(this));
+        },
+
+        open: function() {
+
+            this.isOpen = true;
+        },
+
+        _isViewOrders: function(view) {
+
+            return (view == 'orders');
+        },
+
+        _setViewOrders: function() {
+
+            this._view = 'orders';
+        },
+
+        _isViewPos: function(view) {
+
+            return (view == 'pos');
+        },
+
+        _setViewPos: function() {
+
+            this._view = 'pos';
+        },
+
+        _openCloseOrderDialog: function() {
+
+            this.$.closeOrderDialog.open();
+        },
+
+        _doAction: function() {
+
+            this.$.deleteOrderDialog.open();
+        },
+
+        _closeOrder: function() {
+
+            // Set total
+            this._order.total = this._computeTotalOrder(this._order.products);
+
+            // Set created
+            this._order.created = Date.now();
+
+            // Set ID
+            this._order.id = this._generateId();
+
+            // Push into order history
+            this.push('manualOrdersHistory', this._order);
+
+            // Reset current order
+            this._order = { products: [] };
+        },
+
+        _deleteOrder: function() {
+
+            var orders = this.manualOrdersHistory;
+            var orderId = this._action.id;
+            var orderIndex = 0;
+
+            for(var i = 0; i < orders.length; i++) {
+
+                if(orders[i].id == orderId) {
+
+                    orderIndex = i;
+                }
+            }
+
+            if(orderIndex) {
+
+                this.splice('manualOrdersHistory', orderIndex, 1);
+            }
+
+        },
+
+        _addProduct: function(e) {
+
+            var product = e.model.item;
+
+            // If option
+            if(product.options[0].name && product.options[0].variants.length) {
+
+                // Ask for option
+                this._optionsToSelect = product.options[0];
+                this.$.selectOptionDialog.open();
+            }
+
+            // Add product
+
+            product.selectedVariant = '';
+            product.number = 1;
+            product.priceValue = product.price.value;
+
+            this.push('_order.products', product);
+
+        },
+
+        _changeCategory: function(e) {
+
+            // Get the complete route "branding logo ..."
+
+            var category = e.model.item;
+
+            // Add category
+            var routeKeys = [];
+                routeKeys.push(category.name);
+
+            var firstparent = category.parent;
+
+            // Add category parent
+            if(firstparent !== '') {
+
+                routeKeys.push(firstparent);
+            }
+
+            routeKeys.reverse();
+
+            this._query = routeKeys.join(" ");
+        },
+
+        _previousCategory: function() {
+
+            var queryKeys = this._query.split(' ');
+                queryKeys.pop();
+
+            if(queryKeys.length) {
+
+                this._query = queryKeys.join(' ');
+            }else {
+
+                this._query = '';
+            }
+
+        },
+
+        _computeFullscreenIcon: function(isFullScreen) {
+
+            if(isFullScreen) {
+
+                return 'fullscreen-exit';
+            }else {
+
+                return 'fullscreen';
+            }
+        },
+
+        _removeEditedProductNumber: function() {
+
+            var productNumber = parseInt(this._productToEdit.number);
+                productNumber -= 1;
+
+            if(productNumber > 0) {
+
+                this.set('_productToEdit.number', productNumber);
+            }
+        },
+
+        _addEditedProductNumber: function() {
+
+            var productNumber = parseInt(this._productToEdit.number);
+            productNumber += 1;
+
+            this.set('_productToEdit.number', productNumber);
+        },
+
+        _selectThisVariant: function(e) {
+
+            var variant = e.model.item;
+
+            // Set variant
+            var latestProductIndex = this.get('_order.products').length - 1;
+
+            var path = '_order.products.' + latestProductIndex + '.selectedVariant';
+
+            this.set(path, variant.type);
+
+            // Close dialog
+            this.$.selectOptionDialog.close();
+
+            //Reset select variant
+            this._optionsToSelect = {};
+        },
+
+        _editOrderProduct: function(e) {
+
+            var product = e.model.item;
+
+            // Set product and it's index to edit
+            this._productToEdit = product;
+            this._productIndexToEdit = this._order.products.indexOf(product);
+
+            this.$.editOrderProductModal.open();
+
+        },
+
+        _saveEditedProduct: function() {
+
+            // Get edited product
+            var path = '_order.products.' + this._productIndexToEdit;
+
+            // Set edited product
+            this.set(path, this._productToEdit);
+
+            // Propagate change
+            this.set(path + '.priceValue', this._productToEdit.priceValue);
+            this.set(path + '.number', this._productToEdit.number);
+            this.set(path + '.note', this._productToEdit.note);
+
+            // Reset edited product object
+
+
+        },
+
+        _computeProductPrice: function(product) {
+
+            return product.number * product.priceValue + ' ' + product.price.type;
+        },
+
+        _computeTotalOrder: function(products) {
+
+            var total = 0;
+
+            for(var i = 0; i < products.length; i++) {
+
+                total += products[i].number * products[i].priceValue;
+            }
+
+            return total;
+        },
+
+        _computeNote: function(note) {
+
+            if(typeof note !== 'undefined') {
+
+                return ', ' + note;
+            }else {
+
+                return '';
+            }
+        },
+
+        _categoriesFilter: function(string) {
+
+            // return a filter function for the current search string
+            string = string.toLowerCase();
+
+            return function(item) {
+
+                // Set variables
+                var categoryParentName = item.parent.toLowerCase();
+
+                var keys = string.split(' ');
+                var keysLength = keys.length;
+                var parentKey = keys[keysLength-1];
+
+                /*
+                 * Last keyword of the list need to be the parent
+                 */
+
+                return (parentKey == categoryParentName);
+            };
+
+        },
+
+        _productsFilter: function(string) {
+
+            if (!string) {
+
+                // set filter to null to disable filtering
+                return null;
+            } else {
+
+                // return a filter function for the current search string
+                string = string.toLowerCase();
+
+                return function(item) {
+
+                    // Set variables
+                    var productName = item.name.toLowerCase();
+
+                    var keys = string.split(' ');
+                    var keysLength = keys.length;
+
+                    var tags = [];
+
+                    if(typeof item.tags !== 'undefined') {
+
+                        tags = item.tags;
+                    }
+
+                    var tagsLength = tags.length;
+
+
+
+                    /*
+                     * All first keyword need to be equals to a tag
+                     */
+
+                        var allFirstKeywordMatch = true;
+
+                        // All first keyword
+                        for(var i = 0; i < keysLength; i++) { // For all keyword
+
+                            var key = keys[i];
+
+                            var keyXYStatement = false;
+
+                            for(var j = 0; j < tagsLength; j++) { // keyword equal to a tag
+
+                                var tag = tags[j].toLowerCase();
+
+                                if(tag == key) {
+                                    keyXYStatement = true;
+                                }
+                            }
+
+                            if(!keyXYStatement) {
+
+                                allFirstKeywordMatch = false;
+                            }
+
+                        }
+
+                    return allFirstKeywordMatch;
+                };
+            }
+        },
+
+        _generateId: function() {
+
+            var random = Date.now() * Math.random();
+
+            return random;
+        }
+
+    });
+</script>

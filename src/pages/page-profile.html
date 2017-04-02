@@ -1,5 +1,8 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
@@ -27,12 +30,14 @@
 <link rel="import" href="../components/event-card.html">
 <link rel="import" href="../components/user-card.html">
 <link rel="import" href="../components/file-card.html">
+<link rel="import" href="../components/product-card.html">
 <link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../components/post-wrapper.html">
 <link rel="import" href="../components/profile-informations.html">
 <link rel="import" href="../components/profile-about.html">
 
 <link rel="import" href="../dialogs/wallet-dialog.html">
+<link rel="import" href="../dialogs/product-content.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
@@ -63,6 +68,16 @@
                 padding-bottom: 16px;
                 display: block;
                 background-color: var(--app-primary-background-color);
+            }
+
+            /* DIALOG */
+            .closeViewButton {
+                color: var(--app-background-primary-text-color);
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding: 8px !important;
+                margin: 16px;
             }
 
             /* TOOLBAR */
@@ -168,7 +183,7 @@
             }
 
             /* AFTER TABS CONTENT */
-            div[name="posts"], div[name="replies"], div[name="history"], div[name="files"], div[name="followers"], div[name="following"] {
+            div[name="posts"], div[name="replies"], div[name="history"], div[name="files"], div[name="articles"], div[name="followers"], div[name="following"] {
                 max-width: 800px;
                 margin: 12px auto;
             }
@@ -273,6 +288,10 @@
                 color: var(--app-background-primary-text-color);
             }
 
+            #viewArticleDialog {
+                padding: 16px;
+            }
+
             #openWalletButton {
                 position: fixed;
                 bottom: 16px;
@@ -309,6 +328,40 @@
                        user-name="[[userName]]"
                        settings="[[settings]]">
         </wallet-dialog>
+
+        <!-- View a file -->
+        <paper-dialog id="viewFileDialog"
+                      class="bigDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+
+            <h2>[[_currentFile.name]]</h2>
+
+            <paper-icon-button class="closeViewButton"
+                               icon="my-icons:close"
+                               dialog-dismiss>
+            </paper-icon-button>
+
+            <div class="scrollable">
+                <html-echo html=" [[_currentFile.content]] "></html-echo>
+            </div>
+
+        </paper-dialog>
+
+        <!-- View an article -->
+        <paper-dialog id="viewArticleDialog"
+                      class="bigDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+
+            <h2>[[_currentArticle.name]]</h2>
+
+            <article-content article="[[_currentArticle]]">
+            </article-content>
+
+        </paper-dialog>
 
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
@@ -422,11 +475,19 @@
                            id="tabHistory">
                     <iron-icon icon="my-icons:history"></iron-icon>
                 </paper-tab>
+
                 <paper-tab name="files"
                            id="tabFiles"
                            hidden="[[_isTabFileHidden(_account.sharedFiles.length)]]">
                     <iron-icon icon="my-icons:text-file"></iron-icon>
                 </paper-tab>
+
+                <paper-tab name="articles"
+                           id="tabArticles"
+                           hidden="[[_isTabArticleHidden(_account.sharedArticles.length)]]">
+                    <iron-icon icon="my-icons:shopping"></iron-icon>
+                </paper-tab>
+
                 <paper-tab name="followers"
                            id="tabFollowers">
                     <iron-icon icon="my-icons:follower"></iron-icon>
@@ -583,13 +644,38 @@
 
             <!-- SHARED FILES -->
             <div name="files">
-                <div id="files-list">
+
+                <div id="file-list">
                     <template is="dom-repeat" items="[[_account.sharedFiles]]">
                         <file-card file="[[item]]"
+                                   action="{{_actionFile}}"
                                    allow-select="false">
                         </file-card>
                     </template>
                 </div>
+
+            </div>
+
+            <!-- SHARED ARTICLES -->
+            <div name="articles">
+
+                <div id="categoryList">
+                    <template is="dom-repeat" items="[[_account.sharedCategories]]">
+                        <paper-button on-tap="_setArticlesQuery()">[[item.name]]</paper-button>
+                    </template>
+                </div>
+
+                <div id="article-list">
+                    <template is="dom-repeat"
+                              items="[[_account.sharedArticles]]"
+                              filter="{{_computeArticleFilter(_articlesQuery)}}">
+                        <article-card article="[[item]]"
+                                   action="{{_actionArticle}}"
+                                   allow-select="false">
+                        </article-card>
+                    </template>
+                </div>
+
             </div>
 
             <!-- FOLLOWER -->
@@ -698,8 +784,20 @@
                 type: Array
             },
 
-            _sharedFiles : {
-                type: Array
+            _currentFile: {
+                type: Object
+            },
+
+            _actionFile: {
+                type: Object
+            },
+
+            _currentArticle: {
+                type: Object
+            },
+
+            _actionArticle: {
+                type: Object
             },
 
             _isUserInFavorite: {
@@ -712,6 +810,10 @@
 
             _pinnedPost: {
                 type: Object
+            },
+
+            _articlesQuery: {
+                type: String
             }
         },
 
@@ -724,11 +826,17 @@
             '_userChanged(userName)',
             '_refreshIsTabAbout(_currentProfileView)',
             '_refreshIsTopheaderShowed(_isTabAbout)',
-            '_setTabsOptions(_account.tabsOptions)'
+            '_setTabsOptions(_account.tabsOptions)',
+            '_setSharedFiles(_account.sharedFiles)',
+            '_setTabFileStyle(_account.sharedFiles.length)',
+            '_setTabArticleStyle(_account.sharedArticles.length)',
+            '_doFileAction(_actionFile.type, _actionFile.id)',
+            '_doArticleAction(_actionArticle.type, _actionArticle.id)'
         ],
 
         listeners: {
-            'aboutmenu.tap': '_selectAboutView'
+            'aboutmenu.tap': '_selectAboutView',
+            'categoryList.tap': '_setArticlesQuery'
         },
 
         ready: function() {
@@ -737,6 +845,13 @@
             this._currentProfileView = 'about';
             this._currentAboutView = 'home';
             this._accountName = '';
+
+            this._actionFile = {};
+            this._currentFile = {};
+            this._articlesQuery = '';
+
+            this._actionArticle = {};
+            this._currentArticle = {};
             //this._pageProfile = this.$.pageprofile;
 
             // List event
@@ -781,6 +896,8 @@
                 this.set('_followers', []);
                 this.set('_following', []);
                 this.set('_sharedFiles', []);
+                this.set('_sharedArticles', []);
+                this.set('_articlesQuery', '');
 
                 // Reset view position
                 this._currentProfileView = 'about';
@@ -798,14 +915,83 @@
             }
         },
 
-        _setSharedFiles: function(sharedFiles) {
+        _setTabFileStyle: function(fileLength) {
 
-            this.set('_sharedFiles', sharedFiles);
+            if(fileLength) {
+
+                this.$.tabFiles.setAttribute('style', '');
+            }else {
+
+                this.$.tabFiles.setAttribute('style', 'display: none;');
+            }
+        },
+
+        _doFileAction: function(type, id) {
+
+            switch(type) {
+
+                case 'view':
+                    this._openViewFile(id);
+            }
+        },
+
+        _openViewFile: function(id) {
+
+            // Get file from id
+            for(var i = 0; i < this._account.sharedFiles.length; i++) {
+
+                if(this._account.sharedFiles[i].id == id) {
+
+                    // Set file object from index
+                    this.set('_currentFile', this._account.sharedFiles[i]);
+
+                    // Open dialog
+                    this.$.viewFileDialog.open();
+                }
+            }
 
         },
 
-        _setTabFileStyle: function(fileLength) {
-            return true;
+        _setTabArticleStyle: function(articleLength) {
+
+            if(articleLength) {
+
+                this.$.tabArticles.setAttribute('style', '');
+            }else {
+
+                this.$.tabArticles.setAttribute('style', 'display: none;');
+            }
+        },
+
+        _doArticleAction: function(type, id) {
+
+            switch(type) {
+
+                case 'view':
+                    this._openViewArticle(id);
+            }
+        },
+
+        _openViewArticle: function(id) {
+
+            // Get file from id
+            for(var i = 0; i < this._account.sharedArticles.length; i++) {
+
+                if(this._account.sharedArticles[i].id == id) {
+
+                    // Set file object from index
+                    this.set('_currentArticle', this._account.sharedArticles[i]);
+
+                    // Open dialog
+                    this.$.viewArticleDialog.open();
+                }
+            }
+
+        },
+
+        _setArticlesQuery: function(e) {
+
+            this._articlesQuery = e.model.item.name;
         },
 
         _setTabsOptions: function(tabsOptions) {
@@ -986,6 +1172,132 @@
             }
 
 
+        },
+
+        /* ARTICLE SEARCH (FILTER) */
+
+        _computeArticleFilter: function(string) {
+            if (!string) {
+                // set filter to null to disable filtering
+                return null;
+            } else {
+
+                // return a filter function for the current search string
+                string = string.toLowerCase();
+
+                return function(item) {
+
+                    // Set variables
+                    var statement = false;
+                    var articleName = item.name.toLowerCase();
+
+                    var keys = string.split(' ');
+                    var keysLength = keys.length;
+
+                    var tags = [];
+
+                    if(typeof item.tags !== 'undefined') {
+
+                        tags = item.tags;
+                    }
+
+                    var tagsLength = tags.length;
+
+
+                    /*
+                     *
+                     *      Tag can contain anything exept "," and ", "
+                     *      Tag are separated by "," or ", "
+                     *
+                     */
+
+                    /* If mutliples key, restrictive filter (image + esteem8 = not only image but image with esteem8) */
+
+                    /*
+                     * This function search on tags and name,
+                     * the queryString is composed of multiples keywords
+                     * Only one keyword can be used to search on name, but the keyword can be in the middle of the array
+                     */
+
+                    if(keysLength == 1) { // One keyword in string
+
+                        /*
+                         * The keyword need to be equals to a tag or contained in name
+                         */
+
+                        // First keyword
+                        if(articleName.includes(keys[0].replace(/\-/gm, ' '))) { // String part of the name
+
+                            statement = true;
+                        }
+
+                        for(var i = 0; i < tagsLength; i++) { // String equal to a tag
+
+                            var tag = tags[i].toLowerCase();
+
+                            if(tag == keys[0]) {
+                                statement = true;
+                            }
+                        }
+                    }else {
+
+                        /*
+                         * All first keyword need to be equals to a tag
+                         * The last keyword of the keyword set need to be equals to a tag or contained in the name
+                         */
+
+                        var allFirstKeywordMatch = true;
+
+                        // All first keyword
+                        for(var i = 0; i < keysLength-1; i++) { // For all keyword
+
+                            var key = keys[i];
+
+                            var keyXYStatement = false;
+
+                            for(var j = 0; j < tagsLength; j++) { // keyword equal to a tag
+
+                                var tag = tags[j].toLowerCase();
+
+                                if(tag == key) {
+                                    keyXYStatement = true;
+                                }
+                            }
+
+                            if(!keyXYStatement) {
+
+                                allFirstKeywordMatch = false;
+                            }
+
+                        }
+
+                        var lastKeywordOfTheListMatch = false;
+                        var lastKeywordOfTheList = keys[keysLength-1].replace(/\-/gm, ' ');
+
+                        for(var i = 0; i < tagsLength; i++) { // String equal to a tag
+
+                            var tag = tags[i].toLowerCase();
+
+                            if(tag == lastKeywordOfTheList) {
+                                lastKeywordOfTheListMatch = true;
+                            }
+                        }
+
+                        if(articleName.includes(lastKeywordOfTheList)) { // String part of the name
+
+                            lastKeywordOfTheListMatch = true;
+                        }
+
+                        if(lastKeywordOfTheListMatch && allFirstKeywordMatch) {
+
+                            statement = true;
+                        }
+
+                    }
+
+                    return statement;
+                };
+            }
         },
 
         _toJson: function(text) {

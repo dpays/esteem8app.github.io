@@ -68,6 +68,14 @@
                 textColor: {
                     type: String,
                     notify: true
+                },
+
+                /*
+                 * Color name
+                 */
+                colorName: {
+                    type: String,
+                    notify: true
                 }
             },
 
@@ -119,10 +127,30 @@
                 return (yiq >= 128+20) ? '#111111' : '#eeeeee';
             },
 
+            _getColorName: function(color) {
+
+                var colors = this.colorPalette;
+
+                for(var i = 0; i < colors.length; i++) {
+
+                    if(colors[i].color == color) {
+
+                        return colors[i].name;
+                    }
+
+                }
+
+                return 'undefined';
+
+            },
+
             _colorChanged: function() {
 
                 // Set best text color
                 this.textColor = this._getTextColor(this.color);
+
+                // Set color name
+                this.colorName = this._getColorName(this.color);
             }
         });
     })();

@@ -1,0 +1,252 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../components/my-icons.html">
+
+<dom-module id="product-card">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                text-align: left;
+            }
+
+            * {
+                font-weight: 500;
+            }
+
+            paper-checkbox {
+                --paper-checkbox-checked-color: var(--app-secondary-color);
+                --paper-checkbox-checked-ink-color: var(--app-secondary-color);
+
+                --paper-checkbox-unchecked-color: var(--app-background-primary-text-color);
+                --paper-checkbox-unchecked-ink-color: var(--app-secondary-text-color);
+                --paper-checkbox-label-color: var(--app-secondary-text-color);
+            }
+
+            #productCard {
+                display: inline-block;
+                margin: 12px;
+                background-color: var(--app-secondary-background-color);
+                background-size: cover;
+                color: var(--app-background-primary-text-color);
+                width: 216px;
+                height: 133px;
+            }
+
+            @media (max-width: 400px) {
+                #productCard {
+                    margin: 8px;
+                    width: 142px;
+                    height: 88px;
+                }
+            }
+
+            #headerImage {
+                @apply(--layout-vertical);
+                text-align: left;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                color: #eee;
+            }
+
+            #headerImage .vertical-space {
+                @apply(--layout-flex);
+            }
+
+            #headerImage .heading {
+                padding: 8px;
+                padding-top: 12px;
+                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, .8));
+            }
+
+            #selectProductCheckbox {
+                position: absolute;
+                top: 10px;
+                right: 2px;
+                z-index: 3;
+            }
+
+        </style>
+
+
+        <!-- post cards -->
+        <paper-card id="productCard">
+
+            <div id="headerImage" on-tap="_productTaped()">
+                <div class="vertical-space"></div>
+                <div class="heading">
+                    [[product.name]]
+                </div>
+            </div>
+
+            <paper-checkbox id="selectProductCheckbox"
+                            checked="{{_isSelected}}"
+                            hidden="[[!allowSelect]]">
+            </paper-checkbox>
+
+        </paper-card>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'product-card',
+
+        properties: {
+
+            /*
+             * Product Object
+             */
+            product: {
+                type: Object
+            },
+
+            /*
+             * Action object
+             */
+            action: {
+                type: Object,
+                notify: true
+            },
+
+            /*
+             * Selected products arrays
+             */
+            selectedProducts: {
+                type: Array,
+                notify: true
+            },
+
+            /*
+             *
+             */
+            allowSelect: {
+                type: Boolean
+            },
+
+            _isSelected: {
+                type: Boolean
+            }
+        },
+
+        observers: [
+            '_computeIsSelectedProduct(selectedProducts, selectedProducts.length)',
+            '_updateSelectProduct(_isSelected)',
+            '_updateImage(product.contents)'
+        ],
+
+        ready: function() {
+
+            // List events
+            this.$.headerImage.addEventListener('tap', this._productTaped.bind(this));
+
+            if(typeof this.allowSelect === 'undefined') {
+
+                this.allowSelect = true;
+            }
+
+            if(typeof this.selectedProducts === 'undefined') {
+
+                this.selectedProducts = [];
+                this.allowSelect = false;
+            }
+
+            // set default var
+            this._isSelected = false;
+        },
+
+        _productTaped: function() {
+
+            if(this.allowSelect) {
+
+                if(!this._isSelected) {
+
+                    // One click -> select
+                    this._isSelected = true;
+                }else {
+
+                    // Two click -> open
+                    this.set('action', {type: 'view', id: this.product.id});
+                }
+            }else {
+
+                // One click -> open
+                this.set('action', {type: 'view', id: this.product.id});
+            }
+
+
+        },
+
+        _updateImage: function(contents) {
+
+            var imageUrl = 'https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/txt.png?raw=true';
+
+            if(typeof contents[0] !== 'undefined') {
+
+                if(contents[0].includes('.png') || contents[0].includes('.jpg')) {
+
+                    imageUrl = contents[0];
+                }
+            }
+
+            this.$.productCard.setAttribute('style', 'background-image: url("' + imageUrl + '");');
+        },
+
+        _computeIsSelectedProduct: function(selectedProducts, length) {
+
+            // If product id is in product list
+            if(length) {
+
+                if(selectedProducts.indexOf(this.product.id) >= 0) {
+
+                    this._isSelected = true;
+                }else {
+
+                    this._isSelected = false;
+                }
+            }else {
+
+                this._isSelected = false;
+            }
+
+        },
+
+        _updateSelectProduct: function(_isSelected) {
+
+            if(_isSelected) {
+
+                this.push('selectedProducts', this.product.id);
+            }else {
+
+                if(typeof this.selectedProducts !== 'undefined') {
+
+                    var selectedProductIndex = this.selectedProducts.indexOf(this.product.id);
+
+                    if(selectedProductIndex >= 0) {
+
+                        this.splice('selectedProducts', selectedProductIndex, 1);
+                    }
+                }
+            }
+
+        }
+
+    });
+
+</script>

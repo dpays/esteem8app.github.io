@@ -133,6 +133,9 @@
                 notify: true
             },
 
+            /*
+             *
+             */
             allowSelect: {
                 type: Boolean
             },
@@ -153,14 +156,15 @@
             // List events
             this.$.headerImage.addEventListener('tap', this._fileTaped.bind(this));
 
-            if(typeof this.allowSelect == 'undefined') {
+            if(typeof this.allowSelect === 'undefined') {
 
                 this.allowSelect = true;
             }
 
-            if(typeof this.selectedFiles == 'undefined') {
+            if(typeof this.selectedFiles === 'undefined') {
 
                 this.selectedFiles = [];
+                this.allowSelect = false;
             }
 
             // set default var
@@ -197,9 +201,15 @@
         _computeIsSelectedFile: function(selectedFiles, length) {
 
             // If file id is in file list
-            if(selectedFiles.indexOf(this.file.id) >= 0) {
+            if(length) {
 
-                this._isSelected = true;
+                if(selectedFiles.indexOf(this.file.id) >= 0) {
+
+                    this._isSelected = true;
+                }else {
+
+                    this._isSelected = false;
+                }
             }else {
 
                 this._isSelected = false;
@@ -214,11 +224,14 @@
                 this.push('selectedFiles', this.file.id);
             }else {
 
-                var selectedFileIndex = this.selectedFiles.indexOf(this.file.id);
+                if(typeof this.selectedFiles !== 'undefined') {
 
-                if(selectedFileIndex >= 0) {
+                    var selectedFileIndex = this.selectedFiles.indexOf(this.file.id);
 
-                    this.splice('selectedFiles', selectedFileIndex, 1);
+                    if(selectedFileIndex >= 0) {
+
+                        this.splice('selectedFiles', selectedFileIndex, 1);
+                    }
                 }
             }
 

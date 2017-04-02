@@ -1,14 +1,15 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
 
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../components/share-button.html">
@@ -41,9 +42,8 @@
 
 
             #loginButton {
-                background-color: var(--app-secondary-color);
-                color: var(--app-secondary-text-color);
-                --paper-button-ink-color: var(--app-secondary-text-color);
+                color: var(--app-primary-text-color);
+                --paper-button-ink-color: var(--app-primary-text-color);
             }
 
             /* TOOLBAR */
@@ -65,7 +65,11 @@
 
             #headersection h1 {
                 text-transform: uppercase;
-                padding-bottom: 32px;
+                padding-bottom: 0px;
+            }
+
+            #headersection h2 {
+                text-transform: uppercase;
             }
 
             @media screen and (max-width: 400px) {
@@ -129,6 +133,13 @@
                 display: inline-table;
                 background-color: #fff;
                 color: #333;
+
+                transition: all .3s ease-out;
+            }
+
+            #presentation-cards paper-card:hover {
+                @apply(--shadow-elevation-6dp);
+                transition: all .15s ease-in;
             }
 
             #presentation-cards .card-content {
@@ -223,7 +234,7 @@
                 </span>
             </div>
             <paper-button id="loginButton"
-                          on-tap="_openLoginPage()" raised>
+                          on-tap="_openLoginPage()">
                 LOGIN
             </paper-button>
         </paper-toolbar>
@@ -231,8 +242,13 @@
         <!-- HEADER SECTION -->
         <div id="headersection">
             <div id="presentation-center">
-                <h1 id="headerSectionTitle">Access now to the world first blockchain based social network without any ads.</h1>
-                <h2>Get rewarded to create and like content.</h2>
+
+                <h1 id="headerSectionTitle">YOUR Free social network, without any ads.</h1>
+
+                <h3>Get rewarded to create and like content.</h3>
+
+                <p>Also your cloud, blog, marketplace, pos, and multi-currency wallet.</p>
+
                 <div id="presentation-button">
 
                     <paper-button id="videoButton" on-tap="_openVideoDialog()">play video</paper-button>
@@ -265,7 +281,7 @@
                     <p>STEEM is a social media platform based on a currency where everyone is rewarded to use it.</p>
                     <p>ESTEEM8 is a free web application that let you interact with the Steem blockchain.</p>
                     <p>You can pin this app on your home screen by going into your browser page options.</p>
-                    <p><a href="/info">Tell me more...</a></p>
+                    <p><a href="/info">What the fuck ?</a></p>
                     <!--p>You can change colors in <a href="/settings">settings</a>.</-->
                 </div>
             </paper-card>
@@ -333,13 +349,13 @@
 
         properties: {
 
-            headersectionTitleAnimationConfig: {
+            animationConfig: {
                 value: function() {
                     return {
                         // provided by neon-animation/animations/scale-down-animation.html
                         name: 'fade-in-animation',
-                        node: this.$.headerSectionTitle,
-                        timing: {delay: 500}
+                        node: this,
+                        timing: {delay: 0, duration: 500}
                     }
                 }
             },
@@ -438,7 +454,8 @@
 
             }else {
 
-                this.customStyle['--home-background-image'] = 'url("https://s23.postimg.org/4ywp6zvw9/bg-028.jpg")'; //https://s28.postimg.org/gq2u4cznf/image.jpg
+                //https://s23.postimg.org/4ywp6zvw9/bg-028.jpg //https://s28.postimg.org/gq2u4cznf/image.jpg
+                this.customStyle['--home-background-image'] = 'url("http://esteem8.org/wp-content/uploads/2017/02/Solar-system.jpg?id=22870")';
             }
 
             this.updateStyles();
