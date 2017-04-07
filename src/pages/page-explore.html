@@ -325,33 +325,15 @@
             this._isSelectCategoryOpened = true;
         },
 
-        _currentSortingChanged: function() {
-
-            var path = '/' + this.currentSorting;
-            var pathRegex = /\/(created|hot|trending|active)[a-z\/]*/;
-
-            if(pathRegex.test(path)) {
-
-                window.history.pushState({}, null, path);
-            }
-        },
-
         // sorting var -> sorting url
         _currentTagChanged: function() {
 
-            var path = '/' + this.currentSorting + '/' + this.currentTag;
-            var pathRegex = /\/(created|hot|trending|active)[a-z\/]*/;
+            // Check if this is the app tag
+            this._computeIsEsteem8Tag();
 
-            if(pathRegex.test(path)) {
+            // Refresh add to favorite icon
+            this._refreshIsCurrentTagInFavorite();
 
-                window.history.pushState({}, null, path);
-
-                // Check if this is the app tag
-                this._computeIsEsteem8Tag();
-
-                // Refresh add to favorite icon
-                this._refreshIsCurrentTagInFavorite();
-            }
         },
 
         _steemPathChanged: function() {
@@ -419,7 +401,7 @@
 
             tagHeader.setAttribute('style', 'background-image: url("https://c1.staticflickr.com/' + photoObject.farm + '/' + photoObject.server + '/' + photoObject.id + '_' + photoObject.secret + '.jpg");');
 
-        },
+        }
 
         /*
          * TODO

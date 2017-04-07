@@ -18,6 +18,8 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 
 <link rel="import" href="../../bower_components/granite-qrcode-generator/granite-qrcode-generator.html">
 <link rel="import" href="../../bower_components/qr-code/src/qr-code.html">
@@ -51,6 +53,11 @@
                 color: var(--app-primary-text-color);
             }
 
+            #tabs {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
             paper-input, paper-textarea {
                 --paper-input-container-focus-color: var(--app-secondary-color);
                 --paper-input-container-input-color: var(--app-background-primary-text-color);
@@ -67,9 +74,24 @@
                 height: 42px;
             }
 
-            #scrollable {
+            paper-dialog {
+                background-color: var(--app-primary-background-color);
+                color: var(--app-background-primary-text-color);
+            }
 
-                height: calc(100% - 70px) !important;
+            paper-listbox {
+                background-color: var(--app-secondary-background-color);
+            }
+
+            paper-listbox paper-item {
+                color: var(--app-background-primary-text-color);
+            }
+
+            #scrollable {
+                margin-bottom: 0px;
+                margin-top: 0px;
+                padding-top: 64px;
+                height: calc(100vh - 118px) !important;
             }
 
             #catalogue {
@@ -77,11 +99,7 @@
             }
 
             #left, #right{
-
                 @apply(--layout-flex);
-            }
-
-            #right, #left {
                 min-height: 100% !important;
             }
 
@@ -185,7 +203,7 @@
 
             <paper-input label="price"
                          type="number" value="[[_productToEdit.priceValue]]">
-                <span suffix>[[_productToEdit.price.type]]</span>
+                <span suffix>[[_productToEdit.priceType]]</span>
             </paper-input>
 
             <paper-textarea label="Note"
@@ -219,7 +237,7 @@
         <paper-dialog id="closeOrderDialog"
                       with-backdrop>
 
-            <h2 class="orderTotalPrice">[[_computeTotalOrder(_order.products)]] SBD</h2>
+            <h2 class="orderTotalPrice">[[_computeTotalOrder(_order.products, _order.products.length)]] SBD</h2>
 
             <qr-code data="https://esteem8.com/@esteem8/wallet/send/SBD"></qr-code>
 
@@ -281,23 +299,29 @@
 
                 <span class="title">My store</span>
 
-                <paper-button id="setViewOrdersButton"
-                              on-tap="_setViewOrders()"
-                              hidden="[[_isViewOrders(_view)]]">
-                    past orders
-                </paper-button>
-                <paper-button id="setViewPosButton"
-                              on-tap="_setViewPos()"
-                              hidden="[[_isViewPos(_view)]]">
-                    new order
-                </paper-button>
-
                 <paper-icon-button id="toggleFullscreenButton"
                                    on-tap="_toggleFullscreen()"
                                    icon="my-icons:fullscreen">
                 </paper-icon-button>
 
             </paper-toolbar>
+
+            <!-- SECOND TOOLBAR -->
+            <div class="secondBar" id="tabs">
+                <paper-tabs selected="{{_view}}"
+                            attr-for-selected="name"
+                            fit-container
+                            no-slide>
+                    <paper-tab name="pos">
+                        <iron-icon icon="my-icons:book"></iron-icon>
+                        POS
+                    </paper-tab>
+                    <paper-tab name="orders">
+                        <iron-icon icon="my-icons:person"></iron-icon>
+                        ORDERS
+                    </paper-tab>
+                </paper-tabs>
+            </div>
 
             <paper-fab id="toggleViewfab">
                 <iron-icon icon="my-icon:visibility"></iron-icon>
@@ -363,7 +387,7 @@
 
                                         <div class="infoSpace"></div>
 
-                                        <span>[[_computeTotalOrder(_order.products)]] SBD</span>
+                                        <span>[[_computeTotalOrder(_order.products, _order.products.length)]] SBD</span>
                                         <paper-button id="openCloseOrderDialogButton"
                                                       on-tap="_openCloseOrderDialog()">
                                             Pay
@@ -400,7 +424,9 @@
 
                     <div name="orders">
 
-                        <template is="dom-repeat" items="[[manualOrdersHistory]]">
+                        <template is="dom-repeat"
+                                  items="[[manualOrdersHistory]]"
+                                  sorting="{{_ordersSorting()}}">
 
                             <order-card order="[[item]]"
                                         action="{{_action}}">
@@ -503,9 +529,6 @@
             this._isFullScreen = false;
 
             // List event
-            this.$.setViewOrdersButton.addEventListener('tap', this._setViewOrders.bind(this));
-            this.$.setViewPosButton.addEventListener('tap', this._setViewPos.bind(this));
-
             this.$.previousCategoryButton.addEventListener('tap', this._previousCategory.bind(this));
 
             this.$.removeEditedProductNumberButton.addEventListener('tap', this._removeEditedProductNumber.bind(this));
@@ -530,19 +553,9 @@
             return (view == 'orders');
         },
 
-        _setViewOrders: function() {
-
-            this._view = 'orders';
-        },
-
         _isViewPos: function(view) {
 
             return (view == 'pos');
-        },
-
-        _setViewPos: function() {
-
-            this._view = 'pos';
         },
 
         _openCloseOrderDialog: function() {
@@ -558,7 +571,7 @@
         _closeOrder: function() {
 
             // Set total
-            this._order.total = this._computeTotalOrder(this._order.products);
+            this._order.total = this._computeTotalOrder(this._order.products, this._order.products.length);
 
             // Set created
             this._order.created = Date.now();
@@ -587,7 +600,7 @@
                 }
             }
 
-            if(orderIndex) {
+            if(orderIndex >= 0) {
 
                 this.splice('manualOrdersHistory', orderIndex, 1);
             }
@@ -598,19 +611,29 @@
 
             var product = e.model.item;
 
-            // If option
-            if(product.options[0].name && product.options[0].variants.length) {
-
-                // Ask for option
-                this._optionsToSelect = product.options[0];
-                this.$.selectOptionDialog.open();
-            }
-
             // Add product
-
             product.selectedVariant = '';
             product.number = 1;
-            product.priceValue = product.price.value;
+            product.orderProductId = this._generateId();
+
+            // If option
+            if(typeof product.options[0] !== 'undefined') {
+
+                if(product.options[0].name && product.options[0].variants.length) {
+
+                    // Ask for option
+                    this._optionsToSelect = product.options[0];
+                    this._optionsToSelect.orderProductId = product.orderProductId;
+
+                    this.$.selectOptionDialog.open();
+                }else {
+
+                    this.$.selectOptionDialog.close();
+                }
+            }else {
+
+                this.$.selectOptionDialog.close();
+            }
 
             this.push('_order.products', product);
 
@@ -689,9 +712,9 @@
             var variant = e.model.item;
 
             // Set variant
-            var latestProductIndex = this.get('_order.products').length - 1;
+            var productIndex = this._getIndexProductById(this._optionsToSelect.orderProductId);
 
-            var path = '_order.products.' + latestProductIndex + '.selectedVariant';
+            var path = '_order.products.' + productIndex + '.selectedVariant';
 
             this.set(path, variant.type);
 
@@ -734,16 +757,19 @@
 
         _computeProductPrice: function(product) {
 
-            return product.number * product.priceValue + ' ' + product.price.type;
+            return product.number * product.priceValue + ' ' + product.priceType;
         },
 
-        _computeTotalOrder: function(products) {
+        _computeTotalOrder: function(products, length) {
 
             var total = 0;
 
             for(var i = 0; i < products.length; i++) {
 
-                total += products[i].number * products[i].priceValue;
+                var number = parseInt(products[i].number);
+                var value = parseInt(products[i].priceValue);
+
+                total +=  number * value;
             }
 
             return total;
@@ -758,6 +784,16 @@
 
                 return '';
             }
+        },
+
+        _ordersSorting: function() {
+
+            // return a sorting function
+            return function(itemA, itemB) {
+
+                return (itemA.created > itemB.created);
+            };
+
         },
 
         _categoriesFilter: function(string) {
@@ -845,6 +881,21 @@
                     return allFirstKeywordMatch;
                 };
             }
+        },
+
+        _getIndexProductById: function(id) {
+
+            var orderProduct = this._order.products;
+            var orderProductLength = orderProduct.length;
+
+            for(var i = 0; i < orderProductLength; i++) {
+
+                if(orderProduct[i].orderProductId = id) {
+                    return i;
+                }
+            }
+
+            return -1;
         },
 
         _generateId: function() {

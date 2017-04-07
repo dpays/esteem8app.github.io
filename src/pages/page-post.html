@@ -201,6 +201,10 @@
                 float: right;
             }
 
+            .dollar-value {
+                color: var(--app-background-secondary-text-color);
+            }
+
             /* COMMENTS Content */
 
             .commentsNumber {
@@ -324,6 +328,14 @@
                         </template>
                     </div>
 
+                    <div class="actions-buttons">
+                        <paper-icon-button icon="my-icons:thumb-up"
+                                           class="upvote">
+                        </paper-icon-button>[[_post.net_votes]]
+
+                        <span class="dollar-value">[[_computePostValue(_post.dollarValue)]]$</span>
+                    </div>
+
                     <div id="shareSection">
                         <div id="shareButtons">
                             <share-button share-website="plus"></share-button>
@@ -386,6 +398,7 @@
                         </span>
 
                     </div>
+
                 </div>
 
                 <!-- COMMMENTS Content -->
@@ -531,6 +544,11 @@
             window.history.go(-1);
 
 
+        },
+
+        _computePostValue: function(value) {
+
+            return Math.round(value * 100) / 100;
         },
 
         _openConfirmationRemovePost: function() {

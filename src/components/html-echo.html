@@ -11,6 +11,8 @@
 <link rel="import" href="email-form.html">
 <link rel="import" href="prism-render.html">
 
+<script src="../scripts/sanitize-html.min.js"></script>
+
 <dom-module id="html-echo">
     <style>
 
@@ -23,6 +25,10 @@
         ::selection {
             background: var(--app-light-primary-color);
             color: var(--app-primary-text-color);
+        }
+
+        .markdown-html p {
+
         }
 
         .markdown-html .primary-color {
@@ -60,6 +66,7 @@
         .markdown-html p {
             margin-top: 18px;
             margin-bottom: 18px;
+            @apply(--content-theme-p);
         }
 
         .markdown-html blockquote {
@@ -94,6 +101,7 @@
             vertical-align: middle;
             margin-top: 4px;
             margin-bottom: 4px;
+            @apply(--content-theme-img);
         }
 
         /* TABLES */
@@ -221,6 +229,22 @@
             },
 
             _htmlChanged: function (html) {
+
+                /* SANITIZE HTML */
+                var html = sanitizeHtml(html, {
+                    allowedTags: [ 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+                        'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+                        'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'responsive-iframe' ],
+                    allowedAttributes: {
+                        a: ['href', 'name', 'target'],
+                        img: [ 'src']
+                    },
+                    selfClosing: [ 'img', 'br', 'hr', 'area', 'base', 'basefont', 'input', 'link'],
+                    // URL schemes
+                    allowedSchemes: [ 'http', 'https', 'ftp', 'mailto' ],
+                    allowedSchemesByTag: {},
+                    allowProtocolRelative: true
+                });
 
                 //var html = this.html + ' :) ☺ ';
 
@@ -683,7 +707,6 @@
                     return '<a href="/' + match + '" >' + match + '</a>';
                 });*/
 
-                // REGEX tester https://regex101.com/
 
                 this._htmlDisplayed = html;
 

@@ -48,6 +48,10 @@
 
             /* TOOLBAR */
 
+            #esteem8 {
+                cursor: pointer;
+            }
+
             /* HEADER SECTION */
             #headersection {
                 --home-background-image: '';
@@ -227,11 +231,11 @@
                                icon="my-icons:menu">
             </paper-icon-button>
 
-            <div main-title class="title">
-                <span id="appTitle"
-                      on-tap="_openEsteem8Account()">
+            <div main-title
+                 class="title"
+                 id="esteem8"
+                 on-tap="_openEsteem8Account()">
                     ESTEEM8
-                </span>
             </div>
             <paper-button id="loginButton"
                           on-tap="_openLoginPage()">
@@ -389,7 +393,7 @@
             this.$.videoButton.addEventListener('tap', this._openVideoDialog.bind(this));
             this.$.exploreButton.addEventListener('tap', this._openExplorePage.bind(this));
             this.$.loginButton.addEventListener('tap', this._openLoginPage.bind(this));
-            this.$.appTitle.addEventListener('tap', this._openEsteem8Account.bind(this));
+            this.$.esteem8.addEventListener('tap', this._openEsteem8Account.bind(this));
 
             // Default var
             this._posts = [];

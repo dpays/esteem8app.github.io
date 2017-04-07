@@ -79,6 +79,15 @@
                 z-index: 3;
             }
 
+            .price {
+                padding: 4px;
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+                border-radius: 4px;
+                font-size: 12px;
+                float: right;
+            }
+
         </style>
 
 
@@ -89,6 +98,7 @@
                 <div class="vertical-space"></div>
                 <div class="heading">
                     [[product.name]]
+                    <span class="price">[[product.priceValue]] [[product.priceType]]</span>
                 </div>
             </div>
 

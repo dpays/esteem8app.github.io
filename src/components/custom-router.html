@@ -90,35 +90,35 @@
 
                 var path = '/';
 
-                if(dataUrl1) {
+                if(dataUrl1 != '') {
 
                     path += dataUrl1;
                 }
 
-                if(dataUrl2) {
+                if(dataUrl2 != '') {
 
                     path += '/' + dataUrl2;
                 }
 
-                if(dataUrl3) {
+                if(dataUrl3 != '') {
 
                     path += '/' + dataUrl3;
                 }
 
                 if(this.path != path) {
 
+                    //alert(path);
                     /*
                      * For now path can not be set from params
                      */
-
-                    //alert(path);
-
                     //window.history.pushState({}, null, path);
                     //window.dispatchEvent(new CustomEvent('location-changed'));
                 }
             },
 
             _setDataUrl: function(path) {
+
+                //alert(path);
 
                 // From url (path) set params
 
@@ -128,7 +128,7 @@
 
                     if(typeof dataUrls[0] !== 'undefined') {
 
-                        if(this.dataUrl1 != dataUrls[0] && this._matchParam(dataUrls[2])) {
+                        if(this.dataUrl1 != dataUrls[0]) {
 
                             this.set('dataUrl1', dataUrls[0]);
                         }else {
@@ -143,7 +143,7 @@
 
                     if(typeof dataUrls[1] !== 'undefined') {
 
-                        if(this.dataUrl2 != dataUrls[1] && this._matchParam(dataUrls[1])) {
+                        if(this.dataUrl2 != dataUrls[1]) {
 
                             this.set('dataUrl2', dataUrls[1]);
                         }else{
@@ -153,12 +153,12 @@
 
                     }else {
 
-                        this.set('pathTwo', '');
+                        this.set('dataUrl2', '');
                     }
 
                     if(typeof dataUrls[2] !== 'undefined') {
 
-                        if(this.dataUrl3 != dataUrls[2] && this._matchParam(dataUrls[2])) {
+                        if(this.dataUrl3 != dataUrls[2]) {
 
                             this.set('dataUrl3', dataUrls[2]);
                         }else {
@@ -171,7 +171,6 @@
                         this.set('dataUrl3', '');
                     }
 
-                    console.log(this.dataUrl1+'/'+this.dataUrl2+'/'+this.dataUrl3);
                 }
 
             }

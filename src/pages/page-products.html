@@ -116,6 +116,10 @@
                 color: var(--app-background-primary-text-color)
             }
 
+            paper-dialog .buttons paper-button {
+                color: var(--app-secondary-color);
+            }
+
             #viewProductDialog .dialog-title {
                 display: inline;
             }
@@ -585,7 +589,15 @@
 
             }else {
 
-                var id = id || this._selectedProductsId[0];
+                var id = '';
+
+                if(typeof this._selectedProductsId[0] !== 'undefined') {
+
+                    id = this._selectedProductsId[0];
+                }else {
+
+                    id = this._currentProduct.id;
+                }
 
                 // Get product from id
                 var productIndex = this._getProductIndexFromId(id);
@@ -770,10 +782,9 @@
                 stock: 0,
                 contents: [],
                 tags: [],
-                price: {
-                    value: 0,
-                    type: "STEEM"
-                }
+                priceValue: 0,
+                priceType: "STEEM"
+
             };
 
             this.set('_currentProduct', product);

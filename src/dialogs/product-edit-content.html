@@ -63,6 +63,10 @@
                 color: var(--app-background-primary-text-color)
             }
 
+            #openAddOptionButtonDialog {
+                float: right;
+            }
+
         </style>
 
         <!-- EDIT OPTION -->
@@ -72,12 +76,12 @@
                       with-backdrop>
 
             <paper-input label="Type"
-                         value="{{_option.type}}">
+                         value="{{_variant.type}}">
             </paper-input>
 
             <paper-input label="Stock"
                          type="number"
-                         value="{{_option.stock}}">
+                         value="{{_variant.stock}}">
             </paper-input>
 
             <div class="buttons">
@@ -101,12 +105,12 @@
                       with-backdrop>
 
             <paper-input label="Type"
-                         value="{{_option.type}}">
+                         value="{{_variant.type}}">
             </paper-input>
 
             <paper-input label="Stock"
                          type="number"
-                         value="{{_option.stock}}">
+                         value="{{_variant.stock}}">
             </paper-input>
 
             <div class="buttons">
@@ -142,6 +146,11 @@
 
         <paper-input label="Option name"
                      value="{{product.options.0.name}}">
+            <paper-button id="openAddOptionButtonDialog"
+                          on-tap="_openAddOptionDialog()"
+                          suffix>
+                Add
+            </paper-button>
         </paper-input>
 
         <div id="variantList">
@@ -160,27 +169,22 @@
             </template>
         </div>
 
-        <paper-button id="openAddOptionButtonDialog"
-                      on-tap="_openAddOptionDialog()">
-            Add
-        </paper-button>
-
         <paper-input label="Stock" type="number"
                      value="{{product.stock}}">
         </paper-input>
 
         <paper-input label="Price" type="number"
-                     value="{{product.price.value}}">
+                     value="{{product.priceValue}}">
             <paper-menu-button suffix>
 
                 <paper-button class="dropdown-trigger">
-                    [[product.price.type]]&nbsp;
+                    [[product.priceType]]&nbsp;
                     <iron-icon icon="my-icons:arrow-dropdown">
                     </iron-icon>
                 </paper-button>
 
                 <paper-menu class="dropdown-content"
-                            selected="{{product.price.type}}"
+                            selected="{{product.priceType}}"
                             attr-for-selected="currency">
                     <paper-item currency="STEEM">STEEM</paper-item>
                     <paper-item currency="SBD">SBD</paper-item>
@@ -215,14 +219,14 @@
                 notify: true
             },
 
-            _option: {
+            _variant: {
                 type: Object,
                 notify: true
             },
 
-            _optionIndex: {
+            _variantIndex: {
                 type: Number
-            },
+            }
         },
 
         listeners: {
@@ -232,8 +236,8 @@
         ready: function() {
 
             // Set default value
-            this._option = {};
-            this._optionIndex = 0;
+            this._variant = {};
+            this._variantIndex = 0;
 
             this.$.openAddOptionButtonDialog.addEventListener('tap', this._openAddOptionDialog.bind(this));
             this.$.addOptionButton.addEventListener('tap', this._addOption.bind(this));
@@ -247,26 +251,26 @@
 
         _addOption: function() {
 
-            this.push('product.options.0.variants', this._option);
-            this._option = {};
+            this.push('product.options.0.variants', this._variant);
+            this._variant = {};
         },
 
         _openEditOptionDialog: function(e) {
 
-            this._option = e.model.item;
+            this._variant = e.model.item;
 
-            this._optionIndex = this.product.options[0].variants.indexOf(this._option);
+            this._variantIndex = this.product.options[0].variants.indexOf(this._variant);
             this.$.editOptionDialog.open();
         },
 
         _saveOption: function() {
 
-            this.set('product.options.0.variants.' + this._optionIndex, this._option);
+            this.set('product.options.0.variants.' + this._variantIndex, this._variant);
 
-            this.set('product.options.0.variants.' + this._optionIndex + '.type', this._option.type);
-            this.set('product.options.0.variants.' + this._optionIndex + '.stock', this._option.stock);
+            this.set('product.options.0.variants.' + this._variantIndex + '.type', this._variant.type);
+            this.set('product.options.0.variants.' + this._variantIndex + '.stock', this._variant.stock);
 
-            this._option = {};
+            this._variant = {};
         }
 
 

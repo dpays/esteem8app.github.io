@@ -139,7 +139,14 @@
 
             .bigDialog.withBottomAction .scrollable {
 
-                max-height: calc(100% - 128px);
+                max-height: calc(100% - 136px);
+                min-height: calc(100% - 136px);
+            }
+
+            .bigDialog.withBottomAction .buttons {
+
+                padding-bottom: 16px;
+                padding-right: 16px;
             }
 
             .avatar {
@@ -148,6 +155,17 @@
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
+            }
+
+            paper-input, color-select {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            paper-dropdown-menu {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
             }
 
 
