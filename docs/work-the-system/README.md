@@ -25,15 +25,15 @@ Basicaly these components above are working similary as a program. Comparing to 
 ### The how
 
  * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies)
-  * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) is the way to optimize the current system.
-  * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) is the way to develop the current system.
-  * [/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects) are projects made from strategies.
+   * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) is the way to optimize the current system.
+   * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) is the way to develop the current system.
+   * [/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects) are projects made from strategies.
 
 ### The how of "what + how"
  
  * [/tools](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/tools)
-  * [Organization principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md) is a tool to plan the way to optimize and develop the current system.
-  * [Process principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md) is a tool to work the way planned.
+   * [Organization principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/make-strategy-principles.md) is a tool to plan the way to optimize and develop the current system.
+   * [Process principles](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/tools/process-strategy-principles.md) is a tool to work the way planned.
   
 ## Explanations
 ### Organization level
