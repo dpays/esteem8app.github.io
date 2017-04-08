@@ -1,7 +1,7 @@
 ## Ressource
 
-* Web components ([Community](https://customelements.io/), [Polymer](https://elements.polymer-project.org/))
+* [Web components](https://www.webcomponents.org/)
 * Material design
- * [Inspirations](https://material.uplabs.com/)
- * Icons ([Community](https://materialdesignicons.com/), [Google](https://design.google.com/icons/))
-* [SteemJS API](https://github.com/adcpm/steem)
+  * [Inspirations](https://material.uplabs.com/)
+  * [Icons](https://materialdesignicons.com/)
+* [SteemJS API](https://github.com/steemit/steem-js/tree/master/doc)
