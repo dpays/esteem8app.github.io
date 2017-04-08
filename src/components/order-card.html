@@ -79,6 +79,28 @@
                 color: var(--app-background-secondary-text-color);
             }
 
+            /* CARD HEADING */
+            .order-title {
+                padding-top: 16px;
+                margin-left: 16px;
+                margin-right: 16px;
+                font-size: 18px;
+                color: var(--app-primary-color);
+            }
+
+            .order-note, .order-place {
+                height: 28px;
+                line-height: 28px;
+                var(--app-background-secondary-text-color) !important;
+            }
+
+            .order-note {
+                margin-top: 12px;
+            }
+
+            .order-place {
+            }
+
             /* CARD CONTENT */
             .card-content {
                 padding-bottom: 0px !important;
@@ -93,9 +115,10 @@
             .card-content .content-data {
                 height: 75px;
                 padding-right: 16px;
+                margin-top: 12px;
                 overflow-y: hidden;
                 overflow-x: hidden;
-                box-shadow: inset 0px -120px 65px -120px rgba(0,0,0,0.1);
+                box-shadow: inset 0px -120px 65px -120px rgba(128, 128, 128, 0.2);
                 font-size: 90%;
                 border-bottom: 1px solid #ddd;
                 transition: all ease .2s;
@@ -110,6 +133,7 @@
             .card-actions-buttons {
                 padding: 8px;
                 font-size: 16px;
+                text-align: right;
                 color: var(--app-background-primary-text-color);
                 border-top: 1px solid var(--app-secondary-background-color);
             }
@@ -149,6 +173,7 @@
                                 <a href=""
                                    class="category">#[[order.id]]
                                 </a>
+                                | <span class="background-secondary-text">[[order.products.length]] products for [[order.total]] $ </span>
                             </span>
 
                             <span class="posted-ago">
@@ -157,46 +182,48 @@
                         </span>
                     </div>
 
-                    <!-- TITLE -->
-                    <span id="orderTitle">
-                        [[order.products.length]] products for [[order.total]] $
-                    </span>
+                    <div class="order-note" hidden="[[!order.note.length]]">
+                        <paper-icon-button icon="my-icons:note"></paper-icon-button>
+                        [[order.note]]
+                    </div>
+
+                    <div class="order-place" hidden="[[!order.place.length]]">
+                        <paper-icon-button id="openLocationButton"
+                                           on-tap="_openLocation()"
+                                           icon="my-icons:map-marker">
+                        </paper-icon-button>
+                        <span>[[order.place]]<span>
+                    </div>
 
                     <!-- CONTENT BODY -->
                     <div class="content-data"
                          id="toggleContentData"
                          on-tap="_toggleContentDataHeight()">
 
-                        <paper-item class="location" hidden="[[!order.place.length]]">
-                            [[order.place]]
-                            <paper-icon-button id="openLocationButton"
-                                               class="floatRight"
-                                               on-tap="_openLocation()"
-                                               icon="my-icons:map-marker">
-                            </paper-icon-button>
-                        </paper-item>
+                        <template is="dom-repeat" items="[[order.products]]">
 
-                        <div hidden="[[!order.note.length]]">
-                            <h3>Note</h3>
-                            <p>[[order.note]]</p>
-                        </div>
+                            <paper-item hidden="[[!_productHaveTwoLines(item.selectedVariant, item.note)]]">
+                                <paper-item-body two-line>
+                                    <div>
+                                        <span>[[item.number]] x [[item.name]]<span>
+                                        <span class="floatRight">[[item.priceValue]] [[item.priceType]]<span>
+                                    </div>
+                                    <div secondary>
+                                        [[item.selectedVariant]] [[item.note]]
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
 
-                            <template is="dom-repeat" items="[[order.products]]">
-                                <paper-item>
-                                    <paper-item-body two-line>
-                                        <div>
-                                            <span>[[item.number]] x [[item.name]]<span>
-                                            <span class="floatRight">[[order.total]] $<span>
-                                        </div>
-                                        <div secondary>
-                                            [[item.selectedVariant]] [[item.note]]
-                                        </div>
-                                    </paper-item-body>
-                                </paper-item>
-                            </template>
-
+                            <paper-item hidden="[[_productHaveTwoLines(item.selectedVariant, item.note)]]">
+                                <paper-item-body>
+                                    <div>
+                                        <span>[[item.number]] x [[item.name]]<span>
+                                        <span class="floatRight">[[item.priceValue]] [[item.priceType]]<span>
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+                        </template>
                     </div>
-
                 </div>
             </div>
 
@@ -309,6 +336,11 @@
         _openLocation: function() {
 
             window.open('https://www.google.ch/maps/search/' + this.order.place);
+        },
+
+        _productHaveTwoLines: function(selectedVariant, note) {
+
+            return (selectedVariant.length || note.length);
         }
 
     });

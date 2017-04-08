@@ -75,7 +75,7 @@
             }
 
             paper-dialog {
-                background-color: var(--app-primary-background-color);
+                background-color: var(--app-secondary-background-color);
                 color: var(--app-background-primary-text-color);
             }
 
@@ -90,12 +90,17 @@
             #scrollable {
                 margin-bottom: 0px;
                 margin-top: 0px;
-                padding-top: 64px;
+                padding-right: 0;
+                padding-top: 48px;
+                padding-left: 0;
                 height: calc(100vh - 118px) !important;
             }
 
             #catalogue {
                 @apply(--layout-horizontal);
+                padding-top: 16px;
+                padding-left: 16px;
+                padding-right: 16px;
             }
 
             #left, #right{
@@ -129,11 +134,23 @@
             }
 
             .info {
+                padding: 0;
                 @apply(--layout-horizontal);
             }
 
             .info .infoSpace {
                 @apply(--layout-flex);
+            }
+
+            #openCloseOrderDialogButton {
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-primary-text-color);
+                margin-left: 16px;
+            }
+
+            .order-list {
+                padding-top: 16px;
+                padding-bottom: 24px;
             }
 
             #right #orderCard .body {
@@ -166,13 +183,21 @@
 
             div[name="orders"] {
                 width: 100%;
-                height: calc(100vh - 70px);
+                height: calc(100vh - 118px);
                 overflow: auto;
                 text-align: center;
             }
 
             #deleteOrderDialog {
                 padding: 16px;
+            }
+
+            #closeOrderDialog paper-input {
+                margin-top: 0;
+            }
+
+            #paymentQrCode {
+                text-align: center;
             }
 
         </style>
@@ -239,12 +264,14 @@
 
             <h2 class="orderTotalPrice">[[_computeTotalOrder(_order.products, _order.products.length)]] SBD</h2>
 
-            <qr-code data="https://esteem8.com/@esteem8/wallet/send/SBD"></qr-code>
+            <div id="paymentQrCode">
+                <qr-code data="https://esteem8.com/@esteem8/wallet/send/SBD"></qr-code>
+            </div>
 
             <paper-input label="Request" value="{{_order.who}}">
                 <span prefix>@</span>
                 <paper-icon-button
-                        icon="my-icons:wallet-request">
+                        icon="my-icons:assign" suffix>
                 </paper-icon-button>
             </paper-input>
 
@@ -346,7 +373,7 @@
                                 <template is="dom-repeat"
                                           items="[[favoriteCategories]]"
                                           filter="{{_categoriesFilter(_query)}}">
-                                    <paper-button on-tap="_changeCategory()"
+                                    <paper-button on-tap="_changeCategory()" raised
                                                   style="background-color: [[item.color]]; color: [[item.textColor]];">
                                         [[item.name]]
                                     </paper-button>
@@ -424,16 +451,17 @@
 
                     <div name="orders">
 
-                        <template is="dom-repeat"
-                                  items="[[manualOrdersHistory]]"
-                                  sorting="{{_ordersSorting()}}">
+                        <div class="order-list">
 
-                            <order-card order="[[item]]"
-                                        action="{{_action}}">
-                            </order-card>
+                            <template is="dom-repeat"
+                                      items="[[manualOrdersHistory]]"
+                                      sort="{{_ordersSorting()}}">
 
-                        </template>
-
+                                <order-card order="[[item]]"
+                                            action="{{_action}}">
+                                </order-card>
+                            </template>
+                        </div>
                     </div>
 
                 </iron-pages>
@@ -573,6 +601,10 @@
             // Set total
             this._order.total = this._computeTotalOrder(this._order.products, this._order.products.length);
 
+            // Show toast
+            var appShell = document.getElementById('appshell');
+            appShell.showToast('Order closed, ' + this._order.total + ' gained');
+
             // Set created
             this._order.created = Date.now();
 
@@ -614,7 +646,7 @@
             // Add product
             product.selectedVariant = '';
             product.number = 1;
-            product.orderProductId = this._generateId();
+            product.inOrderId = this._generateId();
 
             // If option
             if(typeof product.options[0] !== 'undefined') {
@@ -623,8 +655,7 @@
 
                     // Ask for option
                     this._optionsToSelect = product.options[0];
-                    this._optionsToSelect.orderProductId = product.orderProductId;
-
+                    this._optionsToSelect.productInOrderId = product.inOrderId;
                     this.$.selectOptionDialog.open();
                 }else {
 
@@ -712,7 +743,7 @@
             var variant = e.model.item;
 
             // Set variant
-            var productIndex = this._getIndexProductById(this._optionsToSelect.orderProductId);
+            var productIndex = this._getIndexProductById(this._optionsToSelect.productInOrderId);
 
             var path = '_order.products.' + productIndex + '.selectedVariant';
 
@@ -791,7 +822,7 @@
             // return a sorting function
             return function(itemA, itemB) {
 
-                return (itemA.created > itemB.created);
+                return (itemA.created < itemB.created);
             };
 
         },
@@ -885,12 +916,16 @@
 
         _getIndexProductById: function(id) {
 
-            var orderProduct = this._order.products;
-            var orderProductLength = orderProduct.length;
+            var orderProductsArray = this._order.products;
 
-            for(var i = 0; i < orderProductLength; i++) {
+            for(var i = 0; i < orderProductsArray.length; i++) {
 
-                if(orderProduct[i].orderProductId = id) {
+                var product = orderProductsArray[i];
+
+                if(product.inOrderId === id) {
+
+
+
                     return i;
                 }
             }

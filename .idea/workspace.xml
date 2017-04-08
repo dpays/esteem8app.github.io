@@ -3,26 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" afterPath="$PROJECT_DIR$/src/api/steemjs/steem-get-post.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app-shell.html" afterPath="$PROJECT_DIR$/src/app-shell.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/custom-router.html" afterPath="$PROJECT_DIR$/src/components/custom-router.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/my-icons.html" afterPath="$PROJECT_DIR$/src/components/my-icons.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/order-card.html" afterPath="$PROJECT_DIR$/src/components/order-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/product-card.html" afterPath="$PROJECT_DIR$/src/components/product-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/manage-categories-dialog.html" afterPath="$PROJECT_DIR$/src/dialogs/manage-categories-dialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/product-content.html" afterPath="$PROJECT_DIR$/src/dialogs/product-content.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/product-edit-content.html" afterPath="$PROJECT_DIR$/src/dialogs/product-edit-content.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/post-card-light.html" afterPath="$PROJECT_DIR$/src/components/post-card-light.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/store-dialog.html" afterPath="$PROJECT_DIR$/src/dialogs/store-dialog.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/wallet-dialog.html" afterPath="$PROJECT_DIR$/src/dialogs/wallet-dialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-404.html" afterPath="$PROJECT_DIR$/src/pages/page-404.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-explore.html" afterPath="$PROJECT_DIR$/src/pages/page-explore.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-files.html" afterPath="$PROJECT_DIR$/src/pages/page-files.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-home.html" afterPath="$PROJECT_DIR$/src/pages/page-home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-post.html" afterPath="$PROJECT_DIR$/src/pages/page-post.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-products.html" afterPath="$PROJECT_DIR$/src/pages/page-products.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-settings.html" afterPath="$PROJECT_DIR$/src/pages/page-settings.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shared-styles.html" afterPath="$PROJECT_DIR$/src/shared-styles.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,31 +28,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="page-files.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-files.html">
+      <file leaf-file-name="post-card-light.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/post-card-light.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="659">
-              <caret line="237" column="54" selection-start-line="237" selection-start-column="23" selection-end-line="237" selection-end-column="54" />
+            <state relative-caret-position="1060">
+              <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="manage-categories-dialog.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/dialogs/manage-categories-dialog.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="store-dialog.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="store-dialog.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dialogs/store-dialog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="477">
-              <caret line="361" column="23" selection-start-line="361" selection-start-column="23" selection-end-line="361" selection-end-column="23" />
+            <state relative-caret-position="491">
+              <caret line="267" column="87" selection-start-line="267" selection-start-column="16" selection-end-line="267" selection-end-column="87" />
               <folding>
                 <element signature="n#style#0;n#paper-button#0;n#template#0;n#div#0;n#div#0;n#div#0;n#iron-pages#0;n#div#1;n#paper-dialog#4;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
               </folding>
@@ -75,41 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order-card.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/order-card.html">
+      <file leaf-file-name="wallet-dialog.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/dialogs/wallet-dialog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1066">
-              <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="page-favorites.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-favorites.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2682">
-              <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="187" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="my-icons.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/my-icons.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="626">
-              <caret line="99" column="20" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="product-card.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/product-card.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="87" column="29" selection-start-line="87" selection-start-column="29" selection-end-line="87" selection-end-column="29" />
+            <state relative-caret-position="702">
+              <caret line="142" column="36" selection-start-line="142" selection-start-column="36" selection-end-line="142" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -131,9 +76,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/dialogs/select-folder-dialog.html" />
-        <option value="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-login.html" />
         <option value="$PROJECT_DIR$/src/components/post-card.html" />
         <option value="$PROJECT_DIR$/src/docs/FAQ.md" />
         <option value="$PROJECT_DIR$/src/docs/pages/favorites.md" />
@@ -166,7 +108,6 @@
         <option value="$PROJECT_DIR$/src/pages/page-files.html" />
         <option value="$PROJECT_DIR$/src/pages/page-products.html" />
         <option value="$PROJECT_DIR$/src/dialogs/manage-categories-dialog.html" />
-        <option value="$PROJECT_DIR$/src/dialogs/wallet-dialog.html" />
         <option value="$PROJECT_DIR$/src/scripts/sanitize-html.min.js" />
         <option value="$PROJECT_DIR$/src/pages/page-post.html" />
         <option value="$PROJECT_DIR$/src/data/app.js" />
@@ -178,10 +119,14 @@
         <option value="$PROJECT_DIR$/src/components/custom-router.html" />
         <option value="$PROJECT_DIR$/src/pages/page-settings.html" />
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
-        <option value="$PROJECT_DIR$/src/components/my-icons.html" />
         <option value="$PROJECT_DIR$/src/dialogs/product-content.html" />
         <option value="$PROJECT_DIR$/src/components/order-card.html" />
+        <option value="$PROJECT_DIR$/404.html" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/components/my-icons.html" />
         <option value="$PROJECT_DIR$/src/dialogs/store-dialog.html" />
+        <option value="$PROJECT_DIR$/src/components/post-card-light.html" />
+        <option value="$PROJECT_DIR$/src/dialogs/wallet-dialog.html" />
       </list>
     </option>
   </component>
@@ -271,7 +216,43 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="docs" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -374,6 +355,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="other" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="github" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -492,12 +499,12 @@
       <workItem from="1487433084474" duration="830000" />
       <workItem from="1487900118673" duration="97705000" />
       <workItem from="1489081545961" duration="73841000" />
-      <workItem from="1489751149220" duration="451614000" />
+      <workItem from="1489751149220" duration="467984000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1100689000" />
+    <option name="totallyTimeSpent" value="1117059000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -511,7 +518,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24951644" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11761427" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12876254" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39966556" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -559,25 +566,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/github-repository-file.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/articles/marketing.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="144">
-            <caret line="8" column="55" selection-start-line="8" selection-start-column="55" selection-end-line="8" selection-end-column="55" />
-            <folding />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/github-repository-file-view-lite.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1188">
@@ -672,22 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-54">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/steemjs/src/steem-parser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="379">
-          <caret line="116" column="258" selection-start-line="116" selection-start-column="258" selection-end-line="116" selection-end-column="258" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="208">
@@ -767,14 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dialogs/wallet-dialog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1296">
-          <caret line="354" column="95" selection-start-line="354" selection-start-column="95" selection-end-line="354" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/scripts/sanitize-html.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -807,34 +771,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="481" column="27" selection-start-line="481" selection-start-column="27" selection-end-line="481" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/data/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1266">
           <caret line="357" column="13" selection-start-line="357" selection-start-column="13" selection-end-line="357" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/404.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="57" column="33" selection-start-line="57" selection-start-column="33" selection-end-line="57" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -871,14 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/custom-router.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="887">
-          <caret line="120" column="18" selection-start-line="120" selection-start-column="18" selection-end-line="120" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app-shell.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2484">
@@ -903,42 +835,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/my-icons.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="626">
-          <caret line="99" column="20" selection-start-line="99" selection-start-column="20" selection-end-line="99" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/product-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="87" column="29" selection-start-line="87" selection-start-column="29" selection-end-line="87" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dialogs/product-content.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="24" column="33" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-favorites.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2682">
-          <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="187" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/shared-styles.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2575">
-          <caret line="168" column="13" selection-start-line="168" selection-start-column="13" selection-end-line="168" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -967,21 +867,125 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/shared-styles.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="566">
+          <caret line="88" column="38" selection-start-line="88" selection-start-column="13" selection-end-line="88" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" column="52" selection-start-line="36" selection-start-column="52" selection-end-line="37" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-favorites.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2682">
+          <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="187" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/404.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1062">
+          <caret line="59" column="7" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/my-icons.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="647">
+          <caret line="272" column="19" selection-start-line="272" selection-start-column="13" selection-end-line="272" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/order-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1066">
-          <caret line="83" column="33" selection-start-line="83" selection-start-column="33" selection-end-line="83" selection-end-column="33" />
+        <state relative-caret-position="945">
+          <caret line="176" column="27" selection-start-line="176" selection-start-column="27" selection-end-line="176" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-post.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1163">
+          <caret line="585" column="74" selection-start-line="584" selection-start-column="12" selection-end-line="585" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/product-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="205" column="8" selection-start-line="205" selection-start-column="8" selection-end-line="218" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/custom-router.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="700">
+          <caret line="114" column="80" selection-start-line="113" selection-start-column="20" selection-end-line="114" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/post-card-light.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1060">
+          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/src/steem.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-486">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/steem-get-account.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-506">
+          <caret line="48" column="25" selection-start-line="48" selection-start-column="16" selection-end-line="48" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/steemjs/src/steem-parser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1872">
+          <caret line="271" column="30" selection-start-line="271" selection-start-column="19" selection-end-line="271" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dialogs/store-dialog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="361" column="23" selection-start-line="361" selection-start-column="23" selection-end-line="361" selection-end-column="23" />
+        <state relative-caret-position="491">
+          <caret line="267" column="87" selection-start-line="267" selection-start-column="16" selection-end-line="267" selection-end-column="87" />
           <folding>
             <element signature="n#style#0;n#paper-button#0;n#template#0;n#div#0;n#div#0;n#div#0;n#iron-pages#0;n#div#1;n#paper-dialog#4;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dialogs/wallet-dialog.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="702">
+          <caret line="142" column="36" selection-start-line="142" selection-start-column="36" selection-end-line="142" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -18,6 +18,8 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
 
+<link rel="import" href="../../bower_components/qr-code/src/qr-code.html">
+
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../api/steemjs/steem-get-value.html">
@@ -109,7 +111,7 @@
                margin-top: 16px;
            }
 
-            #walletSend .actions-buttons paper-button, #walletRequest .actions-buttons paper-button {
+            #walletSend .actions-buttons paper-button, #walletRequestButton {
                 background-color: var(--app-secondary-color);
                 color: var(--app-secondary-text-color);
             }
@@ -135,8 +137,12 @@
                            account="{{_account}}">
         </steem-get-account>
 
-        <steem-get-value value="{{steemValue}}">
-        </steem-get-value>
+        <steem-get-value value="{{steemValue}}"></steem-get-value>
+
+        <paper-dialog id="qrCodeRequestDialog"
+                      with-backdrop>
+            <qr-code data="https://esteem8.com/[[userName]]/wallet/send/[[request.amount]] SBD"></qr-code>
+        </paper-dialog>
 
         <paper-dialog id="walletDialog"
                       opened="{{isOpen}}"
@@ -345,7 +351,12 @@
                             </paper-input>
 
                             <div class="actions-buttons">
-                                <paper-button raised>REQUEST</paper-button>
+                                <paper-button id="walletRequestButtonQrCodeButton"
+                                              on-tap="_openQrCodeRequest()"
+                                              raised>
+                                    QR-code
+                                </paper-button>
+                                <paper-button id="walletRequestButton" raised>REQUEST</paper-button>
                             </div>
 
                         </div>
@@ -431,6 +442,7 @@
             this.$.setViewFundButton.addEventListener('tap', this._setViewFund.bind(this));
             this.$.setViewActivityButton.addEventListener('tap', this._setViewActivity.bind(this));
 
+            this.$.walletRequestButtonQrCodeButton.addEventListener('tap', this._openQrCodeRequest.bind(this));
         },
 
         open: function() {
@@ -501,6 +513,11 @@
             totalSbd += Number(steemInSbd);
 
             return this._roundAmmount(totalSbd, 2);
+        },
+
+        _openQrCodeRequest: function() {
+
+            this.$.qrCodeRequestDialog.open();
         }
 
         /*
