@@ -30,12 +30,6 @@
                 background: var(--app-primary-background-color);
             }
 
-            paper-input {
-                --paper-input-container-focus-color: var(--app-secondary-color);
-                --paper-input-container-input-color: var(--app-background-primary-text-color);
-                --paper-input-container-color: var(--app-background-secondary-text-color);
-            }
-
             /* LOGIN CARD */
             .login-card {
                 max-width: 400px;
@@ -188,9 +182,11 @@
 
         _login: function() {
 
+            // Show toast
             var appShell = document.getElementById('appshell');
                 appShell.showToast('Sucessfully logged onto the matrix');
 
+            // Go to account
             var path = "/@" + this.settings.user.name;
 
             window.history.pushState({}, null, path);

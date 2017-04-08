@@ -217,9 +217,11 @@
                             </paper-item>
                         </template>
 
-                        <div id="myFavorites">
-                            <a href="/favorites">My favorites</a>
-                        </div>
+                        <paper-button id="openManageFoldersDialogButton"
+                                      on-tap="_openManageFoldersDialog()">
+                            <iron-icon icon="my-icons:edit"></iron-icon>
+                            Manage folders
+                        </paper-button>
 
                     </div>
                 </iron-pages>
@@ -245,6 +247,11 @@
                 type: Boolean,
                 notify: true,
                 observer: '_openedChanged'
+            },
+
+            isManageFoldersDialogOpened: {
+                type: Boolean,
+                notify: true
             },
 
             selectedFolder: {
@@ -276,6 +283,7 @@
             // List the event that close the select category dialog
             this.$.selectInputedFolderButton.addEventListener('tap', this._selectInputedFolder.bind(this));
             this.$.closeDialogButton.addEventListener('tap', this._clearAndCloseDialog.bind(this));
+            this.$.openManageFoldersDialogButton.addEventListener('tap', this._openManageFoldersDialog.bind(this));
 
             // Set default value for icon and tabs
             this.selectedFolder = '';
@@ -299,6 +307,11 @@
         open: function() {
 
             this.opened = true;
+        },
+
+        _openManageFoldersDialog: function() {
+
+            this.isManageFoldersDialogOpened = true;
         },
 
         _clearAndCloseDialog: function() {

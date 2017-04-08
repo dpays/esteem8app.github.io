@@ -323,7 +323,6 @@
         </steem-get-following>
 
         <!-- WALLET -->
-
         <wallet-dialog id="wallet"
                        user-name="[[userName]]"
                        settings="[[settings]]">
@@ -358,8 +357,7 @@
 
             <h2>[[_currentArticle.name]]</h2>
 
-            <article-content article="[[_currentArticle]]">
-            </article-content>
+            <article-content article="[[_currentArticle]]"></article-content>
 
         </paper-dialog>
 
@@ -372,17 +370,17 @@
             </paper-icon-button>
 
             <div class="floatingToolbar">
-            <span class="floatingToolbarTitle">
-                <span>
-                    [[userName]]
-                    <span class="reputation">[[_account.reputation]]</span>
+                <span class="floatingToolbarTitle">
+                    <span>
+                        [[userName]]
+                        <span class="reputation">[[_account.reputation]]</span>
+                    </span>
+                    <span></span>
+                    <paper-icon-button id="toggleFavoriteUserButton"
+                                       icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]"
+                                       on-tap="_toggleFavoriteUser()">
+                    </paper-icon-button>
                 </span>
-                <span></span>
-                <paper-icon-button id="toggleFavoriteUserButton"
-                                   icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]"
-                                   on-tap="_toggleFavoriteUser()">
-                </paper-icon-button>
-            </span>
             </div>
 
             <a href="/hot/">
@@ -396,7 +394,6 @@
         </paper-toolbar>
 
         <!-- HEADER -->
-
         <div id="profileheader">
 
             <div id="topheader">
@@ -419,17 +416,16 @@
                     <div id="followersButton"
                          class="followers"
                          on-tap="_setCurrentViewFollowers()">
-                    <span class="number">
-                        <template is="dom-if" if="[[_followCount.followerCount]]">
-                            [[_followCount.followerCount]]
-                        </template>
-                        <template is="dom-if" if="[[!_followCount.followerCount]]">
-                            0
-                        </template>
-                    </span>
+
+                        <span class="number">
+                            <template is="dom-if" if="[[_followCount.followerCount]]">[[_followCount.followerCount]]</template>
+                            <template is="dom-if" if="[[!_followCount.followerCount]]">0</template>
+                        </span>
+
                         <span class="texte">
-                        Followers
-                    </span>
+                            Followers
+                        </span>
+
                     </div>
                     <div id="followingButton"
                          class="followed"
@@ -457,16 +453,19 @@
                         fit-container
                         scrollable
                         no-slide>
+
                 <paper-tab name="about"
                            id="tabAbout">
                     <iron-icon icon="my-icons:account-about"></iron-icon>
                 </paper-tab>
+
                 <paper-tab name="posts"
                            id="tabPosts">
                     <iron-icon icon="my-icons:text-file"></iron-icon>
                 </paper-tab>
-                <!-- Will be released when API permit it -->
+
                 <!--paper-tab name="comments">Comments</paper-tab-->
+
                 <paper-tab name="replies"
                            id="tabReplies">
                     <iron-icon icon="my-icons:message-reply-text"></iron-icon>
@@ -510,7 +509,7 @@
                 <!-- MENU BUTTON -->
                 <paper-menu-button>
                     <paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button>
-                    <paper-menu id="aboutmenu" class="dropdown-content">
+                    <paper-menu id="aboutMenu" class="dropdown-content">
                         <paper-item view="home">Home</paper-item>
                         <template is="dom-if" if="[[_account.pinnedPosts]]">
                             <template is="dom-repeat" items="[[_account.pinnedPosts]]">
@@ -537,11 +536,6 @@
                         <profile-about account="[[_account]]"
                                        class="homeCard">
                         </profile-about>
-
-                        <!--div id="votingPower">
-                              <paper-slider id="votingPowerBar" disabled value="[[_account.votingPower]]"></paper-slider>
-                              [[_account.votingPower]]%
-                          </div-->
 
                         <!-- POSTS (light card) -->
                         <paper-card heading="POSTS" class="homeCard">
@@ -719,7 +713,6 @@
                    icon="my-icons:wallet">
         </paper-fab>
 
-        <!--/div-->
     </template>
 </dom-module>
 
@@ -817,17 +810,11 @@
             }
         },
 
-        /*behaviors: [
-         Polymer.IronScrollTargetBehavior
-         ],*/
-
         observers: [
             '_updateCoverImage(_account.coverImage)',
             '_userChanged(userName)',
             '_refreshIsTabAbout(_currentProfileView)',
-            '_refreshIsTopheaderShowed(_isTabAbout)',
             '_setTabsOptions(_account.tabsOptions)',
-            '_setSharedFiles(_account.sharedFiles)',
             '_setTabFileStyle(_account.sharedFiles.length)',
             '_setTabArticleStyle(_account.sharedArticles.length)',
             '_doFileAction(_actionFile.type, _actionFile.id)',
@@ -835,7 +822,7 @@
         ],
 
         listeners: {
-            'aboutmenu.tap': '_selectAboutView',
+            'aboutMenu.tap': '_selectAboutView',
             'categoryList.tap': '_setArticlesQuery'
         },
 
@@ -852,7 +839,6 @@
 
             this._actionArticle = {};
             this._currentArticle = {};
-            //this._pageProfile = this.$.pageprofile;
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -862,26 +848,9 @@
             this.$.toggleFavoriteUserButton.addEventListener('tap', this._toggleFavoriteUser.bind(this));
         },
 
-        /*_scrollHandler: function() {
-
-         this.async(function() {
-
-         var loadBefore = 450;
-
-         var height = this._pageProfile.clientHeight - window.innerHeight;
-
-         if(this._scrollTop > (height - loadBefore)) {
-
-         alert('load');
-         }
-
-         });
-         },*/
-
         _userChanged: function(userName) {
 
             /*
-            * QUICK FIX, API in API compoment does not reloead
             * /@piskel -> /@esteem8 = OK
             * /@esteem8 or an other account -> /@piskel or an other account = freeze
             *
@@ -1134,15 +1103,9 @@
                     'favorite-border';
         },
 
-        _loadMoreHistoryEvents: function() {
-
-            //this.$.steemGetHistory.loadMoreData();
-        },
-
         _refreshIsTabAbout: function(currentProfileView) {
 
             this._isTabAbout = currentProfileView == 'about' ? true: false;
-            //window.scrollTo(0, 0);
         },
 
         _getPostTitleFromPath: function(postPath) {
@@ -1159,19 +1122,6 @@
         _capitalizeFirstLetter: function(string) {
 
             return string.charAt(0).toUpperCase() + string.slice(1);
-        },
-
-        _refreshIsTopheaderShowed: function(isTabAbout) {
-
-            if(isTabAbout) {
-
-                this.$.topheader.style = "";//"height: auto;"//+this.$.topheader.clientHeight+";";
-            }else {
-
-                //this.$.topheader.style = "margin-top:-2px;margin-bottom:-1px;max-height: 0;display:none;transition: all 0.6s ease-out;";//transform: translateY(-600px)"; //"height: 0;margin:-1px;visibility:hidden;opacity: 0";
-            }
-
-
         },
 
         /* ARTICLE SEARCH (FILTER) */
@@ -1298,11 +1248,6 @@
                     return statement;
                 };
             }
-        },
-
-        _toJson: function(text) {
-
-            return JSON.parse(text);
         }
 
         /*

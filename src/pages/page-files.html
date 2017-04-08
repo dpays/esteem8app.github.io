@@ -30,6 +30,7 @@
 <link rel="import" href="../components/html-echo.html">
 
 <link rel="import" href="../dialogs/select-folder-dialog.html">
+<link rel="import" href="../dialogs/manage-folders-dialog.html">
 
 <link rel="import" href="../shared-styles.html">
 
@@ -207,8 +208,16 @@
 
         <select-folder-dialog id="selectFolderDialog"
                               selected-folder="{{query}}"
-                              favorite-folders="{{favoriteFolders}}">
+                              favorite-folders="{{favoriteFolders}}"
+                              is-manage-folders-dialog-opened="{{_isManageFoldersDialogOpened}}">>
         </select-folder-dialog>
+
+        <!-- Edit folders from favorite -->
+        <manage-folders-dialog id="manageFoldersDialog"
+                               opened="{{_isManageFoldersDialogOpened}}"
+                               folders="{{favoriteFolders}}"
+                               favorite-shared-categories="{{favoriteSharedFolders}}">
+        </manage-folders-dialog>
 
         <app-drawer id="appsDrawer"
                     align="right">
@@ -514,6 +523,10 @@
 
             _externalApps: {
                 type: Array
+            },
+
+            _isManageFoldersDialogOpened: {
+                type: Boolean
             }
         },
 

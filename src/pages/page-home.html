@@ -210,7 +210,7 @@
                 bottom: 16px;
                 left: 16px;
                 font-size: 12px;
-                color: #333;
+                color: var(--app-background-primary-text-color);
             }
 
             #contributors span::after {
@@ -218,7 +218,7 @@
             }
 
             #contributors a {
-                color: #222;
+                color: var(--app-background-secondary-text-color);
                 text-decoration: none;
             }
             
@@ -248,17 +248,12 @@
             <div id="presentation-center">
 
                 <h1 id="headerSectionTitle">YOUR Free social network, without any ads.</h1>
-
                 <h3>Get rewarded to create and like content.</h3>
-
                 <p>Also your cloud, blog/website, marketplace, pos, and multi-currency wallet.</p>
 
                 <div id="presentation-button">
-
                     <paper-button id="videoButton" on-tap="_openVideoDialog()">play video</paper-button>
-
                     <paper-button id="exploreButton" on-tap="_openExplorePage()" raised>What's trending ?</paper-button>
-
                 </div>
             </div>
         </div>
@@ -281,10 +276,10 @@
 
             <paper-card id="whatsThat">
                 <div class="card-content">
-                    <h2>Discover</h2>
-                    <p>STEEM is a social media platform based on a currency where everyone is rewarded to use it.</p>
+                    <h2>What's that ?</h2>
+                    <p>STEEM is a social media platform based on a currency where everyone get rewarded to use it.</p>
                     <p>ESTEEM8 is a free web application that let you interact with the Steem blockchain.</p>
-                    <p>You can pin this app on your home screen by going into your browser page options.</p>
+                    <p>You can pin this app to your home screen by going into your browser page options.</p>
                     <p><a href="/info">What the fuck ?</a></p>
                     <!--p>You can change colors in <a href="/settings">settings</a>.</-->
                 </div>
@@ -411,11 +406,6 @@
             document.getElementById('appshell')._openDrawer();
         },
 
-        _openGithub: function() {
-
-            window.open('https://github.com/esteem8app/esteem8app.github.io');
-        },
-
         _computeContributorsFileText: function() {
 
             // Extract contributors from github file
@@ -452,8 +442,8 @@
 
             if(document.referrer.match('github.com')){
 
-                // https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg
-                this.customStyle['--home-background-image'] = 'url("' + 'https://s28.postimg.org/gq2u4cznf/image.jpg' + '")';
+                // https://s28.postimg.org/gq2u4cznf/image.jpg
+                this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
                 this.$.headersection.style.color = '#eee';
 
             }else {
@@ -469,6 +459,11 @@
 
             //window.open('https://youtu.be/xZmpCAqD7hs');
 
+        },
+
+        _openGithub: function() {
+
+            window.open('https://github.com/esteem8app/esteem8app.github.io');
         },
 
         _openExplorePage: function() {

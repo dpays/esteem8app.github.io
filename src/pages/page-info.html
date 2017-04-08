@@ -19,7 +19,6 @@
             /* GENERAL */
             :host {
                 display: block;
-                /*background-image: url('https://steemitimages.com/1920x1080/https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg');*/
                 background: var(--app-primary-background-color);
                 background-size: cover;
                 min-height: 100%;
@@ -107,14 +106,12 @@
                     <template is="dom-if" if="[[_isCertificationShown]]">
                         <div class="certifications">
                             <iron-icon id="_nonIllumitatiCertifcation" src="https://s27.postimg.org/wuojxnj9v/non_illimuniti_certification.png"></iron-icon>
-                            <iron-icon id="_nonReptoidAllicanceCertifcation" src="https://s27.postimg.org/qfpj0zck3/non_reptoid_certification2.png"></iron-icon>
                         </div>
                     </template>
                 </div>
             </paper-card>
             <template is="dom-if" if="[[_isCertificationShown]]">
-                <paper-tooltip for="_nonIllumitatiCertifcation">Non illuminati certification</paper-tooltip>
-                <paper-tooltip for="_nonReptoidAllicanceCertifcation">Non reptoid certification<br>Note: Only those who are in the reptoid alliance</paper-tooltip>
+                <paper-tooltip for="_nonIllumitatiCertifcation">Non illuminati or NWO certification</paper-tooltip>
             </template>
         </div>
 

@@ -23,17 +23,16 @@
                 display: block;
                 position: absolute;
 
-                /*background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
-                background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");*/
+                background: linear-gradient(to bottom, var(--app-primary-color), var(--app-secondary-color));
+                background-image: url("https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg");
                 --home-background-image: url('https://s24.postimg.org/3nxum2ztv/mdcontract.jpg');
-                /*background-image: var(--home-background-image);
+                background-image: var(--home-background-image);
                 background-size: cover;
                 background-position: center center;
-                background-attachment: fixed;*/
-                background: var(--app-primary-background-color);
+                background-attachment: fixed;
             }
 
-            /*@media screen and (max-width: 400px) {
+            @media screen and (max-width: 400px) {
 
                 :host{
                     background: transparent;
@@ -56,7 +55,7 @@
                     background-attachment: fixed;
                     background-size: cover;
                 }
-            }*/
+            }
 
             /* SUPPORT CARDS */
             .supportCards {
@@ -170,13 +169,11 @@
                     <h2>Make a donation</h2>
                     <div class="card-content">
                         <p>The application is free, you can support us as you want.</p>
-                        <paper-slider max="20" step="1" pin></paper-slider>
-                        <p>Pre-defined percentage splitting rewards on your posts with the contributors.</p>
+                        <paper-slider min="4" max="28" step="1" pin></paper-slider>
                         <p>This is a donation percentage as you earn rewards.</p>
                         <a href="/@esteem8/wallet">Steem donation</a>
                         <br>
                         <a id="timeDonation" href="/created/esteem8">Time donation</a>
-                        <p>Or make a donation to support the Esteem8 team.</p>
                         <br>
                     </div>
                 </paper-card>

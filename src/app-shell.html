@@ -119,8 +119,7 @@
                             settings="[[settings]]"
                             favorite-posts="{{favoritePosts}}"
                             favorite-tags="{{favoriteTags}}"
-                            favorite-users="{{favoriteUsers}}"
-                            favorite-folders="{{favoriteFolders}}">
+                            favorite-users="{{favoriteUsers}}">
             </page-favorites>
 
             <page-tools name="tools"></page-tools>
@@ -490,7 +489,6 @@
                 this.customStyle['--app-background-primary-text-color'] = backgroundPrimaryTextColor || this.settings.theme.backgroundPrimaryTextColor;
                 this.customStyle['--app-background-secondary-text-color'] = backgroundSecondaryTextColor || this.settings.theme.backgroundSecondaryTextColor;
 
-                // Render
                 Polymer.updateStyles();
             },
 
