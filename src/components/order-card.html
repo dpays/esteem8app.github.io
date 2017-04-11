@@ -118,10 +118,19 @@
                 margin-top: 12px;
                 overflow-y: hidden;
                 overflow-x: hidden;
-                box-shadow: inset 0px -120px 65px -120px rgba(128, 128, 128, 0.2);
                 font-size: 90%;
                 border-bottom: 1px solid #ddd;
                 transition: all ease .2s;
+            }
+
+            .card-content .content-data #showMore {
+                position: absolute;
+                bottom: 0;
+                right: 16px;
+                padding: 8px;
+                font-size: 18px;
+                color: var(--app-secondary-color);
+                cursor: pointer;
             }
 
             .floatRight {
@@ -173,7 +182,9 @@
                                 <a href=""
                                    class="category">#[[order.id]]
                                 </a>
-                                | <span class="background-secondary-text">[[order.products.length]] products for [[order.total]] $ </span>
+                                | <span class="background-primary-text">
+                                    [[order.products.length]] <span class="background-secondary-text">products for</span> [[order.total]] $
+                                </span>
                             </span>
 
                             <span class="posted-ago">
@@ -199,6 +210,8 @@
                     <div class="content-data"
                          id="toggleContentData"
                          on-tap="_toggleContentDataHeight()">
+
+                        <span id="showMore">...</span>
 
                         <template is="dom-repeat" items="[[order.products]]">
 
@@ -284,6 +297,7 @@
             if(!this._contentToggled){
 
                 this.$.toggleContentData.style = "height: 250px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
+
             }else {
 
                 this.$.toggleContentData.style = "";

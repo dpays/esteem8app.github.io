@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 
-</body>
-</html>
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="../components/user-card.html">
+
+<link rel="import" href="../api/steemjs/steem-get-following.html">
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="my-icons.html">
+
+<dom-module id="profile-following">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host{
+
+            }
+
+        </style>
+
+        <steem-get-following account-name="[[userName]]"
+                             following="{{_following}}">
+        </steem-get-following>
+
+        <div id="following-list">
+
+            <template is="dom-if" if="[[!_following.length]]">
+                <h2>@[[accountName]] is not following anyone</h2>
+            </template>
+
+            <template is="dom-if" if="[[_following.length]]">
+                <template is="dom-repeat" items="[[_following]]">
+                    <user-card user="[[item]]"></user-card>
+                </template>
+            </template>
+
+        </div>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'profile-following',
+
+        properties: {
+
+            userName: {
+                type: String
+            },
+
+            _following:{
+                type: Array
+            }
+
+        }
+    });
+</script>

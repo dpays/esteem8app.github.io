@@ -1,6 +1,17 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="../components/post-card-light.html">
+<link rel="import" href="../components/post-wrapper.html">
+<link rel="import" href="../components/profile-informations.html">
 
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -10,6 +21,7 @@
     <template>
 
         <style include="shared-styles">
+
             /* GENERAL */
             paper-card {
                 margin-top: 16px;
@@ -26,24 +38,187 @@
                 color: var(--app-secondary-color);
             }
 
+            #viewName {
+                display: inline-block;
+                vertical-align: sub;
+                margin-top: 0;
+                color: var(--app-background-primary-text-color);
+            }
+
+            #votingPower {
+                display: inline-flex;
+                vertical-align: middle;
+                width: 100%;
+            }
+
+            #votingPowerBar {
+                width: 100%;
+                --paper-slider-disabled-knob-color: var(--app-primary-color);
+                --paper-slider-disabled-secondary-color: var(--app-background-secondary-text-color);
+                --paper-slider-disabled-active-color: var(--app-background-primary-text-color);
+            }
+
+            .link a {
+                color: var(--app-secondary-color) !important;
+            }
+
+            .link iron-icon {
+                color: var(--app-background-primary-text-color);
+            }
+
+            paper-card {
+                background-color: var(--app-secondary-background-color);
+                --paper-card-header-text: {
+                    font-size: 18px;
+                    padding-bottom: 0;
+                    text-transform: uppercase;
+                    font-family: 'Roboto', 'Open Sans', sans-serif;
+                    color: var(--app-background-primary-text-color);
+                };
+                margin-top: 12px;
+                margin-bottom: 12px;
+                min-width: 800px;
+            }
+
+
+            #lastestPostList {
+                max-width: 568px;
+                overflow: auto;
+                display: inline-flex;
+            }
+
+            paper-menu-button {
+                color: var(--app-background-primary-text-color);
+                margin-left: 8px;
+            }
+
+            paper-menu, paper-item {
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-secondary-text-color);
+            }
+
+            .pinnedPostVotes {
+                color: var(--app-background-primary-text-color);
+            }
+
         </style>
 
-        <template is="dom-if" if="[[account.customValues.length]]">
+        <!-- MENU BUTTON -->
+        <paper-menu-button>
 
-            <paper-card heading="ABOUT">
-                <div class="card-content">
-                    <template is="dom-repeat" items="[[account.customValues]]">
+            <paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button>
 
-                        <div class="aboutValues">
-                            <span class="name">[[item.name]]:</span>
-                            <span class="value">&nbsp;[[item.value]]</span>
+            <paper-menu id="menu" class="dropdown-content">
+                <paper-item view="home">Home</paper-item>
+                <template is="dom-repeat" items="[[account.pinnedPosts]]">
+                    <paper-item view="[[item.name]]">[[_capitalizeFirstLetter(item.name)]]</paper-item>
+                </template>
+            </paper-menu>
+
+        </paper-menu-button>
+
+
+        <h2 id="viewName">[[_capitalizeFirstLetter(_view)]]</h2>
+
+        <!-- ABOUT VIEWS -->
+        <iron-pages selected="[[_view]]"
+                    attr-for-selected="name">
+
+            <!-- HOME -->
+            <div name="home">
+
+                <!-- INFORMATIONS -->
+                <template is="dom-if" if="[[_isSomethingToSayAbout(account.about, account.location, account.website, account.webLinks)]]">
+                    <paper-card>
+
+                        <div class="card-content">
+
+                            <template is="dom-if" if="[[account.about.length]]">
+                                <div class="about">
+                                    <p>[[account.about]]</p>
+                                </div>
+                            </template>
+
+                            <template is="dom-if" if="[[account.location.length]]">
+                                <div class="location">
+                                    <iron-icon icon="my-icons:map"></iron-icon>
+                                    <span>[[account.location]]</span>
+                                </div>
+                            </template>
+
+                            <template is="dom-if" if="[[account.website.length]]">
+                                <div class="link website">
+                                    <iron-icon icon="my-icons:web"></iron-icon>
+                                    <a target="_blank" href="[[account.website]]">[[_computeLinkText(account.website)]]</a>
+                                </div>
+                            </template>
+
+                            <template is="dom-if" if="[[account.webLinks.length]]">
+                                <template is="dom-repeat" items="[[account.webLinks]]">
+                                    <div class="link">
+                                        <iron-icon icon="my-icons:[[_computeLinkIcon(item)]]"></iron-icon>
+                                        <a target="_blank" href="[[item]]">[[_computeLinkText(item)]]</a>
+                                    </div>
+                                </template>
+                            </template>
+
                         </div>
+                    </paper-card>
+                </template>
 
+                <!-- ABOUT -->
+                <template is="dom-if" if="[[account.customValues.length]]">
+                    <paper-card heading="ABOUT">
+                        <div class="card-content">
+                            <template is="dom-repeat" items="[[account.customValues]]">
+
+                                <div class="aboutValues">
+                                    <span class="name">[[item.name]]:</span>
+                                    <span class="value">&nbsp;[[item.value]]</span>
+                                </div>
+
+                            </template>
+                        </div>
+                    </paper-card>
+                </template>
+
+                <!-- POSTS (light card) -->
+                <template is="dom-if" if="[[posts.length]]">
+                    <paper-card heading="POSTS" class="homeCard">
+                        <post-path-list posts="[[posts]]"
+                                        query-path="false"
+                                        post-type="card-light">
+                        </post-path-list>
+                    </paper-card>
+                </template>
+
+                <!-- PINED POSTS (presentation) -->
+                <template is="dom-if" if="[[account.pinnedPost]]">
+                    <paper-card>
+                        <post-wrapper post-type="content-minimal"
+                                      post-path="[[account.pinnedPost]]">
+                        </post-wrapper>
+                    </paper-card>
+                </template>
+            </div>
+
+            <!-- PINNED POSTS -->
+            <template is="dom-repeat" items="[[account.pinnedPosts]]" as="section">
+
+                <div name="[[section.name]]">
+                    <template is="dom-repeat" items="[[section.posts]]" as="postPath">
+                        [[postPath]]
+                        <paper-card>
+                            <post-wrapper post-type="content-minimal"
+                                          post-path="[[postPath]]">
+                            </post-wrapper>
+                        </paper-card>
                     </template>
                 </div>
-            </paper-card>
 
-        </template>
+            </template>
+
+        </iron-pages>
 
     </template>
 </dom-module>
@@ -58,8 +233,113 @@
 
             account: {
                 type: Object
+            },
+
+            posts: {
+                type: Array
+            },
+
+            showProgress: {
+                type: Boolean
+            },
+
+            _view: {
+                type: String
             }
 
+        },
+
+        listeners: {
+            'menu.tap': '_selectView'
+        },
+
+        ready: function() {
+
+            this._view = 'home';
+        },
+
+        _selectView: function(e) {
+
+            if(typeof e.path[0] !== 'undefined') {
+
+                if(typeof e.path[0].view !== 'undefined') {
+
+                    this._view = e.path[0].view;
+                    return;
+                }
+            }
+
+            this._view = "home";
+
+        },
+
+        _isSomethingToSayAbout: function(about, location, website, webLinks) {
+
+            return (about.length || location.length || website.length || webLinks.length);
+        },
+
+        _capitalizeFirstLetter: function(string) {
+
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        },
+
+        _computeLinkIcon: function(link) {
+
+            if(link.includes('github.com') || link.includes('github.io')) {
+
+                return 'github';
+            }else if(link.includes('plus.google.com')) {
+
+                return 'google-plus';
+            }else if(link.includes('twitter.com')) {
+
+                return 'twitter';
+            }else if(link.includes('facebook.com')) {
+
+                return 'facebook';
+            }else if(link.includes('google') && link.includes('maps')) {
+
+                return 'map';
+            }else if(link.includes('dribbble')) {
+
+                return 'dribbble';
+            }else if(link.includes('jira')) {
+
+                return 'jira';
+            }else if(link.includes('slack.com')) {
+
+                return 'slack';
+            }else if(link.includes('snapchat')) {
+
+                return 'snapchat';
+            }else if(link.includes('soundcloud.com')) {
+
+                return 'soundcloud';
+            }else if(link.includes('twitch.tv')) {
+
+                return 'twitch';
+            }else if(link.includes('discordapp.com')) {
+
+                return 'discord';
+            }else {
+
+                return 'link';
+            }
+        },
+
+        _computeLinkText: function(link) {
+
+            if(typeof link !== 'undefined') {
+
+                var link = link.replace("https://", "")
+                        .replace("http://", "")
+                        .replace("www.", "");
+
+                return link;
+            }else {
+
+                return '';
+            }
         }
 
     });

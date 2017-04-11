@@ -7,20 +7,12 @@
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
-<!--link rel="import" href="../../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"-->
-<link rel="import" href="../../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 
 <link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
-<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
-<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
-<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../../bower_components/paper-menu/paper-submenu.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
@@ -28,23 +20,21 @@
 <link rel="import" href="../components/post-card.html">
 <link rel="import" href="../components/reply-card.html">
 <link rel="import" href="../components/event-card.html">
-<link rel="import" href="../components/user-card.html">
-<link rel="import" href="../components/file-card.html">
-<link rel="import" href="../components/product-card.html">
 <link rel="import" href="../components/html-echo.html">
 <link rel="import" href="../components/post-wrapper.html">
 <link rel="import" href="../components/profile-informations.html">
 <link rel="import" href="../components/profile-about.html">
+<link rel="import" href="../components/profile-files.html">
+<link rel="import" href="../components/profile-products.html">
+<link rel="import" href="../components/profile-followers.html">
+<link rel="import" href="../components/profile-following.html">
 
 <link rel="import" href="../dialogs/wallet-dialog.html">
-<link rel="import" href="../dialogs/product-content.html">
 
 <link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/steemjs/steem-get-post.html">
 <link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../api/steemjs/steem-get-follow-count.html">
-<link rel="import" href="../api/steemjs/steem-get-followers.html">
-<link rel="import" href="../api/steemjs/steem-get-following.html">
 <link rel="import" href="../api/steemjs/steem-get-replies.html">
 <link rel="import" href="../api/steemjs/steem-get-history.html">
 
@@ -68,16 +58,6 @@
                 padding-bottom: 16px;
                 display: block;
                 background-color: var(--app-primary-background-color);
-            }
-
-            /* DIALOG */
-            .closeViewButton {
-                color: var(--app-background-primary-text-color);
-                position: absolute;
-                right: 0;
-                top: 0;
-                padding: 8px !important;
-                margin: 16px;
             }
 
             /* TOOLBAR */
@@ -183,7 +163,7 @@
             }
 
             /* AFTER TABS CONTENT */
-            div[name="posts"], div[name="replies"], div[name="history"], div[name="files"], div[name="articles"], div[name="followers"], div[name="following"] {
+            div[name="about"], div[name="posts"], div[name="replies"], div[name="history"], div[name="files"], div[name="products"], div[name="followers"], div[name="following"] {
                 max-width: 800px;
                 margin: 12px auto;
             }
@@ -198,97 +178,7 @@
 
             /* ABOUT */
 
-            div[name="about"] {
-                padding-top: 12px;
-            }
-
-            div[name="about"] {
-                color: var(--app-background-secondary-text-color);
-                max-width: 800px;
-                margin: auto;
-            }
-
-            @media screen and (max-width: 800px) {
-                div[name="about"] {
-                   min-width: 100%;
-                }
-
-                paper-card {
-                    min-width: 0px !important;
-                    width: 100%;
-                }
-            }
-
-            div[name="about"] h2 {
-                margin-bottom: 0px;
-                margin-left: 8px;
-            }
-
-            #aboutViewName {
-                display: inline-block;
-                vertical-align: sub;
-                margin-top: 0;
-                color: var(--app-background-primary-text-color);
-            }
-
-            #votingPower {
-                display: inline-flex;
-                vertical-align: middle;
-                width: 100%;
-            }
-
-            #votingPowerBar {
-                width: 100%;
-                --paper-slider-disabled-knob-color: var(--app-primary-color);
-                --paper-slider-disabled-secondary-color: var(--app-background-secondary-text-color);
-                --paper-slider-disabled-active-color: var(--app-background-primary-text-color);
-            }
-
-            .link a {
-                color: var(--app-secondary-color) !important;
-            }
-
-            .link iron-icon {
-                color: var(--app-background-primary-text-color);
-            }
-
-            paper-card {
-                background-color: var(--app-secondary-background-color);
-                --paper-card-header-text: {
-                    font-size: 18px;
-                    padding-bottom: 0;
-                    text-transform: uppercase;
-                    font-family: 'Roboto', 'Open Sans', sans-serif;
-                    color: var(--app-background-primary-text-color);
-                };
-                margin-top: 12px;
-                margin-bottom: 12px;
-                min-width: 800px;
-            }
-
-
-
-            #lastestPostList {
-                max-width: 568px;
-                overflow: auto;
-                display: inline-flex;
-            }
-
-            paper-menu-button {
-                color: var(--app-background-primary-text-color);
-                margin-left: 8px;
-            }
-
-            paper-menu, paper-item {
-                background-color: var(--app-secondary-background-color);
-                color: var(--app-background-secondary-text-color);
-            }
-
-            .pinnedPostVotes {
-                color: var(--app-background-primary-text-color);
-            }
-
-            #viewArticleDialog {
+            #viewProductDialog {
                 padding: 16px;
             }
 
@@ -314,50 +204,22 @@
                                 follow-count="{{_followCount}}">
         </steem-get-follow-count>
 
-        <steem-get-followers account-name="[[_accountName]]"
-                             followers="{{_followers}}">
-        </steem-get-followers>
-
-        <steem-get-following account-name="[[_accountName]]"
-                             following="{{_following}}">
-        </steem-get-following>
-
         <!-- WALLET -->
         <wallet-dialog id="wallet"
                        user-name="[[userName]]"
                        settings="[[settings]]">
         </wallet-dialog>
 
-        <!-- View a file -->
-        <paper-dialog id="viewFileDialog"
+        <!-- View an product -->
+        <paper-dialog id="viewProductDialog"
                       class="bigDialog"
                       entry-animation="fade-in-animation"
                       exit-animation="fade-out-animation"
                       with-backdrop>
 
-            <h2>[[_currentFile.name]]</h2>
+            <h2>[[_currentProduct.name]]</h2>
 
-            <paper-icon-button class="closeViewButton"
-                               icon="my-icons:close"
-                               dialog-dismiss>
-            </paper-icon-button>
-
-            <div class="scrollable">
-                <html-echo html=" [[_currentFile.content]] "></html-echo>
-            </div>
-
-        </paper-dialog>
-
-        <!-- View an article -->
-        <paper-dialog id="viewArticleDialog"
-                      class="bigDialog"
-                      entry-animation="fade-in-animation"
-                      exit-animation="fade-out-animation"
-                      with-backdrop>
-
-            <h2>[[_currentArticle.name]]</h2>
-
-            <article-content article="[[_currentArticle]]"></article-content>
+            <product-content product="[[_currentProduct]]"></product-content>
 
         </paper-dialog>
 
@@ -481,9 +343,9 @@
                     <iron-icon icon="my-icons:text-file"></iron-icon>
                 </paper-tab>
 
-                <paper-tab name="articles"
-                           id="tabArticles"
-                           hidden="[[_isTabArticleHidden(_account.sharedArticles.length)]]">
+                <paper-tab name="products"
+                           id="tabProducts"
+                           hidden="[[_isTabProductHidden(_account.sharedProducts.length)]]">
                     <iron-icon icon="my-icons:shopping"></iron-icon>
                 </paper-tab>
 
@@ -506,71 +368,11 @@
             <!-- ABOUT -->
             <div name="about">
 
-                <!-- MENU BUTTON -->
-                <paper-menu-button>
-                    <paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button>
-                    <paper-menu id="aboutMenu" class="dropdown-content">
-                        <paper-item view="home">Home</paper-item>
-                        <template is="dom-if" if="[[_account.pinnedPosts]]">
-                            <template is="dom-repeat" items="[[_account.pinnedPosts]]">
-                                <paper-item view="[[item.name]]">[[_capitalizeFirstLetter(item.name)]]</paper-item>
-                            </template>
-                        </template>
-                    </paper-menu>
-                </paper-menu-button>
+                <profile-about account="[[_account]]"
+                               posts="[[_posts]]"
+                               show-progress="[[_showProgress]]">
+                </profile-about>
 
-
-                <h2 id="aboutViewName">[[_capitalizeFirstLetter(_currentAboutView)]]</h2>
-
-                <iron-pages selected="[[_currentAboutView]]"
-                            attr-for-selected="name">
-
-                    <div name="home">
-
-                        <!-- INFORMATIONS -->
-                        <profile-informations account="[[_account]]"
-                                              class="homeCard">
-                        </profile-informations>
-
-                        <!-- ABOUT -->
-                        <profile-about account="[[_account]]"
-                                       class="homeCard">
-                        </profile-about>
-
-                        <!-- POSTS (light card) -->
-                        <paper-card heading="POSTS" class="homeCard">
-                            <post-path-list posts="[[_posts]]"
-                                            query-path="false"
-                                            post-type="card-light">
-                            </post-path-list>
-                        </paper-card>
-
-                        <!-- PINED POSTS (presentation) -->
-                        <template is="dom-if" if="[[_account.pinnedPost]]">
-                            <paper-card>
-                                <post-wrapper post-type="content-minimal"
-                                              post-path="[[_account.pinnedPost]]">
-                                </post-wrapper>
-                            </paper-card>
-                        </template>
-                    </div>
-
-                    <template is="dom-if" if="[[_account.pinnedPosts]]">
-                        <template is="dom-repeat" items="[[_account.pinnedPosts]]" as="section">
-                            <div name="[[section.name]]">
-                                <template is="dom-repeat" items="[[section.posts]]" as="postPath">
-                                    [[postPath]]
-                                    <paper-card>
-                                        <post-wrapper post-type="content-minimal"
-                                                      post-path="[[postPath]]">
-                                        </post-wrapper>
-                                    </paper-card>
-                                </template>
-                            </div>
-                        </template>
-                    </template>
-
-                </iron-pages>
             </div>
 
             <!-- POSTS -->
@@ -615,6 +417,7 @@
 
             <!-- REPLIES -->
             <div name="history">
+
                 <steem-get-history id="steemGetHistory"
                                    user-name="[[_accountName]]"
                                    events="{{_events}}">
@@ -639,72 +442,31 @@
             <!-- SHARED FILES -->
             <div name="files">
 
-                <div id="file-list">
-                    <template is="dom-repeat" items="[[_account.sharedFiles]]">
-                        <file-card file="[[item]]"
-                                   action="{{_actionFile}}"
-                                   allow-select="false">
-                        </file-card>
-                    </template>
-                </div>
+                <profile-files files="[[_account.sharedFiles]]"></profile-files>
 
             </div>
 
-            <!-- SHARED ARTICLES -->
-            <div name="articles">
+            <!-- SHARED PRODUCTS -->
+            <div name="products">
 
-                <div id="categoryList">
-                    <template is="dom-repeat" items="[[_account.sharedCategories]]">
-                        <paper-button on-tap="_setArticlesQuery()">[[item.name]]</paper-button>
-                    </template>
-                </div>
-
-                <div id="article-list">
-                    <template is="dom-repeat"
-                              items="[[_account.sharedArticles]]"
-                              filter="{{_computeArticleFilter(_articlesQuery)}}">
-                        <article-card article="[[item]]"
-                                   action="{{_actionArticle}}"
-                                   allow-select="false">
-                        </article-card>
-                    </template>
-                </div>
+                <profile-products products="[[_account.sharedProducts]]"
+                                  categories="[[_account.sharedCategories]]">
+                </profile-products>
 
             </div>
 
             <!-- FOLLOWER -->
             <div name="followers">
 
-                <div id="followers-list">
+                <profile-followers user-name="[[userName]]"></profile-followers>
 
-                    <template is="dom-if" if="[[!_followers.length]]">
-                        <h1 class="nothingText">[[userName]] has no follower</h1>
-                    </template>
-
-                    <template is="dom-if" if="[[_followers.length]]">
-                        <template is="dom-repeat" items="[[_followers]]">
-                            <user-card user="[[item]]"></user-card>
-                        </template>
-                    </template>
-
-                </div>
             </div>
 
             <!-- FOLLOWING -->
             <div name="following">
 
-                <div id="following-list">
-                    <template is="dom-if" if="[[!_following.length]]">
-                        <h1 class="nothingText">[[userName]] is not following anyone</h1>
-                    </template>
+                <profile-following user-name="[[userName]]"></profile-following>
 
-                    <template is="dom-if" if="[[_following.length]]">
-                        <template is="dom-repeat" items="[[_following]]">
-                            <user-card user="[[item]]"></user-card>
-                        </template>
-                    </template>
-
-                </div>
             </div>
         </iron-pages>
 
@@ -752,10 +514,6 @@
                 type: String
             },
 
-            _currentAboutView: {
-                type: String
-            },
-
             _accountName: {
                 type: String,
                 notify: true
@@ -765,32 +523,8 @@
                 type: Object
             },
 
-            _followers: {
-                type: Array
-            },
-
-            _following: {
-                type: Array
-            },
-
             _events: {
                 type: Array
-            },
-
-            _currentFile: {
-                type: Object
-            },
-
-            _actionFile: {
-                type: Object
-            },
-
-            _currentArticle: {
-                type: Object
-            },
-
-            _actionArticle: {
-                type: Object
             },
 
             _isUserInFavorite: {
@@ -799,14 +533,6 @@
 
             _isTabAbout: {
                 type: Boolean
-            },
-
-            _pinnedPost: {
-                type: Object
-            },
-
-            _articlesQuery: {
-                type: String
             }
         },
 
@@ -816,29 +542,14 @@
             '_refreshIsTabAbout(_currentProfileView)',
             '_setTabsOptions(_account.tabsOptions)',
             '_setTabFileStyle(_account.sharedFiles.length)',
-            '_setTabArticleStyle(_account.sharedArticles.length)',
-            '_doFileAction(_actionFile.type, _actionFile.id)',
-            '_doArticleAction(_actionArticle.type, _actionArticle.id)'
+            '_setTabProductStyle(_account.sharedProducts.length)'
         ],
-
-        listeners: {
-            'aboutMenu.tap': '_selectAboutView',
-            'categoryList.tap': '_setArticlesQuery'
-        },
 
         ready: function() {
 
             // Set variables
             this._currentProfileView = 'about';
-            this._currentAboutView = 'home';
             this._accountName = '';
-
-            this._actionFile = {};
-            this._currentFile = {};
-            this._articlesQuery = '';
-
-            this._actionArticle = {};
-            this._currentArticle = {};
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -862,11 +573,7 @@
                 this.set('_posts', []);
                 this.set('_events', []);
                 this.set('_replies', []);
-                this.set('_followers', []);
-                this.set('_following', []);
-                this.set('_sharedFiles', []);
-                this.set('_sharedArticles', []);
-                this.set('_articlesQuery', '');
+                this.set('_productsQuery', '');
 
                 // Reset view position
                 this._currentProfileView = 'about';
@@ -895,72 +602,15 @@
             }
         },
 
-        _doFileAction: function(type, id) {
+        _setTabProductStyle: function(productLength) {
 
-            switch(type) {
+            if(productLength) {
 
-                case 'view':
-                    this._openViewFile(id);
-            }
-        },
-
-        _openViewFile: function(id) {
-
-            // Get file from id
-            for(var i = 0; i < this._account.sharedFiles.length; i++) {
-
-                if(this._account.sharedFiles[i].id == id) {
-
-                    // Set file object from index
-                    this.set('_currentFile', this._account.sharedFiles[i]);
-
-                    // Open dialog
-                    this.$.viewFileDialog.open();
-                }
-            }
-
-        },
-
-        _setTabArticleStyle: function(articleLength) {
-
-            if(articleLength) {
-
-                this.$.tabArticles.setAttribute('style', '');
+                this.$.tabProducts.setAttribute('style', '');
             }else {
 
-                this.$.tabArticles.setAttribute('style', 'display: none;');
+                this.$.tabProducts.setAttribute('style', 'display: none;');
             }
-        },
-
-        _doArticleAction: function(type, id) {
-
-            switch(type) {
-
-                case 'view':
-                    this._openViewArticle(id);
-            }
-        },
-
-        _openViewArticle: function(id) {
-
-            // Get file from id
-            for(var i = 0; i < this._account.sharedArticles.length; i++) {
-
-                if(this._account.sharedArticles[i].id == id) {
-
-                    // Set file object from index
-                    this.set('_currentArticle', this._account.sharedArticles[i]);
-
-                    // Open dialog
-                    this.$.viewArticleDialog.open();
-                }
-            }
-
-        },
-
-        _setArticlesQuery: function(e) {
-
-            this._articlesQuery = e.model.item.name;
         },
 
         _setTabsOptions: function(tabsOptions) {
@@ -978,17 +628,10 @@
                     // REPLIES
                     if(typeof tabsOptions.replies !== 'undefined') {
 
-                        if(typeof tabsOptions.replies.display !== 'undefined') {
+                        if(tabsOptions.replies.display == 'none') {
 
-                            if(tabsOptions.replies.display == 'none') {
+                            this.$.tabReplies.setAttribute('style', 'display: none;')
 
-                                this.$.tabReplies.setAttribute('style', 'display: none;')
-
-                            }
-
-                        }else {
-
-                            this.$.tabReplies.setAttribute('style', '')
                         }
 
                     }else {
@@ -999,17 +642,9 @@
                     // HISTORY
                     if(typeof tabsOptions.history !== 'undefined') {
 
-                        if(typeof tabsOptions.history.display !== 'undefined') {
+                        if(tabsOptions.history.display == 'none') {
 
-                            if(tabsOptions.history.display == 'none') {
-
-                                this.$.tabHistory.setAttribute('style', 'display: none;')
-
-                            }
-
-                        }else {
-
-                            this.$.tabHistory.setAttribute('style', '')
+                            this.$.tabHistory.setAttribute('style', 'display: none;')
                         }
 
                     }else {
@@ -1042,21 +677,6 @@
 
                 this.$.profileheader.style.backgroundImage = "";
             }
-
-        },
-
-        _selectAboutView: function(e) {
-
-            if(typeof e.path[0] !== 'undefined') {
-
-                if(typeof e.path[0].view !== 'undefined') {
-
-                    this._currentAboutView = e.path[0].view;
-                    return;
-                }
-            }
-
-            this._currentAboutView = "home";
 
         },
 
@@ -1106,148 +726,6 @@
         _refreshIsTabAbout: function(currentProfileView) {
 
             this._isTabAbout = currentProfileView == 'about' ? true: false;
-        },
-
-        _getPostTitleFromPath: function(postPath) {
-
-            var pathSplitted = postPath.split('/');
-
-            var postTitle = pathSplitted[pathSplitted.length-1];
-            var postTitleText = postTitle.split('-').join(' ');
-            postTitleText = this._capitalizeFirstLetter(postTitleText);
-
-            return postTitleText;
-        },
-
-        _capitalizeFirstLetter: function(string) {
-
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        },
-
-        /* ARTICLE SEARCH (FILTER) */
-
-        _computeArticleFilter: function(string) {
-            if (!string) {
-                // set filter to null to disable filtering
-                return null;
-            } else {
-
-                // return a filter function for the current search string
-                string = string.toLowerCase();
-
-                return function(item) {
-
-                    // Set variables
-                    var statement = false;
-                    var articleName = item.name.toLowerCase();
-
-                    var keys = string.split(' ');
-                    var keysLength = keys.length;
-
-                    var tags = [];
-
-                    if(typeof item.tags !== 'undefined') {
-
-                        tags = item.tags;
-                    }
-
-                    var tagsLength = tags.length;
-
-
-                    /*
-                     *
-                     *      Tag can contain anything exept "," and ", "
-                     *      Tag are separated by "," or ", "
-                     *
-                     */
-
-                    /* If mutliples key, restrictive filter (image + esteem8 = not only image but image with esteem8) */
-
-                    /*
-                     * This function search on tags and name,
-                     * the queryString is composed of multiples keywords
-                     * Only one keyword can be used to search on name, but the keyword can be in the middle of the array
-                     */
-
-                    if(keysLength == 1) { // One keyword in string
-
-                        /*
-                         * The keyword need to be equals to a tag or contained in name
-                         */
-
-                        // First keyword
-                        if(articleName.includes(keys[0].replace(/\-/gm, ' '))) { // String part of the name
-
-                            statement = true;
-                        }
-
-                        for(var i = 0; i < tagsLength; i++) { // String equal to a tag
-
-                            var tag = tags[i].toLowerCase();
-
-                            if(tag == keys[0]) {
-                                statement = true;
-                            }
-                        }
-                    }else {
-
-                        /*
-                         * All first keyword need to be equals to a tag
-                         * The last keyword of the keyword set need to be equals to a tag or contained in the name
-                         */
-
-                        var allFirstKeywordMatch = true;
-
-                        // All first keyword
-                        for(var i = 0; i < keysLength-1; i++) { // For all keyword
-
-                            var key = keys[i];
-
-                            var keyXYStatement = false;
-
-                            for(var j = 0; j < tagsLength; j++) { // keyword equal to a tag
-
-                                var tag = tags[j].toLowerCase();
-
-                                if(tag == key) {
-                                    keyXYStatement = true;
-                                }
-                            }
-
-                            if(!keyXYStatement) {
-
-                                allFirstKeywordMatch = false;
-                            }
-
-                        }
-
-                        var lastKeywordOfTheListMatch = false;
-                        var lastKeywordOfTheList = keys[keysLength-1].replace(/\-/gm, ' ');
-
-                        for(var i = 0; i < tagsLength; i++) { // String equal to a tag
-
-                            var tag = tags[i].toLowerCase();
-
-                            if(tag == lastKeywordOfTheList) {
-                                lastKeywordOfTheListMatch = true;
-                            }
-                        }
-
-                        if(articleName.includes(lastKeywordOfTheList)) { // String part of the name
-
-                            lastKeywordOfTheListMatch = true;
-                        }
-
-                        if(lastKeywordOfTheListMatch && allFirstKeywordMatch) {
-
-                            statement = true;
-                        }
-
-                    }
-
-                    return statement;
-                };
-            }
         }
 
         /*

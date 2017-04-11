@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../components/html-echo.html">
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="view-file-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host{
+
+            }
+
+        </style>
+
+        <!-- View a file -->
+        <paper-dialog opened="{{opened}}"
+                      class="bigDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+
+            <h2>[[file.name]]</h2>
+
+            <paper-icon-button class="closeViewButton"
+                               icon="my-icons:close"
+                               dialog-dismiss>
+            </paper-icon-button>
+
+            <div class="scrollable">
+                <html-echo html=" [[file.content]] "></html-echo>
+            </div>
+
+        </paper-dialog>
+
+    </template>
+
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'view-file-dialog',
+
+        properties: {
+
+            opened: {
+                type: Boolean
+            },
+
+            file: {
+                type: Object
+            }
+
+        },
+
+        open: function() {
+
+            this.opened = true;
+        }
+    });
+</script>

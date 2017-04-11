@@ -1,0 +1,101 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/file-card.html">
+<link rel="import" href="../dialogs/view-file-dialog.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="profile-files">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host{
+
+            }
+
+        </style>
+
+        <view-file-dialog id="viewFileDialog"
+                          file="[[_file]]">
+        </view-file-dialog>
+
+        <div id="folder-list">
+
+            <template is="dom-repeat" items="[[folders]]">
+                <paper-button on-tap="_setArticlesQuery()">
+                    [[item.name]]
+                </paper-button>
+            </template>
+
+        </div>
+
+        <div id="file-list">
+
+            <template is="dom-repeat" items="[[files]]">
+                <file-card file="[[item]]"
+                           action="{{_actionFile}}"
+                           allow-select="false">
+                </file-card>
+            </template>
+
+        </div>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'profile-files',
+
+        properties: {
+
+            files: {
+                type: Array
+            },
+
+            folders: {
+                type: Array
+            },
+
+            _file: {
+                type: Object
+            }
+
+        },
+
+        observers: [
+            '_doAction(_actionFile.type, _actionFile.id)',
+        ],
+
+        _doAction: function(type, id) {
+
+            switch(type) {
+
+                case 'view':
+                    this._openViewFile(id);
+            }
+        },
+
+        _openViewFile: function(id) {
+
+            // Get file from id
+            for(var i = 0; i < this.files.length; i++) {
+
+                if(this.files[i].id == id) {
+
+                    // Set file object from index
+                    this.set('_file', this.files[i]);
+
+                    // Open dialog
+                    this.$.viewFileDialog.open();
+                }
+            }
+
+        },
+    });
+</script>

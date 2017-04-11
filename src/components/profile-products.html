@@ -1,0 +1,174 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../components/product-card.html">
+
+<link rel="import" href="../dialogs/view-product-dialog.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="profile-products">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host{
+
+            }
+
+        </style>
+
+        <view-product-dialog id="viewProductDialog"
+                             product="[[_product]]">
+        </view-product-dialog>
+
+        <div id="category-list">
+
+            <template is="dom-repeat" items="[[categories]]">
+                <paper-button on-tap="_setProductQuery()">
+                    [[item.name]]
+                </paper-button>
+            </template>
+
+        </div>
+
+        <div id="product-list">
+
+            <template is="dom-repeat" items="[[products]]"
+                      filter="{{_getProductFilter(_productQuery)}}">
+                <product-card product="[[item]]"
+                              action="{{_actionProduct}}"
+                              allow-select="false">
+                </product-card>
+            </template>
+
+        </div>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'profile-products',
+
+        properties: {
+
+            products: {
+                type: Array
+            },
+
+            categories: {
+                type: Array
+            },
+
+            _product: {
+                type: Object
+            },
+
+            _productQuery: {
+                type: String
+            }
+
+        },
+
+        listeners: {
+            'category-list.tap': '_setProductQuery'
+        },
+
+        observers: [
+            '_doAction(_actionProduct.type, _actionProduct.id)'
+        ],
+
+        ready: function() {
+
+            this._productsQuery = '';
+        },
+
+        _doAction: function(type, id) {
+
+            switch(type) {
+
+                case 'view':
+                    this._openViewProduct(id);
+            }
+        },
+
+        _setProductQuery: function(e) {
+
+            this._productQuery = e.model.item.name;
+        },
+
+        _openViewProduct: function(id) {
+
+            // Get file from id
+            for(var i = 0; i < this.products.length; i++) {
+
+                if(this.products[i].id == id) {
+
+                    // Set file object from index
+                    this.set('_product', this.products[i]);
+
+                    // Open dialog
+                    this.$.viewProductDialog.open();
+                }
+            }
+
+        },
+
+        /* ARTICLE SEARCH (FILTER) */
+        _getProductFilter: function(string) {
+
+            if (!string) {
+
+                // set filter to null to disable filtering
+                return null;
+
+            } else {
+
+                // return a filter function for the current search string
+                string = string.toLowerCase();
+
+                return function(item) {
+
+                    // Set variables
+                    var tags = [];
+                    var statement = false;
+                    var keywords = string.split(" ");
+
+                    if(typeof item.tags !== 'undefined') {
+
+                        tags = item.tags;
+                    }
+
+                    // All keyword must match a tag
+                    for(var i = 0; i < keywords.length; i++) {
+
+                        var keyword = keywords[i].toLowerCase();
+                        var keywordMatch = false;
+
+                        for(var j = 0; j < tags.length; j++) { // String equal to a tag
+
+                            var tag = tags[j].toLowerCase();
+
+                            if(tag == keyword) {
+
+                                keywordMatch = true;
+                            }
+                        }
+
+                        statement = keywordMatch;
+
+                    }
+
+                    return statement;
+
+                };
+            }
+        }
+    });
+</script>

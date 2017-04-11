@@ -106,6 +106,10 @@
                 color: var(--app-secondary-color);
             }
 
+            paper-spinner {
+                --paper-spinner-color: var(--app-secondary-color);
+            }
+
             paper-card {
                 --paper-card-background-color: var(--app-secondary-background-color);
                 --paper-card-header-color: var(--app-background-primary-text-color);
@@ -130,6 +134,15 @@
                     height: 100%;
                     margin: 0;
                 }
+            }
+
+            .closeViewButton {
+                color: var(--app-background-primary-text-color);
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding: 8px !important;
+                margin: 16px;
             }
 
             .bigDialog .scrollable {

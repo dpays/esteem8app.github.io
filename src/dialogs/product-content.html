@@ -23,14 +23,15 @@
 
             .product-add {
                 margin-top: 16px;
+                display: inline-flex;
             }
 
             .product-add-button {
-                display: inline;
-            }
-
-            .product-add-button paper-button {
-                color: var(--app-background-primary-text-color);
+                color: var(--app-secondary-text-color);
+                background-color: var(--app-secondary-color);
+                max-height: 42px;
+                margin-top: 24px;
+                margin-left: 16px;
             }
 
             .product-header {
@@ -115,12 +116,10 @@
                                             icon="my-icons:add"
                                             suffix>
                         </paper-icon-button>
-                        <div class="product-add-button" suffix>
-                            <paper-button>
-                                <iron-icon icon="my-icons:cart-add"></iron-icon>
-                            </paper-button>
-                        </div>
                     </paper-input>
+                    <paper-button class="product-add-button">
+                        <iron-icon icon="my-icons:cart-add"></iron-icon>
+                    </paper-button>
                 </div>
 
             </div>
