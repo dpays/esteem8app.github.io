@@ -106,6 +106,10 @@
                 padding-bottom: 12px !important;
             }
 
+            #toggleContentDataButton {
+                color: var(--app-secondary-color);
+            }
+
             .card-content #postTitle a {
                 color: var(--app-background-primary-text-color);
                 text-decoration: none;
@@ -113,7 +117,7 @@
             }
 
             .card-content .content-data {
-                height: 75px;
+                height: 0px;
                 padding-right: 16px;
                 overflow-y: hidden;
                 overflow-x: hidden;
@@ -277,10 +281,20 @@
 
                     <!-- TITLE -->
                     <span id="postTitle">
+
+                        <template is="dom-repeat" items="[[_icons]]">
+                            <iron-icon icon="my-icons:[[item]]"></iron-icon>
+                        </template>
+
                         <a href="[[post.url]]">[[post.title]]</a>
                     </span>
 
                     <!-- CONTENT BODY -->
+                    <paper-icon-button id="toggleContentDataButton"
+                                       icon="my-icons:[[_computeToggleIcon(_contentToggled)]]"
+                                       hidden="[[!settings.display.showCardContent]]">
+                    </paper-icon-button>
+
                     <div class="content-data"
                          hidden="[[!settings.display.showCardContent]]"
                          id="toggleContentData"
@@ -366,13 +380,18 @@
 
             _domainName: {
                 type: String
+            },
+
+            _icons: {
+                type: Array
             }
         },
 
         ready: function() {
 
             // List events
-            this.$.toggleContentData.addEventListener('tap', this._toggleContentDataHeight.bind(this));
+            //this.$.toggleContentData.addEventListener('tap', this._toggleContentDataHeight.bind(this));
+            this.$.toggleContentDataButton.addEventListener('tap', this._toggleContentDataHeight.bind(this));
 
             this.$.addFavoritePostButton.addEventListener('tap', this._addFavoritePost.bind(this));
             this.$.openConfirmationRemovePostButton.addEventListener('tap', this._openConfirmationRemovePost.bind(this));
@@ -397,7 +416,7 @@
 
             if(!this._contentToggled){
 
-                this.$.toggleContentData.style = "height: 250px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
+                this.$.toggleContentData.style = "height: 342px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
             }else {
 
                 this.$.toggleContentData.style = "";
@@ -410,6 +429,7 @@
 
             this.$.toggleContentData.style = "";
             this._contentToggled = false;
+            this._computeIcons(this.post.body);
         },
 
         _showImage: function(imagesLength, showImage) {
@@ -438,6 +458,63 @@
         _computeAuthor: function(author) {
 
             return '@'+author;
+        },
+
+        _computeToggleIcon: function(contentToggled) {
+
+            if(contentToggled) {
+
+                return 'arrow-up';
+            }else {
+
+                return 'arrow-down';
+            }
+        },
+
+        _computeIcons: function(body) {
+
+            var icons = [];
+
+            var youtubeVideoLinkregex = /https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm;
+            var dailymotionVideoLinkregex = /(https?:\/\/)?(www\.)?dailymotion\.com(\/video)?\/[a-zA-Z0-9\-\_]+/gm;
+            var VimeoVideoLinkregex = /(https:\/\/)?(www\.)?vimeo\.com\/[0-9]+/gm;
+            var twitchVideoLinkregex = /(https?:\/\/)?(www\.)?twitch\.tv\/[_a-zA-Z0-9-]+/gm;
+
+            var pornhubVideoLinkregex = /(https?:\/\/)?(www\.)?pornhub\.com\/view_video\.php\?viewkey=[_a-zA-Z0-9-]+/gm;
+            var tube8VideoLinkregex = /(https?:\/\/)?(www\.)?tube8\.com\/[_a-zA-Z0-9-]+\/[_a-zA-Z0-9-]+\/[0-9]+\//gm;
+
+            var soundcloudSoundRegex = /https:\/\/soundcloud.com\/[a-zA-Z0-9-]*\/[a-zA-Z0-9-?=\/]*/gm;
+
+            var pdfRegex = /https:\/\/[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+\/[a-zA-Z0-9\/\$\&\?\=]+\.pdf(\&raw\=true)?/gm;
+
+            var gitHubRepositoryFileRegex = /.?https:\/\/github.com\/[a-zA-Z0-9]+\/[\.a-zA-Z0-9-]+\/blob\/\w+\/[\.\/a-zA-Z0-9-]+/gm;
+            var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+ /gm;
+
+            var googleMapsIframeRegex = /\<iframe src\=\"((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+\"[a-z0-9 \=\"\:]+\>\<\/iframe>/gm;
+
+            var googleDocsRegex = /[^("|'|[)]https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?(u\/)?(0\/)?[_?=\-.a-zA-Z0-9-]*\/[%\-.?&a-zA-Z0-9-#=]*/gm;
+
+            if(body.match(youtubeVideoLinkregex) ||
+               body.match(dailymotionVideoLinkregex) ||
+               body.match(VimeoVideoLinkregex) ||
+               body.match(twitchVideoLinkregex)
+            ) { icons.push('file-video'); }
+
+            if(body.match(pornhubVideoLinkregex) ||
+               body.match(tube8VideoLinkregex)
+            ) { icons.push('duck'); }
+
+            if(body.match(pdfRegex)
+            ) { icons.push('file-document'); }
+
+            if(body.match(soundcloudSoundRegex)
+            ) { icons.push('soundcloud'); }
+
+            if(body.match(gitHubRepositoryFileRegex) ||
+               body.match(gitHubRepositoryRegex)
+            ) { icons.push('github'); }
+
+            this.set('_icons', icons);
         },
 
         _refreshIsFavoritePost: function() {

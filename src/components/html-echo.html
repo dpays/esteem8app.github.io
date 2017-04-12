@@ -457,7 +457,7 @@
                 });*/
 
                 // Github repository path -> <github-repository>
-                var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+ /gm
+                var gitHubRepositoryRegex = /[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+ /gm;
                 html = html.replace(gitHubRepositoryRegex, function(match){
 
                     var match = match.replace(/ /g, "");
@@ -465,7 +465,7 @@
                 });
 
                 // Github file view -> <github-repository-file-view>
-                var gitHubRepositoryFileRegex = /.?https:\/\/github.com\/[a-zA-Z0-9]+\/[\.a-zA-Z0-9-]+\/blob\/\w+\/[\.\/a-zA-Z0-9-]+/gm
+                var gitHubRepositoryFileRegex = /.?https:\/\/github.com\/[a-zA-Z0-9]+\/[\.a-zA-Z0-9-]+\/blob\/\w+\/[\.\/a-zA-Z0-9-]+/gm;
                 html = html.replace(gitHubRepositoryFileRegex, function(match){
 
                     if(match.includes('"') || match.includes('\'') || match.includes('[')) {
@@ -485,7 +485,7 @@
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
-                var youtubeVideoHtmlLinkregex = /<a[ a-zA-Z0-9\=\"\'\w]* href=("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*<\/a>/gm
+                var youtubeVideoHtmlLinkregex = /<a[ a-zA-Z0-9\=\"\'\w]* href=("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*<\/a>/gm;
                 html = html.replace(youtubeVideoHtmlLinkregex, function(matchString){
 
                     var match = matchString.match(/("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')/g, "");
@@ -495,7 +495,7 @@
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
-                var youtubeVideoMarkdownLinkregex = /\[[a-zA-Z0-9\=\"\'\w]*\]\(https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*\)/gm
+                var youtubeVideoMarkdownLinkregex = /\[[a-zA-Z0-9\=\"\'\w]*\]\(https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*\)/gm;
                 html = html.replace(youtubeVideoMarkdownLinkregex, function(matchString){
 
                     var match = matchString.match(/https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/g, "");
@@ -526,7 +526,7 @@
                 });*/
 
                 // Youtube video link
-                var youtubeVideoLinkregex = /https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm
+                var youtubeVideoLinkregex = /https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm;
                 html = html.replace(youtubeVideoLinkregex, function(match){
 
                     var match = match.replace(/ /g, "");
@@ -535,8 +535,35 @@
                     return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
                 });
 
+                // Dailymotion video link
+                var dailymotionVideoLinkregex = /(https?:\/\/)?(www\.)?dailymotion\.com(\/video)?\/[a-zA-Z0-9\-\_]+/gm;
+                html = html.replace(dailymotionVideoLinkregex, function(url){
+
+                    url = url.replace('/video/', '/embed/video/');
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                // Vimeo video link
+                var VimeoVideoLinkregex = /(https:\/\/)?(www\.)?vimeo\.com\/[0-9]+/gm;
+                html = html.replace(VimeoVideoLinkregex, function(url){
+
+                    url = url.replace(/(https:\/\/)?(www\.)?vimeo\.com\//g, 'https://player.vimeo.com/video/');
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
+                // Coub video link
+                var coubVideoLinkregex = /(https:\/\/)?(www\.)?coub\.com\/view\/[0-9a-zA-Z]+/gm;
+                html = html.replace(coubVideoLinkregex , function(url){
+
+                    url = url.replace('/view/', '/embed/');
+
+                    return '<responsive-iframe url="' + url + '" ></responsive-iframe>';
+                });
+
                 // Twitch video link
-                var twitchVideoLinkregex = /(https?:\/\/)?(www\.)?twitch\.tv\/[_a-zA-Z0-9-]+/gm
+                var twitchVideoLinkregex = /(https?:\/\/)?(www\.)?twitch\.tv\/[_a-zA-Z0-9-]+/gm;
                 html = html.replace(twitchVideoLinkregex, function(match){
 
                     var match = match.replace(/ /g, "");
@@ -547,7 +574,7 @@
                 });
 
                 // Pornhub video link
-                var pornhubVideoLinkregex = /(https?:\/\/)?(www\.)?pornhub\.com\/view_video\.php\?viewkey=[_a-zA-Z0-9-]+/gm
+                var pornhubVideoLinkregex = /(https?:\/\/)?(www\.)?pornhub\.com\/view_video\.php\?viewkey=[_a-zA-Z0-9-]+/gm;
                 html = html.replace(pornhubVideoLinkregex, function(match){
 
                     var match = match.replace(/ /g, "");
@@ -558,7 +585,7 @@
                 });
 
                 // Tube8 video link
-                var tube8VideoLinkregex = /(https?:\/\/)?(www\.)?tube8\.com\/[_a-zA-Z0-9-]+\/[_a-zA-Z0-9-]+\/[0-9]+\//gm
+                var tube8VideoLinkregex = /(https?:\/\/)?(www\.)?tube8\.com\/[_a-zA-Z0-9-]+\/[_a-zA-Z0-9-]+\/[0-9]+\//gm;
                 html = html.replace(tube8VideoLinkregex, function(match){
 
                     var match = match.replace(/ /g, "");
@@ -606,9 +633,8 @@
                 });*/
 
                 // GOOGLE MAP IFRAME
-
                 var googleMapsIframeRegex = /\<iframe src\=\"((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+\"[a-z0-9 \=\"\:]+\>\<\/iframe>/gm;
-                     html = html.replace(googleMapsIframeRegex, function(match){
+                html = html.replace(googleMapsIframeRegex, function(match){
 
                      var urlMapsRegex = /((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+/g;
                      var url = match.match(urlMapsRegex);
