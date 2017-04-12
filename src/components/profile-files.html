@@ -24,8 +24,14 @@
 
         <div id="folder-list">
 
+            <paper-button id="resetFileQueryButton"
+                          on-tap="_resetFileQuery()"
+                          hidden="[[!folders.length]]">
+                all
+            </paper-button>
+
             <template is="dom-repeat" items="[[folders]]">
-                <paper-button on-tap="_setArticlesQuery()">
+                <paper-button on-tap="_setFileQuery()">
                     [[item.name]]
                 </paper-button>
             </template>
@@ -34,7 +40,8 @@
 
         <div id="file-list">
 
-            <template is="dom-repeat" items="[[files]]">
+            <template is="dom-repeat" items="[[files]]"
+                      filter="{{_getFilesFilter(_fileQuery)}}">
                 <file-card file="[[item]]"
                            action="{{_actionFile}}"
                            allow-select="false">
@@ -64,13 +71,26 @@
 
             _file: {
                 type: Object
+            },
+
+            _fileQuery: {
+                type: String
             }
 
         },
 
+        listeners: {
+            'folder-list.tap': '_setFileQuery'
+        },
+
         observers: [
-            '_doAction(_actionFile.type, _actionFile.id)',
+            '_doAction(_actionFile.type, _actionFile.id)'
         ],
+
+        ready: function() {
+
+            this.$.resetFileQueryButton.addEventListener('tap', this._resetFileQuery.bind(this));
+        },
 
         _doAction: function(type, id) {
 
@@ -97,5 +117,67 @@
             }
 
         },
+
+        _setFileQuery: function(e) {
+
+            this._fileQuery = e.model.item.name;
+        },
+
+        _resetFileQuery: function() {
+
+            this._fileQuery = '';
+        },
+
+        /* PRODUCT SEARCH (FILTER) */
+        _getFilesFilter: function(string) {
+
+            if (!string) {
+
+                // set filter to null to disable filtering
+                return null;
+
+            } else {
+
+                // return a filter function for the current search string
+                string = string.toLowerCase();
+
+                return function(item) {
+
+                    // Set variables
+                    var tags = [];
+                    var statement = false;
+                    var keywords = string.split(" ");
+
+                    if(typeof item.tags !== 'undefined') {
+
+                        tags = item.tags;
+                    }
+
+                    // All keyword must match a tag
+                    for(var i = 0; i < keywords.length; i++) {
+
+                        var keyword = keywords[i].toLowerCase();
+                        var keywordMatch = false;
+
+                        for(var j = 0; j < tags.length; j++) { // String equal to a tag
+
+                            var tag = tags[j].toLowerCase();
+
+                            if(tag == keyword) {
+
+                                keywordMatch = true;
+                            }
+                        }
+
+                        statement = keywordMatch;
+
+                    }
+
+                    return statement;
+
+                };
+            }
+        }
+
     });
 </script>

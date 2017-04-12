@@ -19,13 +19,36 @@
 
             }
 
+            #viewProductDialog {
+                padding: 16px;
+            }
+
         </style>
 
-        <view-product-dialog id="viewProductDialog"
+        <!--view-product-dialog id="viewProductDialog"
                              product="[[_product]]">
-        </view-product-dialog>
+        </view-product-dialog-->
+
+        <!-- View an product -->
+        <paper-dialog id="viewProductDialog"
+                      class="bigDialog"
+                      entry-animation="fade-in-animation"
+                      exit-animation="fade-out-animation"
+                      with-backdrop>
+
+            <h2>[[_product.name]]</h2>
+
+            <product-content product="[[_product]]"></product-content>
+
+        </paper-dialog>
 
         <div id="category-list">
+
+            <paper-button id="resetProductQueryButton"
+                          on-tap="_resetProductQuery()"
+                          hidden="[[!categories.length]]">
+                all
+            </paper-button>
 
             <template is="dom-repeat" items="[[categories]]">
                 <paper-button on-tap="_setProductQuery()">
@@ -38,7 +61,7 @@
         <div id="product-list">
 
             <template is="dom-repeat" items="[[products]]"
-                      filter="{{_getProductFilter(_productQuery)}}">
+                      filter="{{_getProductsFilter(_productQuery)}}">
                 <product-card product="[[item]]"
                               action="{{_actionProduct}}"
                               allow-select="false">
@@ -86,7 +109,7 @@
 
         ready: function() {
 
-            this._productsQuery = '';
+            this.$.resetProductQueryButton.addEventListener('tap', this._resetProductQuery.bind(this));
         },
 
         _doAction: function(type, id) {
@@ -101,6 +124,11 @@
         _setProductQuery: function(e) {
 
             this._productQuery = e.model.item.name;
+        },
+
+        _resetProductQuery: function() {
+
+            this._productQuery = '';
         },
 
         _openViewProduct: function(id) {
@@ -120,8 +148,8 @@
 
         },
 
-        /* ARTICLE SEARCH (FILTER) */
-        _getProductFilter: function(string) {
+        /* PRODUCT SEARCH (FILTER) */
+        _getProductsFilter: function(string) {
 
             if (!string) {
 

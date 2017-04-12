@@ -96,7 +96,20 @@ function computeAccount(accountReceived, steemFormatter, accountName) {
 
     }
 
-    // Shared products
+    // Shared pinned folders
+    if(typeof accountJsonObject.profile.shared_folders === 'undefined') {
+
+        if(accountName == 'esteem8') {
+
+            account.sharedFolders = JSON.parse('[{"name":"branding"}, {"name":"logo"}]');
+        }else {
+
+            account.sharedFolders = [];
+        }
+
+    }
+
+    // Shared pinned products
     if(typeof accountJsonObject.profile.shared_products === 'undefined') {
 
         if(accountName == 'esteem8') {
@@ -109,12 +122,12 @@ function computeAccount(accountReceived, steemFormatter, accountName) {
 
     }
 
-    // Shared categories
+    // Shared pinned categories
     if(typeof accountJsonObject.profile.shared_categories === 'undefined') {
 
         if(accountName == 'esteem8') {
 
-            account.sharedCategories = JSON.parse('[{"name":"branding","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}, {"name":"logo","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":"branding"}, {"name":"branding logo","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}, {"name":"other","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}]');
+            account.sharedCategories = JSON.parse('[{"name":"branding","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}, {"name":"other","color":"#3f51b5","textColor":"#eeeeee","colorName":"Indigo","parent":""}]');
         }else {
 
             account.sharedCategories = [];

@@ -1,8 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
-<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
-
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-image/iron-image.html">
@@ -16,15 +13,12 @@
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
-<link rel="import" href="../components/post-card-light.html">
 <link rel="import" href="../components/post-card.html">
-<link rel="import" href="../components/reply-card.html">
-<link rel="import" href="../components/event-card.html">
-<link rel="import" href="../components/html-echo.html">
-<link rel="import" href="../components/post-wrapper.html">
-<link rel="import" href="../components/profile-informations.html">
+
 <link rel="import" href="../components/profile-about.html">
 <link rel="import" href="../components/profile-files.html">
+<link rel="import" href="../components/profile-replies.html">
+<link rel="import" href="../components/profile-history.html">
 <link rel="import" href="../components/profile-products.html">
 <link rel="import" href="../components/profile-followers.html">
 <link rel="import" href="../components/profile-following.html">
@@ -35,8 +29,6 @@
 <link rel="import" href="../api/steemjs/steem-get-post.html">
 <link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../api/steemjs/steem-get-follow-count.html">
-<link rel="import" href="../api/steemjs/steem-get-replies.html">
-<link rel="import" href="../api/steemjs/steem-get-history.html">
 
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -177,11 +169,6 @@
             }
 
             /* ABOUT */
-
-            #viewProductDialog {
-                padding: 16px;
-            }
-
             #openWalletButton {
                 position: fixed;
                 bottom: 16px;
@@ -209,19 +196,6 @@
                        user-name="[[userName]]"
                        settings="[[settings]]">
         </wallet-dialog>
-
-        <!-- View an product -->
-        <paper-dialog id="viewProductDialog"
-                      class="bigDialog"
-                      entry-animation="fade-in-animation"
-                      exit-animation="fade-out-animation"
-                      with-backdrop>
-
-            <h2>[[_currentProduct.name]]</h2>
-
-            <product-content product="[[_currentProduct]]"></product-content>
-
-        </paper-dialog>
 
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
@@ -397,77 +371,38 @@
 
             <!-- REPLIES -->
             <div name="replies">
-                <steem-get-replies user-name="[[_accountName]]"
-                                   replies="{{_replies}}">
-                </steem-get-replies>
-                <div id="replies-list">
-
-                    <template is="dom-if" if="[[!_replies.length]]">
-                        <h1 class="nothingText">[[userName]] has no replies</h1>
-                    </template>
-
-                    <template is="dom-if" if="[[_replies.length]]">
-                        <template is="dom-repeat" items="[[_replies]]">
-                            <reply-card reply="[[item]]"></reply-card>
-                        </template>
-                    </template>
-
-                </div>
+                <profile-replies account-name="[[_accountName]]"></profile-replies>
             </div>
 
             <!-- REPLIES -->
             <div name="history">
-
-                <steem-get-history id="steemGetHistory"
-                                   user-name="[[_accountName]]"
-                                   events="{{_events}}">
-                </steem-get-history>
-                <div id="events-list">
-
-                    <template is="dom-if" if="[[!_events.length]]">
-                        <h1 class="nothingText">[[userName]] has no history</h1>
-                    </template>
-
-                    <template is="dom-if" if="[[_events.length]]">
-                        <!--iron-scroll-threshold  on-lower-threshold="_loadMoreHistoryEvents"> This is triggered before _events are loaded :/-->
-                        <template is="dom-repeat" items="[[_events]]">
-                            <event-card event="[[item]]"></event-card>
-                        </template>
-                        <!--/iron-scroll-threshold-->
-                    </template>
-
-                </div>
+                <profile-history account-name="[[_accountName]]"></profile-history>
             </div>
 
             <!-- SHARED FILES -->
             <div name="files">
-
-                <profile-files files="[[_account.sharedFiles]]"></profile-files>
-
+                <profile-files files="[[_account.sharedFiles]]"
+                               folders="[[_account.sharedFolders]]">
+                </profile-files>
             </div>
 
             <!-- SHARED PRODUCTS -->
             <div name="products">
-
                 <profile-products products="[[_account.sharedProducts]]"
                                   categories="[[_account.sharedCategories]]">
                 </profile-products>
-
             </div>
 
             <!-- FOLLOWER -->
             <div name="followers">
-
                 <profile-followers user-name="[[userName]]"></profile-followers>
-
             </div>
 
             <!-- FOLLOWING -->
             <div name="following">
-
                 <profile-following user-name="[[userName]]"></profile-following>
-
             </div>
+
         </iron-pages>
 
         <paper-fab id="openWalletButton"
@@ -506,10 +441,6 @@
                 type: Array
             },
 
-            _replies: {
-                type: Array
-            },
-
             _currentProfileView: {
                 type: String
             },
@@ -523,15 +454,7 @@
                 type: Object
             },
 
-            _events: {
-                type: Array
-            },
-
             _isUserInFavorite: {
-                type: Boolean
-            },
-
-            _isTabAbout: {
                 type: Boolean
             }
         },
@@ -539,7 +462,6 @@
         observers: [
             '_updateCoverImage(_account.coverImage)',
             '_userChanged(userName)',
-            '_refreshIsTabAbout(_currentProfileView)',
             '_setTabsOptions(_account.tabsOptions)',
             '_setTabFileStyle(_account.sharedFiles.length)',
             '_setTabProductStyle(_account.sharedProducts.length)'
@@ -549,7 +471,6 @@
 
             // Set variables
             this._currentProfileView = 'about';
-            this._accountName = '';
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -569,23 +490,15 @@
 
             if(userName.includes('@')) {
 
-                // Reset account related data
-                this.set('_posts', []);
-                this.set('_events', []);
-                this.set('_replies', []);
-                this.set('_productsQuery', '');
+                //this.set('_posts', []);
 
-                // Reset view position
-                this._currentProfileView = 'about';
-                this._currentAboutView = 'home';
-
-                // Reload page
                 /*
-                 * Reload account data won't
+                 * get account is triggered but return nothing
                  */
 
                 // Remove '@' at user and put it into _accountName
-                this._accountName = userName.replace('@', '');
+                var accountName = userName.replace('@', '');
+                this.set('_accountName', accountName);
 
                 this._refreshIsFavoriteUser();
             }
@@ -628,10 +541,9 @@
                     // REPLIES
                     if(typeof tabsOptions.replies !== 'undefined') {
 
-                        if(tabsOptions.replies.display == 'none') {
+                        if(tabsOptions.replies.display == 'none') { // Hide replies ?
 
                             this.$.tabReplies.setAttribute('style', 'display: none;')
-
                         }
 
                     }else {
@@ -642,7 +554,7 @@
                     // HISTORY
                     if(typeof tabsOptions.history !== 'undefined') {
 
-                        if(tabsOptions.history.display == 'none') {
+                        if(tabsOptions.history.display == 'none') { // Hide history ?
 
                             this.$.tabHistory.setAttribute('style', 'display: none;')
                         }
@@ -654,7 +566,7 @@
 
                 }
 
-                }
+            }
 
         },
 
@@ -721,11 +633,6 @@
             return userIsInFavorite ?
                     'favorite':
                     'favorite-border';
-        },
-
-        _refreshIsTabAbout: function(currentProfileView) {
-
-            this._isTabAbout = currentProfileView == 'about' ? true: false;
         }
 
         /*

@@ -11,7 +11,7 @@
 
 <link rel="import" href="../components/post-card-light.html">
 <link rel="import" href="../components/post-wrapper.html">
-<link rel="import" href="../components/profile-informations.html">
+<link rel="import" href="../components/html-echo.html">
 
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
@@ -253,6 +253,10 @@
             'menu.tap': '_selectView'
         },
 
+        observers: [
+            '_resetView(posts)',
+        ],
+
         ready: function() {
 
             this._view = 'home';
@@ -271,6 +275,14 @@
 
             this._view = "home";
 
+        },
+
+        _resetView: function(when) {
+
+            if(when) {
+
+                this._view = 'home';
+            }
         },
 
         _isSomethingToSayAbout: function(about, location, website, webLinks) {
