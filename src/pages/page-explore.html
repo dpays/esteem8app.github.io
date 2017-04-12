@@ -298,6 +298,7 @@
         },
 
         observers: [
+            '_updateUrl(currentSorting, currentTag)'
             //'_renderImageTagHeader(_photosTagListTxt)'
         ],
 
@@ -323,6 +324,22 @@
         _openSelectCategoryDialog: function() {
 
             this._isSelectCategoryOpened = true;
+        },
+
+        _updateUrl: function(sorting, tag) {
+
+            var path = '/' + sorting;
+
+            if(tag.length) {
+
+                path += '/' + tag;
+            }
+
+            if(/\/(created|hot|trending|active)(\/[a-z0-9-]+)?/.test(path)) {
+
+                window.history.pushState({}, null, path);
+            }
+
         },
 
         // sorting var -> sorting url

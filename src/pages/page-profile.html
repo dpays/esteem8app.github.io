@@ -429,6 +429,10 @@
                 type: String
             },
 
+            previousUserName: {
+                type: String
+            },
+
             _showProgress: {
                 type: Boolean
             },
@@ -471,6 +475,7 @@
 
             // Set variables
             this._currentProfileView = 'about';
+            this.previousUserName = '';
 
             // List event
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
@@ -487,6 +492,21 @@
             * /@esteem8 or an other account -> /@piskel or an other account = freeze
             *
             */
+
+
+            if(userName != '') { // This is a quick fix
+
+                if(userName !== this.previousUserName && typeof this.previousUserName !== 'undefined') {
+
+                    location.reload();
+
+                }else {
+
+                    this.previousUserName = userName;
+                }
+
+            }
+
 
             if(userName.includes('@')) {
 
