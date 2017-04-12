@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.html" afterPath="$PROJECT_DIR$/404.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/my-icons.html" afterPath="$PROJECT_DIR$/src/components/my-icons.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/post-card.html" afterPath="$PROJECT_DIR$/src/components/post-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-tools.html" afterPath="$PROJECT_DIR$/src/pages/page-tools.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app-shell.html" afterPath="$PROJECT_DIR$/src/app-shell.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="post-card.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="post-card.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="982">
-              <caret line="119" column="25" selection-start-line="119" selection-start-column="25" selection-end-line="119" selection-end-column="25" />
+            <state relative-caret-position="946">
+              <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -89,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-info.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-info.html">
+      <file leaf-file-name="app-shell.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app-shell.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1332">
-              <caret line="107" column="42" selection-start-line="107" selection-start-column="42" selection-end-line="107" selection-end-column="42" />
+            <state relative-caret-position="1085">
+              <caret line="957" column="25" selection-start-line="957" selection-start-column="25" selection-end-line="957" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -165,7 +159,6 @@
         <option value="$PROJECT_DIR$/src/dialogs/select-folder-dialog.html" />
         <option value="$PROJECT_DIR$/src/dialogs/manage-folders-dialog.html" />
         <option value="$PROJECT_DIR$/src/pages/page-favorites.html" />
-        <option value="$PROJECT_DIR$/src/app-shell.html" />
         <option value="$PROJECT_DIR$/src/dialogs/product-content.html" />
         <option value="$PROJECT_DIR$/src/components/product-card.html" />
         <option value="$PROJECT_DIR$/src/components/order-card.html" />
@@ -196,6 +189,7 @@
         <option value="$PROJECT_DIR$/src/components/html-echo.html" />
         <option value="$PROJECT_DIR$/src/components/my-icons.html" />
         <option value="$PROJECT_DIR$/src/components/post-card.html" />
+        <option value="$PROJECT_DIR$/src/app-shell.html" />
       </list>
     </option>
   </component>
@@ -582,12 +576,12 @@
       <workItem from="1487433084474" duration="830000" />
       <workItem from="1487900118673" duration="97705000" />
       <workItem from="1489081545961" duration="73841000" />
-      <workItem from="1489751149220" duration="522893000" />
+      <workItem from="1489751149220" duration="523240000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1171968000" />
+    <option name="totallyTimeSpent" value="1172315000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
@@ -767,14 +761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="684">
           <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app-shell.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85">
-          <caret line="121" column="62" selection-start-line="121" selection-start-column="62" selection-end-line="121" selection-end-column="62" />
           <folding />
         </state>
       </provider>
@@ -1054,8 +1040,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/post-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="982">
-          <caret line="119" column="25" selection-start-line="119" selection-start-column="25" selection-end-line="119" selection-end-column="25" />
+        <state relative-caret-position="946">
+          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app-shell.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1085">
+          <caret line="957" column="25" selection-start-line="957" selection-start-column="25" selection-end-line="957" selection-end-column="25" />
           <folding />
         </state>
       </provider>
