@@ -1,7 +1,0 @@
-<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
-
-<script src="./src/steem.min.js"></script>
-
-</head><body><dom-module id="steem-get-account-number"></dom-module>
-
-<script>!function(){Polymer({is:"steem-get-account-number",properties:{number:{type:Number,notify:!0}},created:function(){this.getAccountNumber()},getAccountNumber:function(){var t=this;this.async(function(){window.steem.api.getAccountCount(function(n,e){n||(t.number=e)})})}})}();</script></body></html>

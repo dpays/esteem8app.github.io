@@ -1,5 +1,0 @@
-<html><head></head><body><polymer-element name="qr-code" attributes="data format modulesize margin">
-
-	<script>Polymer("qr-code",{format:"png",dataChanged:function(){this.generate()},generate:function(){var e={modulesize:this.modulesize,margin:0===this.margin?-1:this.margin};"png"===this.format?this.generatePNG(e):this.generateHTML(e)},generatePNG:function(e){var t;try{t=document.createElement("img"),t.src=QRCode.generatePNG(this.data,e),this.clear(),this.appendChild(t)}catch(e){console.log("no canvas support")}},generateHTML:function(e){var t=QRCode.generateHTML(this.data,e);this.clear(),this.appendChild(t)},clear:function(){var e;for(e=0;e<this.children.length;e++)this.children[e].parentNode.removeChild(this.children[e])}});</script>
-
-</polymer-element></body></html>

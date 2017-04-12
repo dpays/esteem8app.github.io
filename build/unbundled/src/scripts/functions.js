@@ -1,1 +1,0 @@
-function cloneObj(r){if(null==r||"object"!=typeof r)return r;var n=r.constructor();for(var o in r)r.hasOwnProperty(o)&&(n[o]=r[o]);return n}

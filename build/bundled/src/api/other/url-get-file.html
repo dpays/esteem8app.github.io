@@ -1,5 +1,0 @@
-<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
-
-</head><body><dom-module id="url-get-file"></dom-module>
-
-<script>!function(){Polymer({is:"url-get-file",properties:{url:{type:String,observer:"_loadFile"},_lastUrl:{type:String},responseText:{type:String,notify:!0}},_loadFile:function(){if("undefined"!=typeof this.url&&""!==this.url&&this.url!=this._lastUrl){var t=this;this.async(function(){var e=new XMLHttpRequest;e.open("GET",t.url),e.onreadystatechange=function(){t.responseText=e.responseText},e.send()}),this._lastUrl=this.url}}})}();</script></body></html>

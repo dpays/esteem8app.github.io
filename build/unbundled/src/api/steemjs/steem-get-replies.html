@@ -1,8 +1,0 @@
-<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
-
-<script src="./src/steem.min.js"></script>
-<script src="./src/steem-parser.js"></script>
-
-</head><body><dom-module id="steem-get-replies"></dom-module>
-
-<script>!function(){Polymer({is:"steem-get-replies",properties:{userName:{type:String},replies:{type:Array,notify:!0}},observers:["_userNameChanged(userName)"],ready:function(){},_userNameChanged:function(e){if(""!=e){var e=e.replace("@",""),r=this;this.async(function(){window.steem.api.getRepliesByLastUpdate(e,"",100,function(e,s){if(e)console.error(e);else{var i=computeReplies(s);r.set("replies",i)}})})}}})}();</script></body></html>
