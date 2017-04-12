@@ -1,0 +1,44 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/event-card.html">
+
+<link rel="import" href="../api/steemjs/steem-get-history.html">
+
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="profile-history">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host{
+
+            }
+
+        </style>
+
+        <steem-get-history user-name="[[accountName]]" events="{{_events}}">
+        </steem-get-history>
+
+        <div id="events-list">
+
+            <template is="dom-if" if="[[!_events.length]]">
+                <h1 class="nothingText">[[userName]] has no history</h1>
+            </template>
+
+            <template is="dom-if" if="[[_events.length]]">
+
+                <template is="dom-repeat" items="[[_events]]">
+                    <event-card event="[[item]]"></event-card>
+                </template>
+
+            </template>
+
+        </div>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"profile-history",properties:{accountName:{type:String},_events:{type:Array}}});</script></body></html>

@@ -1,0 +1,204 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../components/my-icons.html">
+
+</head><body><dom-module id="select-folder-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                display: block;
+            }
+
+            .noMargin {
+                margin: 0 !important;
+            }
+
+            /* UP TOOLBAR */
+            #selectFolderDialog {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                width: 90%;
+                max-width: 408px;
+                margin: 12px auto 20% auto;
+                background-color: transparent;
+                text-align: center;
+            }
+
+            @media screen and (max-width: 600px) {
+                #selectFolderDialog {
+                    margin-top: 8px;
+                }
+
+                #enterFolderToolbar {
+                    padding-top: 4px !important;
+                }
+
+            }
+
+            #closeDialogButton {
+                margin-left: -12px;
+                margin-top: -24px;
+            }
+
+            #selectInputedFolderButton {
+                margin-top: -2px;
+                margin-right: -10px;
+            }
+
+            #enterFolderToolbar {
+                height: 40px;
+                padding: 0;
+                border-top-left-radius: 2px;
+                border-top-right-radius: 2px;
+                background-color: var(--app-dark-primary-color);
+                color: var(--app-primary-text-color);
+                --paper-input-container-color: #fff;
+            }
+
+            #enterFolderToolbar paper-icon-button {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            #enterFolderInputContainer {
+                width: 100%;
+                margin-top: 4px;
+            }
+
+            #insertFolderInput {
+                margin-top: -24px;
+                width: 100%;
+                text-align: left;
+                --paper-input-container-color: transparent;
+                --paper-input-container-input-color: var(--app-primary-text-color);
+                --paper-input-container-focus-color: transparent;
+            }
+
+            /* SORTING TABS */
+            #sortingFoldersTabs {
+                border-radius: 2px;
+                margin-top: 0;
+                background-color: var(--app-primary-color);
+                color: var(--app-primary-text-color);
+                --paper-tabs-selection-bar-color: var(--app-secondary-color);
+            }
+
+            #sortingFoldersTabs paper-tab {
+                --paper-tab-ink: var(--app-secondary-color);
+            }
+
+            /* BODY */
+            paper-item-body {
+                text-align: left;
+            }
+
+            paper-dialog-scrollable {
+                background-color: white;
+            }
+
+            #myFavorites {
+                height: 32px;
+                line-height: 32px;
+            }
+
+            #myFavorites a {
+                text-decoration: none;
+                color: var(--app-secondary-color);
+            }
+
+        </style>
+
+        <paper-dialog id="selectFolderDialog" opened="{{opened}}" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop="">
+            
+            <paper-toolbar id="enterFolderToolbar" class="noMargin">
+                <paper-icon-button id="closeDialogButton" icon="my-icons:close" on-tap="_clearAndCloseDialog()">
+                </paper-icon-button>
+
+                <div id="enterFolderInputContainer">
+                    <paper-input-container id="insertFolderInput" no-label-float="">
+                        <span prefix=""># </span>
+
+                        <input is="iron-input" value="{{selectedFolder::input}}">
+
+                        <paper-icon-button suffix="" id="selectInputedFolderButton" on-tap="_selectInputedFolder()" icon="my-icons:[[_icon]]">
+                        </paper-icon-button>
+                    </paper-input-container>
+                </div>
+            </paper-toolbar>
+
+            
+            <paper-tabs id="sortingFoldersTabs" selected="{{_currentSortingFolders}}" attr-for-selected="name" fit-container="" scrollable="" no-slide="">
+
+                <paper-tab name="basic">
+                    <iron-icon icon="my-icons:folder"></iron-icon>
+                </paper-tab>
+
+                <paper-tab name="favorites">
+                    <iron-icon icon="my-icons:folder-favorite"></iron-icon>
+                </paper-tab>
+            </paper-tabs>
+
+            
+            <paper-dialog-scrollable class="noMargin">
+                <iron-pages selected="[[_currentSortingFolders]]" attr-for-selected="name">
+
+                    
+                    <div role="listbox" name="basic" id="basicFolders">
+
+                        <template is="dom-repeat" items="[[folders]]">
+
+                            <paper-item>
+                                <paper-item-body two-line="" class="selectCategoryButton" on-tap="_selectThisFolder()">
+                                    <div>#[[item.name]]</div>
+                                </paper-item-body>
+                            </paper-item>
+                        </template>
+                    </div>
+
+                    
+                    <div role="listbox" name="favorites" id="favoriteFolders">
+
+                        <template is="dom-repeat" items="[[favoriteFolders]]">
+
+                            <paper-item>
+                                <paper-item-body class="selectCategoryButton" on-tap="_selectThisFolder()">
+                                    <div>#[[item.name]]</div>
+                                </paper-item-body>
+                            </paper-item>
+                        </template>
+
+                        <paper-button id="openManageFoldersDialogButton" on-tap="_openManageFoldersDialog()">
+                            <iron-icon icon="my-icons:edit"></iron-icon>
+                            Manage folders
+                        </paper-button>
+
+                    </div>
+                </iron-pages>
+            </paper-dialog-scrollable>
+        </paper-dialog>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"select-folder-dialog",listeners:{"basicFolders.tap":"_selectThisFolder","favoriteFolders.tap":"_selectThisFolder"},properties:{opened:{type:Boolean,notify:!0,observer:"_openedChanged"},isManageFoldersDialogOpened:{type:Boolean,notify:!0},selectedFolder:{type:String,notify:!0},folders:{type:Array},favoriteFolders:{type:Array,notify:!0},_currentSortingFolders:{type:String,observer:"_currentSortingFoldersChanged"},_icon:{type:String}},ready:function(){this.$.selectInputedFolderButton.addEventListener("tap",this._selectInputedFolder.bind(this)),this.$.closeDialogButton.addEventListener("tap",this._clearAndCloseDialog.bind(this)),this.$.openManageFoldersDialogButton.addEventListener("tap",this._openManageFoldersDialog.bind(this)),this.selectedFolder="",this.opened=!1,this._icon="done",this._currentSortingFolders="basic",this.folders=[{name:"file"},{name:"media"},{name:"sound"},{name:"video"},{name:"post"},{name:"github"},{name:"steem"},{name:"document"}]},open:function(){this.opened=!0},_openManageFoldersDialog:function(){this.isManageFoldersDialogOpened=!0},_clearAndCloseDialog:function(){this.selectedFolder="",this.opened=!1},_selectInputedFolder:function(){"basic"==this._currentSortingFolders?this.opened=!1:"favorites"==this._currentSortingFolders&&this.push("favoriteFolders",{name:this.selectedFolder})},_selectThisFolder:function(e){"undefined"!=typeof e.model.item.name?this.selectedFolder=e.model.item.name:this.selectedFolder=e.model.item,this.opened=!1},_currentSortingFoldersChanged:function(){"basic"==this._currentSortingFolders?this._icon="done":this._icon="add"},_checkForEnterOnFolderInput:function(e){13===e.keyCode&&this._selectThisFolder()}});</script></body></html>

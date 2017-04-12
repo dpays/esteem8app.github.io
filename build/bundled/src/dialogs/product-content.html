@@ -1,0 +1,126 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+
+<link rel="import" href="../../bower_components/l2t-paper-slider/l2t-paper-slider.html">
+
+<link rel="import" href="../shared-styles.html">
+</head><body><dom-module id="product-content">
+
+    <template>
+
+        <style include="shared-styles">
+
+            paper-dropdown-menu {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+            }
+
+            .product-add {
+                margin-top: 16px;
+                display: inline-flex;
+            }
+
+            .product-add-button {
+                color: var(--app-secondary-text-color);
+                background-color: var(--app-secondary-color);
+                max-height: 42px;
+                margin-top: 24px;
+                margin-left: 16px;
+            }
+
+            .product-header {
+                @apply(--layout-horizontal);
+            }
+
+            .product-header-flex {
+                @apply(--layout-flex);
+            }
+
+            @media (max-width: 800px) {
+
+                .product-header {
+                    @apply(--layout-vertical);
+                }
+            }
+
+            .product-header-flex, .left l2t-paper-slider {
+                --paper-slide-height: 300px;
+            }
+
+            .product-header-flex, .right {
+                padding: 16px;
+            }
+
+            html-echo {
+
+                --content-theme-p: {
+                    padding: 0;
+                    margin: 0;
+                };
+
+                --content-theme-img: {
+                    margin: 0;
+                };
+            }
+
+        </style>
+
+        <div class="product-header">
+
+            <div class="product-header-flex left">
+
+                <l2t-paper-slider total-slides="[[product.contents.length]]">
+                    <template is="dom-repeat" items="[[product.contents]]">
+                        <paper-slide>
+                            <html-echo html=" [[item]] "></html-echo>
+                        </paper-slide>
+                    </template>
+                </l2t-paper-slider>
+
+            </div>
+
+            <div class="product-header-flex right">
+
+                <html-echo html="[[product.shortDescription]]"></html-echo>
+
+                <template is="dom-if" if="[[product.options.0.name]]">
+                    <paper-dropdown-menu label="[[product.options.0.name]]" class="product-option">
+                        <paper-listbox class="dropdown-content" selected="1">
+                            <template is="dom-repeat" items="[[product.options.0.variants]]">
+                                <paper-item>[[item.type]]</paper-item>
+                            </template>
+                        </paper-listbox>
+                    </paper-dropdown-menu>
+                </template>
+
+                <div class="product-add">
+                    <paper-input class="product-add-number" value="{{product.number}}" type="number">
+                        <paper-icon-button id="removeNumberButton" on-tap="_removeNumber()" icon="my-icons:remove" prefix="">
+                        </paper-icon-button>
+                        <span suffix="">
+                            ([[_computePriceValue(product.priceValue, product.number)]] [[product.priceType]])
+                        </span>
+                        <paper-icon-button id="addNumberButton" on-tap="_addNumber()" icon="my-icons:add" suffix="">
+                        </paper-icon-button>
+                    </paper-input>
+                    <paper-button class="product-add-button">
+                        <iron-icon icon="my-icons:cart-add"></iron-icon>
+                    </paper-button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <h2>Description</h2>
+        <html-echo html="[[product.longDescription]]"></html-echo>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"product-content",properties:{product:{type:Object,notify:!0}},observers:["_computeProduct(product)"],ready:function(){this.$.removeNumberButton.addEventListener("tap",this._removeNumber.bind(this)),this.$.addNumberButton.addEventListener("tap",this._addNumber.bind(this))},_computeProduct:function(t){"undefined"==typeof t.price?this.set("product.price","free"):this.set("product.price","free"),this.set("product.number","1")},_removeNumber:function(){var t=parseInt(this.product.number);t-1&&t--,this.set("product.number",t)},_addNumber:function(){var t=parseInt(this.product.number);t++,this.set("product.number",t)},_computePriceValue:function(t,e){return t*e}});</script></body></html>

@@ -1,0 +1,13 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../other/url-get-file.html">
+
+</head><body><dom-module id="get-repository-labels">
+
+    <template>
+        <url-get-file url="[[_url]]" response-text="{{_labelListText}}">
+        </url-get-file>
+    </template>
+
+    <script>!function(){Polymer({is:"get-repository-labels",properties:{repository:{type:String},labels:{type:Array,notify:!0},_url:{type:String},_labelListText:{type:String,observer:"_computeLabels"}},observers:["_computeLabelsUrl(repository)"],_computeLabelsUrl:function(e){if(""!==e){var t=e.replace("https://github.com","https://api.github.com/repos");t+="/labels",this._url=t}},_computeLabels:function(){this.set("labels",JSON.parse(this._labelListText))}})}();</script>
+</dom-module></body></html>

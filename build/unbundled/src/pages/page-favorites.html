@@ -1,0 +1,232 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+
+<link rel="import" href="../../bower_components/polymer-sortablejs/polymer-sortablejs.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/post-card.html">
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="page-favorites">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host {
+                min-height: calc(100% - 16px);
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                margin-top: -16px;
+                padding-top: 16px;
+                padding-bottom: 16px;
+                display: block;
+                background-color: var(--app-primary-background-color);
+            }
+
+            a, h1, iron-icon, paper-icon-button, paper-input {
+                color: var(--app-background-primary-text-color);
+            }
+
+            paper-toolbar paper-icon-button, paper-tab iron-icon {
+                color: var(--app-primary-text-color);
+            }
+
+            iron-pages {
+                margin-top: 128px;
+                min-height: 100%;
+            }
+
+            a {
+                display: inline;
+            }
+
+            /* BODY */
+            #posts-list {
+                padding-top: 12px;
+            }
+
+            h1 {
+                margin-top: 100px;
+                padding: 24px;
+                text-align: center;
+            }
+
+            paper-input {
+                margin: auto;
+                padding-left: 16px;
+                padding-right: 16px;
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            #favoriteTagsList, #favoriteUsersList {
+                overflow-y: scroll;
+                height: calc(100vh - 250px);
+            }
+
+            #users, #tags, #folders {
+                max-width: 600px;
+                margin: auto;
+            }
+
+            paper-item-body a {
+                text-decoration: none;
+            }
+
+            @media screen and (max-width: 600px) {
+                iron-pages {
+                    margin-top: 108px;
+                }
+
+                #favoriteTagsList, #favoriteUsersList {
+                    overflow-y: scroll;
+                    height: calc(100vh - 230px);
+                }
+
+            }
+
+            /* TOAST */
+            .cancel-button {
+                color: var(--app-secondary-color);
+                float: right;
+                vertical-align: middle;
+            }
+
+
+        </style>
+
+        
+
+        
+        <paper-toast id="toastDeleteTag" text="Tag #[[deletedTag]] deleted" class="fit-bottom">
+            <paper-button id="cancelDeleteTagButton" on-tap="_cancelDeleteTag()" class="cancel-button">
+                Cancel
+            </paper-button>
+        </paper-toast>
+
+        <paper-toast id="toastDeleteUser" text="User @[[deletedUser]] deleted" class="fit-bottom">
+            <paper-button id="cancelDeleteUserButton" on-tap="_cancelDeleteUser()" class="cancel-button">
+                Cancel
+            </paper-button>
+        </paper-toast>
+
+        
+        <paper-toolbar class="mainToolbar">
+            <paper-icon-button id="toggleDrawerMenu" on-tap="_openDrawer()" icon="my-icons:menu">
+            </paper-icon-button>
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    Favorite [[currentView]]
+                </span>
+            </div>
+            <a href="/trending">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+        </paper-toolbar>
+
+        
+        <div class="secondBar">
+            <paper-tabs selected="{{currentView}}" attr-for-selected="name" fit-container="" no-slide="">
+                <paper-tab name="publications">
+                    <iron-icon icon="my-icons:book"></iron-icon>
+                    [[favoritePosts.length]]
+                </paper-tab>
+                <paper-tab name="users">
+                    <iron-icon icon="my-icons:person"></iron-icon>
+                    [[favoriteUsers.length]]
+                </paper-tab>
+                <paper-tab name="tags">
+                    <iron-icon icon="my-icons:label"></iron-icon>
+                    [[favoriteTags.length]]
+                </paper-tab>
+            </paper-tabs>
+        </div>
+
+        
+        <iron-pages selected="[[currentView]]" attr-for-selected="name">
+
+            <div name="publications">
+
+                <template is="dom-if" if="[[!favoritePosts.length]]">
+                    <h1>You don't have any favorites publications</h1>
+                </template>
+
+                <div id="posts-list">
+
+                    <template is="dom-if" if="[[favoritePosts.length]]">
+                        <template is="dom-repeat" items="[[favoritePosts]]">
+                            <post-card post="[[item]]" settings="[[settings]]" favorite-posts="{{favoritePosts}}">
+                            </post-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            <div name="users" id="users">
+
+                <paper-input label="Add a user" value="{{addUserInput}}" on-keydown="_checkForEnterOnUserInput">
+                    <span prefix="">@</span>
+                    <paper-icon-button id="addUserButton" icon="my-icons:add" on-tap="_addUser()" suffix="">
+                    </paper-icon-button>
+                </paper-input>
+                <div role="listbox" id="favoriteUsersList">
+                    <template is="dom-repeat" items="[[favoriteUsers]]">
+                        <paper-item>
+                            <paper-item-body>
+                                <a href="/@[[item]]">@[[item]]</a>
+                            </paper-item-body>
+                            <paper-icon-button icon="my-icons:delete" id="deleteUsers" on-tap="_deleteUser()">
+                            </paper-icon-button>
+                        </paper-item>
+
+                    </template>
+                </div>
+            </div>
+
+            <div name="tags" id="tags">
+
+                <paper-input label="Add a tag" value="{{addTagInput}}" on-keydown="_checkForEnterOnTagInput">
+                    <span prefix="">#</span>
+                    <paper-icon-button id="addTagButton" icon="my-icons:add" on-tap="_addTag()" suffix="">
+                    </paper-icon-button>
+                </paper-input>
+                <div role="listbox" id="favoriteTagsList">
+                    <template is="dom-repeat" items="[[favoriteTags]]">
+                        <paper-item>
+                            <paper-item-body>
+                                <a href="/hot/[[item]]">#[[item]]</a>
+                            </paper-item-body>
+                            <paper-icon-button icon="my-icons:delete" id="deleteTags" on-tap="_deleteTag()">
+                            </paper-icon-button>
+                        </paper-item>
+                    </template>
+                </div>
+            </div>
+        </iron-pages>
+
+        <app-drawer id="drawer">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"page-favorites",listeners:{"tags.tap":"_deleteTag","users.tap":"_deleteUser"},properties:{favoritePosts:{type:Array,notify:!0},favoriteUsers:{type:Array,notify:!0},favoriteTags:{type:Array,notify:!0},currentView:{type:String},addTagInput:{type:String},addUserInput:{type:String},deletedUser:{type:String},deletedTag:{type:String}},ready:function(){this.$.toggleDrawerMenu.addEventListener("tap",this._openDrawer.bind(this)),this.$.addTagButton.addEventListener("tap",this._addTag.bind(this)),this.$.addUserButton.addEventListener("tap",this._addUser.bind(this)),this.$.cancelDeleteUserButton.addEventListener("tap",this._cancelDeleteUser.bind(this)),this.$.cancelDeleteTagButton.addEventListener("tap",this._cancelDeleteTag.bind(this)),this.currentView="publications"},_openDrawer:function(){document.getElementById("appshell")._openDrawer()},_addUser:function(){this.push("favoriteUsers",this.addUserInput.toLowerCase()),this.addUserInput=""},_addTag:function(){this.push("favoriteTags",this.addTagInput.toLowerCase()),this.addTagInput=""},_deleteUser:function(e){var t=e.model.item;if(this.deletedUser=t,this.$.toastDeleteUser.open(),"undefined"!=typeof e.model){var s=this.favoriteUsers.indexOf(t);s>-1&&this.splice("favoriteUsers",s,1)}},_deleteTag:function(e){var t=e.model.item;if(this.deletedTag=t,this.$.toastDeleteTag.open(),"undefined"!=typeof e.model){var s=this.favoriteTags.indexOf(t);s>-1&&this.splice("favoriteTags",s,1)}},_cancelDeleteUser:function(){this.push("favoriteUsers",this.deletedUser),this.$.toastDeleteUser.close()},_cancelDeleteTag:function(){this.push("favoriteTags",this.deletedTag),this.$.toastDeleteTag.close()},_checkForEnterOnUserInput:function(e){13===e.keyCode&&this._addUser()},_checkForEnterOnTagInput:function(e){13===e.keyCode&&this._addTag()}});</script></body></html>

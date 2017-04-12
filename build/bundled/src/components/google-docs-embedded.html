@@ -1,0 +1,41 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../shared-styles.html">
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../components/responsive-iframe.html">
+</head><body><dom-module id="google-docs-embedded">
+
+    <template>
+
+        <style include="shared-styles">
+
+            :host {
+                width: 100%;
+            }
+
+            #toolbar {
+                background-color: var(--app-primary-background-color);
+                padding: 8px 16px;
+                text-align: right;
+            }
+
+        </style>
+
+        <div id="docs">
+            <div id="toolbar">
+                <paper-icon-button id="openDocumentButton" on-tap="_openDocument()" icon="my-icons:visibility">
+                </paper-icon-button>
+            </div>
+            <div id="file">
+                <responsive-iframe url="[[url]]" ratio="1:1"></responsive-iframe>
+            </div>
+        </div>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"google-docs-embedded",properties:{url:{type:String}},ready:function(){this.$.openDocumentButton.addEventListener("tap",this._openDocument.bind(this))},_openDocument:function(){var e=/https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?[_?=\-.a-zA-Z0-9-]*\//g,o=e.exec(this.url)[0];window.open(o)}});</script></body></html>

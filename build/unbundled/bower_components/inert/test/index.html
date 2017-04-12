@@ -1,0 +1,28 @@
+<!DOCTYPE html><html><head>
+  <meta charset="utf-8">
+  <title>Tests</title>
+  <link href="../node_modules/mocha/mocha.css" rel="stylesheet">
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/whatwg-fetch/fetch.js"></script>
+  <script src="helpers/fixture.js"></script>
+</head>
+
+<body>
+
+  
+  <div id="mocha"></div>
+
+  
+  <script>mocha.setup("bdd"),window.onload=function(){function t(t,e){var a=function(t){for(var e=[];t.parent.title;)e.push(t.parent.title),t=t.parent;return e.reverse()};n.push({name:t.title,result:!1,message:e.message,stack:e.stack,titles:a(t)})}var e=mocha.run(),n=[];e.on("end",function(){window.mochaResults=e.stats,window.mochaResults.reports=n}),e.on("fail",t)},mocha.checkLeaks();</script>
+
+  
+  <script src="../dist/inert.js"></script>
+
+  
+  <script src="index.js"></script>
+
+
+
+
+</body></html>

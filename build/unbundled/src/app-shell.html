@@ -1,0 +1,139 @@
+<html><head><link rel="import" href="./../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="./../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="./../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="./../bower_components/app-route/app-location.html">
+<link rel="import" href="./../bower_components/app-route/app-route.html">
+
+<link rel="import" href="./../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="api/steemjs/steem-get-account-lite.html">
+<link rel="import" href="components/drawer-content.html">
+<link rel="import" href="components/custom-router.html">
+
+<script src="scripts/intl-relativeformat-with-locales.min.js"></script>
+
+</head><body><dom-module id="app-shell">
+
+    <template>
+
+        <style>
+
+            :host {
+                --app-primary-color: #F44336;
+                --app-light-primary-color: #ff5041;
+                --app-dark-primary-color: #c3362b;
+                --app-ultra-dark-primary-color: #7a221b;
+                --app-primary-text-color: #eeeeee;
+                --app-secondary-color: #3F51B5;
+                --app-secondary-text-color: #eeeeee;
+                --app-icon-color: #FFFFFF;
+                --app-divider-color: #BDBDBD;
+                --app-primary-background-color: #eeeeee;
+                --app-secondary-background-color: #ffffff;
+                --app-background-primary-text-color: #282828;
+                --app-background-secondary-text-color: #666666;
+
+
+                display: block;
+            }
+
+            #drawer {
+                z-index: 8 !important;
+            }
+
+            #copyTextInput {
+                position: absolute;
+                z-index: -1;
+                visibility: hidden;
+            }
+
+        </style>
+
+        <meta name="theme-color" content="[[settings.theme.darkPrimaryColor]]">
+
+        
+        <app-localstorage-document key="settings" data="{{settings}}"></app-localstorage-document>
+        <app-localstorage-document key="favoritePosts" data="{{favoritePosts}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteUsers" data="{{favoriteUsers}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteTags" data="{{favoriteTags}}"></app-localstorage-document>
+
+        <app-localstorage-document key="favoriteFiles" data="{{favoriteFiles}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedFiles" data="{{favoriteSharedFiles}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteFolders" data="{{favoriteFolders}}"></app-localstorage-document>
+
+        <app-localstorage-document key="favoriteProducts" data="{{favoriteProducts}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedProducts" data="{{favoriteSharedProducts}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteCategories" data="{{favoriteCategories}}"></app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedCategories" data="{{favoriteSharedCategories}}"></app-localstorage-document>
+
+        <app-localstorage-document key="manualOrdersHistory" data="{{manualOrdersHistory}}"></app-localstorage-document>
+
+        
+        <steem-get-account-lite account-name="[[_username]]" account="{{settings.user.account}}">
+        </steem-get-account-lite>
+
+        
+        <app-location route="{{route}}"></app-location>
+
+        <custom-router route="{{route}}" data-url1="{{dataUrl1}}" data-url2="{{dataUrl2}}" data-url3="{{dataUrl3}}">
+        </custom-router>
+
+        
+        <app-drawer id="drawer" opened="{{_isDrawerOpen}}" swipe-open="">
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
+        
+        <iron-pages id="pages" selected="[[selectedPage]]" attr-for-selected="name" fallback-selection="404" role="main">
+
+            <page-home name="home"></page-home>
+
+            <page-explore name="explore" favorite-posts="{{favoritePosts}}" favorite-tags="{{favoriteTags}}" id="explorePage" current-sorting="{{dataUrl1}}" current-tag="{{dataUrl2}}" settings="[[settings]]">
+            </page-explore>
+
+            <page-post name="post" settings="[[settings]]" category="[[dataUrl1]]" author="[[dataUrl2]]" post-name="[[dataUrl3]]">
+            </page-post>
+
+            <page-favorites name="favorites" settings="[[settings]]" favorite-posts="{{favoritePosts}}" favorite-tags="{{favoriteTags}}" favorite-users="{{favoriteUsers}}">
+            </page-favorites>
+
+            <page-tools name="tools"></page-tools>
+
+            <page-tips name="tips"></page-tips>
+
+            <page-profile name="profile" settings="[[settings]]" user-name="[[dataUrl1]]">
+            </page-profile>
+
+            <page-files name="files" settings="[[settings]]" favorite-files="{{favoriteFiles}}" favorite-folders="{{favoriteFolders}}" favorite-shared-files="{{favoriteSharedFiles}}">
+            </page-files>
+
+            <page-products name="products" settings="[[settings]]" favorite-products="{{favoriteProducts}}" favorite-categories="{{favoriteCategories}}" favorite-shared-products="{{favoriteSharedProducts}}" favorite-shared-categories="{{favoriteSharedCategories}}" manual-orders-history="{{manualOrdersHistory}}">
+            </page-products>
+
+            <page-settings name="settings" settings="{{settings}}">
+            </page-settings>
+
+            <page-info name="info" settings="{{settings}}">
+            </page-info>
+
+            <page-support name="support" settings="{{settings}}">
+            </page-support>
+
+            <page-login name="login" settings="{{settings}}">
+            </page-login>
+
+            <page-404 name="404" settings="[[settings]]">
+            </page-404>
+        </iron-pages>
+
+        <paper-toast id="toast" text=""></paper-toast>
+
+        <input type="text" id="copyTextInput" value="">
+
+    </template>
+
+    <script>Polymer({is:"app-shell",properties:{selectedPage:{type:String,reflectToAttribute:!0,observer:"_selectedPageChanged"},route:{type:Object},settings:{type:Object},favoritePosts:{type:Array},favoriteUsers:{type:Array},favoriteTags:{type:Array},favoriteFiles:{type:Array},favoriteSharedFiles:{type:Array},favoriteFolders:{type:Array},favoriteProducts:{type:Array},favoriteSharedProducts:{type:Array},favoriteCategories:{type:Array},favoriteSharedCategories:{type:Array},manualOrdersHistory:{type:Array},_isDrawerOpen:{type:Boolean},_username:{type:String}},observers:["_routePageChanged(dataUrl1, dataUrl2, dataUrl3)","_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)","_userNameChanged(settings.user.name)","_notifyChangeRoute(route)"],ready:function(){this.account={},this._isDrawerOpen=!1,"undefined"==typeof this.favoritePosts&&(this.favoritePosts=[]),"undefined"==typeof this.favoriteUsers&&(this.favoriteUsers=["esteem8"]),"undefined"==typeof this.favoriteTags&&(this.favoriteTags=["esteem8"]),"undefined"==typeof this.favoriteFolders&&(this.favoriteFolders=[{name:"esteem8"},{name:"media steem"},{name:"media image esteem8"}]),"undefined"==typeof this.favoriteFiles&&(this.favoriteFiles=this.getDefaultFiles()),"undefined"==typeof this.favoriteSharedFiles&&(this.favoriteSharedFiles=[]),"undefined"==typeof this.favoriteProducts&&(this.favoriteProducts=this.getDefaultProducts()),"undefined"==typeof this.favoriteSharedProducts&&(this.favoriteSharedProducts=[]),"undefined"==typeof this.favoriteCategories&&(this.favoriteCategories=[{name:"logo",color:"#F44336",textColor:"#eeeeee",colorName:"Red",parent:"branding"},{name:"branding",color:"#3f51b5",textColor:"#eeeeee",colorName:"Indigo",parent:""}]),"undefined"==typeof this.favoriteSharedCategories&&(this.favoriteSharedCategories=[]),"undefined"==typeof this.manualOrdersHistory&&(this.manualOrdersHistory=[]),"undefined"==typeof this.settings&&this.setDefaultSettings()},_notifyChangeRoute:function(e){console.log(e)},attached:function(){this._themeChanged();var e=this.getDefaultSettings();this.settings.appVersion!=e.appVersion&&(this._mergeDefaultSettings(),this.showToast("App version "+e.appVersion+" successfully updated"))},_routePageChanged:function(e,t,a){var e=e||"";""==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="home"):"login"==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="login"):"favorites"==e?(this.dataUrl3="",this.selectedPage="favorites"):"settings"==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="settings"):"info"==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="info"):"tools"==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="tools"):"support"==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="support"):"files"==e?(this.dataUrl3="",this.selectedPage="files"):"products"==e?(this.dataUrl3="",this.selectedPage="products"):"tips"==e?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="tips"):this._isPageProfile()?(this.dataUrl2="",this.dataUrl3="",this.selectedPage="profile"):this._isPageExplore()?(this.dataUrl3="",this.selectedPage="explore"):this._isPagePost()?this.selectedPage="post":this.selectedPage="404",this.$.drawer.close()},_isPageExplore:function(){var e="undefined"!=typeof this.dataUrl1?this.dataUrl1:"";return"created"==e||"created/"==e||"hot"==e||"hot/"==e||"trending"==e||"trending/"==e||"active"==e||"active/"==e},_isPagePost:function(){var e="undefined"!=typeof this.dataUrl2?this.dataUrl2:"";return"@"==e.charAt(0)},_isPageProfile:function(){var e="undefined"!=typeof this.dataUrl1?this.dataUrl1:"";return"@"==e.charAt(0)},_selectedPageChanged:function(e){var e=e||this.selectedPage,t=this.resolveUrl("pages/page-"+e+".html");this.importHref(t,null,this._showPage404,!0)},_showPage404:function(){this.selectedPage="404"},_themeChanged:function(e,t,a,o,s,i,r,n,m,d,l){this.customStyle["--app-primary-color"]=e||this.settings.theme.primaryColor,this.customStyle["--app-secondary-color"]=t||this.settings.theme.secondaryColor,this.customStyle["--app-dark-primary-color"]=a||this.settings.theme.darkPrimaryColor,this.customStyle["--app-light-primary-color"]=o||this.settings.theme.lightPrimaryColor,this.customStyle["--app-primary-text-color"]=s||this.settings.theme.primaryTextColor,this.customStyle["--app-secondary-text-color"]=i||this.settings.theme.secondaryTextColor,this.customStyle["--app-ultra-dark-primary-color"]=r||this.settings.theme.ultraDarkPrimaryColor,this.customStyle["--app-primary-background-color"]=n||this.settings.theme.primaryBackgroundColor,this.customStyle["--app-secondary-background-color"]=m||this.settings.theme.secondaryBackgroundColor,this.customStyle["--app-background-primary-text-color"]=d||this.settings.theme.backgroundPrimaryTextColor,this.customStyle["--app-background-secondary-text-color"]=l||this.settings.theme.backgroundSecondaryTextColor,Polymer.updateStyles()},_openDrawer:function(){this._isDrawerOpen=!0},_userNameChanged:function(e){this._username=e},showToast:function(e){var t=this.$.toast;t.close(),t.setAttribute("text",e),t.open()},copyToClipboard:function(e){var t=document.getElementById("copyTextInput");t.setAttribute("value",e),t.focus(),document.execCommand("copy")},isFavoritePost:function(e){return this.favoritePosts.indexOf(e)!=-1},isFavoriteUser:function(e){return this.favoriteUsers.indexOf(e)!=-1},isFavoriteTag:function(e){return this.favoriteTags.indexOf(e)!=-1},addFavoritePost:function(e){this.push("favoritePosts",e)},addFavoriteUser:function(e){this.push("favoriteUsers",e)},addFavoriteTag:function(e){this.push("favoriteTags",e)},addFavoriteFile:function(e){this.push("favoriteFiles",e)},removeFavoritePost:function(e){var t=this.favoritePosts.indexOf(e);this.splice("favoritePosts",t,1)},removeFavoriteUser:function(e){var t=this.favoritePosts.indexOf(e);this.splice("favoriteUsers",t,1)},removeFavoriteTag:function(e){var t=this.favoriteTags.indexOf(e);this.splice("favoriteTags",t,1)},removeFavoriteFile:function(e){var t=this.favoritePosts.indexOf(e);this.splice("favoriteFiles",t,1)},getSettings:function(){return this.settings},setSettings:function(e){this.settings=e},getDefaultFiles:function(){for(var e=[{name:"ESTEEM8 Logo",id:"1",content:"https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center%203.png?raw=true",manualTags:["es8","logo","purple","/esteem8"],defaultTags:["github.com","media","image","images","photo","photos"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center%203.png?raw=true"},{name:"ESTEEM8 Logo",id:"2",content:"https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true",manualTags:["es8","logo","red","/esteem8"],defaultTags:["github.com","media","image","images","photo","photos"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true"},{name:"Steem presentation",id:"3",content:"https://www.youtube.com/watch?v=xZmpCAqD7hs",manualTags:["steem","presentation","what","a thing"],defaultTags:["www.youtube.com","media","video","youtube","google"],image:"https://img.youtube.com/vi/xZmpCAqD7hs/0.jpg"},{name:"ES8 Presentation",id:"4",content:"https://docs.google.com/presentation/d/1xEWJQGMOGEVvNVW0Rf245TE4nYsRVOge29H4V6OERJ0/edit#slide=id.p",manualTags:["esteem8","presentation","what","a thing","/esteem8/docs"],defaultTags:["docs.google.com","file","doc","docs","documents","document","files","google","presentation"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/google/slides.png?raw=true"},{name:"Welcome",id:"5",content:"https://github.com/esteem8app/esteem8app.github.io/blob/master/products/welcome.md",manualTags:["esteem8"],defaultTags:["github.com","file","files","doc","docs","documents","document","github","it","/esteem8/docs"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true"},{name:"esteem8app.github.io",id:"6",manualTags:["esteem8","welcome"],content:"# ESTEEM8 GitHub \n \n https://github.com/esteem8app/esteem8app.github.io \n \n [button$text=open&icon=visibility&url=https://github.com/esteem8app/esteem8app.github.io]",manualTags:["esteem8","repository"],defaultTags:["github.com","file","files","doc","docs","documents","document","github","it"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true"},{name:"ES8 Docs",id:"7",manualTags:["es8"],content:"[iframe$ratio=1:1&url=https://esteem8app.github.io/doc-viewer/index.html?repository=https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/contributing-kit]",defaultTags:["esteem8app.github.io","file","files","doc","docs","documents","document","github","it","/esteem8/docs"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/github/octocat.png?raw=true"},{name:"Dot matrix",id:"8",content:"https://soundcloud.com/viperrecordings/mob-tactics-dot-matrix?in=420-matias/sets/faster-than-light-dnb",defaultTags:["soundcloud.com","media","sound","soundcloud"],manualTags:["you","are","dot","/my-sound"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/soundcloud.png?raw=true"},{name:"Holy call",id:"9",content:"https://soundcloud.com/bad-taste-recordings/aeph-holy-call",defaultTags:["soundcloud.com","media","sound","soundcloud"],manualTags:["holy"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/soundcloud.png?raw=true"},{name:"Forward Thought",id:"10",content:"# Sounds \n \n https://soundcloud.com/techitch/forward-thought-clip  \n \n **We have the ability to think forward to the future.**",defaultTags:["file","media","sound","file","files","doc","docs","documents","document","md","markdown"],manualTags:["future","/my-sound"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/txt.png?raw=true"},{name:"Sytem Failure",id:"11",content:"https://soundcloud.com/futuresickness/difend-incube-sytem-failure?in=420-matias/sets/faster-than-light-dnb",defaultTags:["soundcloud.com","media","sound","soundcloud"],manualTags:["/my-sound"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/soundcloud.png?raw=true"},{name:"Soundsystem Heavyweight ",id:"12",content:"https://soundcloud.com/eatbrain/hypoxia-feat-mc-seko-soundsystem-heavyweight-eatbrain025",defaultTags:["soundcloud.com","media","sound","soundcloud"],manualTags:["/my-sound","heavyweight"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/soundcloud.png?raw=true"},{name:"LET'S PLAY MINECRAFT SURVIVAL GAMES",id:"13",content:"https://www.pornhub.com/view_video.php?viewkey=ph55e3269544303",manualTags:["video"],defaultTags:["www.pornhub.com"],image:"https://github.com/esteem8app/esteem8app.github.io/blob/master/src/images/other/txt.png?raw=true"}],t=0;t<e.length;t++)e[t].created=Date.now();return e},getDefaultProducts:function(){for(var e=[{name:"ESTEEM8 Logo",id:"1",shortDescription:"monofilament garage woman military-grade otaku numinous towards footage RAF urban Kowloon singularity neural network. sign pen cyber- engine pre- media woman car tank-traps military-grade chrome hacker market 3D-printed. systemic corrupted footage free-market -space claymore mine boat stimulate faded into saturation point beef noodles 8-bit neon.",longDescription:"## SYSTEMA ASSAULT \n \n wonton soup lights denim free-market BASE jump smart- bicycle Chiba semiotics realism franchise RAF. human free-market marketing towards alcohol alcohol nano- courier market cartel monofilament boy Legba construct. geodesic systemic katana advert man human chrome engine receding meta- Chiba tower construct media. towards denim drone nano- sensory gang paranoid Legba woman media corrupted film skyscraper saturation point. fluidity youtube carbon digital systema rebar ablative neon refrigerator sensory market face forwards alcohol free-market. neural sentient narrative camera crypto- singularity pre- ablative Legba Tokyo DIY RAF sensory carbon. \n \n sub-orbital engine cyber- pen wonton soup cartel math- render-farm -ware range-rover fluidity grenade corporation refrigerator. shoes jeans claymore mine stimulate meta- skyscraper franchise DIY alcohol San Francisco vehicle vehicle singularity nodal point. pistol wonton soup pre- cardboard gang vinyl sign pistol geodesic pre- sprawl singularity sentient construct. chrome A.I. -space tanto military-grade jeans otaku courier 8-bit uplink assault meta- knife dead. knife marketing otaku garage smart- artisanal courier physical shanty town narrative cardboard A.I. DIY meta-. tanto fluidity drugs car pistol tattoo sign motion man free-market bridge -ware San Francisco silent. \n \n industrial grade bomb woman footage bomb euro-pop rain soul-delay physical realism sunglasses network sprawl systemic. faded tiger-team beef noodles shanty town artisanal military-grade sentient artisanal skyscraper beef noodles euro-pop gang augmented reality urban. alcohol towards woman engine order-flow convenience store denim footage tower warehouse long-chain hydrocarbons Shibuya systemic tiger-team. plastic faded cyber- convenience store neural advert bomb digital car hotdog sunglasses fetishism RAF tiger-team. face forwards j-pop carbon franchise footage order-flow towards apophenia weathered order-flow convenience store papier-mache Kowloon courier. soul-delay geodesic claymore mine -ware receding San Francisco narrative drugs pistol neural jeans computer media otaku. \n physical math- geodesic tank-traps spook vehicle semiotics towards receding Tokyo footage tank-traps media garage. neon papier-mache kanji papier-mache plastic marketing face forwards semiotics claymore mine paranoid warehouse receding rain human. claymore mine monofilament urban sign paranoid sprawl dolphin motion advert RAF office human Legba drone. monofilament garage woman military-grade otaku numinous towards footage RAF urban Kowloon singularity neural network. sign pen cyber- engine pre- media woman car tank-traps military-grade chrome hacker market 3D-printed. systemic corrupted footage free-market -space claymore mine boat stimulate faded into saturation point beef noodles 8-bit neon.",options:[{name:"color",variants:[{type:"red",stock:"42"},{type:"purple",stock:"42"}]}],priceValue:"0",priceType:"STEEM",tags:["branding"],contents:["https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center.png?raw=true","https://github.com/esteem8app/esteem8app.github.io/blob/master/logo/Esteem8%20logo%20center%203.png?raw=true"],stock:"42"}],t=0;t<e.length;t++)e[t].created=Date.now();return e},getDefaultSettings:function(){return{appVersion:"0.0.8.0",user:{name:"",password:"",account:{profileImage:"",coverImage:"",followers:[],following:[]}},theme:{primaryColor:"#673AB7",secondaryColor:"#FF5722",darkPrimaryColor:"#522e92",lightPrimaryColor:"#7c46dc",ultraDarkPrimaryColor:"#341d5c",primaryTextColor:"#eeeeee",secondaryTextColor:"#eeeeee",dividerColor:"#BDBDBD",primaryBackgroundColor:"#eeeeee",secondaryBackgroundColor:"#ffffff",backgroundPrimaryTextColor:"#282828",backgroundSecondaryTextColor:"#666666"},display:{showCardContent:!0,showCardTags:!0,showCardImage:!0,imageResolution:"medium"},content:{emojiSheet:"emojione",imageProxyUrl:"https://steemitimages.com/",customImageProxyUrls:[],defaultImageProxyUrls:["https://steemitimages.com/"],textAlign:"left"},support:{enableSupportApplication:!1,enableSupportUpdates:!1},network:{websocketUrl:"wss://steemd.steemit.com",chainName:"steem"},steem:{customWebsocketUrls:[],defaultWebsocketUrls:["wss://steemd.steemit.com","wss://steemd.steemitdev.com","wss://node.steem.ws ","wss://this.piston.rocks","wss://seed.bitcoiner.me"]},golos:{customWebsocketUrls:[],defaultWebsocketUrls:["wss://ws.golos.io"]}}},setDefaultSettings:function(){this.settings=this.getDefaultSettings()},_mergeDefaultSettings:function(){var e=this.getDefaultSettings(),t=this.settings;t.appVersion=e.appVersion,this.set("settings",Object.assign(e,t)),this.favoriteFiles=this.getDefaultFiles(),this.favoriteProducts=this.getDefaultProducts(),this.favoriteFolders=[{name:"esteem8"},{name:"media steem"},{name:"media image esteem8"},{name:"/esteem8/docs"},{name:"/my-sound"}]}});</script>
+</dom-module></body></html>

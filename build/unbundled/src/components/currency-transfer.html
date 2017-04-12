@@ -1,0 +1,60 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../shared-styles.html">
+
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="../api/steemjs/steem-get-account.html">
+
+<link rel="import" href="my-icons.html">
+</head><body><dom-module id="currency-transfer">
+
+    <template>
+
+        <style include="shared-styles">
+            /* GENERAL */
+            * {
+
+            }
+
+            a {
+                color: var(--app-secondary-color);
+                text-decoration: none;
+            }
+
+            iron-image, iron-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 40px;
+                color: var(--app-dark-primary-color);
+            }
+
+            div[secondary] {
+                overflow: visible;
+            }
+
+        </style>
+
+        
+
+        <paper-icon-item>
+            
+            <iron-icon icon="my-icons:person-circle" item-icon=""></iron-icon>
+            <paper-item-body two-line="">
+                <div>
+                    <a href="/@[[transfer.operation.from]]">@[[transfer.operation.from]]</a> [[transfer.type]] [[transfer.operation.amount]] to
+                    <a href="/@[[transfer.operation.to]]">@[[transfer.operation.to]]</a>
+                </div>
+                <div secondary="" hidden="[[!transfer.operation.memo]]">
+                    [[transfer.operation.memo]]
+                </div>
+            </paper-item-body>
+        </paper-icon-item>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"currency-transfer",properties:{transfer:{type:Object}}});</script></body></html>

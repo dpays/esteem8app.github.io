@@ -1,0 +1,206 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../../bower_components/google-chart/google-chart.html">
+
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-icon-button">
+
+<link rel="import" href="../api/github/get-repository-overview.html">
+<link rel="import" href="../api/other/url-get-file.html">
+<link rel="import" href="../shared-styles.html">
+</head><body><dom-module id="github-repository-overview">
+
+    <style include="shared-styles">
+
+        :host {
+            width: 100%;
+        }
+
+        .one-card, .two-card, .card {
+            width: 100%;
+        }
+
+        paper-card {
+            width: calc(100% - 32px);
+            height: calc(100% - 32px);
+            margin: 16px;
+        }
+
+        .two-card {
+            @apply(--layout-horizontal);
+        }
+
+        .two-card .card {
+            @apply(--layout-flex);
+            min-height: 220px;
+        }
+
+        @media screen and (max-width: 560px) {
+
+            .two-card {
+                @apply(--layout-vertical);
+            }
+        }
+
+        #basicInfoCard, #stateCounterCard, #moreInfoCard, #chartCard {
+            background-color: var(--app-secondary-background-color);
+        }
+
+        .title {
+            display: block;
+            overflow: auto;
+        }
+
+        .title h3 {
+            display: inline;
+        }
+
+        h3, h3 a, a paper-icon-button {
+            color: var(--app-background-primary-text-color);
+            text-decoration: none;
+        }
+
+        paper-item-body div {
+            padding-right: 16px;
+        }
+
+        #websiteButton {
+            float: right;
+        }
+
+        google-chart {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            background-color: transparent;
+        }
+
+
+    </style>
+
+    <template>
+
+        <get-repository-overview repository="[[repository]]" repository-object="{{_repositoryObject}}">
+        </get-repository-overview>
+
+        <url-get-file url="[[_repositoryObject.languages_url]]" response-text="{{_repoLanguagesText}}">
+        </url-get-file>
+
+        <div class="one-card">
+
+            <paper-card id="basicInfoCard">
+
+                <div class="card-content">
+                    <div class="title">
+                        <h3>
+                            <a href="[[_repositoryObject.owner.html_url]]" target="_blank">[[_repositoryObject.owner.login]]</a>
+                            /&nbsp;<a href="[[_repositoryObject.html_url]]" target="_blank">[[_repositoryObject.name]]</a>
+                        </h3>
+                        <template is="dom-if" if="[[_repositoryObject.homepage]]">
+                            <a id="websiteButton" hidden="[[!_repositoryObject.has_pages]]" href="[[_repositoryObject.homepage]]" target="_blank">
+                                <paper-icon-button icon="my-icons:web"></paper-icon-button>
+                            </a>
+                        </template>
+                    </div>
+
+
+                    <p>[[_repositoryObject.description]]</p>
+
+                    <hr>
+                    <span>
+                        <span class="background-primary-text">Created</span>
+                        <span class="background-secondary-text">[[_computeTimeFromNow(_repositoryObject.created_at)]]</span>
+                    </span>&nbsp;|&nbsp;
+                    <span>
+                        <span class="background-primary-text">Updated</span>
+                        <span class="background-secondary-text">[[_computeTimeFromNow(_repositoryObject.updated_at)]]</span>
+                    </span>&nbsp;|&nbsp;
+                    <span>
+                        <span class="background-primary-text">Latest push</span>
+                        <span class="background-secondary-text">[[_computeTimeFromNow(_repositoryObject.pushed_at)]]</span>
+                    </span>
+                </div>
+            </paper-card>
+
+        </div>
+
+        <div class="two-card container">
+
+            <div class="card">
+                <paper-card id="chartCard">
+                    <div class="card-content">
+                        <span>Languages</span>
+                        <google-chart id="languagechart" type="pie" cols="[{&quot;label&quot;:&quot;Language&quot;, &quot;type&quot;:&quot;string&quot;}, {&quot;label&quot;:&quot;files number&quot;, &quot;type&quot;:&quot;number&quot;}]" rows="[[_repoLanguageChart]]" options="{&quot;legend&quot;: &quot;none&quot;}">
+                        </google-chart>
+                    </div>
+                </paper-card>
+            </div>
+
+            <div class="card">
+                <paper-card id="stateCounterCard">
+                    <div class="card-content">
+                        <div role="listbox">
+
+                            <paper-icon-item id="watchersItem" on-tap="_openWatchers()">
+                                <iron-icon icon="my-icons:visibility" item-icon=""></iron-icon>
+                                <paper-item-body>
+                                    <div>Watchers</div>
+                                </paper-item-body>
+                                <div>[[_repositoryObject.subscribers_count]]</div>
+                            </paper-icon-item>
+
+                            <paper-icon-item id="stargazersItem" on-tap="_openStargazers()">
+                                <iron-icon icon="my-icons:star" item-icon=""></iron-icon>
+                                <paper-item-body>
+                                    <div>Stargazers</div>
+                                </paper-item-body>
+                                <div>[[_repositoryObject.stargazers_count]]</div>
+                            </paper-icon-item>
+
+                            <paper-icon-item id="forksItem" on-tap="_openForks()">
+                                <iron-icon icon="my-icons:share" item-icon=""></iron-icon>
+                                <paper-item-body>
+                                    <div>Fork</div>
+                                </paper-item-body>
+                                <div>[[_repositoryObject.network_count]]</div>
+                            </paper-icon-item>
+                        </div>
+                    </div>
+                </paper-card>
+            </div>
+
+        </div>
+
+        <div class="one-card">
+            <paper-card id="moreInfoCard">
+                <div class="card-content">
+                    <paper-button id="openCodeButton" on-tap="_openCode()">
+                        Code
+                    </paper-button>
+                    <paper-button id="openProjectsButton" on-tap="_openProjects()">
+                        Projects
+                    </paper-button>
+
+                    <paper-button id="openIssuesButton" hidden="[[!_repositoryObject.has_issues]]" on-tap="_openIssues()">
+                        [[_repositoryObject.open_issues]] Issues
+                    </paper-button>
+
+                    <paper-button id="openWikiButton" hidden="[[!_repositoryObject.has_wiki]]" on-tap="_openWiki()">
+                        Wiki
+                    </paper-button>
+
+                    <paper-button id="openGithubButton" on-tap="_openGithub()">
+                        More...
+                    </paper-button>
+                </div>
+            </paper-card>
+        </div>
+
+    </template>
+</dom-module>
+
+<script>!function(){"use strict";Polymer({is:"github-repository-overview",behaviors:[Polymer.AppLocalizeBehavior],properties:{repository:{type:String},repositoryView:{type:String,notify:!0},_repositoryObject:{type:Object},_repoLanguagesText:{type:String,observer:"_computeLanguageForChart"},_repoLanguageChart:{type:Array}},ready:function(){this.$.watchersItem.addEventListener("tap",this._openWatchers.bind(this)),this.$.stargazersItem.addEventListener("tap",this._openStargazers.bind(this)),this.$.forksItem.addEventListener("tap",this._openForks.bind(this)),this.$.openCodeButton.addEventListener("tap",this._openCode.bind(this)),this.$.openProjectsButton.addEventListener("tap",this._openProjects.bind(this)),this.$.openIssuesButton.addEventListener("tap",this._openIssues.bind(this)),this.$.openWikiButton.addEventListener("tap",this._openWiki.bind(this)),this.$.openGithubButton.addEventListener("tap",this._openGithub.bind(this))},_computeTimeFromNow:function(t){return new IntlRelativeFormat("en-us").format(new Date(t))},_computeLanguageForChart:function(){var t=JSON.parse(this._repoLanguagesText),e=[];for(var i in t)if(t.hasOwnProperty(i)){var o=t[i],n=[];n.push(i),n.push(o),e.push(n)}this._repoLanguageChart=e,this.$.languagechart.redraw()},_openWatchers:function(){window.open(this.repository+"/watchers")},_openStargazers:function(){window.open(this.repository+"/stargazers")},_openForks:function(){window.open(this.repository+"/network/members")},_openCode:function(){this.repositoryView="files"},_openProjects:function(){window.open(this.repository+"/projects")},_openIssues:function(){this.repositoryView="tasks"},_openWiki:function(){window.open(this.repository+"/wiki")},_openGithub:function(){window.open(this.repository)}})}();</script></body></html>

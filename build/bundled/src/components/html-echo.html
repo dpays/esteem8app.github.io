@@ -1,0 +1,178 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+
+<link rel="import" href="post-wrapper.html">
+<link rel="import" href="post-path-list.html">
+<link rel="import" href="github-repository.html">
+<link rel="import" href="github-repository-file-view.html">
+<link rel="import" href="google-docs-embedded.html">
+<link rel="import" href="es8-button.html">
+<link rel="import" href="email-form.html">
+<link rel="import" href="prism-render.html">
+
+<script src="../scripts/sanitize-html.min.js"></script>
+
+</head><body><dom-module id="html-echo">
+    <style>
+
+        /* GENERAL */
+        :host {
+            display: block;
+            overflow: auto;
+        }
+
+        ::selection {
+            background: var(--app-light-primary-color);
+            color: var(--app-primary-text-color);
+        }
+
+        .markdown-html p {
+
+        }
+
+        .markdown-html .primary-color {
+            color: var(--app-primary-color);
+        }
+
+        .markdown-html .secondary-color {
+            color: var(--app-secondary-color);
+        }
+
+        .markdown-html .bold {
+            font-weight: bold;
+        }
+
+        .markdown-html .low-priority {
+            color: #8BC34A;
+        }
+
+        .markdown-html .medium-priority {
+            color: #FFEB3B;
+        }
+
+        .markdown-html .high-priority {
+            color: #FF5722;
+        }
+
+        .markdown-html .bold {
+            font-weight: bold;
+        }
+
+        .markdown-html .bold {
+            font-weight: bold;
+        }
+
+        .markdown-html p {
+            margin-top: 18px;
+            margin-bottom: 18px;
+            @apply(--content-theme-p);
+        }
+
+        .markdown-html blockquote {
+            margin-left: 0;
+            margin-right: 0;
+            padding: 4px;
+            padding-left: 32px;
+            padding-right: 16px;
+            border-left: solid 2px var(--app-secondary-color);
+            background-color: rgba(128, 128, 128, .1);
+        }
+
+
+        /* BASIC */
+        .markdown-html a {
+            color: var(--app-secondary-color) !important;
+            text-decoration: none;
+        }
+
+        .markdown-html * {
+            font-family: 'Open Sans', 'Roboto', sans-serif;
+        }
+
+        .markdown-html h1, .markdown-html h2, .markdown-html h3, .markdown-html h4, .markdown-html h5, .markdown-html h6 {
+            color: var(--app-background-primary-text-color);
+            font-family: 'Roboto', 'Open Sans', sans-serif;
+        }
+
+        .markdown-html img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            @apply(--content-theme-img);
+        }
+
+        /* TABLES */
+        .markdown-html table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: scroll;
+        }
+
+        .markdown-html thead {
+            background-color: rgba(128, 128, 128, .2);
+        }
+
+        .markdown-html table, .markdown-html th, .markdown-html td {
+            border: 1px solid #ddd;
+        }
+
+        .markdown-html th, .markdown-html td {
+            padding: 8px;
+        }
+
+        .markdown-html th a, .markdown-html td a {
+            text-decoration: none;
+        }
+
+        .markdown-html th:hover, .markdown-html td:hover {
+            background-color: rgba(128, 128, 128, .10);
+        }
+
+        .markdown-html th {
+            font-weight: bold;
+        }
+
+        .markdown-html tr:hover {
+            background-color: rgba(128, 128, 128, .15);
+        }
+
+        .markdown-html th:empty, .markdown-html td:empty {
+            display: none;
+        }
+
+        /* APP Elements */
+        .markdown-html post-path-list {
+            width: 100%;
+        }
+
+        .markdown-html post-wrapper {
+            width: 100%;
+        }
+
+        /* CUSTOM */
+        .markdown-html .hidden {
+            display: none;
+        }
+
+        .markdown-html .secondary-color {
+            color: var(--app-secondary-color);
+        }
+
+        .markdown-html .primary-color {
+            color: var(--app-primary-color);
+        }
+
+    </style>
+    <template>
+        <marked-element markdown="[[_htmlDisplayed]]">
+            <div class="markdown-html">[[_htmlDisplayed]]</div>
+        </marked-element>
+    </template>
+</dom-module>
+
+
+
+<script>!function(){Polymer({is:"html-echo",properties:{html:{type:String},_htmlDisplayed:{type:String},_emoji:{type:Object}},observers:["_htmlChanged(html)"],ready:function(){},_htmlChanged:function(e){var e=sanitizeHtml(e,{allowedTags:["h3","h4","h5","h6","blockquote","p","a","ul","ol","nl","li","b","i","strong","em","strike","code","hr","br","div","table","thead","caption","tbody","tr","th","td","pre","responsive-iframe"],allowedAttributes:{a:["href","name","target"],img:["src"]},selfClosing:["img","br","hr","area","base","basefont","input","link"],allowedSchemes:["http","https","ftp","mailto"],allowedSchemesByTag:{},allowProtocolRelative:!0});e.includes("wait for rewards."),e.includes("You can create your own idea");var r=/\[(iframe|steem tag|button|postWrapper|form)(\$)?([\/.=&@:a-zA-Z0-9\?\- ]+)?]/gm;e=e.replace(r,function(e){var e=e.replace("[",""),e=e.replace("]",""),r=e.split("$")[0],a=e.split("$")[1].split("&")||[],t=[],o="";switch(r){case"iframe":o="responsive-iframe",t.push(["prompt-user","true"]);break;case"postWrapper":o="post-wrapper";break;case"button":o="es8-button";break;case"form":o="email-form"}for(var s=t,i=0;i<a.length;i++){var p=[],c=a[i].split("=")[0],m=a[i].replace(c,"").replace("=","");p.push(c),p.push(m),s.push(p)}for(var n="<"+o+" ",i=0;i<s.length;i++)n+=s[i][0]+'="'+s[i][1]+'" ';return n+="></"+o+">"});var a=/!\[[ a-zA-Z0-9]*\]\([:&=%\/.=?a-zA-Z0-9-]*\)/gm;e=e.replace(a,function(e){var r=e.replace(/!\[[ a-zA-Z0-9]*\]\(/g,"").replace(")","").replace(/ /gm,"");return'<img src="'+r+'" ></img>'});var t=/.?http[ :.=_\-a-zA-Z0-9\/\%]*.(jpg|png|gif|jpeg)[ \/\%&=a-zA-Z0-9\?\.]*/gm;e=e.replace(t,function(e){var r=e.substring(0,1);if(">"==r||'"'==r||"'"==r||"("==r)return e;var a=e.replace(/ /gm,"");return'<img src="'+a+'" ></img>'});var o=/(\[((objectives?|composition|strategy|strategies|projects?|tasks?)]))/gm;e=e.replace(o,function(e){return'<span class="primary-color">'+e+"</span>"});var s=/(\[(?:very )?(low|medium|high) (priority)\])/gm;e=e.replace(s,function(e){var r=imgUrlRegex.exec(e)[0];return r=r.replace(" ","-"),'<span class="'+r+'">'+e+"</span>"});var i=/(`+|<code>)[a-zA-Z0-9 \(\)\{\}\/\\\<\>\n\r\t\:\;\.\=\'\"\^\?\+\-\,\*\%\&\@\~\[\]\#\|\$\°\§\!\£]*(`+|<\/code>)/gm;e=e.replace(i,function(e){var r=e.replace(/(`+|code)/g,"");return'<prism-render code="'+r+'" background-color="rgba(128, 128, 128, .2)"></prism-render>'});var p=/[^("|'|[)]https:\/\/github\.com\/[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+ /gm;e=e.replace(p,function(e){var e=e.replace(/ /g,"");return'<github-repository repository="'+e+'" ></github-repository>'});var c=/.?https:\/\/github.com\/[a-zA-Z0-9]+\/[\.a-zA-Z0-9-]+\/blob\/\w+\/[\.\/a-zA-Z0-9-]+/gm;e=e.replace(c,function(e){if(e.includes('"')||e.includes("'")||e.includes("["))return e;var e=e.replace(/ /g,"");return'<github-repository-file-view file-url="'+e+'" ></github-repository-file-view>'});var m=/[^("|'|[)]https:\/\/[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+\.it\//gm;e=e.replace(m,function(e){var r=e.replace(/ /g,"");return'<responsive-iframe url="'+r+'" ></responsive-iframe>'});var n=/<a[ a-zA-Z0-9\=\"\'\w]* href=("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*<\/a>/gm;e=e.replace(n,function(e){var r=e.match(/("|')https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')/g,""),a=r.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/").replace(/\"/g,"").replace(/\'/g,"");return'<responsive-iframe url="'+a+'" ></responsive-iframe>'});var l=/\[[a-zA-Z0-9\=\"\'\w]*\]\(https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+("|')>[a-zA-Z0-9:\/.?=]*\)/gm;e=e.replace(l,function(e){var r=e.match(/https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/g,""),a=r.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/").replace(/ /g,"");return'<responsive-iframe url="'+a+'" ></responsive-iframe>'});var u=/https:\/\/www\.[a-zA-Z0-9-]+\.com\/(watch\?v=|embed\/)[_a-zA-Z0-9-]+/gm;e=e.replace(u,function(e){var e=e.replace(/ /g,""),r=e.replace("https://www.youtube.com/watch?v=","https://www.youtube.com/embed/");return'<responsive-iframe url="'+r+'" ></responsive-iframe>'});var w=/(https?:\/\/)?(www\.)?dailymotion\.com(\/video)?\/[a-zA-Z0-9\-\_]+/gm;e=e.replace(w,function(e){return e=e.replace("/video/","/embed/video/"),'<responsive-iframe url="'+e+'" ></responsive-iframe>'});var g=/(https:\/\/)?(www\.)?vimeo\.com\/[0-9]+/gm;e=e.replace(g,function(e){return e=e.replace(/(https:\/\/)?(www\.)?vimeo\.com\//g,"https://player.vimeo.com/video/"),'<responsive-iframe url="'+e+'" ></responsive-iframe>'});var v=/(https:\/\/)?(www\.)?coub\.com\/view\/[0-9a-zA-Z]+/gm;e=e.replace(v,function(e){return e=e.replace("/view/","/embed/"),'<responsive-iframe url="'+e+'" ></responsive-iframe>'});var h=/(https?:\/\/)?(www\.)?twitch\.tv\/[_a-zA-Z0-9-]+/gm;e=e.replace(h,function(e){var e=e.replace(/ /g,""),r=e.replace(/(https?:\/\/)?(www\.)?twitch\.tv\//g,""),a="https://player.twitch.tv/?channel="+r;return'<responsive-iframe url="'+a+'" ></responsive-iframe>'});var d=/(https?:\/\/)?(www\.)?pornhub\.com\/view_video\.php\?viewkey=[_a-zA-Z0-9-]+/gm;e=e.replace(d,function(e){var e=e.replace(/ /g,""),r=e.replace(/(https?:\/\/)?(www\.)?pornhub\.com\/view\_video\.php\?viewkey\=/g,""),a="https://www.pornhub.com/embed/"+r;return'<responsive-iframe url="'+a+'" ></responsive-iframe>'});var f=/(https?:\/\/)?(www\.)?tube8\.com\/[_a-zA-Z0-9-]+\/[_a-zA-Z0-9-]+\/[0-9]+\//gm;e=e.replace(f,function(e){var e=e.replace(/ /g,""),r=e.replace("http://www.tube8.com/","http://www.tube8.com/embed/");return'<responsive-iframe url="'+r+'" ></responsive-iframe>'});var b=/https:\/\/soundcloud.com\/[a-zA-Z0-9-]*\/[a-zA-Z0-9-?=\/]*/gm;e=e.replace(b,function(e){var e=e.replace(/ /g,""),r="https://w.soundcloud.com/player/?url="+e;return'<responsive-iframe ratio="24:9" url="'+r+'" ></responsive-iframe>'});var z=/https:\/\/[a-zA-Z0-9\.]+\.[a-zA-Z0-9\.]+\/[a-zA-Z0-9\/\$\&\?\=]+\.pdf(\&raw\=true)?/gm;e=e.replace(z,function(e){var r=e.replace(/ /g,"");return'<responsive-iframe ratio="1:1" url="'+r+'" ></responsive-iframe>'});var A=/\<iframe src\=\"((https?)?\:\/\/)?(www\.)?discordapp\.com\/widget\?id\=[0-9]+(\&theme\=[a-z]+)?\"[a-z0-9\=\" ]*\>\<\/iframe>/gm;e=e.replace(A,function(e){var r=/((https?)?\:\/\/)?(www\.)?discordapp\.com\/widget\?id\=[0-9]+(\&theme\=[a-z]+)/g,a=e.match(r);return'<responsive-iframe ratio="16:9" url="'+a+'" ></responsive-iframe>'});var Z=/\<iframe src\=\"((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+\"[a-z0-9 \=\"\:]+\>\<\/iframe>/gm;e=e.replace(Z,function(e){var r=/((https?)?:\/\/)?(www)?\.google.[a-z]+\/maps\/[a-zA-Z0-9\/\+\%\@\.\,\=\!\:\?]+/g,a=e.match(r);return'<responsive-iframe ratio="1:1" url="'+a+'" ></responsive-iframe>'});var y=/[^("|'|[)]https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?(u\/)?(0\/)?[_?=\-.a-zA-Z0-9-]*\/[%\-.?&a-zA-Z0-9-#=]*/gm;e=e.replace(y,function(e){var e=e.replace(/ /g,""),r="";if(e.includes("maps")){if(e.includes("maps")){r="https://www.google.com/maps/d/u/0/embed?";var a=/mid=[_a-zA-Z0-9-]*/g,t=a.exec(e)[0];r+=t}}else{var o=/https:\/\/(docs|www)\.google\.com\/(presentation|document|spreadsheets|forms|drawings|maps)\/d\/(e\/)?[_?=\-.a-zA-Z0-9-]*\//g;r=o.exec(e)[0],r.includes("https://docs.google.com/presentation")&&(r+="embed"),r.includes("https://docs.google.com/document")&&(r+="pub?embedded=true"),r.includes("https://docs.google.com/spreadsheets")&&(r+="pubhtml"),r.includes("https://docs.google.com/forms")&&(r+="viewform"),r.includes("https://docs.google.com/drawings")&&(r+="pub")}return'<google-docs-embedded url="'+r+'" ></google-docs-embedded>'});var _=/[^("|'|[)]https:\/\/sites\.google\.com\/view\/[_a-zA-Z0-9-]*\//gm;e=e.replace(_,function(e){var r=e.replace(/ /g,"");return'<responsive-iframe url="'+r+'" ratio="3:1" ></responsive-iframe>'}),this._htmlDisplayed=e}})}();</script></body></html>

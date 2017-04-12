@@ -1,0 +1,247 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
+
+<link rel="import" href="my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="order-card">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            * {
+                text-align: left;
+            }
+
+            #orderCard {
+                display: block;
+                max-width: 600px;
+                margin-top: 12px;
+                margin-left: auto;
+                margin-right: auto;
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-primary-text-color);
+            }
+
+            @media (max-width: 380px) {
+                #orderCard {
+                    min-width: 100%;
+                }
+            }
+
+            /* TOP DATA */
+            .top-data {
+                height: 36px;
+                margin-bottom: 16px;
+            }
+
+            .top-data .head {
+                display: block;
+                height: 38px;
+                padding-top: 2px;
+                margin-left: 42px;
+                font-size: 14px;
+            }
+
+            .top-data .head .posted-in a {
+                color: var(--app-secondary-color);
+                text-decoration: none;
+            }
+
+            .top-data .head .author a {
+                color: var(--app-secondary-color);
+                font-weight: 500;
+                text-decoration: none;
+            }
+
+            .top-data .author-icon {
+                display: block;
+                float: left;
+                width: 36px;
+                height: 36px;
+                color: var(--app-dark-primary-color);
+            }
+
+            .top-data .posted-ago {
+                float: right;
+                margin-top: -18px;
+                font-size: 12px;
+                color: var(--app-background-secondary-text-color);
+            }
+
+            /* CARD HEADING */
+            .order-title {
+                padding-top: 16px;
+                margin-left: 16px;
+                margin-right: 16px;
+                font-size: 18px;
+                color: var(--app-primary-color);
+            }
+
+            .order-note, .order-place {
+                height: 28px;
+                line-height: 28px;
+                var(--app-background-secondary-text-color) !important;
+            }
+
+            .order-note {
+                margin-top: 12px;
+            }
+
+            .order-place {
+            }
+
+            /* CARD CONTENT */
+            .card-content {
+                padding-bottom: 0px !important;
+            }
+
+            .card-content #orderTitle {
+                color: var(--app-background-primary-text-color);
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+            .card-content .content-data {
+                height: 75px;
+                padding-right: 16px;
+                margin-top: 12px;
+                overflow-y: hidden;
+                overflow-x: hidden;
+                font-size: 90%;
+                border-bottom: 1px solid #ddd;
+                transition: all ease .2s;
+            }
+
+            .card-content .content-data #showMore {
+                position: absolute;
+                bottom: 0;
+                right: 16px;
+                padding: 8px;
+                font-size: 18px;
+                color: var(--app-secondary-color);
+                cursor: pointer;
+            }
+
+            .floatRight {
+                float: right;
+            }
+
+
+            /* CARD ACTION BUTTONS */
+            .card-actions-buttons {
+                padding: 8px;
+                font-size: 16px;
+                text-align: right;
+                color: var(--app-background-primary-text-color);
+                border-top: 1px solid var(--app-secondary-background-color);
+            }
+
+            .card-actions-buttons paper-icon-button {
+                width: 36px;
+                height: 36px;
+                color: var(--app-background-primary-text-color);
+            }
+
+        </style>
+
+        
+        <paper-card id="orderCard">
+
+            <div class="card-content">
+
+                
+                <div class="top-content">
+
+                    
+                    <div class="top-data">
+
+                        <span>
+                            <iron-icon class="author-icon" icon="my-icons:person-circle">
+                            </iron-icon>
+                        </span>
+
+
+                        <span class="head">
+                            <span class="author">
+                                <a href="/@[[order.who]]">@[[_computeWho(order.who)]]</a>
+                            </span><br>
+
+                            <span class="posted-in">
+                                <a href="" class="category">#[[order.id]]
+                                </a>
+                                | <span class="background-primary-text">
+                                    [[order.products.length]] <span class="background-secondary-text">products for</span> [[order.total]] $
+                                </span>
+                            </span>
+
+                            <span class="posted-ago">
+                                [[_computeTimeFromNow(order.created)]]
+                            </span>
+                        </span>
+                    </div>
+
+                    <div class="order-note" hidden="[[!order.note.length]]">
+                        <paper-icon-button icon="my-icons:note"></paper-icon-button>
+                        [[order.note]]
+                    </div>
+
+                    <div class="order-place" hidden="[[!order.place.length]]">
+                        <paper-icon-button id="openLocationButton" on-tap="_openLocation()" icon="my-icons:map-marker">
+                        </paper-icon-button>
+                        <span>[[order.place]]<span>
+                    </span></span></div>
+
+                    
+                    <div class="content-data" id="toggleContentData" on-tap="_toggleContentDataHeight()">
+
+                        <span id="showMore">...</span>
+
+                        <template is="dom-repeat" items="[[order.products]]">
+
+                            <paper-item hidden="[[!_productHaveTwoLines(item.selectedVariant, item.note)]]">
+                                <paper-item-body two-line="">
+                                    <div>
+                                        <span>[[item.number]] x [[item.name]]<span>
+                                        <span class="floatRight">[[item.priceValue]] [[item.priceType]]<span>
+                                    </span></span></span></span></div>
+                                    <div secondary="">
+                                        [[item.selectedVariant]] [[item.note]]
+                                    </div>
+                                </paper-item-body>
+                            </paper-item>
+
+                            <paper-item hidden="[[_productHaveTwoLines(item.selectedVariant, item.note)]]">
+                                <paper-item-body>
+                                    <div>
+                                        <span>[[item.number]] x [[item.name]]<span>
+                                        <span class="floatRight">[[item.priceValue]] [[item.priceType]]<span>
+                                    </span></span></span></span></div>
+                                </paper-item-body>
+                            </paper-item>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="card-actions-buttons">
+                <paper-icon-button id="deleteOrderButton" on-tap="_deleteOrder()" icon="my-icons:delete">
+                </paper-icon-button>
+            </div>
+        </paper-card>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"order-card",behaviors:[Polymer.AppLocalizeBehavior],properties:{order:{type:Object,observer:"_orderChanged"},_contentToggled:{type:Boolean},action:{type:Object,notify:!0}},ready:function(){this.$.toggleContentData.addEventListener("tap",this._toggleContentDataHeight.bind(this)),this.$.openLocationButton.addEventListener("tap",this._openLocation.bind(this)),this.$.deleteOrderButton.addEventListener("tap",this._deleteOrder.bind(this)),this.rf=new IntlRelativeFormat("en-us"),this._contentToggled=!1},_toggleContentDataHeight:function(){this._contentToggled?this.$.toggleContentData.style="":this.$.toggleContentData.style="height: 250px;overflow-y: scroll;border-bottom: 1px solid #aaa;",this._contentToggled=!this._contentToggled},_orderChanged:function(){this.$.toggleContentData.style="",this._contentToggled=!1},_deleteOrder:function(){var t={type:"delete",id:this.order.id};this.set("action",t)},_computeTimeFromNow:function(t){return"undefined"!=typeof t?new IntlRelativeFormat("en-us").format(t):""},_computeAuthor:function(t){return"@"+t},_computeWho:function(t){return"undefined"==typeof t?"anonymous":t},_openLocation:function(){window.open("https://www.google.ch/maps/search/"+this.order.place)},_productHaveTwoLines:function(t,e){return t.length||e.length}});</script></body></html>

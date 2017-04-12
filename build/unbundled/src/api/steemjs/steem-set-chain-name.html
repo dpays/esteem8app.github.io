@@ -1,0 +1,7 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+</head><body><dom-module id="steem-set-chain-name"></dom-module>
+
+<script>!function(){Polymer({is:"steem-set-chain-name",properties:{chainName:{type:String,observer:"_setChainId"},websockets:{type:Array},websocketUrl:{type:String}},_ready:function(){"undefined"==typeof this.websockets&&(this.websockets=[{name:"steem",defaultWebsocket:"wss://steemd.steemit.com",chainID:"0000000000000000000000000000000000000000000000000000000000000000",chainPrefix:"STM"},{name:"golos",defaultWebsocket:"wss://ws.golos.io",chainID:"782a3039b478c839e4cb0c941ff4eaeb7df40bdd68bd441afd444b9da763de12",chainPrefix:"GLS"}])},_setChainId:function(){if("undefined"!=typeof this.chainName&&""!=this.chainName){var e=steem.config.get("chain_id")==s;if(e){for(var s="",t="",i="",a=0;a<this.websockets.length;a++){var n=this.websockets[a];n.name==this.chainName&&(s=n.chainID,t=n.chainPrefix,i=n.defaultWebsocket)}steem.config.set("chain_id",s),steem.config.set("address_prefix",t),steem.config.set("websocket",i),this.websocketUrl=i}}}})}();</script></body></html>

@@ -1,0 +1,7 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+</head><body><dom-module id="steem-get-value"></dom-module>
+
+<script>!function(){Polymer({is:"steem-get-value",properties:{value:{type:Number,notify:!0}},created:function(){this.getSteemValue()},getSteemValue:function(){var e=this;this.async(function(){steem.api.getCurrentMedianHistoryPrice(function(t,i){if(!t){var a=i.base.replace(" SBD",""),n=i.quote.replace(" STEEM","");e.value=a/n}})})}})}();</script></body></html>

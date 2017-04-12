@@ -1,0 +1,178 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-tags/paper-tags.html">
+<link rel="import" href="../../bower_components/paper-tags/paper-tags-input.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+</head><body><dom-module id="product-edit-content">
+
+    <template>
+
+        <style include="shared-styles">
+
+            .toggle {
+                height: 64px;
+                line-height: 64px;
+            }
+
+            .toggle paper-toggle-button {
+                float: right;
+                margin-top: 18px;
+            }
+
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
+                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
+                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
+            }
+
+            paper-input, paper-tags-input, paper-textarea {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            paper-tags, paper-tags-input {
+                --paper-tag-margin: 4px;
+                --paper-tag-focus-color: var(--app-secondary-color);
+                --paper-tag-text-color: var(--app-background-primary-text-color);
+                --paper-tags-item: {
+                    padding-left: 8px !important;
+                    color: var(--app-secondary-color) !important;
+                };
+            }
+
+            paper-dialog {
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-primary-text-color)
+            }
+
+            #openAddOptionButtonDialog {
+                float: right;
+            }
+
+        </style>
+
+        
+        <paper-dialog id="editOptionDialog" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop="">
+
+            <paper-input label="Type" value="{{_variant.type}}">
+            </paper-input>
+
+            <paper-input label="Stock" type="number" value="{{_variant.stock}}">
+            </paper-input>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss="">
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm="" autofocus="" id="saveOptionButton" on-tap="_saveOption()">
+                    SAVE
+                </paper-button>
+            </div>
+
+        </paper-dialog>
+
+        
+        <paper-dialog id="addOptionDialog" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop="">
+
+            <paper-input label="Type" value="{{_variant.type}}">
+            </paper-input>
+
+            <paper-input label="Stock" type="number" value="{{_variant.stock}}">
+            </paper-input>
+
+            <div class="buttons">
+                <paper-button dialog-dismiss="">
+                    Cancel
+                </paper-button>
+                <paper-button dialog-confirm="" autofocus="" id="addOptionButton" on-tap="_addOption()">
+                    ADD
+                </paper-button>
+            </div>
+
+        </paper-dialog>
+
+        
+        <paper-input label="Name" value="{{product.name}}">
+        </paper-input>
+
+        <paper-textarea label="Short description" value="{{product.shortDescription}}">
+        </paper-textarea>
+
+        <paper-textarea label="Long description" value="{{product.longDescription}}">
+        </paper-textarea>
+
+        <paper-tags-input label="Images" items="{{product.contents}}">
+        </paper-tags-input>
+
+        <paper-input label="Option name" value="{{product.options.0.name}}">
+            <paper-button id="openAddOptionButtonDialog" on-tap="_openAddOptionDialog()" suffix="">
+                Add
+            </paper-button>
+        </paper-input>
+
+        <div id="variantList">
+            <template is="dom-repeat" items="[[product.options.0.variants]]">
+                <paper-item>
+                    <paper-item-body two-line="">
+                        <paper-item-body two-line="">
+                            <div>Type: [[item.type]]</div>
+                            <div secondary="">Stock: [[item.stock]]</div>
+                        </paper-item-body>
+                    </paper-item-body>
+                    <paper-icon-button icon="my-icons:edit" on-tap="_openEditOptionDialog()">
+                    </paper-icon-button>
+                </paper-item>
+            </template>
+        </div>
+
+        <paper-input label="Stock" type="number" value="{{product.stock}}">
+        </paper-input>
+
+        <paper-input label="Price" type="number" value="{{product.priceValue}}">
+            <paper-menu-button suffix="">
+
+                <paper-button class="dropdown-trigger">
+                    [[product.priceType]]&nbsp;
+                    <iron-icon icon="my-icons:arrow-dropdown">
+                    </iron-icon>
+                </paper-button>
+
+                <paper-menu class="dropdown-content" selected="{{product.priceType}}" attr-for-selected="currency">
+                    <paper-item currency="STEEM">STEEM</paper-item>
+                    <paper-item currency="SBD">SBD</paper-item>
+                </paper-menu>
+
+            </paper-menu-button>
+
+        </paper-input>
+
+        <paper-tags-input label="Tags" items="{{product.tags}}">
+        </paper-tags-input>
+
+        <div class="toggle">
+            <span>Share product</span>
+            <paper-toggle-button checked="{{product.shared}}"></paper-toggle-button>
+        </div>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"product-edit-content",properties:{product:{type:Object,notify:!0},_variant:{type:Object,notify:!0},_variantIndex:{type:Number}},listeners:{"variantList.tap":"_openEditOptionDialog"},ready:function(){this._variant={},this._variantIndex=0,this.$.openAddOptionButtonDialog.addEventListener("tap",this._openAddOptionDialog.bind(this)),this.$.addOptionButton.addEventListener("tap",this._addOption.bind(this)),this.$.saveOptionButton.addEventListener("tap",this._saveOption.bind(this))},_openAddOptionDialog:function(){this.$.editOptionDialog.open()},_addOption:function(){this.push("product.options.0.variants",this._variant),this._variant={}},_openEditOptionDialog:function(t){this._variant=t.model.item,this._variantIndex=this.product.options[0].variants.indexOf(this._variant),this.$.editOptionDialog.open()},_saveOption:function(){this.set("product.options.0.variants."+this._variantIndex,this._variant),this.set("product.options.0.variants."+this._variantIndex+".type",this._variant.type),this.set("product.options.0.variants."+this._variantIndex+".stock",this._variant.stock),this._variant={}}});</script></body></html>

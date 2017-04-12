@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head>
+	<meta charset="utf-8">
+	<script src="../undo.js"></script>
+	<script src="../vendor/jquery-1.5.1.js"></script>
+	<title>Undo.js demo</title>
+	<style>
+		body { font:62.5% Verdana,Arial,sans-serif; }
+	</style>
+	<script>$(function(){function t(){d.attr("disabled",!n.canUndo()),r.attr("disabled",!n.canRedo()),u.toggle(n.dirty())}function e(){$("ul li button").attr("disabled",!1),$("ul li:first .up").attr("disabled",!0),$("ul li:last .down").attr("disabled",!0)}var n=new Undo.Stack,i=Undo.Command.extend({constructor:function(t){this.li=t},execute:function(){this.li.insertBefore(this.li.prev())},undo:function(){this.li.insertAfter(this.li.next())}}),o=i.extend({execute:i.prototype.undo,undo:i.prototype.execute});n.changed=function(){t(),e()};var d=$(".undo"),r=$(".redo"),u=$(".dirty");t(),e(),$(document.body).delegate(".undo, .redo, .save","click",function(){var t=$(this).attr("class");return n[t](),!1}),$(document.body).delegate(".up, .down","click",function(){var t=$(this).attr("class");return"up"==t?n.execute(new i($(this).parent())):n.execute(new o($(this).parent())),!1})});</script>
+</head>
+<body>
+	<button class="undo" href="#">Undo</button>
+	<button class="redo" href="#">Redo</button>
+	<button class="save" href="#">Save<span class="dirty">*</span></button>
+	<ul>
+		<li>
+			<span>1. item</span>
+			<button class="up" href="#">Up</button>
+			<button class="down" href="#">Down</button>
+		</li>
+		<li>
+			<span>2. item</span>
+			<button class="up" href="#">Up</button>
+			<button class="down" href="#">Down</button>
+		</li>
+		<li>
+			<span>3. item</span>
+			<button class="up" href="#">Up</button>
+			<button class="down" href="#">Down</button>
+		</li>
+		<li>
+			<span>4. item</span>
+			<button class="up" href="#">Up</button>
+			<button class="down" href="#">Down</button>
+		</li>
+		<li>
+			<span>5. item</span>
+			<button class="up" href="#">Up</button>
+			<button class="down" href="#">Down</button>
+		</li>
+	</ul>
+	
+	<a href="contenteditable.html">Contenteditable Demo</a>
+
+</body></html>

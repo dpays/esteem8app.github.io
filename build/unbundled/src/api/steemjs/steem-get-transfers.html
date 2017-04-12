@@ -1,0 +1,7 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+</head><body><dom-module id="steem-get-transfers"></dom-module>
+
+<script>!function(){Polymer({is:"steem-get-transfers",properties:{accountName:{type:String},type:{type:String},transfers:{type:Array,notify:!0}},observers:["_updateTransfers(accountName)"],_updateTransfers:function(t){var e=this,r="@"+t.replace("@","")+"/transfers",s=this.type||"";this.async(function(){steem.api.getState(r,function(t,r){if(!t){var a=r.accounts,n=[];for(var p in a)if(a.hasOwnProperty(p)){var i=a[p];n=i.transfer_history}for(var o=[],f=0;f<n.length;f++){var c=n[f],y={type:c[1].op[0],created:c[1].timestamp,operation:c[1].op[1]};""==s?o.push(y):s==y.type&&o.push(y)}e.set("transfers",o)}})})}})}();</script></body></html>

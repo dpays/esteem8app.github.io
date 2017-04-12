@@ -1,0 +1,7 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+</head><body><dom-module id="steem-get-following"></dom-module>
+
+<script>!function(){Polymer({is:"steem-get-following",properties:{accountName:{type:String},following:{type:Array,notify:!0}},observers:["_accountNameChanged(accountName)"],_accountNameChanged:function(o){this.following=[],this._loadFollowing(o)},_loadFollowing:function(o,n){var l=this,o=o.replace("@",""),n=n||"";this.async(function(){window.steem.api.getFollowing(o,n,null,100,function(o,n){if(o)console.log("steem-get-following error");else for(var i=0;i<n.length;i++){var e=n[i].following;l.push("following",e)}})})},_loadMore:function(){var o=this.following.length,n=this.following[o-1];this._loadFollowing(this.accountName,n)}})}();</script></body></html>

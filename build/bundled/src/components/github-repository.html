@@ -1,0 +1,117 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="../components/github-repository-overview.html">
+<link rel="import" href="../components/github-repository-file.html">
+<link rel="import" href="github-repository-issue-list.html">
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+</head><body><dom-module id="github-repository">
+
+    <style include="shared-styles">
+
+        :host {
+            width: 100%;
+        }
+
+        #repositoryCurrentView{
+            background-color: var(--app-primary-color);
+            color: var(--app-primary-text-color);
+        }
+
+        #repositoryCurrentView .title {
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        #repositoryCurrentView .title .sub-title {
+            font-size: 12px;
+            text-transform: lowercase;
+        }
+
+        paper-menu {
+            padding: 0;
+        }
+
+        #repositoryViewsMenu, #repositoryViewsMenu paper-menu {
+            background-color: var(--app-dark-primary-color);
+            color: var(--app-primary-text-color);
+        }
+
+        iron-pages {
+            background-color: var(--app-primary-background-color);
+            border-left: 1px solid var(--app-background-primary-text-color);
+            border-right: 1px solid var(--app-background-primary-text-color);
+            border-bottom: 1px solid var(--app-background-primary-text-color);
+        }
+
+    </style>
+
+    <template>
+
+        <div id="repositoryView">
+            <paper-toolbar id="repositoryCurrentView">
+                <paper-icon-button id="toggleMenuButton" on-tap="_toggleMenu()" icon="my-icons:[[_getMenuIcon(_isMenuOpen)]]">
+                </paper-icon-button>
+                <span class="title">
+                    [[_currentRepositoryView]]
+                    <span class="sub-title">
+                        [[_computeRepoName(repository, _currentRepositoryView)]]
+                    </span>
+                </span>
+                <paper-icon-button id="openCurrentViewButton" icon="my-icons:link" on-tap="_openCurrentView()">
+                </paper-icon-button>
+            </paper-toolbar>
+
+            <div id="repositoryViewsMenu" hidden="[[!_isMenuOpen]]">
+                <paper-menu selected="{{_currentRepositoryView}}" attr-for-selected="repository-view">
+                    
+                    <paper-item repository-view="overview">
+                        <iron-icon icon="my-icons:dashboard"></iron-icon>
+                        &nbsp;Overview
+                    </paper-item>
+                    
+                    <paper-item repository-view="files">
+                        <iron-icon icon="my-icons:file"></iron-icon>
+                        &nbsp;Files
+                    </paper-item>
+                    
+                    
+                    <paper-item repository-view="tasks">
+                        <iron-icon icon="my-icons:done"></iron-icon>
+                        &nbsp;Tasks
+                    </paper-item>
+                </paper-menu>
+            </div>
+        </div>
+
+        <iron-pages selected="[[_currentRepositoryView]]" attr-for-selected="name">
+
+            <div name="overview">
+                <github-repository-overview repository="[[repository]]" repository-view="{{_currentRepositoryView}}">
+                </github-repository-overview>
+            </div>
+
+            <div name="files">
+                <github-repository-file repository="[[repository]]">
+                </github-repository-file>
+            </div>
+
+            <div name="tasks">
+                <github-repository-issue-list repository="[[repository]]">
+                </github-repository-issue-list>
+            </div>
+
+        </iron-pages>
+
+    </template>
+</dom-module>
+
+<script>!function(){"use strict";Polymer({is:"github-repository",properties:{repository:{type:Object},_isMenuOpen:{type:Boolean},_currentRepositoryView:{type:String,observer:"_closeMenu"}},ready:function(){this._currentRepositoryView="overview",this.$.toggleMenuButton.addEventListener("tap",this._toggleMenu.bind(this)),this.$.openCurrentViewButton.addEventListener("tap",this._openCurrentView.bind(this))},_getMenuIcon:function(e){return e?"close":"menu"},_getLastUrlPart:function(){var e="";switch(this._currentRepositoryView){case"tasks":e="/issues"}return e},_computeRepoName:function(e){return e=e.replace("https://github.com/",""),e+=this._getLastUrlPart()},_toggleMenu:function(){this._isMenuOpen=!this._isMenuOpen},_closeMenu:function(){this._isMenuOpen=!1},_openCurrentView:function(){var e=this._getLastUrlPart();window.open(this.repository+e)}})}();</script>
+</body></html>

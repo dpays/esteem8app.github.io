@@ -1,0 +1,38 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/html-echo.html">
+<link rel="import" href="../api/other/url-get-file.html">
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="github-repository-file-view-lite">
+
+    <template>
+
+        <style include="shared-styles">
+
+            .currentFile {
+                border-top: 1px solid var(--app-background-secondary-text-color);
+                padding: 8px;
+                overflow: auto;
+            }
+
+            marked-element a{
+                color: var(--app-background-primary-text-color) !important;
+            }
+
+        </style>
+
+        <url-get-file url="[[_computeFileUrl(fileUrl)]]" response-text="{{_html}}">
+        </url-get-file>
+
+        <div class="currentFile">
+
+            <html-echo html="[[_html]]"></html-echo>
+
+        </div>
+
+    </template>
+</dom-module>
+
+<script>!function(){"use strict";Polymer({is:"github-repository-file-view-lite",properties:{fileUrl:{type:String},_html:{type:String}},_computeFileUrl:function(t){return t.replace("https://github.com/","https://raw.githubusercontent.com/").replace("/blob/master/","/master/")}})}();</script>
+</body></html>

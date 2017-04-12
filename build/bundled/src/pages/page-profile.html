@@ -1,0 +1,374 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+<link rel="import" href="../../bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+
+<link rel="import" href="../components/post-card.html">
+
+<link rel="import" href="../components/profile-about.html">
+<link rel="import" href="../components/profile-files.html">
+<link rel="import" href="../components/profile-replies.html">
+<link rel="import" href="../components/profile-history.html">
+<link rel="import" href="../components/profile-products.html">
+<link rel="import" href="../components/profile-followers.html">
+<link rel="import" href="../components/profile-following.html">
+
+<link rel="import" href="../dialogs/wallet-dialog.html">
+
+<link rel="import" href="../api/steemjs/steem-get-state.html">
+<link rel="import" href="../api/steemjs/steem-get-post.html">
+<link rel="import" href="../api/steemjs/steem-get-account.html">
+<link rel="import" href="../api/steemjs/steem-get-follow-count.html">
+
+<link rel="import" href="../components/my-icons.html">
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="page-profile">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* Inspiration from https://www.uplabs.com/collections/profile-fd2d2339-bc35-44ae-822a-983aa31fa15a */
+
+            /* GENERAL */
+            :host {
+                min-height: calc(100% - 16px);
+                margin: 0;
+                position: absolute;
+                width: 100%;
+                padding-bottom: 16px;
+                display: block;
+                background-color: var(--app-primary-background-color);
+            }
+
+            /* TOOLBAR */
+            #toggleFavoriteUserButton {
+                float: right;
+            }
+
+            .reputation {
+                font-size: 12px;
+                padding: 4px;
+                border-radius: 33px;
+                background-color: var(--app-primary-text-color);
+                color: var(--app-primary-color);
+            }
+
+            #progress-bar {
+                width: 100%;
+                position: fixed;
+                z-index: 3;
+                left: 0;
+                top: 0;
+                --paper-progress-active-color: var(--app-secondary-color);
+                --paper-progress-container-color: var(--app-primary-color);
+            }
+
+            /* HEADER */
+            #profileheader {
+                background-color: var(--app-primary-color);
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                color: var(--app-primary-text-color);
+                width: 100%;
+                padding-top: 16px;
+                margin-top: 44px;
+            }
+
+            @media (max-width: 600px) {
+                #profileheader {
+                    margin-top: 36px;
+                }
+            }
+
+            .profileRepresentation {
+                width: 124px;
+                height: 124px;
+                border-radius: 124px;
+            }
+
+            #topheader {
+                margin: 16px auto;
+                max-width: 600px;
+                max-height: 600px;
+            }
+
+            .headerLeftPart {
+                display: inline-block;
+                height: 124px;
+                margin: 16px;
+            }
+
+            @media screen and (max-width: 400px) {
+                .headerRightPart {
+                    margin-left: 0 !important;
+                }
+            }
+
+            .headerRightPart {
+                display: inline-block;
+                position: absolute;
+                height: 124px;
+                margin: 8px;
+                font-size: 16px;
+            }
+
+            .followed, .followers {
+                margin-left: 32px;
+                padding: 4px;
+                display: inline-block;
+                transition: all .2s;
+            }
+
+            .followed:active, .followers:active {
+                background-color: rgba(255, 255, 255, .2);
+                transition: all .2s;
+            }
+
+            .number {
+                font-size: 32px;
+                font-weight: bold;
+                display: block;
+            }
+
+            /* TABS */
+            #profileTabs {
+                @apply(--shadow-elevation-2dp);
+                background-color: var(--app-dark-primary-color);
+                --paper-tabs-selection-bar-color: var(--app-secondary-color);
+            }
+
+            #profileTabs paper-tab {
+                --paper-tab-ink: var(--app-secondary-color);
+            }
+
+            /* AFTER TABS CONTENT */
+            div[name="about"], div[name="posts"], div[name="replies"], div[name="history"], div[name="files"], div[name="products"], div[name="followers"], div[name="following"] {
+                max-width: 800px;
+                margin: 12px auto;
+            }
+
+            .nothingText {
+                display: table;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 100px;
+                color: var(--app-background-primary-text-color);
+            }
+
+            /* ABOUT */
+            #openWalletButton {
+                position: fixed;
+                bottom: 16px;
+                right: 16px;
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+            }
+
+        </style>
+
+        
+
+        <steem-get-account account-name="[[_accountName]]" account="{{_account}}" posts="{{_posts}}" is-loading="{{_showProgress}}">
+        </steem-get-account>
+
+        <steem-get-follow-count account-name="[[_accountName]]" follow-count="{{_followCount}}">
+        </steem-get-follow-count>
+
+        
+        <wallet-dialog id="wallet" user-name="[[userName]]" settings="[[settings]]">
+        </wallet-dialog>
+
+        
+        <paper-toolbar class="mainToolbar">
+
+            <paper-icon-button id="toggleDrawerMenu" on-tap="_openDrawer()" icon="my-icons:menu">
+            </paper-icon-button>
+
+            <div class="floatingToolbar">
+                <span class="floatingToolbarTitle">
+                    <span>
+                        [[userName]]
+                        <span class="reputation">[[_account.reputation]]</span>
+                    </span>
+                    <span></span>
+                    <paper-icon-button id="toggleFavoriteUserButton" icon="my-icons:[[_computeFavoriteUserIcon(_isUserInFavorite)]]" on-tap="_toggleFavoriteUser()">
+                    </paper-icon-button>
+                </span>
+            </div>
+
+            <a href="/hot/">
+                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
+            </a>
+
+            <paper-progress id="progress-bar" indeterminate="" hidden="[[!_showProgress]]">
+            </paper-progress>
+        </paper-toolbar>
+
+        
+        <div id="profileheader">
+
+            <div id="topheader">
+
+                <div class="headerLeftPart">
+                    <template is="dom-if" if="[[_account.profileImage]]">
+                        <iron-image class="profileRepresentation" sizing="cover" src="https://steemitimages.com/124x124/[[_account.profileImage]]">
+                        </iron-image>
+                    </template>
+                    <template is="dom-if" if="[[!_account.profileImage]]">
+                        <iron-icon class="profileRepresentation" icon="my-icons:person-circle">
+                        </iron-icon>
+                    </template>
+                </div>
+
+                <div class="headerRightPart">
+                    <div id="followersButton" class="followers" on-tap="_setCurrentViewFollowers()">
+
+                        <span class="number">
+                            <template is="dom-if" if="[[_followCount.followerCount]]">[[_followCount.followerCount]]</template>
+                            <template is="dom-if" if="[[!_followCount.followerCount]]">0</template>
+                        </span>
+
+                        <span class="texte">
+                            Followers
+                        </span>
+
+                    </div>
+                    <div id="followingButton" class="followed" on-tap="_setCurrentViewFollowers()">
+                    <span class="number">
+                        <template is="dom-if" if="[[_followCount.followingCount]]">
+                            [[_followCount.followingCount]]
+                        </template>
+                        <template is="dom-if" if="[[!_followCount.followingCount]]">
+                            0
+                        </template>
+                    </span>
+                        <span class="texte">
+                        Following
+                    </span>
+                    </div>
+                </div>
+
+            </div>
+
+            
+            <paper-tabs id="profileTabs" selected="{{_currentProfileView}}" attr-for-selected="name" fit-container="" scrollable="" no-slide="">
+
+                <paper-tab name="about" id="tabAbout">
+                    <iron-icon icon="my-icons:account-about"></iron-icon>
+                </paper-tab>
+
+                <paper-tab name="posts" id="tabPosts">
+                    <iron-icon icon="my-icons:text-file"></iron-icon>
+                </paper-tab>
+
+                
+
+                <paper-tab name="replies" id="tabReplies">
+                    <iron-icon icon="my-icons:message-reply-text"></iron-icon>
+                </paper-tab>
+                <paper-tab name="history" id="tabHistory">
+                    <iron-icon icon="my-icons:history"></iron-icon>
+                </paper-tab>
+
+                <paper-tab name="files" id="tabFiles" hidden="[[_isTabFileHidden(_account.sharedFiles.length)]]">
+                    <iron-icon icon="my-icons:text-file"></iron-icon>
+                </paper-tab>
+
+                <paper-tab name="products" id="tabProducts" hidden="[[_isTabProductHidden(_account.sharedProducts.length)]]">
+                    <iron-icon icon="my-icons:shopping"></iron-icon>
+                </paper-tab>
+
+                <paper-tab name="followers" id="tabFollowers">
+                    <iron-icon icon="my-icons:follower"></iron-icon>
+                </paper-tab>
+                <paper-tab name="following" id="tabFollowing">
+                    <iron-icon icon="my-icons:following"></iron-icon>
+                </paper-tab>
+            </paper-tabs>
+
+        </div>
+
+        
+        <iron-pages selected="[[_currentProfileView]]" attr-for-selected="name">
+
+            
+            <div name="about">
+
+                <profile-about account="[[_account]]" posts="[[_posts]]" show-progress="[[_showProgress]]">
+                </profile-about>
+
+            </div>
+
+            
+            <div name="posts">
+
+                <div id="posts-list">
+
+                    <template is="dom-if" if="[[!_posts.length]]">
+                        <h1 class="nothingText">[[userName]] has not posted anything</h1>
+                    </template>
+
+                    <template is="dom-if" if="[[_posts.length]]">
+                        <template is="dom-repeat" items="[[_posts]]">
+                            <post-card post="[[item]]" settings="[[settings]]">
+                            </post-card>
+                        </template>
+                    </template>
+
+                </div>
+            </div>
+
+            
+            <div name="replies">
+                <profile-replies account-name="[[_accountName]]"></profile-replies>
+            </div>
+
+            
+            <div name="history">
+                <profile-history account-name="[[_accountName]]"></profile-history>
+            </div>
+
+            
+            <div name="files">
+                <profile-files files="[[_account.sharedFiles]]" folders="[[_account.sharedFolders]]">
+                </profile-files>
+            </div>
+
+            
+            <div name="products">
+                <profile-products products="[[_account.sharedProducts]]" categories="[[_account.sharedCategories]]">
+                </profile-products>
+            </div>
+
+            
+            <div name="followers">
+                <profile-followers user-name="[[userName]]"></profile-followers>
+            </div>
+
+            
+            <div name="following">
+                <profile-following user-name="[[userName]]"></profile-following>
+            </div>
+
+        </iron-pages>
+
+        <paper-fab id="openWalletButton" on-tap="_openWallet()" icon="my-icons:wallet">
+        </paper-fab>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"page-profile",properties:{settings:{type:Object},userName:{type:String},previousUserName:{type:String},_showProgress:{type:Boolean},_account:{type:Object},_posts:{type:Array},_currentProfileView:{type:String},_accountName:{type:String,notify:!0},_followCount:{type:Object},_isUserInFavorite:{type:Boolean}},observers:["_updateCoverImage(_account.coverImage)","_userChanged(userName)","_setTabsOptions(_account.tabsOptions)","_setTabFileStyle(_account.sharedFiles.length)","_setTabProductStyle(_account.sharedProducts.length)"],ready:function(){this._currentProfileView="about",this.previousUserName="",this.$.toggleDrawerMenu.addEventListener("tap",this._openDrawer.bind(this)),this.$.openWalletButton.addEventListener("tap",this._openWallet.bind(this)),this.$.followersButton.addEventListener("tap",this._setCurrentViewFollowers.bind(this)),this.$.followingButton.addEventListener("tap",this._setCurrentViewFollowing.bind(this)),this.$.toggleFavoriteUserButton.addEventListener("tap",this._toggleFavoriteUser.bind(this))},_userChanged:function(e){if(""!=e&&(e!==this.previousUserName&&"undefined"!=typeof this.previousUserName?location.reload():this.previousUserName=e),e.includes("@")){var t=e.replace("@","");this.set("_accountName",t),this._refreshIsFavoriteUser()}},_setTabFileStyle:function(e){e?this.$.tabFiles.setAttribute("style",""):this.$.tabFiles.setAttribute("style","display: none;")},_setTabProductStyle:function(e){e?this.$.tabProducts.setAttribute("style",""):this.$.tabProducts.setAttribute("style","display: none;")},_setTabsOptions:function(e){"undefined"!=typeof e&&""!=e&&("undefined"!=typeof e.replies?"none"==e.replies.display&&this.$.tabReplies.setAttribute("style","display: none;"):this.$.tabReplies.setAttribute("style",""),"undefined"!=typeof e.history?"none"==e.history.display&&this.$.tabHistory.setAttribute("style","display: none;"):this.$.tabHistory.setAttribute("style",""))},_openDrawer:function(){document.getElementById("appshell")._openDrawer()},_openWallet:function(){this.$.wallet.open()},_updateCoverImage:function(e){""!==e?this.$.profileheader.style.backgroundImage="url('"+e+"')":this.$.profileheader.style.backgroundImage=""},_setCurrentViewFollowers:function(){this.set("_currentProfileView","followers")},_setCurrentViewFollowing:function(){this.set("_currentProfileView","following")},_setCurrentViewPosts:function(){this.set("_currentProfileView","posts")},_refreshIsFavoriteUser:function(){this._isUserInFavorite=document.getElementById("appshell").isFavoriteUser(this._accountName)},_toggleFavoriteUser:function(){this._isUserInFavorite?document.getElementById("appshell").removeFavoriteUser(this._accountName):document.getElementById("appshell").addFavoriteUser(this._accountName),this._refreshIsFavoriteUser()},_computeFavoriteUserIcon:function(e){return e?"favorite":"favorite-border"}});</script></body></html>

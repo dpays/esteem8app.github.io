@@ -1,0 +1,60 @@
+<html><head><link rel="import" href="../../polymer/polymer.html">
+<link rel="import" href="../../paper-button/paper-button.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
+<link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../iron-icons/image-icons.html">
+<link rel="import" href="../../paper-input/paper-input.html">
+<link rel="import" href="../../paper-button/paper-button.html">
+<link rel="import" href="../../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../../paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../paper-listbox/paper-listbox.html">
+<link rel="import" href="../../paper-item/paper-item.html">
+<link rel="import" href="../../paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../wysiwyg-tool-behavior.html">
+<link rel="import" href="../wysiwyg-tool-styles.html">
+</head><body><dom-module id="wysiwyg-tool-audio">
+	<template>
+		<style include="iron-flex"></style>
+		<style include="wysiwyg-tool-styles"></style>
+		<style>
+			#close {
+				color: rgba(0, 0, 0, 0.5)!important;
+			}
+
+			#updateInsert {
+				color: #2A9AF2!important;
+			}
+
+			#remove {
+				color: #d23f31!important;
+			}
+
+			paper-input,
+			paper-dropdown-menu {
+				--paper-input-container-focus-color: #2a9af2;
+				width: 400px;
+				max-width: 100%;
+			}
+		</style>
+		<paper-tooltip id="tooltip" for="button" position="[[tooltipPosition]]" offset="5">[[localize('Audio')]] (Shift + Alt + A)</paper-tooltip>
+		<iron-a11y-keys id="a11y" target="[[target]]" keys="shift+alt+a" on-keys-pressed="execCommand"></iron-a11y-keys>
+		<paper-menu-button on-paper-dropdown-close="_paperDropdownClose" id="dropdown" disabled="[[disabled]]" dynamic-align="">
+			<paper-button disabled="[[disabled]]" id="button" class="dropdown-trigger">
+				<iron-icon icon="image:audiotrack"></iron-icon>
+			</paper-button>
+			<div class="dropdown-content vertical layout" style="padding: 8px 16px 18px 16px">
+				<paper-input label="URL" always-float-label="" value="{{audioUrl}}" id="url"></paper-input>
+				<div class="horizontal layout">
+					<paper-icon-button id="close" icon="close"></paper-icon-button>
+					<div class="flex"></div>
+					<paper-icon-button hidden$="[[!selectedAudio]]" id="remove" icon="delete"></paper-icon-button>
+					<div class="flex"></div>
+					<paper-icon-button id="updateInsert" icon="check"></paper-icon-button>
+				</div>
+			</div>
+		</paper-menu-button>
+	</template>
+	<script>Polymer({is:"wysiwyg-tool-audio",behaviors:[WYSIWYG.ToolBehavior],properties:{audioUrl:{type:String,value:""},selectedAudio:{type:Object,value:null,readOnly:!0,observer:"_selectedAudioChanged"},active:{type:Boolean,value:!1,computed:"queryCommandState(range0, selectionRoot, canRedo, canUndo, value, commonAncestorPath, selectedAudio)",reflectToAttribute:!0,observer:"_activeChanged"},disabled:{type:Boolean,value:!0,computed:"_computeDisabled(range0, selectionRoot, canRedo, canUndo, value, commonAncestorPath, selectedAudio)",reflectToAttribute:!0,observer:"_disabledChanged"}},execCommand:function(e){if(!this.disabled&&this.range0){var o=this.audioUrl.replace(new RegExp('"',"g"),"&quote;"),t=Polymer.dom(e).rootTarget;this.$.updateInsert.contains(t)?(this.$.dropdown.close(),this.async(function(){if(this.selectedAudio)this.selectedAudio.src=o;else{var e='<p><br><audio-wrapper><audio src="'+o+'" controls></audio></audio-wrapper><br></p>';document.execCommand("insertHTML",!1,e)}},10)):this.$.remove.contains(t)?(this.selectedAudio&&this.selectedAudio.parentNode.removeChild(this.selectedAudio),this.$.dropdown.close()):this.$.close.contains(t)?this.$.dropdown.close():this.$.button.contains(t)&&(this.selectedAudio?this.audioUrl=this.selectedAudio.src:this.audioUrl="",this.$.dropdown.open(),this.async(function(){this.$.url.focus()},100))}},queryCommandEnabled:function(){return this.range0},queryCommandState:function(){return this.selectedAudio},ready:function(){this.resources={en:{Audio:"Audio"}};var e=function(e){var o=Polymer.dom(e).rootTarget,t=null;if(this.target.contains(o)){if("AUDIO-WRAPPER"===o.tagName){var i=o.querySelector("audio");i&&(t=i)}this._setSelectedAudio(t)}}.bind(this);document.addEventListener("click",e),document.addEventListener("keydown",e)},_click:function(e){this.execCommand(e)},_paperDropdownClose:function(e){e.target===this.$.dropdown&&(this.audioUrl="",this.fire("restore-selection"))},_selectedAudioChanged:function(e){},_stopPropagation:function(e){e.stopPropagation()}});</script>
+</dom-module></body></html>

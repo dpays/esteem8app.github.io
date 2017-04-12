@@ -1,0 +1,8 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/to-markdown.js"></script>
+<script src="./src/steem.min.js"></script>
+
+</head><body><dom-module id="steem-get-comment-replies"></dom-module>
+
+<script>!function(){Polymer({is:"steem-get-comment-replies",properties:{parentAuthor:{type:String},parentPermlink:{type:String,observer:"_parent_permlinkChanged"},comments:{type:Object,notify:!0},queryError:{type:Boolean,notify:!0}},ready:function(){"undefined"==typeof this.comments&&(this.comments=[]),"undefined"==typeof this.queryError&&(this.queryError=!1)},_parent_permlinkChanged:function(){if(""!==this.parentPermlink&&""!==this.parentAuthor){var e=this;this.async(function(){window.steem.api.getContentReplies(this.parentAuthor,this.parentPermlink,function(t,r){"undefined"===r||t?e.queryError=!0:e._computeComments(r)})})}},_computeComments:function(e){for(var t=[],r=0;r<e.length;r++){var n=e[r],o={};o.parent_author=n.parent_author,o.parent_permlink=n.parent_permlink,o.permlink=n.permlink,o.author=n.author,o.created=n.created,o.votes=n.net_votes,o.replies=n.children,o.dollarValue=parseFloat(n.total_pending_payout_value.split(" ")[0])+parseFloat(n.total_payout_value.split(" ")[0]),o.body=n.body,t.push(o)}this.set("comments",t)}})}();</script></body></html>

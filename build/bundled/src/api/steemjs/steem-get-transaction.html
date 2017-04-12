@@ -1,0 +1,7 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+
+</head><body><dom-module id="steem-get-transaction"></dom-module>
+
+<script>!function(){Polymer({is:"steem-get-transaction",properties:{transactionId:{type:String},transaction:{type:Object,notify:!0}},created:function(){this._updateTransaction()},_updateTransaction:function(){var t=this;this.async(function(){steem.api.getTransaction("",t.transactionId,function(n,a){n||(t.transaction=a)})})}})}();</script></body></html>

@@ -1,0 +1,42 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../components/reply-card.html">
+
+<link rel="import" href="../api/steemjs/steem-get-replies.html">
+
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="profile-replies">
+
+    <template>
+
+        <style include="shared-styles">
+
+            /* GENERAL */
+            :host{
+
+            }
+
+        </style>
+
+        <steem-get-replies user-name="[[accountName]]" replies="{{_replies}}">
+        </steem-get-replies>
+
+        <div id="replies-list">
+
+            <template is="dom-if" if="[[!_replies.length]]">
+                <h1 class="nothingText">[[userName]] has no replies</h1>
+            </template>
+
+            <template is="dom-if" if="[[_replies.length]]">
+                <template is="dom-repeat" items="[[_replies]]">
+                    <reply-card reply="[[item]]"></reply-card>
+                </template>
+            </template>
+
+        </div>
+
+    </template>
+</dom-module>
+
+<script>Polymer({is:"profile-replies",properties:{accountName:{type:String},_replies:{type:Array}}});</script></body></html>

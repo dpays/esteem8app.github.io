@@ -1,6 +1,6 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/esteem8-shell.html",
+  "shell": "src/app-shell.html",
   "fragments": [
     "src/page/page-explore.html",
     "src/page/page-favorite.html",
@@ -15,6 +15,7 @@
   "sourceGlobs": [
     "src/**/*",
     "images/**/*",
+    "bower_components/**/*",
     "bower.json"
   ],
   "includeDependencies": [

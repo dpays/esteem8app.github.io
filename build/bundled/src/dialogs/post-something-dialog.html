@@ -1,0 +1,122 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
+<link rel="import" href="../../bower_components/font-roboto/roboto.html">
+<link rel="import" href="../../bower_components/marked-element/marked-import.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+
+<link rel="import" href="../../bower_components/wysiwyg-e/wysiwyg-e.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/bold.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/italic.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/underline.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/strike.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/clear.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/code.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/link.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/image.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/ordered.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/unordered.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/indent.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/outdent.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/justify.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/heading.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/blockquote.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/undo.html">
+<link rel="import" href="../../bower_components/wysiwyg-e/tools/redo.html">
+
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="post-something-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            #selectTagDialog {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                top: 0;
+                padding: 0;
+                position: fixed;
+            }
+
+            paper-input {
+                --paper-input-container-color: var(--app-primary-text-color);
+                --paper-input-container-input-color: var(--app-primary-text-color);
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                width: 100%;
+                margin-bottom: 12px;
+            }
+
+            paper-toolbar {
+                margin: 0 !important;
+                padding: 0 !important;
+                background-color: var(--app-primary-color);
+            }
+
+            paper-toolbar paper-icon-button {
+                color: var(--app-primary-text-color)
+            }
+
+            #editor {
+                margin-top: 0 !important;
+                padding: 0 !important;
+                height: calc(100% - 64px);
+                width: 100vw;
+                --wysiwyg-toolbar: {
+                    background-color: var(--app-dark-primary-color);
+                }
+            }
+
+        </style>
+
+        <paper-dialog id="selectTagDialog" opened="{{opened}}" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop="">
+            
+            <paper-toolbar>
+                <paper-icon-button icon="my-icons:close" dialog-dismiss="">
+                </paper-icon-button>
+                <paper-input value="" label="Title">
+                </paper-input>
+                <paper-icon-button id="postButton" icon="my-icons:send">
+                </paper-icon-button>
+            </paper-toolbar>
+
+            
+            <wysiwyg-e id="editor" value="{{value}}">
+                <wysiwyg-tool-bold class="wysiwyg-tool"></wysiwyg-tool-bold>
+                <wysiwyg-tool-italic class="wysiwyg-tool"></wysiwyg-tool-italic>
+                <wysiwyg-tool-underline class="wysiwyg-tool"></wysiwyg-tool-underline>
+                <wysiwyg-tool-strike class="wysiwyg-tool"></wysiwyg-tool-strike>
+                <wysiwyg-tool-clear class="wysiwyg-tool"></wysiwyg-tool-clear>
+                <wysiwyg-tool-code class="wysiwyg-tool"></wysiwyg-tool-code>
+                <wysiwyg-tool-link class="wysiwyg-tool"></wysiwyg-tool-link>
+                <wysiwyg-tool-image class="wysiwyg-tool"></wysiwyg-tool-image>
+                <wysiwyg-tool-ordered class="wysiwyg-tool"></wysiwyg-tool-ordered>
+                <wysiwyg-tool-unordered class="wysiwyg-tool"></wysiwyg-tool-unordered>
+                <wysiwyg-tool-indent class="wysiwyg-tool"></wysiwyg-tool-indent>
+                <wysiwyg-tool-outdent class="wysiwyg-tool"></wysiwyg-tool-outdent>
+                <wysiwyg-tool-justify class="wysiwyg-tool" right="" center="" full=""></wysiwyg-tool-justify>
+                <wysiwyg-tool-heading class="wysiwyg-tool" h1="" h2="" h3="" h4="" h5="" h6=""></wysiwyg-tool-heading>
+                <wysiwyg-tool-blockquote class="wysiwyg-tool"></wysiwyg-tool-blockquote>
+                <wysiwyg-tool-undo class="wysiwyg-tool"></wysiwyg-tool-undo>
+                <wysiwyg-tool-redo class="wysiwyg-tool"></wysiwyg-tool-redo>
+            </wysiwyg-e>
+        </paper-dialog>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"post-something-dialog",properties:{opened:{type:Boolean,notify:!0},value:{type:String}},ready:function(){this.value="Write something here"},openDialog:function(){this.opened=!0}});</script>
+
+
+
+</body></html>

@@ -1,0 +1,8 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+<script src="./src/steem-parser.js"></script>
+
+</head><body><dom-module id="steem-get-history"></dom-module>
+
+<script>!function(){Polymer({is:"steem-get-history",properties:{userName:{type:String},events:{type:Array,notify:!0}},observers:["_userNameChanged(userName)"],_userNameChanged:function(e){var e=e.replace("@",""),t=this;this.async(function(){window.steem.api.getAccountHistory(e,99999999,100,function(e,r){if(e)console.error("Load steem-get-history error");else{var s=computeEvents(r);t.set("events",s)}})})}})}();</script></body></html>

@@ -1,0 +1,10 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<script src="./src/steem.min.js"></script>
+<script src="../../scripts/functions.js"></script>
+
+</head><body><dom-module id="steem-get-follow-count">
+    <template></template>
+</dom-module>
+
+<script>!function(){Polymer({is:"steem-get-follow-count",properties:{accountName:{type:String,notify:!0},followCount:{type:Object,notify:!0},isLoading:{type:Boolean,notify:!0}},observers:["_accountNameChanged(accountName)"],ready:function(){this.isLoading=!0,"undefined"==typeof this.followCount&&this.set("followCount",{followerCount:0,followingCount:0})},_accountNameChanged:function(o){if(""!=o){this.isLoading=!0;var t=this;this.async(function(){window.steem.api.getFollowCount(o,function(o,n){t._computeAccountFollowCount(o,n)})})}},_computeAccountFollowCount:function(o,t){o?(this.set("followCount.followerCount",0),this.set("followCount.followingCount",0)):(this.set("followCount.followerCount",t.follower_count),this.set("followCount.followingCount",t.following_count)),this.isLoading=!1}})}();</script></body></html>

@@ -1,0 +1,46 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../shared-styles.html">
+
+</head><body><dom-module id="sign-up-dialog">
+
+    <template>
+
+        <style include="shared-styles">
+
+            :host {
+                padding: 16px;
+            }
+
+            paper-dialog {
+                background-color: var(--app-secondary-background-color);
+                color: var(--app-background-secondary-text-color);
+            }
+
+            paper-dialog h1 {
+                color: var(--app-background-primary-text-color);
+            }
+
+            paper-dialog a {
+                color: var(--app-secondary-color);
+            }
+
+        </style>
+
+        <paper-dialog id="selectTagDialog" opened="{{isOpen}}" entry-animation="fade-in-animation" exit-animation="fade-out-animation" with-backdrop="">
+
+            <h1>Sign up</h1>
+            <p>Please sign up on <a href="https://steemit.com/enter_email" target="_blank">steemit</a> and go back to login.</p>
+            <p>To make this application support this features, you can <a href="/support">support us</a>.</p>
+
+        </paper-dialog>
+    </template>
+</dom-module>
+
+<script>Polymer({is:"sign-up-dialog",properties:{isOpen:{type:Boolean,notify:!0}},openDialog:function(){this.isOpen=!0}});</script></body></html>

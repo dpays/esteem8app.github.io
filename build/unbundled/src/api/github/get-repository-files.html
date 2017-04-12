@@ -1,0 +1,13 @@
+<html><head><link rel="import" href="../../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../other/url-get-file.html">
+
+</head><body><dom-module id="get-repository-files">
+
+    <template>
+        <url-get-file url="[[url]]" response-text="{{_fileListText}}">
+        </url-get-file>
+    </template>
+
+    <script>!function(){Polymer({is:"get-repository-files",properties:{url:{type:String},files:{type:Array,notify:!0},_fileListText:{type:String,observer:"_computeFiles"}},_computeFiles:function(){this.set("files",JSON.parse(this._fileListText))}})}();</script>
+</dom-module></body></html>
