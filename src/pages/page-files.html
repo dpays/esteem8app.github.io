@@ -204,7 +204,7 @@
                  on-tap="_openSelectFolderDialog()"
                  class="floatingToolbar">
                 <span class="floatingToolbarTitle">
-                    <div>#[[query]]</div>
+                    #[[query]]
                 </span>
             </div>
 
@@ -479,13 +479,13 @@
         observers: [
             '_setCurrentFileName(_currentFile.content)',
             '_setCurrentFileDefaultTags(_currentFile.content)',
-            '_doAction(_action.type, _action.id)'
+            '_doAction(_action.type, _action.id)',
+            '_changeUrl(query)'
         ],
 
         ready: function() {
 
             this.pastFiles = this.favoriteFiles;
-            this.query = '';
             this._selectedFilesId = [];
             this._resetCurrentFile();
 
@@ -504,6 +504,11 @@
 
             this.$.saveFileButton.addEventListener('tap', this._saveFile.bind(this));
             this.$.copyFileLinkButton.addEventListener('tap', this._copyFileLink.bind(this));
+        },
+
+        _changeUrl: function(query) {
+
+            window.history.pushState({}, null, '/files/'+query);
         },
 
         /* OPEN SOMETHING FUNCTIONS */
@@ -532,17 +537,11 @@
         _openViewFileDialog: function(id) {
 
             var id = id || this._currentFile.id;
-
-            // Get file from id
             var fileIndex = this._getFileIndexFromId(id);
-
-            // Set file object from index
             this.set('_currentFile', this.favoriteFiles[fileIndex]);
 
             // Open dialog
             this.$.viewFileDialog.open();
-
-            // Reset selected files
             this._selectedFilesId = [];
         },
 
@@ -550,34 +549,25 @@
 
             // Open dialog
             this.$.editFileDialog.open();
-
-            // Reset selected files
             this._selectedFilesId = [];
         },
 
         _openAddFileDialog: function() {
 
+            // Open dialog
             this._resetCurrentFile();
             this.$.addFileDialog.open();
+            this._selectedFilesId = [];
         },
 
         /* TEST FUNCTION */
-
-        _oneSelected: function(_selectedFilesIdLength) {
-
-            return (_selectedFilesIdLength == 1);
-        },
-
         _multipleSelected: function(_selectedFilesIdLength) {
 
             return (_selectedFilesIdLength >= 1);
         },
 
         /* ACTIONS FUNCTION */
-
         _doAction: function(type, id) {
-
-
 
             switch(type) {
 
@@ -613,7 +603,7 @@
 
             }
 
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
 
             appShell.showToast('Successfully copied to your clipboard');
             appShell.copyToClipboard(textToCopy);
@@ -635,6 +625,7 @@
                 return b - a;
             });
 
+            // Delete files
             for(var i = 0; i < indexToDelete.length; i++) {
 
                 var index = indexToDelete[i];
@@ -653,7 +644,7 @@
         _saveFile: function() {
 
             // Save change
-            var idToUpdate = this._currentFile.id
+            var idToUpdate = this._currentFile.id;
             var indexToUpdate = this._getFileIndexFromId(idToUpdate);
             var pathToUpdate = 'favoriteFiles.' + indexToUpdate;
 
@@ -725,7 +716,7 @@
                 if(isLink) {
 
                     // Open link
-                    window.open(fileContent);
+                    window.open(file.content);
                 }else {
 
                     // Open file
@@ -956,32 +947,7 @@
 
         _generateId: function() {
 
-            var random = Date.now() * Math.random();
-
-            return random;
-        },
-
-        _arrayAsString: function(list) {
-
-            var text = '';
-
-            if(typeof list !== 'undefined') {
-
-                var listLength = list.length || 0;
-
-                for(var i = 0;i < listLength; i++) {
-
-                    text += list[i];
-
-                    if(i < listLength-1) {
-
-                        text += ', ';
-                    }
-
-                }
-            }
-
-            return text;
+            return Date.now() * Math.random();
         },
 
         _isFileALink: function(file) {

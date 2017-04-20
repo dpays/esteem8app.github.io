@@ -167,6 +167,7 @@
 
             <page-files name="files"
                         settings="[[settings]]"
+                        query="[[dataUrl2]]"
                         favorite-files="{{favoriteFiles}}"
                         favorite-folders="{{favoriteFolders}}"
                         favorite-shared-files="{{favoriteSharedFiles}}">
@@ -183,6 +184,7 @@
 
             <page-products name="products"
                            settings="[[settings]]"
+                           query="[[dataUrl2]]"
                            favorite-products="{{favoriteProducts}}"
                            favorite-categories="{{favoriteCategories}}"
                            favorite-shared-products="{{favoriteSharedProducts}}"
@@ -304,7 +306,7 @@
                 // Set default browser stored value
                 if(typeof this.favoritePosts === 'undefined') { this.favoritePosts = [];}
                 if(typeof this.favoriteUsers === 'undefined') { this.favoriteUsers = ['esteem8'];}
-                if(typeof this.favoriteTags === 'undefined') { this.favoriteTags = ['esteem8'];}
+                if(typeof this.favoriteTags === 'undefined') { this.favoriteTags = ['esteem8', 'pizzagate'];}
 
                 if(typeof this.favoriteFolders === 'undefined') { this.favoriteFolders = [{name: 'esteem8'}, {name: 'media steem'}, {name: 'media image esteem8'}];}
                 if(typeof this.favoriteFiles === 'undefined') { this.favoriteFiles = defaultFiles;}

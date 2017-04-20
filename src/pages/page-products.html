@@ -492,13 +492,13 @@
 
         observers: [
             '_setCurrentProductName(_currentProduct.content)',
-            '_doAction(_action.type, _action.id)'
+            '_doAction(_action.type, _action.id)',
+            '_changeUrl(query)'
         ],
 
         ready: function() {
 
             this._previousFavoriteProducts = this.favoriteProducts;
-            this.query = '';
             this._selectedProductsId = [];
             this._multipleEdit = {};
             this._resetCurrentProduct();
@@ -520,6 +520,11 @@
             this.$.copyProductLinkButton.addEventListener('tap', this._copyProductLink.bind(this));
 
             this.$.makeMultipleEditButton.addEventListener('tap', this._makeMultipleEdit.bind(this));
+        },
+
+        _changeUrl: function(query) {
+
+            window.history.pushState({}, null, '/products/'+query);
         },
 
         _updateFavoriteSharedProducts: function() {

@@ -2,215 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa2c855-02f1-46df-9abd-d273e4256e7b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/defaultCategories.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/defaultFiles.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/defaultProducts.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/defaultSettings.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/drawer/tools-drawer.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bower_components/inert/gulpfile.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/LICENSE" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/todo/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/todo/task-tools.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/todo/tasks/README.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/todo/tasks/code/BUGS.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/todo/tasks/code/DEV.md" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/todo/tasks/code/README.md" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/app-shell.html" afterPath="$PROJECT_DIR$/src/app-entry.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.html" afterPath="$PROJECT_DIR$/404.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/awesome-button/.bower.json" afterPath="$PROJECT_DIR$/bower_components/awesome-button/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/awesome-button/awesome-button.html" afterPath="$PROJECT_DIR$/bower_components/awesome-button/awesome-button.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/font-roboto/.bower.json" afterPath="$PROJECT_DIR$/bower_components/font-roboto/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/font-roboto/roboto.html" afterPath="$PROJECT_DIR$/bower_components/font-roboto/roboto.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/.bower.json" afterPath="$PROJECT_DIR$/bower_components/inert/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/.gitignore" afterPath="$PROJECT_DIR$/bower_components/inert/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/inert/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/README.md" afterPath="$PROJECT_DIR$/bower_components/inert/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/dist/inert.js" afterPath="$PROJECT_DIR$/bower_components/inert/dist/inert.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/dist/inert.min.js" afterPath="$PROJECT_DIR$/bower_components/inert/dist/inert.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/inert.html" afterPath="$PROJECT_DIR$/bower_components/inert/inert.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/package.json" afterPath="$PROJECT_DIR$/bower_components/inert/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/inert/src/inert.js" afterPath="$PROJECT_DIR$/bower_components/inert/src/inert.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-a11y-announcer/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-a11y-announcer/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-a11y-announcer/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-a11y-announcer/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-a11y-announcer/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-a11y-announcer/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-ajax/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-ajax/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-ajax/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-ajax/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-ajax/README.md" afterPath="$PROJECT_DIR$/bower_components/iron-ajax/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-ajax/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-ajax/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-ajax/hero.svg" afterPath="$PROJECT_DIR$/bower_components/iron-ajax/hero.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-behaviors/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-behaviors/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-behaviors/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-behaviors/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-behaviors/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-behaviors/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-behaviors/iron-button-state.html" afterPath="$PROJECT_DIR$/bower_components/iron-behaviors/iron-button-state.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-behaviors/test/active-state.html" afterPath="$PROJECT_DIR$/bower_components/iron-behaviors/test/active-state.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-dropdown/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-dropdown/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-dropdown/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-dropdown/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-dropdown/iron-dropdown-scroll-manager.html" afterPath="$PROJECT_DIR$/bower_components/iron-dropdown/iron-dropdown-scroll-manager.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/README.md" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/classes/iron-flex-layout.html" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/classes/iron-flex-layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/classes/iron-shadow-flex-layout.html" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/classes/iron-shadow-flex-layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/demo/index.html" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/demo/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/iron-flex-layout-classes.html" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/iron-flex-layout-classes.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-flex-layout/iron-flex-layout.html" afterPath="$PROJECT_DIR$/bower_components/iron-flex-layout/iron-flex-layout.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/README.md" afterPath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-form-element-behavior/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-input/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-input/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/bower_components/iron-input/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/README.md" afterPath="$PROJECT_DIR$/bower_components/iron-input/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-input/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/hero.svg" afterPath="$PROJECT_DIR$/bower_components/iron-input/hero.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-input/iron-input.html" afterPath="$PROJECT_DIR$/bower_components/iron-input/iron-input.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-menu-behavior/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-menu-behavior/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-menu-behavior/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-menu-behavior/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-menu-behavior/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-menu-behavior/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-menu-behavior/iron-menu-behavior.html" afterPath="$PROJECT_DIR$/bower_components/iron-menu-behavior/iron-menu-behavior.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-menu-behavior/test/iron-menu-behavior.html" afterPath="$PROJECT_DIR$/bower_components/iron-menu-behavior/test/iron-menu-behavior.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-meta/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-meta/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-meta/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-meta/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-meta/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-meta/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-meta/hero.svg" afterPath="$PROJECT_DIR$/bower_components/iron-meta/hero.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-overlay-behavior/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-overlay-behavior/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/iron-resizable-behavior.html" afterPath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/iron-resizable-behavior.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/test/test-elements.html" afterPath="$PROJECT_DIR$/bower_components/iron-resizable-behavior/test/test-elements.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/.bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/bower.json" afterPath="$PROJECT_DIR$/bower_components/iron-validatable-behavior/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/.bower.json" afterPath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/README.md" afterPath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/package.json" afterPath="$PROJECT_DIR$/bower_components/keyboardevent-key-polyfill/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/l2t-paper-slider/.bower.json" afterPath="$PROJECT_DIR$/bower_components/l2t-paper-slider/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/l2t-paper-slider/bower.json" afterPath="$PROJECT_DIR$/bower_components/l2t-paper-slider/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/l2t-paper-slider/l2t-paper-slider.html" afterPath="$PROJECT_DIR$/bower_components/l2t-paper-slider/l2t-paper-slider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/marked-element/.bower.json" afterPath="$PROJECT_DIR$/bower_components/marked-element/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/marked-element/README.md" afterPath="$PROJECT_DIR$/bower_components/marked-element/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/marked-element/bower.json" afterPath="$PROJECT_DIR$/bower_components/marked-element/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/marked-element/marked-element.html" afterPath="$PROJECT_DIR$/bower_components/marked-element/marked-element.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/marked-element/test/marked-element.html" afterPath="$PROJECT_DIR$/bower_components/marked-element/test/marked-element.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/neon-animation/.bower.json" afterPath="$PROJECT_DIR$/bower_components/neon-animation/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/neon-animation/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/neon-animation/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/neon-animation/bower.json" afterPath="$PROJECT_DIR$/bower_components/neon-animation/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/neon-animation/demo/tiles/circles-page.html" afterPath="$PROJECT_DIR$/bower_components/neon-animation/demo/tiles/circles-page.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-behaviors/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-behaviors/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-behaviors/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-behaviors/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-behaviors/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-behaviors/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-behaviors/test/paper-ripple-behavior.html" afterPath="$PROJECT_DIR$/bower_components/paper-behaviors/test/paper-ripple-behavior.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-button/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-button/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-button/.gitignore" afterPath="$PROJECT_DIR$/bower_components/paper-button/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-button/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-button/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-button/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-button/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-card/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-card/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-card/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-card/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-card/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-card/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-card/demo/index.html" afterPath="$PROJECT_DIR$/bower_components/paper-card/demo/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-card/paper-card.html" afterPath="$PROJECT_DIR$/bower_components/paper-card/paper-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-card/test/basic.html" afterPath="$PROJECT_DIR$/bower_components/paper-card/test/basic.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/README.md" afterPath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/hero.svg" afterPath="$PROJECT_DIR$/bower_components/paper-dialog-behavior/hero.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-fab/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-fab/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-fab/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-fab/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-fab/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-fab/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-icon-button/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-icon-button/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-icon-button/README.md" afterPath="$PROJECT_DIR$/bower_components/paper-icon-button/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-icon-button/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-icon-button/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-input/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/README.md" afterPath="$PROJECT_DIR$/bower_components/paper-input/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-input/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/paper-input-container.html" afterPath="$PROJECT_DIR$/bower_components/paper-input/paper-input-container.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/paper-input.html" afterPath="$PROJECT_DIR$/bower_components/paper-input/paper-input.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/paper-textarea.html" afterPath="$PROJECT_DIR$/bower_components/paper-input/paper-textarea.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-input/test/paper-input-container.html" afterPath="$PROJECT_DIR$/bower_components/paper-input/test/paper-input-container.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-material/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-material/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-material/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-material/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-material/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/bower_components/paper-material/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-material/README.md" afterPath="$PROJECT_DIR$/bower_components/paper-material/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-material/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-material/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-material/paper-material.html" afterPath="$PROJECT_DIR$/bower_components/paper-material/paper-material.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-slider/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/README.md" afterPath="$PROJECT_DIR$/bower_components/paper-slider/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-slider/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/demo/index.html" afterPath="$PROJECT_DIR$/bower_components/paper-slider/demo/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/paper-slider.html" afterPath="$PROJECT_DIR$/bower_components/paper-slider/paper-slider.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/test/a11y.html" afterPath="$PROJECT_DIR$/bower_components/paper-slider/test/a11y.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/test/basic.html" afterPath="$PROJECT_DIR$/bower_components/paper-slider/test/basic.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-slider/test/index.html" afterPath="$PROJECT_DIR$/bower_components/paper-slider/test/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-styles/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-styles/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-styles/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-styles/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-styles/element-styles/paper-item.html" afterPath="$PROJECT_DIR$/bower_components/paper-styles/element-styles/paper-item.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-styles/element-styles/paper-material.html" afterPath="$PROJECT_DIR$/bower_components/paper-styles/element-styles/paper-material.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-toast/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-toast/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-toast/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-toast/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-toast/README.md" afterPath="$PROJECT_DIR$/bower_components/paper-toast/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-toast/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-toast/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-toast/hero.svg" afterPath="$PROJECT_DIR$/bower_components/paper-toast/hero.svg" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-toast/paper-toast.html" afterPath="$PROJECT_DIR$/bower_components/paper-toast/paper-toast.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-tooltip/.bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-tooltip/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-tooltip/.travis.yml" afterPath="$PROJECT_DIR$/bower_components/paper-tooltip/.travis.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-tooltip/bower.json" afterPath="$PROJECT_DIR$/bower_components/paper-tooltip/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-tooltip/paper-tooltip.html" afterPath="$PROJECT_DIR$/bower_components/paper-tooltip/paper-tooltip.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/paper-tooltip/test/basic.html" afterPath="$PROJECT_DIR$/bower_components/paper-tooltip/test/basic.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/polymer/.bower.json" afterPath="$PROJECT_DIR$/bower_components/polymer/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/polymer/bower.json" afterPath="$PROJECT_DIR$/bower_components/polymer/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/polymer/build.log" afterPath="$PROJECT_DIR$/bower_components/polymer/build.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/polymer/polymer-micro.html" afterPath="$PROJECT_DIR$/bower_components/polymer/polymer-micro.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/polymer/polymer-mini.html" afterPath="$PROJECT_DIR$/bower_components/polymer/polymer-mini.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/polymer/polymer.html" afterPath="$PROJECT_DIR$/bower_components/polymer/polymer.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/.bower.json" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/History.md" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/History.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/README.md" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/bower.json" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next-lite.min.js" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next-lite.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next-lite.min.js.map" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next-lite.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next.min.js" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next.min.js.map" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations-next.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations.min.js" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations.min.js.map" afterPath="$PROJECT_DIR$/bower_components/web-animations-js/web-animations.min.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/README.md" afterPath="$PROJECT_DIR$/docs/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/contributing-kit/documentation.md" afterPath="$PROJECT_DIR$/docs/contributing-kit/documentation.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/work-the-system/README.md" afterPath="$PROJECT_DIR$/docs/work-the-system/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/manifest.json" afterPath="$PROJECT_DIR$/manifest.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/polymer.json" afterPath="$PROJECT_DIR$/polymer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/custom-router.html" afterPath="$PROJECT_DIR$/src/components/custom-router.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/html-echo.html" afterPath="$PROJECT_DIR$/src/components/html-echo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/post-card.html" afterPath="$PROJECT_DIR$/src/components/post-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/profile-files.html" afterPath="$PROJECT_DIR$/src/components/profile-files.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/profile-products.html" afterPath="$PROJECT_DIR$/src/components/profile-products.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" afterPath="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-404.html" afterPath="$PROJECT_DIR$/src/pages/page-404.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-downvotes.html" afterPath="$PROJECT_DIR$/src/pages/page-downvotes.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-explore.html" afterPath="$PROJECT_DIR$/src/pages/page-explore.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app-entry.html" afterPath="$PROJECT_DIR$/src/app-entry.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/defaultSettings.js" afterPath="$PROJECT_DIR$/src/data/defaultSettings.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-favorites.html" afterPath="$PROJECT_DIR$/src/pages/page-favorites.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-files.html" afterPath="$PROJECT_DIR$/src/pages/page-files.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-home.html" afterPath="$PROJECT_DIR$/src/pages/page-home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-info.html" afterPath="$PROJECT_DIR$/src/pages/page-info.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-login.html" afterPath="$PROJECT_DIR$/src/pages/page-login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-post.html" afterPath="$PROJECT_DIR$/src/pages/page-post.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-products.html" afterPath="$PROJECT_DIR$/src/pages/page-products.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-profile.html" afterPath="$PROJECT_DIR$/src/pages/page-profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-settings.html" afterPath="$PROJECT_DIR$/src/pages/page-settings.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-support.html" afterPath="$PROJECT_DIR$/src/pages/page-support.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-tips.html" afterPath="$PROJECT_DIR$/src/pages/page-tips.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/page-tools.html" afterPath="$PROJECT_DIR$/src/pages/page-tools.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shared-styles.html" afterPath="$PROJECT_DIR$/src/shared-styles.html" />
     </list>
     <ignored path="esteem8app.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -234,38 +32,28 @@
       <file leaf-file-name="page-products.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/page-products.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="548" column="49" lean-forward="false" selection-start-line="548" selection-start-column="49" selection-end-line="548" selection-end-column="49" />
+            <state relative-caret-position="1189">
+              <caret line="1030" column="0" lean-forward="true" selection-start-line="1030" selection-start-column="0" selection-end-line="1030" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-settings.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-settings.html">
+      <file leaf-file-name="page-favorites.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/page-favorites.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5320">
-              <caret line="30" column="26" lean-forward="true" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+            <state relative-caret-position="937">
+              <caret line="331" column="91" lean-forward="false" selection-start-line="331" selection-start-column="91" selection-end-line="331" selection-end-column="91" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-support.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-support.html">
+      <file leaf-file-name="custom-router.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/custom-router.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1381">
-              <caret line="202" column="10" lean-forward="true" selection-start-line="202" selection-start-column="10" selection-end-line="202" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="page-tips.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/page-tips.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1361">
-              <caret line="138" column="49" lean-forward="false" selection-start-line="138" selection-start-column="49" selection-end-line="138" selection-end-column="49" />
+            <state relative-caret-position="900">
+              <caret line="117" column="22" lean-forward="false" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -274,18 +62,18 @@
       <file leaf-file-name="page-tools.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/page-tools.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="640">
-              <caret line="32" column="13" lean-forward="true" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+            <state relative-caret-position="360">
+              <caret line="234" column="50" lean-forward="false" selection-start-line="234" selection-start-column="50" selection-end-line="234" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="page-profile.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="582" column="49" lean-forward="false" selection-start-line="582" selection-start-column="49" selection-end-line="582" selection-end-column="49" />
+            <state relative-caret-position="900">
+              <caret line="348" column="18" lean-forward="true" selection-start-line="348" selection-start-column="18" selection-end-line="348" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -294,18 +82,28 @@
       <file leaf-file-name="page-files.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/page-files.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4580">
-              <caret line="29" column="54" lean-forward="false" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
+            <state relative-caret-position="-6360">
+              <caret line="794" column="42" lean-forward="false" selection-start-line="794" selection-start-column="42" selection-end-line="794" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="defaultSettings.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="defaultSettings.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/data/defaultSettings.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+            <state relative-caret-position="1080">
+              <caret line="57" column="6" lean-forward="true" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app-entry.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app-entry.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1074">
+              <caret line="186" column="47" lean-forward="false" selection-start-line="186" selection-start-column="47" selection-end-line="186" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -314,8 +112,8 @@
       <file leaf-file-name="profile-files.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/profile-files.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="14" column="12" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="16" selection-end-column="13" />
+            <state relative-caret-position="760">
+              <caret line="92" column="10" lean-forward="true" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -343,9 +141,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_selectedPageChanged</find>
-      <find>_userName</find>
-      <find>_userNameChanged</find>
       <find>_showPage404</find>
       <find>_importPage</find>
       <find>_isPagePost</find>
@@ -373,6 +168,9 @@
       <find>_openAppsDrawer</find>
       <find>selectOtherCategoryButton</find>
       <find>toolsDrawerButton</find>
+      <find>_multipleSelected</find>
+      <find>_openFileLink</find>
+      <find>_isFileALink</find>
     </findStrings>
     <replaceStrings>
       <replace>_userName</replace>
@@ -418,25 +216,25 @@
         <option value="$PROJECT_DIR$/src/shared-styles.html" />
         <option value="$PROJECT_DIR$/src/pages/page-settings.html" />
         <option value="$PROJECT_DIR$/src/pages/page-404.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-tools.html" />
         <option value="$PROJECT_DIR$/src/components/post-card.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-favorites.html" />
-        <option value="$PROJECT_DIR$/src/app-entry.html" />
         <option value="$PROJECT_DIR$/src/dialogs/select-tag-dialog.html" />
         <option value="$PROJECT_DIR$/src/drawer/apps-drawer.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-files.html" />
         <option value="$PROJECT_DIR$/src/drawer/tools-drawer.html" />
         <option value="$PROJECT_DIR$/src/pages/page-home.html" />
         <option value="$PROJECT_DIR$/src/components/html-echo.html" />
         <option value="$PROJECT_DIR$/src/pages/page-explore.html" />
         <option value="$PROJECT_DIR$/src/pages/page-login.html" />
-        <option value="$PROJECT_DIR$/src/pages/page-products.html" />
         <option value="$PROJECT_DIR$/src/pages/page-support.html" />
         <option value="$PROJECT_DIR$/src/pages/page-tips.html" />
         <option value="$PROJECT_DIR$/src/components/profile-files.html" />
         <option value="$PROJECT_DIR$/src/components/profile-products.html" />
         <option value="$PROJECT_DIR$/src/pages/page-profile.html" />
+        <option value="$PROJECT_DIR$/src/app-entry.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-favorites.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-tools.html" />
         <option value="$PROJECT_DIR$/src/data/defaultSettings.js" />
+        <option value="$PROJECT_DIR$/src/pages/page-files.html" />
+        <option value="$PROJECT_DIR$/src/pages/page-products.html" />
       </list>
     </option>
   </component>
@@ -469,6 +267,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -563,6 +363,24 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="dialogs" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="esteem8app.github.io" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -587,8 +405,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -737,25 +553,26 @@
       <workItem from="1489751149220" duration="526923000" />
       <workItem from="1492229144059" duration="37000" />
       <workItem from="1492460703720" duration="2716000" />
-      <workItem from="1492555893437" duration="27345000" />
+      <workItem from="1492555893437" duration="27786000" />
+      <workItem from="1492657716096" duration="3266000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1206096000" />
+    <option name="totallyTimeSpent" value="1209803000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1080" height="1920" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28796297" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28333333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24951644" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07429829" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21904238" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39966556" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -818,7 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -828,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -836,7 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="739">
           <caret line="57" column="1" lean-forward="false" selection-start-line="57" selection-start-column="1" selection-end-line="57" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -844,7 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="19" column="1" lean-forward="false" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -852,7 +665,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="13" column="4" lean-forward="true" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -861,26 +673,17 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="720">
             <caret line="36" column="0" lean-forward="true" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CNAME">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/CNAME" />
     <entry file="file://$PROJECT_DIR$/CONTRIBUTORS.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -896,7 +699,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="1445">
             <caret line="76" column="12" lean-forward="false" selection-start-line="76" selection-start-column="12" selection-end-line="76" selection-end-column="12" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -907,7 +709,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="140">
             <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -918,7 +719,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -929,7 +729,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -940,7 +739,6 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
             <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
@@ -951,20 +749,12 @@
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="820">
             <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-            <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/defaultData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/defaultData.js" />
     <entry file="file://$PROJECT_DIR$/src/data/defaultCategories.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
@@ -977,7 +767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4060">
           <caret line="203" column="46" lean-forward="false" selection-start-line="203" selection-start-column="46" selection-end-line="203" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1001,7 +790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="840">
           <caret line="42" column="32" lean-forward="true" selection-start-line="42" selection-start-column="32" selection-end-line="42" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1009,7 +797,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="760">
           <caret line="38" column="35" lean-forward="false" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1017,7 +804,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="880">
           <caret line="44" column="0" lean-forward="true" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1029,27 +815,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/custom-router.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="920">
-          <caret line="118" column="80" lean-forward="true" selection-start-line="118" selection-start-column="22" selection-end-line="118" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app-entry.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="161" column="52" lean-forward="false" selection-start-line="161" selection-start-column="52" selection-end-line="161" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dialogs/select-category-dialog.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2820">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1057,7 +826,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1260">
           <caret line="63" column="6" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="68" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1073,7 +841,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1132">
           <caret line="166" column="85" lean-forward="true" selection-start-line="164" selection-start-column="16" selection-end-line="166" selection-end-column="85" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1081,7 +848,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-748">
           <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1089,7 +855,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1272">
           <caret line="354" column="21" lean-forward="true" selection-start-line="354" selection-start-column="21" selection-end-line="354" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1101,19 +866,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-favorites.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="294" column="23" lean-forward="false" selection-start-line="294" selection-start-column="12" selection-end-line="294" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2012">
           <caret line="197" column="38" lean-forward="false" selection-start-line="197" selection-start-column="38" selection-end-line="197" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1121,7 +877,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1108">
           <caret line="34" column="13" lean-forward="true" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1129,7 +884,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1332">
           <caret line="199" column="49" lean-forward="false" selection-start-line="199" selection-start-column="49" selection-end-line="199" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1141,50 +895,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-products.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="548" column="49" lean-forward="false" selection-start-line="548" selection-start-column="49" selection-end-line="548" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-settings.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5320">
-          <caret line="30" column="26" lean-forward="true" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
+        <state relative-caret-position="600">
+          <caret line="30" column="26" lean-forward="false" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-support.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1381">
-          <caret line="202" column="10" lean-forward="true" selection-start-line="202" selection-start-column="10" selection-end-line="202" selection-end-column="10" />
+        <state relative-caret-position="4040">
+          <caret line="202" column="10" lean-forward="false" selection-start-line="202" selection-start-column="10" selection-end-line="202" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/page-tips.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1361">
+        <state relative-caret-position="2760">
           <caret line="138" column="49" lean-forward="false" selection-start-line="138" selection-start-column="49" selection-end-line="138" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-tools.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="640">
-          <caret line="32" column="13" lean-forward="true" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/profile-files.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="14" column="12" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="16" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1197,26 +927,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
+    <entry file="file://$PROJECT_DIR$/src/app-entry.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1080">
-          <caret line="582" column="49" lean-forward="false" selection-start-line="582" selection-start-column="49" selection-end-line="582" selection-end-column="49" />
+        <state relative-caret-position="1074">
+          <caret line="186" column="47" lean-forward="false" selection-start-line="186" selection-start-column="47" selection-end-line="186" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/page-files.html">
+    <entry file="file://$PROJECT_DIR$/src/components/custom-router.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4580">
-          <caret line="29" column="54" lean-forward="false" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
+        <state relative-caret-position="900">
+          <caret line="117" column="22" lean-forward="false" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/profile-files.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="92" column="10" lean-forward="true" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-favorites.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="937">
+          <caret line="331" column="91" lean-forward="false" selection-start-line="331" selection-start-column="91" selection-end-line="331" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-tools.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="234" column="50" lean-forward="false" selection-start-line="234" selection-start-column="50" selection-end-line="234" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/data/defaultSettings.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="24" lean-forward="false" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+        <state relative-caret-position="1080">
+          <caret line="57" column="6" lean-forward="true" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-files.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6360">
+          <caret line="794" column="42" lean-forward="false" selection-start-line="794" selection-start-column="42" selection-end-line="794" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-products.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1189">
+          <caret line="1030" column="0" lean-forward="true" selection-start-line="1030" selection-start-column="0" selection-end-line="1030" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/page-profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="348" column="18" lean-forward="true" selection-start-line="348" selection-start-column="18" selection-end-line="348" selection-end-column="18" />
           <folding />
         </state>
       </provider>

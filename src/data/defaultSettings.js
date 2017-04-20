@@ -1,6 +1,6 @@
 var defaultSettings = {
 
-    appVersion: '0.0.8.3',
+    appVersion: '0.0.8.4',
 
     user: {
         name: '',

@@ -331,15 +331,6 @@
 
             this.$.goToExploreButton.addEventListener('tap', this._goToExplore.bind(this));
 
-            // Default view
-            if (typeof this.currentView == 'undefined') {
-
-                if(!/(publications|users|tags)/.test(this.currentView)) {
-
-                    this.currentView = 'publications';
-                }
-            }
-
             // Sort user A -> Z
 
             // Sort tag A -> Z
