@@ -147,9 +147,11 @@
                     Favorite [[currentView]]
                 </span>
             </div>
-            <a href="/trending">
-                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
-            </a>
+            <paper-icon-button icon="my-icons:explore"
+                               id="goToExploreButton"
+                               on-tap="_goToExplore()">
+            </paper-icon-button>
+
         </paper-toolbar>
 
         <!-- SECOND TOOLBAR -->
@@ -311,6 +313,10 @@
             }
         },
 
+        observers: [
+            '_changeUrl(currentView)'
+        ],
+
         ready: function() {
 
             // List event
@@ -322,8 +328,17 @@
             this.$.cancelDeleteUserButton.addEventListener('tap', this._cancelDeleteUser.bind(this));
             this.$.cancelDeleteTagButton.addEventListener('tap', this._cancelDeleteTag.bind(this));
 
+
+            this.$.goToExploreButton.addEventListener('tap', this._goToExplore.bind(this));
+
             // Default view
-            this.currentView = 'publications';
+            if (typeof this.currentView == 'undefined') {
+
+                if(!/(publications|users|tags)/.test(this.currentView)) {
+
+                    this.currentView = 'publications';
+                }
+            }
 
             // Sort user A -> Z
 
@@ -333,7 +348,20 @@
 
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
+        },
+
+        _goToExplore: function() {
+
+            window.history.pushState({}, null, "/trending");
+            window.dispatchEvent(new CustomEvent('location-changed'));
+        },
+
+        _changeUrl: function(currentView) {
+
+            var path = '/favorites/' + currentView;
+
+            window.history.pushState({}, null, path);
         },
 
         _addUser: function() {
@@ -412,7 +440,7 @@
         }
 
         /*
-         * Improvment idea: swipe to delete with iron-swipeable-container
+         * Improvement idea: swipe to delete with iron-swipeable-container
          */
     });
 </script>

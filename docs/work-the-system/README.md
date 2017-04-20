@@ -8,7 +8,10 @@ This document describe the document set used to work the primary **ESTEEM8 syste
 A system is what make it does what it perform.
 ```
 
+Esteem8 is viewed as system.
+
 #### Vocabulary
+
 * **A system** is a composition of nested systems composed of _functions_.
 * **A function** is a composition of _process_ grouped by a type.
 * **A process** is a series of _mechanical and chemical operations_.
@@ -18,16 +21,16 @@ Basicaly these components above are working similary as a program. Comparing to 
 ## Document set
 ### The what
 
-* [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
- * [System composition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-composition.md) is the detailed current whole system state.
- * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) is the detailed current system objectives, goal or destination.
+ * [/definiton](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition)
+   * [System composition](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition/system-composition.md) is the detailed current whole system state.
+   * [System objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) is the detailed current system objectives, goal or destination.
 
 ### The how
 
- * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies)
-   * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) is the way to optimize the current system.
-   * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) is the way to develop the current system.
-   * [/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects) are projects made from strategies.
+  * [/strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies)
+    * [/optimization strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/optimization-strategies) is the way to optimize the current system.
+    * [/development strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/development-strategies) is the way to develop the current system.
+    * [/projects](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies/projects) are projects made from strategies.
 
 ### The how of "what + how"
  
@@ -38,10 +41,10 @@ Basicaly these components above are working similary as a program. Comparing to 
 ## Explanations
 ### Organization level
 
-* [Objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) are made for a very long term planning.
-* [Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) are made for a long term planning and translated from composition & objectives [grouped by output].
-* [Projects](https://github.com/esteem8app/esteem8app.github.io/projects) are made for a middle term planning from mixed strategy parts [grouped by work type and strategies].
-* [Tasks](https://github.com/esteem8app/esteem8app.github.io/issues) are made for a short term planning from mixed projects parts [grouped by work type].
+ * [Objectives](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/definition/system-objectives.md) are made for a very long term planning.
+ * [Strategies](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/strategies) are made for a long term planning and translated from composition & objectives [grouped by output].
+ * [Projects](https://github.com/esteem8app/esteem8app.github.io/projects) are made for a middle term planning from mixed strategy parts [grouped by work type and strategies].
+ * [Tasks](https://github.com/esteem8app/esteem8app.github.io/issues) are made for a short term planning from mixed projects parts [grouped by work type].
 
 All organization level or layer [Objectives, strategies, projects and tasks] can be [Linked, Nested, Have [dependency](https://en.wikipedia.org/wiki/Dependency_(project_management)), Have [relationships](https://www.google.com/search?q=entity+relationship+diagram)] with all organization level or layer.
 
@@ -51,7 +54,7 @@ These 4 point above are organizational (process description) and sorted from a h
 * Organization principles are tools to write and precise these process descriptions also called objectives, strategies, projects and tasks.
 * Process principles are tools to translate process descriptions into mechanical and biological process.
 
-#### Using "Organization principles" doc [Describe]
+#### Using "Organization principles" doc [To describe]
 
 * [layer 1] [**What**](https://github.com/esteem8app/esteem8app.github.io/tree/master/docs/work-the-system/definition): [composition & objectives] ->
 
@@ -61,14 +64,14 @@ These 4 point above are organizational (process description) and sorted from a h
 
 * [layer 4] **Tasks:** [[GitHub issues](https://github.com/esteem8app/esteem8app.github.io/issues) filtered by skills(label) & projects(milestone)].
 
-#### Using "Process principles" doc [Process]
+#### Using "Process principles" doc [To process]
 
-* **Tasks:** -> Mechanical and biological process [Your process]
+* **Tasks:** -> Mechanical and biological process
 
-## Shema visualitation
+## Schema visualitation
 
 ![Work a system](https://github.com/esteem8app/esteem8app.github.io/blob/master/docs/work-the-system/Work%20a%20system.png?raw=true)
 
 ## More informations
 
-This framework has been built using the [work the system](http://www.workthesystem.com/).
+This working framework has been built using the [work the system](http://www.workthesystem.com/) methodology.

@@ -80,20 +80,6 @@
 
             paper-toggle-button {
                 float: right;
-                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
-                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
-                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
-            }
-
-            paper-input, color-select {
-                --paper-input-container-focus-color: var(--app-secondary-color);
-                --paper-input-container-input-color: var(--app-background-primary-text-color);
-                --paper-input-container-color: var(--app-background-secondary-text-color);
-            }
-
-            paper-dropdown-menu {
-                --paper-input-container-focus-color: var(--app-secondary-color);
-                --paper-input-container-input-color: var(--app-background-primary-text-color);
             }
 
             paper-card div a {
@@ -371,7 +357,7 @@
         // Open side drawer (menu)
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
         },
 
         // Return boolean, permit to test if the given chain is the used one
@@ -383,7 +369,7 @@
         // Reset settings configuration
         _resetSettings: function() {
 
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.setDefaultSettings();
                 appShell.showToast('Setting successfully reset');
         },

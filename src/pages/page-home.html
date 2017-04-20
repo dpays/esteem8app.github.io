@@ -15,9 +15,7 @@
 
 <link rel="import" href="../shared-styles.html">
 <link rel="import" href="../components/share-button.html">
-<link rel="import" href="../components/post-card.html">
 <link rel="import" href="../api/steemjs/steem-get-tags.html">
-<link rel="import" href="../api/steemjs/steem-get-state.html">
 <link rel="import" href="../api/other/url-get-file.html">
 
 <dom-module id="page-home">
@@ -34,7 +32,6 @@
 
 
             /* GENERAL */
-
             :host {
                 min-height: 100%;
                 width: 100%;
@@ -42,14 +39,7 @@
                 background-color: var(--app-primary-background-color);
             }
 
-
-            #loginButton {
-                color: var(--app-primary-text-color);
-                --paper-button-ink-color: var(--app-primary-text-color);
-            }
-
             /* TOOLBAR */
-
             #esteem8Profile {
                 cursor: pointer;
                 @apply(--layout-flex);
@@ -71,12 +61,7 @@
                 @apply(--shadow-elevation-2dp);
             }
 
-            #headersection h1 {
-                text-transform: uppercase;
-                padding-bottom: 0px;
-            }
-
-            #headersection h2 {
+            #headerSectionTitle {
                 text-transform: uppercase;
             }
 
@@ -102,18 +87,9 @@
                 margin: auto;
             }
 
-            #exploreButton {
-                background-color: var(--app-secondary-color);
-                --paper-button-ink-color: var(--app-secondary-text-color);
-            }
-
             #presentation-button {
                 padding-top: 32px;
                 text-align: center;
-            }
-
-            #presentation-button a {
-                color: #fff;
             }
 
             /* PRESENTATION CARDS */
@@ -127,21 +103,15 @@
                 color: #222;
             }
 
-            #presentation-cards a {
-                color: var(--app-secondary-color);
-                text-decoration: none;
-            }
-
             #presentation-cards paper-card {
+                text-align: left;
+                display: inline-table;
                 width: 280px;
                 height: 400px;
                 margin: 10px;
                 padding: 0;
-                text-align: left;
-                display: inline-table;
                 background-color: #fff;
                 color: #333;
-
                 transition: all .3s ease-out;
             }
 
@@ -154,40 +124,13 @@
                 font-family: 'Open Sans', sans-serif;
             }
 
-            #whatsThat {
-                /*background-image: url("https://steemitimages.com/280x280/http://media.coindesk.com/uploads/2014/11/Zennet-e1417244262314.jpg");*/
-                /*background-image: url("https://steemitimages.com/280x280/https://blockchain.info/wallet/img/blockchain-ad-placeholder-d232c25892a75ec148e9bb02c7df86cf8824876c.jpg");*/
-
-                /*box-shadow: inset 0px 320px 80px -18px rgb(255, 255, 255);
-                background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");
-
-                background-size: contain;
-                background-repeat: no-repeat;
-                background-position: bottom;*/
-            }
-
-            #joinTheMovement {
-                /*background-image: url('https://steemitimages.com/280x280/https://quantoz.com/wp-content/uploads/2016/02/blockchain-technology-professional-services_transparent-XL-1030x610.png');*/
-
-                /*box-shadow: inset 0px 315px 80px -18px rgb(255, 255, 255);
-                background-image: url("https://steemitimages.com/280x180/http://media.coindesk.com/uploads/2014/05/bitcoinnodes-300x185.jpg");
-                background-size: contain;
-                background-repeat: no-repeat;
-                background-position: bottom;*/
-            }
-
             #best-tags .card-content paper-listbox {
                 overflow-y: scroll;
                 max-height: 290px;
                 margin-top: 0;
             }
 
-            #best-tags .card-content paper-listbox {
-                margin-top: 0;
-            }
-
             /* SHARES BUTTONS */
-
             #shareButtons {
                 position: fixed;
                 right: 16px;
@@ -208,13 +151,12 @@
             }
 
             /* CONTRIBUTOR */
-
             #contributors {
                 position: absolute;
                 bottom: 16px;
                 left: 16px;
                 font-size: 12px;
-                color: var(--app-background-primary-text-color);
+                color: var(--app-background-secondary-text-color);
             }
 
             #contributors span::after {
@@ -222,8 +164,7 @@
             }
 
             #contributors a {
-                color: var(--app-background-secondary-text-color);
-                text-decoration: none;
+                color: var(--app-background-primary-text-color);
             }
             
         </style>
@@ -254,11 +195,20 @@
 
                 <h1 id="headerSectionTitle">Free social network, without any ads.</h1>
                 <h3>Get money to create and like content.</h3>
-                <p>Your cloud, blog/website, marketplace, pos, and multi-currency wallet.</p>
+                <p>Your cloud, custom blog, marketplace, and multi-currency wallet.</p>
 
                 <div id="presentation-button">
-                    <paper-button id="videoButton" on-tap="_openVideoDialog()">play video</paper-button>
-                    <paper-button id="exploreButton" on-tap="_openExplorePage()" raised>What's trending ?</paper-button>
+                    <paper-button id="videoButton"
+                                  class="primary-text-color-button"
+                                  on-tap="_openVideoDialog()">
+                        play video
+                    </paper-button>
+                    <paper-button id="exploreButton"
+                                  class="secondary-color-button"
+                                  on-tap="_openExplorePage()"
+                                  raised>
+                        What's trending ?
+                    </paper-button>
                 </div>
             </div>
         </div>
@@ -301,17 +251,6 @@
 
         </div>
 
-        <!-- 20 posts -->
-        <steem-get-state path="hot/"
-                         posts="{{_posts}}">
-        </steem-get-state>
-
-        <div id="presentation-posts">
-            <template is="dom-repeat" items="[[_posts]]">
-                <post-card post="[[item]]"></post-card>
-            </template>
-        </div>
-
         <div id="shareButtons">
             <paper-button id="githubButton" on-tap="_openGithub()" raised>
                 <iron-icon icon="my-icons:github" ></iron-icon>
@@ -323,7 +262,7 @@
 
         <div id="contributors">
             <template is="dom-if" if="[[_contributors.length]]">
-                <a target="_blank" href="https://github.com/esteem8app/esteem8app.github.io/blob/master/CONTRIBUTORS.md">GitHub contributors:&nbsp;</a>
+                <a target="_blank" href="https://github.com/esteem8app/esteem8app.github.io/blob/master/CONTRIBUTORS.md">Contributors:&nbsp;</a>
                 <template is="dom-repeat" items="[[_contributors]]">
                     <span>[[item]]</span>
                 </template>
@@ -356,10 +295,9 @@
             animationConfig: {
                 value: function() {
                     return {
-                        // provided by neon-animation/animations/scale-down-animation.html
                         name: 'fade-in-animation',
                         node: this,
-                        timing: {delay: 0, duration: 500}
+                        timing: {delay: 0, duration: 300}
                     }
                 }
             },
@@ -408,7 +346,7 @@
 
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
         },
 
         _computeContributorsFileText: function() {
@@ -443,17 +381,13 @@
 
         _updateBackground: function () {
 
-            var now = new Date();
-
             if(document.referrer.match('github.com')){
 
-                // https://s28.postimg.org/gq2u4cznf/image.jpg
                 this.customStyle['--home-background-image'] = 'url("' + 'https://static.pexels.com/photos/193349/pexels-photo-193349.jpeg' + '")';
                 this.$.headersection.style.color = '#eee';
 
             }else {
 
-                //https://s23.postimg.org/4ywp6zvw9/bg-028.jpg //https://s28.postimg.org/gq2u4cznf/image.jpg
                 this.customStyle['--home-background-image'] = 'url("http://esteem8.org/wp-content/uploads/2017/02/Solar-system.jpg?id=22870")';
             }
 
@@ -462,7 +396,7 @@
 
         _openVideoDialog: function() {
 
-            //window.open('https://youtu.be/xZmpCAqD7hs');
+            window.open('https://youtu.be/xZmpCAqD7hs');
 
         },
 
@@ -487,7 +421,7 @@
 
             window.history.pushState({}, null, '/@esteem8');
             window.dispatchEvent(new CustomEvent('location-changed'));
-        },
+        }
 
     });
 </script>

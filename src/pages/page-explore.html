@@ -36,12 +36,13 @@
                 background-color: var(--app-primary-background-color);
             }
 
-            .middle {
-                vertical-align: middle;
+            #toggleFavoriteTagButton {
+                float: right;
+                margin-top: -40px;
             }
 
-            .space {
-                width: 100%;
+            #floatingTitle {
+                cursor: pointer;
             }
 
             #progress-bar {
@@ -53,45 +54,8 @@
                 --paper-progress-container-color: var(--app-primary-background-color);
             }
 
-            #floatingTitle {
-                cursor: pointer;
-            }
-
-            #tagheader {
-                margin-top: 72px;
-                width: 100%;
-                height: 400px;
-                background-color: transparent; /*var(--app-dark-primary-color);*/
-                background-size: cover;
-                position: fixed;
-            }
-
-            #tagheader h1 {
-                padding-top: 300px;
-                padding-left: 64px;
-                color: var(--app-primary-text-color);
-                text-transform: uppercase;
-                display: none;
-            }
-
-            @media (max-width: 800px) {
-                #tagheader {
-                    height: 300px;
-                }
-
-                #tagheader h1 {
-                    padding-top: 136px;
-                }
-            }
-
             @media (max-width: 400px) {
-                #tagheader {
-                    height: 250px;
-                }
-                #tagheader h1 {
-                    padding-top: 186px;
-                    padding-left: 32px;
-                }
+
                 #posts-list {
                     padding-top: 126px;
                 }
@@ -99,7 +63,7 @@
 
             #posts-list {
                 min-height: 100%;
-                padding-top: 126px;
+                padding-top: 96px;
                 margin-top: 32px;
                 margin-right: auto;
                 margin-left: auto
@@ -112,11 +76,6 @@
                 padding-right: 16px;
                 text-align: center;
                 color: var(--app-background-primary-text-color);
-            }
-
-            #toggleFavoriteTagButton {
-                float: right;
-                margin-top: -40px;
             }
 
         </style>
@@ -147,9 +106,8 @@
                      on-tap="_openSelectCategoryDialog()">
                     <!-- current category -->
                     <span class="middle floatingToolbarTitle"
-                          id="selectOtherCategoryButton"
                           hidden$="[[!currentTag.length]]">
-                      #[[currentTag]]
+                        #[[currentTag]]
                     </span>
                     <!-- explore button -->
                     <span class="middle floatingToolbarTitle"
@@ -163,20 +121,10 @@
                 </paper-icon-button>
             </div>
 
-            <template is="dom-if" if="[[settings.user.name]]">
-                <a href="/@[[settings.user.name]]">
-                    <paper-icon-button id="account-button"
-                                       icon="my-icons:person-circle">
-                    </paper-icon-button>
-                </a>
-            </template>
-            <template is="dom-if" if="[[!settings.user.name]]">
-                <a href="/login">
-                    <paper-icon-button id="account-button"
-                                       icon="my-icons:person-circle">
-                    </paper-icon-button>
-                </a>
-            </template>
+            <paper-icon-button id="accountButton"
+                               on-tap="_goToAccount()"
+                               icon="my-icons:person-circle">
+            </paper-icon-button>
         </paper-toolbar>
 
         <!-- SORTING POST (Second bar) -->
@@ -207,26 +155,16 @@
 
         <div id="content-page">
 
-            <!--url-get-file url="https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=71b641039138d8854effa0b13a1c15d1&tags=[[currentTag]]&text=[[currentTag]]&sort=relevance&format=json&nojsoncallback=1"
-                          response-text="{{_photosTagListTxt}}">
-            </url-get-file-->
-
-            <div id="tagheader">
-                <h1>#[[currentTag]]</h1>
-            </div>
-
             <!-- Publications lists -->
             <div id="posts-list">
                 <template is="dom-if" if="[[_isEsteem8Tag]]">
                     <p class="textIsEsteem8Tag">This is the application tag, you can upvote our publications to support us.</p>
                 </template>
 
-                <template is="dom-if" if="[[_posts.length]]">
-                    <template is="dom-repeat" items="[[_posts]]">
-                        <post-card post="[[item]]"
-                                   settings="[[settings]]">
-                        </post-card>
-                    </template>
+                <template is="dom-repeat" items="[[_posts]]">
+                    <post-card post="[[item]]"
+                               settings="[[settings]]">
+                    </post-card>
                 </template>
             </div>
         </div>
@@ -251,15 +189,13 @@
             // current sorting mode (hot, new, trending, created)
             currentSorting: {
                 type: String,
-                notify: true,
-                observer: '_currentSortingChanged'
+                notify: true
             },
 
             // Current filter tag (esteem8, ...)
             currentTag: {
                 type: String,
-                notify: true,
-                observer: '_currentTagChanged'
+                notify: true
             },
 
             settings: {
@@ -280,8 +216,7 @@
             },
 
             _isSelectCategoryOpened: {
-                type: Boolean,
-                notify: true
+                type: Boolean
             },
 
             _isEsteem8Tag: {
@@ -290,16 +225,13 @@
 
             _isCurrentTagInFavorite: {
                 type: Boolean
-            },
-
-            _photosTagListTxt: {
-                type: String
             }
         },
 
         observers: [
-            '_updateUrl(currentSorting, currentTag)'
-            //'_renderImageTagHeader(_photosTagListTxt)'
+            '_updateUrl(currentSorting, currentTag)',
+            '_currentSortingChanged(currentSorting)',
+            '_currentTagChanged(currentTag)'
         ],
 
         ready: function() {
@@ -308,6 +240,7 @@
             this.$.floatingTitle.addEventListener('tap', this._openSelectCategoryDialog.bind(this));
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
             this.$.toggleFavoriteTagButton.addEventListener('tap', this._toggleFavoriteTag.bind(this));
+            this.$.accountButton.addEventListener('tap', this._goToAccount.bind(this));
 
             // Default variables value
             this._isSelectCategoryOpened = false;
@@ -318,7 +251,7 @@
 
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
         },
 
         _openSelectCategoryDialog: function() {
@@ -343,13 +276,13 @@
         },
 
         // sorting var -> sorting url
-        _currentTagChanged: function() {
+        _currentTagChanged: function(tag) {
 
             // Check if this is the app tag
-            this._computeIsEsteem8Tag();
+            this._computeIsEsteem8Tag(tag);
 
             // Refresh add to favorite icon
-            this._refreshIsCurrentTagInFavorite();
+            this._refreshIsCurrentTagInFavorite(tag);
 
         },
 
@@ -359,27 +292,12 @@
             window.scrollTo(0, 0);
         },
 
-        _computeIsEsteem8Tag: function() {
+        _computeIsEsteem8Tag: function(tag) {
 
-            this._isEsteem8Tag = (this.currentTag.includes('esteem8'));
-        },
-
-        _refreshIsCurrentTagInFavorite: function() {
-
-            if(typeof this.favoriteTags === 'undefined') {
-
-                return false;
-            }
-
-            this._isCurrentTagInFavorite = document.getElementById('appshell').isFavoriteTag(this.currentTag);
+            this._isEsteem8Tag = (tag.includes('esteem8'));
         },
 
         _computeFavoriteTagIcon: function(tagIsInFavorite) {
-
-            if(typeof this.currentTag === 'undefined') { // Display no favorite icon if no tag
-
-                return 'star';
-            }
 
             return tagIsInFavorite ?
                     'star':
@@ -388,43 +306,36 @@
 
         _toggleFavoriteTag: function() {
 
-            if(this._isCurrentTagInFavorite) {
+            var appEntry = document.getElementById('app-entry');
 
-                // Remove tag from favourite
-                document.getElementById('appshell').removeFavoriteTag(this.currentTag);
-            }else {
-
-                // Add tag to favourite
-                document.getElementById('appshell').addFavoriteTag(this.currentTag);
-            }
+            this._isCurrentTagInFavorite ?
+                appEntry.removeFavoriteTag(this.currentTag):
+                appEntry.addFavoriteTag(this.currentTag);
 
             // Refresh actual state of fav tag displayed in floating toolbar
-            this._refreshIsCurrentTagInFavorite();
+            this._refreshIsCurrentTagInFavorite(this.currentTag);
         },
 
-        _renderImageTagHeader: function(tagListTxt) {
+        _refreshIsCurrentTagInFavorite: function(tag) {
 
-            //https://www.flickr.com/services/api/explore/flickr.photos.search
+            if(typeof this.favoriteTags === 'undefined') {
 
-            var photoObjectList = JSON.parse(tagListTxt).photos.photo;
-            var min = 0;
-            var max = photoObjectList.length -1;
+                return false;
+            }
 
-            var index = Math.trunc(Math.random() * (max - min) + min);
+            this._isCurrentTagInFavorite = document.getElementById('app-entry').isFavoriteTag(tag);
+        },
 
-            var photoObject = photoObjectList[0];
+        _goToAccount: function() {
 
-            var tagHeader = this.$.tagheader;
+            var path = this.settings.account.name ? // is user logged ?
+                '/@' + this.settings.account.name:
+                '/login';
 
-            tagHeader.setAttribute('style', 'background-image: url("https://c1.staticflickr.com/' + photoObject.farm + '/' + photoObject.server + '/' + photoObject.id + '_' + photoObject.secret + '.jpg");');
 
+            window.history.pushState({}, null, path);
+            window.dispatchEvent(new CustomEvent('location-changed'));
         }
-
-        /*
-         * TODO
-         * Current tag change the url
-         * Steem path possible to be a username
-         */
 
     });
 </script>

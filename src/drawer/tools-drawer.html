@@ -1,0 +1,148 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
+
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+
+<link rel="import" href="../shared-styles.html">
+
+<dom-module id="tools-drawer">
+
+    <template>
+
+        <style include="shared-style">
+
+            app-drawer {
+                z-index: 6;
+                --app-drawer-content-container: {
+                    text-align: left;
+                    color: var(--app-background-secondary-text-color);
+                    background-color: var(--app-secondary-background-color);
+                }
+
+            }
+
+            app-drawer .title {
+                padding-left: 16px;
+            }
+
+            app-drawer .adultAppsToggle {
+                position: absolute;
+                right: 16px;
+                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
+                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
+                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
+            }
+
+            #toolList {
+                overflow: auto !important;
+                max-height: calc(100vh - 116px) !important;
+            }
+
+            #toolList paper-item {
+                cursor: pointer;
+            }
+
+        </style>
+
+        <app-drawer id="drawer"
+                    align="right">
+
+            <h2 class="title">Tools</h2>
+
+            <paper-item>
+                <span>18+</span>
+                <paper-toggle-button class="adultAppsToggle"
+                                     checked="{{alsoAdultTools}}">
+                </paper-toggle-button>
+            </paper-item>
+
+            <div id="toolList">
+                <template is="dom-repeat"
+                          items="[[tools]]"
+                          filter="{{computeToolsFilter(alsoAdultTools)}}">
+                    <paper-item on-tap="_openThisTool()">[[item.name]]</paper-item>
+                </template>
+            </div>
+
+        </app-drawer>
+
+    </template>
+</dom-module>
+
+<script>
+
+    Polymer({
+
+        is: 'tools-drawer',
+
+        properties: {
+
+            tools: {
+                type: Array
+            }
+        },
+
+        listeners: {
+            'toolList.tap': '_openThisTool'
+        },
+
+        ready: function() {
+
+            this.tools = [
+                {name: 'Google docs', icon: 'text-file', url: 'https://docs.google.com/document/', adult: false},
+                {name: 'Google sheets', icon: '', url: 'https://docs.google.com/spreadsheets/', adult: false},
+                {name: 'Google slides', icon: '', url: 'https://docs.google.com/presentation/', adult: false},
+                {name: 'Google forms', icon: '', url: 'https://docs.google.com/forms/', adult: false},
+                {name: 'Google drawings', icon: '',  url: 'https://docs.google.com/drawings/', adult: false},
+                {name: 'Youtube', icon: '', url: 'https://www.youtube.com/', adult: false},
+                {name: 'Twitch', icon: '', url: 'https://www.twitch.tv/', adult: false},
+                {name: 'Soundcloud', icon: '', url: 'https://soundcloud.com/', adult: false},
+                {name: 'GitHub', icon: '', url: 'https://github.com/', adult: false},
+                {name: 'Discord', icon: '', url: 'https://discordapp.com/', adult: false},
+                {name: 'Pornhub', icon: '', url: 'http://www.pornhub.com/', adult: true},
+                {name: 'Tube8', icon: '', url: 'http://www.tube8.com/', adult: true}
+            ];
+
+        },
+
+        open: function() {
+
+            this.$.drawer.open();
+        },
+
+        _openThisTool: function(e) {
+
+            var url = e.model.item.url;
+
+            if(url.includes('https')) {
+
+                window.open(url);
+            }else {
+
+                window.history.pushState({}, null, url);
+                window.dispatchEvent(new CustomEvent('location-changed'));
+            }
+
+        },
+
+        computeToolsFilter: function(alsoAdultTools) {
+
+            return function(item) {
+
+                if(!item.adult) {
+
+                    return true;
+                }else {
+
+                    return (item.adult == alsoAdultTools);
+
+                }
+
+            }
+
+        }
+
+    });
+</script>

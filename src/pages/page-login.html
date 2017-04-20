@@ -81,6 +81,8 @@
 
             #loginButton {
                 color: var(--app-background-primary-text-color);
+                float: right;
+                margin-top: 12px;
             }
 
             @media (max-width: 550px) {
@@ -88,10 +90,6 @@
                     margin-top: 16px;
                     margin-right: 16px;
                 }
-            }
-
-            .card-actions {
-                text-align: right;
             }
 
 
@@ -128,20 +126,24 @@
                 <h2>Login</h2>
 
                 <div class="card-content">
-                    <p>You can see profile but not yet interact.</p>
-                    <p>We are working on. To help us provide this feature you can <a href="/support">support us</a>.</p>
+
                     <paper-input
                             label="Username"
                             value="{{settings.user.name}}">
                     </paper-input>
+
+                    <paper-input
+                            label="Password"
+                            type="password"
+                            value="{{settings.user.password}}">
+                    </paper-input>
+
                 </div>
 
-                <div class="card-actions">
-                    <paper-button id="loginButton"
-                                  on-tap="_login()">
-                            LOGIN
-                    </paper-button>
-                </div>
+                <paper-button id="loginButton"
+                              on-tap="_login()">
+                    LOGIN
+                </paper-button>
 
             </paper-card>
         </div>
@@ -183,7 +185,7 @@
         _login: function() {
 
             // Show toast
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Sucessfully logged onto the matrix');
 
             // Go to account
@@ -195,7 +197,7 @@
 
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
         },
 
         _openSignUpDialog: function() {

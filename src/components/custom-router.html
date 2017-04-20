@@ -2,12 +2,16 @@
 
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-route-converter.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+
 
 <dom-module id="custom-router">
     <template>
 
+        <app-location route="{{route}}"></app-location>
+
         <app-route-converter route="{{route}}"
-                             path="{{path}}">
+                             path="{{location}}">
         </app-route-converter>
 
     </template>
@@ -29,7 +33,7 @@
                 },
 
                 // '/A/B/C' String
-                path: {
+                location: {
                     type: String,
                     notify: true
                 },
@@ -54,8 +58,8 @@
             },
 
             observers: [
-                '_setPath(dataUrl1, dataUrl2, dataUrl3)',
-                '_setDataUrl(path)'
+                '_setLocation(dataUrl1, dataUrl2, dataUrl3)',
+                '_setDataUrl(location)'
             ],
 
             ready: function() {
@@ -82,49 +86,49 @@
                 return true;
             },
 
-            _setPath: function(dataUrl1, dataUrl2, dataUrl3) {
+            _setLocation: function(dataUrl1, dataUrl2, dataUrl3) {
 
                 var dataUrl1 = dataUrl1 || '';
                 var dataUrl2 = dataUrl2 || '';
                 var dataUrl3 = dataUrl3 || '';
 
-                var path = '/';
+                var location = '/';
 
                 if(dataUrl1 != '') {
 
-                    path += dataUrl1;
+                    location += dataUrl1;
                 }
 
                 if(dataUrl2 != '') {
 
-                    path += '/' + dataUrl2;
+                    location += '/' + dataUrl2;
                 }
 
                 if(dataUrl3 != '') {
 
-                    path += '/' + dataUrl3;
+                    location += '/' + dataUrl3;
                 }
 
-                if(this.path != path) {
+                if(this.location != location) {
 
-                    //alert(path);
+                    //alert(location);
                     /*
-                     * For now path can not be set from params
+                     * For now location can not be set from params
                      */
-                    //window.history.pushState({}, null, path);
+                    //window.history.pushState({}, null, location);
                     //window.dispatchEvent(new CustomEvent('location-changed'));
                 }
             },
 
-            _setDataUrl: function(path) {
+            _setDataUrl: function(location) {
 
-                //alert(path);
+                //alert(location);
 
-                // From url (path) set params
+                // From url (location) set params
 
-                if(path != '') {
+                if(location != '') {
 
-                    var dataUrls = path.replace('/', '').split('/');
+                    var dataUrls = location.replace('/', '').split('/');
 
                     if(typeof dataUrls[0] !== 'undefined') {
 

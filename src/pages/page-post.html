@@ -565,25 +565,25 @@
         _refreshIsFavoritePost: function() {
 
             // Refresh favorite post state
-            this._isInFavoritePost = document.getElementById('appshell').isFavoritePost(this._post);
+            this._isInFavoritePost = document.getElementById('app-entry').isFavoritePost(this._post);
         },
 
         _refreshIsFavoriteUser: function() {
 
             // Refresh favorite user state
-            this._isInFavoriteUser =  document.getElementById('appshell').isFavoriteUser(this.username);
+            this._isInFavoriteUser =  document.getElementById('app-entry').isFavoriteUser(this.username);
         },
 
         _refreshIsFavoriteTag: function() {
 
             // Refresh favorite tag state
-            this._isInFavoriteTag =  document.getElementById('appshell').isFavoriteTag(this.category);
+            this._isInFavoriteTag =  document.getElementById('app-entry').isFavoriteTag(this.category);
         },
 
         _addFavoritePost: function() {
 
             // Add post to favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Post sucessfully added to favorites');
                 appShell.addFavoritePost(this._post);
 
@@ -594,7 +594,7 @@
         _addFavoriteUser: function() {
 
             // Add user to favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('User sucessfully added to favorites');
                 appShell.addFavoriteUser(this.username);
 
@@ -605,7 +605,7 @@
         _addFavoriteTag: function() {
 
             // Add tag to favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Tag sucessfully added to favorites');
                 appShell.addFavoriteTag(this.category);
 
@@ -616,7 +616,7 @@
         _removeFavoritePost: function() {
 
             // remove post from favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Post sucessfully removed from favorites');
                 appShell.removeFavoritePost(this._post);
 
@@ -627,7 +627,7 @@
         _removeFavoriteUser: function() {
 
             // remove user from favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('User sucessfully removed from favorites');
                 appShell.removeFavoriteUser(this.username);
 
@@ -638,7 +638,7 @@
         _removeFavoriteTag: function() {
 
             // remove tag from favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Tag sucessfully removed from favorites');
                 appShell.removeFavoriteTag(this.category);
 

@@ -11,7 +11,6 @@
 <link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../../bower_components/paper-styles/shadow.html">
 
 <link rel="import" href="../components/post-card.html">
 
@@ -209,7 +208,10 @@
                 <span class="floatingToolbarTitle">
                     <span>
                         [[userName]]
-                        <span class="reputation">[[_account.reputation]]</span>
+                        <span class="reputation">
+                            <template is="dom-if" if="[[_account.reputation]]">[[_account.reputation]]</template>
+                            <template is="dom-if" if="[[!_account.reputation]]">[[0]]</template>
+                        </span>
                     </span>
                     <span></span>
                     <paper-icon-button id="toggleFavoriteUserButton"
@@ -235,20 +237,24 @@
             <div id="topheader">
 
                 <div class="headerLeftPart">
+
                     <template is="dom-if" if="[[_account.profileImage]]">
                         <iron-image class="profileRepresentation"
                                     sizing="cover"
                                     src="https://steemitimages.com/124x124/[[_account.profileImage]]">
                         </iron-image>
                     </template>
+
                     <template is="dom-if" if="[[!_account.profileImage]]">
                         <iron-icon class="profileRepresentation"
                                    icon="my-icons:person-circle">
                         </iron-icon>
                     </template>
+
                 </div>
 
                 <div class="headerRightPart">
+
                     <div id="followersButton"
                          class="followers"
                          on-tap="_setCurrentViewFollowers()">
@@ -266,14 +272,12 @@
                     <div id="followingButton"
                          class="followed"
                          on-tap="_setCurrentViewFollowers()">
+
                     <span class="number">
-                        <template is="dom-if" if="[[_followCount.followingCount]]">
-                            [[_followCount.followingCount]]
-                        </template>
-                        <template is="dom-if" if="[[!_followCount.followingCount]]">
-                            0
-                        </template>
+                        <template is="dom-if" if="[[_followCount.followingCount]]">[[_followCount.followingCount]]</template>
+                        <template is="dom-if" if="[[!_followCount.followingCount]]">0</template>
                     </span>
+
                         <span class="texte">
                         Following
                     </span>
@@ -290,47 +294,42 @@
                         scrollable
                         no-slide>
 
-                <paper-tab name="about"
-                           id="tabAbout">
+                <paper-tab name="about" id="tabAbout">
                     <iron-icon icon="my-icons:account-about"></iron-icon>
                 </paper-tab>
 
-                <paper-tab name="posts"
-                           id="tabPosts">
+                <paper-tab name="posts" id="tabPosts">
                     <iron-icon icon="my-icons:text-file"></iron-icon>
                 </paper-tab>
 
                 <!--paper-tab name="comments">Comments</paper-tab-->
 
-                <paper-tab name="replies"
-                           id="tabReplies">
+                <paper-tab name="replies" id="tabReplies">
                     <iron-icon icon="my-icons:message-reply-text"></iron-icon>
                 </paper-tab>
-                <paper-tab name="history"
-                           id="tabHistory">
+
+                <paper-tab name="history" id="tabHistory">
                     <iron-icon icon="my-icons:history"></iron-icon>
                 </paper-tab>
 
-                <paper-tab name="files"
-                           id="tabFiles"
+                <paper-tab name="files" id="tabFiles"
                            hidden="[[_isTabFileHidden(_account.sharedFiles.length)]]">
                     <iron-icon icon="my-icons:text-file"></iron-icon>
                 </paper-tab>
 
-                <paper-tab name="products"
-                           id="tabProducts"
+                <paper-tab name="products" id="tabProducts"
                            hidden="[[_isTabProductHidden(_account.sharedProducts.length)]]">
                     <iron-icon icon="my-icons:shopping"></iron-icon>
                 </paper-tab>
 
-                <paper-tab name="followers"
-                           id="tabFollowers">
+                <paper-tab name="followers" id="tabFollowers">
                     <iron-icon icon="my-icons:follower"></iron-icon>
                 </paper-tab>
-                <paper-tab name="following"
-                           id="tabFollowing">
+
+                <paper-tab name="following" id="tabFollowing">
                     <iron-icon icon="my-icons:following"></iron-icon>
                 </paper-tab>
+
             </paper-tabs>
 
         </div>
@@ -487,13 +486,6 @@
 
         _userChanged: function(userName) {
 
-            /*
-            * /@piskel -> /@esteem8 = OK
-            * /@esteem8 or an other account -> /@piskel or an other account = freeze
-            *
-            */
-
-
             if(userName != '') { // This is a quick fix
 
                 if(userName !== this.previousUserName && typeof this.previousUserName !== 'undefined') {
@@ -526,24 +518,20 @@
 
         _setTabFileStyle: function(fileLength) {
 
-            if(fileLength) {
+            fileLength ?
 
-                this.$.tabFiles.setAttribute('style', '');
-            }else {
-
+                this.$.tabFiles.setAttribute('style', ''):
                 this.$.tabFiles.setAttribute('style', 'display: none;');
-            }
+
         },
 
         _setTabProductStyle: function(productLength) {
 
-            if(productLength) {
+            productLength ?
 
-                this.$.tabProducts.setAttribute('style', '');
-            }else {
-
+                this.$.tabProducts.setAttribute('style', ''):
                 this.$.tabProducts.setAttribute('style', 'display: none;');
-            }
+
         },
 
         _setTabsOptions: function(tabsOptions) {
@@ -592,7 +580,7 @@
 
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
         },
 
         _openWallet: function() {
@@ -629,7 +617,7 @@
 
         _refreshIsFavoriteUser: function() {
 
-            this._isUserInFavorite = document.getElementById('appshell').isFavoriteUser(this._accountName);
+            this._isUserInFavorite = document.getElementById('app-entry').isFavoriteUser(this._accountName);
         },
 
         _toggleFavoriteUser: function() {
@@ -637,11 +625,11 @@
             if(this._isUserInFavorite) {
 
                 // Remove user from favourite
-                document.getElementById('appshell').removeFavoriteUser(this._accountName);
+                document.getElementById('app-entry').removeFavoriteUser(this._accountName);
             }else {
 
                 // Add user to favourite
-                document.getElementById('appshell').addFavoriteUser(this._accountName);
+                document.getElementById('app-entry').addFavoriteUser(this._accountName);
             }
 
             // Invert favorite state of user

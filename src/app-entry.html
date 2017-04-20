@@ -1,0 +1,548 @@
+<link rel="import" href="./../bower_components/polymer/polymer.html">
+
+<link rel="import" href="./../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="./../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="./../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+
+<link rel="import" href="./../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="api/steemjs/steem-get-account-lite.html">
+
+<link rel="import" href="components/drawer-content.html">
+<link rel="import" href="components/custom-router.html">
+
+<script src="data/defaultCategories.js"></script>
+<script src="data/defaultFiles.js"></script>
+<script src="data/defaultProducts.js"></script>
+<script src="data/defaultSettings.js"></script>
+
+<dom-module id="app-entry">
+
+    <template>
+
+        <style>
+
+            :host {
+                --app-primary-color: #F44336;
+                --app-light-primary-color: #ff5041;
+                --app-dark-primary-color: #c3362b;
+                --app-ultra-dark-primary-color: #7a221b;
+                --app-primary-text-color: #eeeeee;
+                --app-secondary-color: #3F51B5;
+                --app-secondary-text-color: #eeeeee;
+                --app-icon-color: #FFFFFF;
+                --app-divider-color: #BDBDBD;
+                --app-primary-background-color: #eeeeee;
+                --app-secondary-background-color: #ffffff;
+                --app-background-primary-text-color: #282828;
+                --app-background-secondary-text-color: #666666;
+
+                display: block;
+            }
+
+            #drawer {
+                z-index: 8 !important;
+            }
+
+            #copyTextInput {
+                position: absolute;
+                visibility: hidden;
+                z-index: -1;
+            }
+
+        </style>
+
+        <!-- LOCAL STORAGE -->
+        <app-localstorage-document key="settings"
+                                   data="{{settings}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoritePosts"
+                                   data="{{favoritePosts}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteUsers"
+                                   data="{{favoriteUsers}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteTags"
+                                   data="{{favoriteTags}}">
+        </app-localstorage-document>
+
+        <app-localstorage-document key="favoriteFiles"
+                                   data="{{favoriteFiles}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedFiles"
+                                   data="{{favoriteSharedFiles}}"
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteFolders"
+                                   data="{{favoriteFolders}}">
+        </app-localstorage-document>
+
+        <app-localstorage-document key="favoriteProducts"
+                                   data="{{favoriteProducts}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedProducts"
+                                   data="{{favoriteSharedProducts}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteCategories"
+                                   data="{{favoriteCategories}}">
+        </app-localstorage-document>
+        <app-localstorage-document key="favoriteSharedCategories"
+                                   data="{{favoriteSharedCategories}}">
+        </app-localstorage-document>
+
+        <app-localstorage-document key="manualOrdersHistory"
+                                   data="{{manualOrdersHistory}}">
+        </app-localstorage-document>
+
+        <!-- GET ACCOUNT -->
+        <steem-get-account-lite account-name="[[_userName]]"
+                                account="{{settings.user.account}}">
+        </steem-get-account-lite>
+
+        <!-- ROUTER -->
+        <custom-router data-url1="{{dataUrl1}}"
+                       data-url2="{{dataUrl2}}"
+                       data-url3="{{dataUrl3}}">
+        </custom-router>
+
+        <!-- DRAWER -->
+        <app-drawer id="drawer"
+                    opened="{{_isDrawerOpen}}"
+                    swipe-open>
+            <drawer-content settings="[[settings]]"></drawer-content>
+        </app-drawer>
+
+        <!-- PAGES -->
+        <iron-pages id="pages"
+                    selected="[[selectedPage]]"
+                    attr-for-selected="name"
+                    fallback-selection="404"
+                    role="main">
+
+            <page-home name="home">
+            </page-home>
+
+            <page-tools name="tools">
+            </page-tools>
+
+            <page-tips name="tips">
+            </page-tips>
+
+            <page-info name="info">
+            </page-info>
+
+            <page-support name="support">
+            </page-support>
+
+            <page-404 name="404">
+            </page-404>
+
+            <page-settings name="settings"
+                           settings="{{settings}}">
+            </page-settings>
+
+            <page-login name="login"
+                        settings="{{settings}}">
+            </page-login>
+
+            <page-profile name="profile"
+                          settings="[[settings]]"
+                          user-name="[[dataUrl1]]">
+            </page-profile>
+
+            <page-post name="post"
+                       settings="[[settings]]"
+                       category="[[dataUrl1]]"
+                       author="[[dataUrl2]]"
+                       post-name="[[dataUrl3]]">
+            </page-post>
+
+            <page-favorites name="favorites"
+                            settings="[[settings]]"
+                            current-view="[[dataUrl2]]"
+                            favorite-posts="{{favoritePosts}}"
+                            favorite-tags="{{favoriteTags}}"
+                            favorite-users="{{favoriteUsers}}">
+            </page-favorites>
+
+            <page-files name="files"
+                        settings="[[settings]]"
+                        favorite-files="{{favoriteFiles}}"
+                        favorite-folders="{{favoriteFolders}}"
+                        favorite-shared-files="{{favoriteSharedFiles}}">
+            </page-files>
+
+            <page-explore name="explore"
+                          favorite-posts="{{favoritePosts}}"
+                          favorite-tags="{{favoriteTags}}"
+                          id="explorePage"
+                          current-sorting="{{dataUrl1}}"
+                          current-tag="{{dataUrl2}}"
+                          settings="[[settings]]">
+            </page-explore>
+
+            <page-products name="products"
+                           settings="[[settings]]"
+                           favorite-products="{{favoriteProducts}}"
+                           favorite-categories="{{favoriteCategories}}"
+                           favorite-shared-products="{{favoriteSharedProducts}}"
+                           favorite-shared-categories="{{favoriteSharedCategories}}"
+                           manual-orders-history="{{manualOrdersHistory}}">
+            </page-products>
+
+        </iron-pages>
+
+        <!-- TOAST -->
+        <paper-toast id="toast" text=""></paper-toast>
+
+        <!-- COPY TO CLIPBOARD -->
+        <input type="text" id="copyTextInput" value="">
+
+    </template>
+
+    <script>
+
+        Polymer({
+
+            is: 'app-entry',
+
+            properties: {
+
+                /*
+                 * Current page selected.
+                 */
+                selectedPage: {
+                    type: String
+                },
+
+                /*
+                 * Application settings object.
+                 * Stored in browser.
+                 */
+                settings: {
+                    type: Object
+                },
+
+                /*
+                 * Drawer state
+                 */
+                _isDrawerOpen: {
+                    type: Boolean
+                },
+
+                /*
+                 * User name logged
+                 */
+                _userName: {
+                    type: String
+                },
+
+                /*
+                 * DB for favorite Array
+                 * Stored in browser.
+                 */
+
+                favoritePosts: {
+                    type: Array
+                },
+
+                favoriteUsers: {
+                    type: Array
+                },
+
+                favoriteTags: {
+                    type: Array
+                },
+
+                favoriteFiles: {
+                    type: Array
+                },
+
+                favoriteSharedFiles: {
+                    type: Array
+                },
+
+                favoriteFolders: {
+                    type: Array
+                },
+
+                favoriteProducts: {
+                    type: Array
+                },
+
+                favoriteSharedProducts: {
+                    type: Array
+                },
+
+                favoriteCategories: {
+                    type: Array
+                },
+
+                favoriteSharedCategories: {
+                    type: Array
+                },
+
+                manualOrdersHistory: {
+                    type: Array
+                }
+
+            },
+
+            observers: [
+                '_selectPage(dataUrl1, dataUrl2, dataUrl3)',
+                '_importPage(selectedPage)',
+                '_themeChanged(settings.theme.primaryColor, settings.theme.secondaryColor, settings.theme.darkPrimaryColor, settings.theme.lightPrimaryColor, settings.theme.primaryTextColor, settings.theme.secondaryTextColor, settings.theme.ultraDarkPrimaryColor, settings.theme.primaryBackgroundColor, settings.theme.secondaryBackgroundColor, settings.theme.backgroundPrimaryTextColor, settings.theme.backgroundSecondaryTextColor)',
+                '_userNameChanged(settings.user.name)'
+            ],
+
+            ready: function() {
+
+                // Set default variables value
+                this.account = {};
+                this._isDrawerOpen = false;
+
+                // Set default browser stored value
+                if(typeof this.favoritePosts === 'undefined') { this.favoritePosts = [];}
+                if(typeof this.favoriteUsers === 'undefined') { this.favoriteUsers = ['esteem8'];}
+                if(typeof this.favoriteTags === 'undefined') { this.favoriteTags = ['esteem8'];}
+
+                if(typeof this.favoriteFolders === 'undefined') { this.favoriteFolders = [{name: 'esteem8'}, {name: 'media steem'}, {name: 'media image esteem8'}];}
+                if(typeof this.favoriteFiles === 'undefined') { this.favoriteFiles = defaultFiles;}
+                if(typeof this.favoriteSharedFiles === 'undefined'){ this.favoriteSharedFiles = []; }
+
+                if(typeof this.favoriteProducts === 'undefined') { this.favoriteProducts = defaultProducts;}
+                if(typeof this.favoriteSharedProducts === 'undefined') { this.favoriteSharedProducts = [];}
+                if(typeof this.favoriteCategories === 'undefined') { this.favoriteCategories = defaultCategories;}
+                if(typeof this.favoriteSharedCategories === 'undefined') { this.favoriteSharedCategories = [];}
+
+                if(typeof this.manualOrdersHistory === 'undefined') { this.manualOrdersHistory = [];}
+
+                if(typeof this.settings === 'undefined') { this.settings = defaultSettings;}
+            },
+
+            attached: function() {
+
+                this._themeChanged();
+
+                // On new version
+                if(this.settings.appVersion !== defaultSettings.appVersion) {
+
+                    // Update settings
+                    this._mergeDefaultSettings();
+
+                    // Notify user
+                    this.showToast('App version ' + defaultSettings.appVersion + ' successfully updated');
+                }
+            },
+
+            _selectPage: function(dataUrl1, dataUrl2, dataUrl3) {
+
+                // SET /dataUrl1/dataUrl2/dataUrl3 in variables
+                var dataUrl1 = dataUrl1 || '';
+                var dataUrl2 = dataUrl2 || '';
+                var dataUrl3 = dataUrl3 || '';
+
+                // Choose page
+                if(dataUrl1 == ''){
+
+                    this.selectedPage ='home';// HOME
+                }else if(dataUrl1 === 'login'){
+
+                    this.selectedPage = 'login'; // LOGIN
+                }else if(dataUrl1 === 'favorites') {
+
+                    this.selectedPage = 'favorites'; //FAVORITES
+                }else if(dataUrl1 === 'settings') {
+
+                    this.selectedPage = 'settings'; // SETTINGS
+                }else if(dataUrl1 === 'info') {
+
+                    this.selectedPage = 'info'; // INFO
+                }else if(dataUrl1 === 'tools') {
+
+
+                    this.selectedPage = 'tools'; // TOOLS
+                }else if(dataUrl1 === 'support') {
+
+                    this.selectedPage = 'support'; // SUPPORT
+                }else if(dataUrl1 === 'files') {
+
+                    this.selectedPage = 'files'; // FILES
+                }else if(dataUrl1 === 'products') {
+
+                    this.selectedPage = 'products'; // ARTICLES
+                }else if(dataUrl1 === 'tips') {
+
+
+                    this.selectedPage = 'tips'; // TIPS
+                }else if(/@[a-zA-Z0-9-]+/.test(dataUrl1)) {
+
+                    this.selectedPage = 'profile'; // PROFILE
+                }else if(/(created|hot|trending|active)/.test(dataUrl1)) {
+
+                    this.selectedPage = 'explore'; // EXPLORE
+                }else if(/@[a-zA-Z0-9-]+/.test(dataUrl2)){
+
+                    this.selectedPage = 'post'; // SINGLE PUBLICATION
+                }else {
+
+                    this.selectedPage = '404'; // PAGE 404
+                }
+
+                // Close drawer
+                this._isDrawerOpen = false;
+            },
+
+            // Load and display page
+            _importPage: function(page) {
+
+                // Load page import on demand. Show 404 page if fails
+                var resolvedPageUrl = this.resolveUrl('pages/page-' + page + '.html');
+                this.importHref(resolvedPageUrl, null, this._showPage404, true);
+
+            },
+
+            // Load and display 404 page
+            _showPage404: function() {
+
+                this.selectedPage = '404';
+            },
+
+            // Change theme color
+            _themeChanged: function(primaryColor, secondaryColor, darkPrimaryColor, lightPrimaryColor, primaryTextColor, secondaryTextColor, ultraDarkPrimaryColor, primaryBackgroundColor, secondaryBackgroundColor, backgroundPrimaryTextColor, backgroundSecondaryTextColor) {
+
+                // Set style
+                this.customStyle['--app-primary-color'] = primaryColor || this.settings.theme.primaryColor;
+                this.customStyle['--app-secondary-color'] = secondaryColor || this.settings.theme.secondaryColor;
+                this.customStyle['--app-dark-primary-color'] = darkPrimaryColor || this.settings.theme.darkPrimaryColor;
+                this.customStyle['--app-light-primary-color'] = lightPrimaryColor || this.settings.theme.lightPrimaryColor;
+                this.customStyle['--app-primary-text-color'] = primaryTextColor || this.settings.theme.primaryTextColor;
+                this.customStyle['--app-secondary-text-color'] = secondaryTextColor || this.settings.theme.secondaryTextColor;
+                this.customStyle['--app-ultra-dark-primary-color'] = ultraDarkPrimaryColor || this.settings.theme.ultraDarkPrimaryColor;
+                this.customStyle['--app-primary-background-color'] = primaryBackgroundColor || this.settings.theme.primaryBackgroundColor;
+                this.customStyle['--app-secondary-background-color'] = secondaryBackgroundColor || this.settings.theme.secondaryBackgroundColor;
+                this.customStyle['--app-background-primary-text-color'] = backgroundPrimaryTextColor || this.settings.theme.backgroundPrimaryTextColor;
+                this.customStyle['--app-background-secondary-text-color'] = backgroundSecondaryTextColor || this.settings.theme.backgroundSecondaryTextColor;
+
+                Polymer.updateStyles();
+            },
+
+            openDrawer: function() {
+
+                this._isDrawerOpen = true;
+            },
+
+            _userNameChanged: function(username) {
+
+                this._userName = username;
+            },
+
+            showToast: function(text) {
+
+                var toast = this.$.toast;
+
+                toast.close();
+                toast.setAttribute('text', text);
+                toast.open();
+            },
+
+            copyToClipboard: function(text) {
+
+                var copyInput = document.getElementById('copyTextInput');
+                copyInput.setAttribute('value', text);
+                copyInput.focus();
+                document.execCommand('copy');
+            },
+
+            isFavoritePost: function(post) {
+
+                // Refresh favorite post state
+                return (this.favoritePosts.indexOf(post) != -1);
+            },
+
+            isFavoriteUser: function(username) {
+
+                // Refresh favorite user state
+                return (this.favoriteUsers.indexOf(username) != -1);
+            },
+
+            isFavoriteTag: function(tag) {
+
+                // Refresh favorite tag state
+                return (this.favoriteTags.indexOf(tag) != -1);
+            },
+
+            addFavoritePost: function(post) {
+
+                // Add post to favorite
+                this.push('favoritePosts', post);
+            },
+
+            addFavoriteUser: function(username) {
+
+                // Add user to favorite
+                this.push('favoriteUsers', username);
+            },
+
+            addFavoriteTag: function(tag) {
+
+                // Add tag to favorite
+                this.push('favoriteTags', tag);
+            },
+
+            addFavoriteFile: function(file) {
+
+                // Add tag to favorite
+                this.push('favoriteFiles', file);
+            },
+
+            removeFavoritePost: function(post) {
+
+                // remove post from favorite
+                var index = this.favoritePosts.indexOf(post);
+                this.splice('favoritePosts', index, 1);
+            },
+
+            removeFavoriteUser: function(username) {
+
+                // remove user from favorite
+                var index = this.favoritePosts.indexOf(username);
+                this.splice('favoriteUsers', index, 1);
+            },
+
+            removeFavoriteTag: function(tag) {
+
+                // remove tag from favorite
+                var index = this.favoriteTags.indexOf(tag);
+                this.splice('favoriteTags', index, 1);
+            },
+
+            removeFavoriteFile: function(file) {
+
+                // remove file from favorite
+                var index = this.favoritePosts.indexOf(file);
+                this.splice('favoriteFiles', index, 1);
+            },
+
+            getSettings: function() {
+
+                return this.settings;
+            },
+
+            setSettings: function(settings) {
+
+                this.settings = settings;
+            },
+
+            _mergeDefaultSettings: function() {
+
+                // Update version
+                this.settings.appVersion = defaultSettings.appVersion;
+
+                // Update settings
+                this.set('settings', Object.assign(defaultSettings, this.settings));
+            }
+
+        });
+    </script>
+</dom-module>

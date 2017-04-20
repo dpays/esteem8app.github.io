@@ -23,11 +23,11 @@
 <link rel="import" href="../../bower_components/paper-tags/paper-tags.html">
 <link rel="import" href="../../bower_components/paper-tags/paper-tags-input.html">
 
-<link rel="import" href="../../bower_components/app-layout/app-drawer/app-drawer.html">
-
 <link rel="import" href="../components/my-icons.html">
 <link rel="import" href="../components/file-card.html">
 <link rel="import" href="../components/html-echo.html">
+
+<link rel="import" href="../drawer/tools-drawer.html">
 
 <link rel="import" href="../dialogs/select-folder-dialog.html">
 <link rel="import" href="../dialogs/manage-folders-dialog.html">
@@ -52,34 +52,6 @@
                 display: block;
                 background-color: var(--app-primary-background-color);
                 overflow: hidden;
-            }
-
-            #appsDrawer {
-                z-index: 6;
-                --app-drawer-content-container: {
-                    text-align: left;
-                    color: var(--app-background-secondary-text-color);
-                    background-color: var(--app-secondary-background-color);
-                }
-
-            }
-
-            #adult {
-                position: absolute;
-                right: 16px;
-            }
-
-            #appsDrawer .title {
-                padding-left: 16px;
-            }
-
-            #toolsList {
-                overflow: auto !important;
-                max-height: calc(100vh - 116px) !important;
-            }
-
-            #toolsList paper-item {
-                cursor: pointer;
             }
 
             #fileOptionToolbar {
@@ -206,41 +178,19 @@
 
         </style>
 
+        <tools-drawer id="toolsDrawer"></tools-drawer>
+
         <select-folder-dialog id="selectFolderDialog"
                               selected-folder="{{query}}"
                               favorite-folders="{{favoriteFolders}}"
                               is-manage-folders-dialog-opened="{{_isManageFoldersDialogOpened}}">>
         </select-folder-dialog>
 
-        <!-- Edit folders from favorite -->
         <manage-folders-dialog id="manageFoldersDialog"
                                opened="{{_isManageFoldersDialogOpened}}"
                                folders="{{favoriteFolders}}"
                                favorite-shared-categories="{{favoriteSharedFolders}}">
         </manage-folders-dialog>
-
-        <app-drawer id="appsDrawer"
-                    align="right">
-
-            <h2 class="title">Tools</h2>
-
-            <div id="externalApps">
-
-                <paper-item>
-                    <span>18+</span>
-                    <paper-toggle-button id="adult" checked="{{adult}}"></paper-toggle-button>
-                </paper-item>
-
-                <div id="toolsList">
-                    <template is="dom-repeat" items="[[_externalApps]]" filter="{{computeToolsFilter(adult)}}">
-                        <paper-item on-tap="_openThisApp()">
-                            [[item.name]]
-                        </paper-item>
-                    </template>
-                </div>
-
-            </div>
-        </app-drawer>
 
         <!-- TOOLBAR -->
         <paper-toolbar id="mainToolbar"
@@ -258,8 +208,8 @@
                 </span>
             </div>
 
-            <paper-icon-button id="appsDrawerButton"
-                               on-tap="_openAppsDrawer()"
+            <paper-icon-button id="toolsDrawerButton"
+                               on-tap="_openToolsDrawer()"
                                icon="my-icons:apps">
             </paper-icon-button>
 
@@ -521,10 +471,6 @@
                 type: Object
             },
 
-            _externalApps: {
-                type: Array
-            },
-
             _isManageFoldersDialogOpened: {
                 type: Boolean
             }
@@ -536,10 +482,6 @@
             '_doAction(_action.type, _action.id)'
         ],
 
-        listeners: {
-            'externalApps.tap': '_openThisApp'
-        },
-
         ready: function() {
 
             this.pastFiles = this.favoriteFiles;
@@ -547,23 +489,8 @@
             this._selectedFilesId = [];
             this._resetCurrentFile();
 
-            this._externalApps = [
-                {name: 'Google docs', icon: 'text-file', url: 'https://docs.google.com/document/', adult: false},
-                {name: 'Google sheets', icon: '', url: 'https://docs.google.com/spreadsheets/', adult: false},
-                {name: 'Google slides', icon: '', url: 'https://docs.google.com/presentation/', adult: false},
-                {name: 'Google forms', icon: '', url: 'https://docs.google.com/forms/', adult: false},
-                {name: 'Google drawings', icon: '',  url: 'https://docs.google.com/drawings/', adult: false},
-                {name: 'Youtube', icon: '', url: 'https://www.youtube.com/', adult: false},
-                {name: 'Twitch', icon: '', url: 'https://www.twitch.tv/', adult: false},
-                {name: 'Soundcloud', icon: '', url: 'https://soundcloud.com/', adult: false},
-                {name: 'GitHub', icon: '', url: 'https://github.com/', adult: false},
-                {name: 'Discord', icon: '', url: 'https://discordapp.com/', adult: false},
-                {name: 'Pornhub', icon: '', url: 'http://www.pornhub.com/', adult: true},
-                {name: 'Tube8', icon: '', url: 'http://www.tube8.com/', adult: true}
-            ];
-
             this.$.toggleDrawerMenu.addEventListener('tap', this._openDrawer.bind(this));
-            this.$.appsDrawerButton.addEventListener('tap', this._openAppsDrawer.bind(this));
+            this.$.toolsDrawerButton.addEventListener('tap', this._openToolsDrawer.bind(this));
 
             this.$.floatingToolbar.addEventListener('tap', this._openSelectFolderDialog.bind(this));
 
@@ -584,12 +511,12 @@
         // Open side drawer (menu)
         _openDrawer: function() {
 
-            document.getElementById('appshell')._openDrawer();
+            document.getElementById('app-entry').openDrawer();
         },
 
-        _openAppsDrawer: function() {
+        _openToolsDrawer: function() {
 
-            this.$.appsDrawer.open();
+            this.$.toolsDrawer.open();
         },
 
         _openSelectFolderDialog: function () {
@@ -621,14 +548,6 @@
 
         _openEditFileDialog: function(id) {
 
-            /*var id = id || this._currentFile.id;
-
-            // Get file from id
-            var fileIndex = this._getFileIndexFromId(id);
-
-            // Set file object from index
-            this.set('_currentFile', this.favoriteFiles[fileIndex]);*/
-
             // Open dialog
             this.$.editFileDialog.open();
 
@@ -640,21 +559,6 @@
 
             this._resetCurrentFile();
             this.$.addFileDialog.open();
-        },
-
-        _openThisApp: function(e) {
-
-            var url = e.model.item.url;
-
-            if(url.includes('https')) {
-
-                window.open(url);
-            }else {
-
-                window.history.pushState({}, null, url);
-                window.dispatchEvent(new CustomEvent('location-changed'));
-            }
-
         },
 
         /* TEST FUNCTION */
@@ -1165,28 +1069,8 @@
             return indexList[0];
         },
 
-        /* TOOLS (FILTER) */
-        computeToolsFilter: function(adult) {
-
-            return function(item) {
-
-                if (!adult) { // Not adult content
-
-                    if(item.adult == false){
-
-                        return true;
-                    }
-
-                } else {
-
-                    return true;
-                }
-            }
-
-        },
 
         /* SEARCH (FILTER) */
-
         computeFilter: function(string) {
             if (!string) {
                 // set filter to null to disable filtering

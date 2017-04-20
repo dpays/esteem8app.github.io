@@ -9,11 +9,12 @@
 
 <link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 
-<link rel="import" href="../api/steemjs/steem-get-account.html">
 <link rel="import" href="../components/html-echo.html">
 <link rel="import" href="images-slider.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="../shared-styles.html">
+
+<script src="../scripts/intl-relativeformat-with-locales.min.js"></script>
 
 <dom-module id="post-card">
 
@@ -36,18 +37,8 @@
                 color: var(--app-background-primary-text-color);
             }
 
-            @media (max-width: 380px) {
-                #postCard {
-                    min-width: 100%;
-                }
-            }
-
             /* SHARE DIALOG */
-            #shareDialog {
-                background-color: var(--app-secondary-background-color);
-            }
-
-            #shareDialog paper-listbox {
+            #shareDialog, #shareDialog paper-listbox {
                 background-color: var(--app-secondary-background-color);
             }
 
@@ -70,22 +61,21 @@
                 font-size: 14px;
             }
 
-            .top-data .head .posted-in a {
+            .top-data .head .posted-in a, .top-data .head .author a {
                 color: var(--app-secondary-color);
                 text-decoration: none;
             }
 
             .top-data .head .author a {
-                color: var(--app-secondary-color);
                 font-weight: 500;
-                text-decoration: none;
             }
 
-            .top-data .author-icon {
+            .top-data .author-icon, .top-data #profileImage {
                 display: block;
                 float: left;
                 width: 36px;
                 height: 36px;
+                border-radius: 36px;
                 color: var(--app-dark-primary-color);
             }
 
@@ -95,18 +85,12 @@
                 font-size: 12px;
             }
 
-            .top-data #profileImage {
-                height: 36px;
-                width: 36px;
-                border-radius: 36px;
-            }
-
             /* CARD CONTENT */
             .card-content {
                 padding-bottom: 12px !important;
             }
 
-            #toggleContentDataButton {
+            .card-content #toggleContentDataButton {
                 color: var(--app-secondary-color);
             }
 
@@ -142,9 +126,9 @@
                 margin-right: 4px;
                 border-radius: 4px;
                 background-color: var(--app-primary-background-color);
-                text-decoration: none;
                 color: var(--app-background-secondary-text-color);
-                font-size: 75%;
+                text-decoration: none;
+                font-size: 12px;
             }
 
             /* CARD ACTION BUTTONS */
@@ -158,6 +142,11 @@
             .card-actions-buttons .dollar-value {
                 margin-left: 12px;
                 font-size: 12px;
+            }
+
+            .card-actions-buttons .right-button {
+                float: right;
+                margin-right: 10px;
             }
 
             .card-actions-buttons paper-icon-button {
@@ -197,25 +186,25 @@
                 <a target="_blank" href="https://www.reddit.com/submit?url=[[_domainName]][[post.url]]">
                     <paper-item>
                         <iron-icon icon="my-icons:reddit"></iron-icon>
-                        &nbsp;Reddit this !
+                        &nbsp;Share on Reddit
                     </paper-item>
                 </a>
                 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=[[_domainName]][[post.url]]">
                     <paper-item>
                         <iron-icon icon="my-icons:facebook"></iron-icon>
-                        &nbsp;Facebook this :/
+                        &nbsp;Share on  Facebook
                     </paper-item>
                 </a>
                 <a target="_blank" href="https://twitter.com/home?status=[[_domainName]][[post.url]]">
                     <paper-item>
                         <iron-icon icon="my-icons:twitter"></iron-icon>
-                        &nbsp;Twitt this :(
+                        &nbsp;Share on  Twitter
                     </paper-item>
                 </a>
                 <a target="_blank" href="https://plus.google.com/share?url=[[_domainName]][[post.url]]">
                     <paper-item>
                         <iron-icon icon="my-icons:google-plus"></iron-icon>
-                        &nbsp;Google+ what's that shit ?
+                        &nbsp;Share on  Google+
                     </paper-item>
                 </a>
             </paper-listbox>
@@ -290,10 +279,11 @@
                     </span>
 
                     <!-- CONTENT BODY -->
-                    <paper-icon-button id="toggleContentDataButton"
-                                       icon="my-icons:[[_computeToggleIcon(_contentToggled)]]"
-                                       hidden="[[!settings.display.showCardContent]]">
-                    </paper-icon-button>
+                    <div hidden="[[!settings.display.showCardContent]]">
+                        <paper-icon-button id="toggleContentDataButton"
+                                           icon="my-icons:[[_computeToggleIcon(_contentToggled)]]">
+                        </paper-icon-button>
+                    </div>
 
                     <div class="content-data"
                          hidden="[[!settings.display.showCardContent]]"
@@ -329,10 +319,9 @@
                 <paper-icon-button icon="my-icons:thumb-up"
                                    class="upvote">
                 </paper-icon-button>[[post.net_votes]]
-
                 <span class="dollar-value">[[_computePostValue(post.dollarValue)]]$</span>
 
-                <div style="float: right; margin-right: 10px;">
+                <div class="right-button">
                     <paper-icon-button id="resteemButton" icon="my-icons:reply"></paper-icon-button>
                     <paper-icon-button id="openShareDialogButton" icon="my-icons:share"></paper-icon-button>
                     <paper-icon-button icon="my-icons:comment"></paper-icon-button>
@@ -341,10 +330,6 @@
             </div>
         </paper-card>
 
-        <!-- Get account to display image -->
-        <steem-get-account name="[[_computeAuthor(post.author)]]"
-                           account="{{account}}">
-        </steem-get-account>
     </template>
 </dom-module>
 
@@ -361,8 +346,7 @@
         properties: {
 
             post: {
-                type: Object,
-                observer: "_postChanged"
+                type: Object
             },
 
             settings: {
@@ -370,8 +354,7 @@
             },
 
             account: {
-                type: Object,
-                observer: '_accountChanged'
+                type: Object
             },
 
             _contentToggled: {
@@ -386,6 +369,11 @@
                 type: Array
             }
         },
+
+        observers: [
+            '_resetContentToggled(post)',
+            '_computeIcons(post.body)'
+        ],
 
         ready: function() {
 
@@ -414,35 +402,22 @@
 
         _toggleContentDataHeight: function() {
 
-            if(!this._contentToggled){
-
+            this._contentToggled ?
+                this.$.toggleContentData.style = "":
                 this.$.toggleContentData.style = "height: 342px;overflow-y: scroll;border-bottom: 1px solid #aaa;";
-            }else {
-
-                this.$.toggleContentData.style = "";
-            }
 
             this._contentToggled = !this._contentToggled;
         },
 
-        _postChanged: function() {
+        _resetContentToggled: function() {
 
             this.$.toggleContentData.style = "";
             this._contentToggled = false;
-            this._computeIcons(this.post.body);
         },
 
         _showImage: function(imagesLength, showImage) {
 
-            if (showImage) {
-
-                if(imagesLength){
-
-                    return true;
-                }
-            }
-
-            return false;
+            return (showImage && imagesLength);
         },
 
         _computeTimeFromNow: function(date) {
@@ -462,13 +437,10 @@
 
         _computeToggleIcon: function(contentToggled) {
 
-            if(contentToggled) {
+            return contentToggled ?
+                'arrow-up':
+                'arrow-down';
 
-                return 'arrow-up';
-            }else {
-
-                return 'arrow-down';
-            }
         },
 
         _computeIcons: function(body) {
@@ -519,13 +491,13 @@
 
         _refreshIsFavoritePost: function() {
 
-            this._isInFavorite = document.getElementById('appshell').isFavoritePost(this.post);
+            this._isInFavorite = document.getElementById('app-entry').isFavoritePost(this.post);
         },
 
         _addFavoritePost: function() {
 
             // Add to favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Post sucessfully added to favorites');
                 appShell.addFavoritePost(this.post);
 
@@ -535,7 +507,7 @@
         _removeFavoritePost: function() {
 
             // remove from favorite
-            var appShell = document.getElementById('appshell');
+            var appShell = document.getElementById('app-entry');
                 appShell.showToast('Post sucessfully removed from favorites');
                 appShell.removeFavoritePost(this.post);
 

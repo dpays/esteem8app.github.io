@@ -7,10 +7,14 @@
 
         <style>
 
+            /* Various */
+
             ::selection {
                 background: var(--app-light-primary-color);
                 color: var(--app-primary-text-color);
             }
+
+            /* Toolbar */
 
             .floatingToolbar {
                 background-color: var(--app-dark-primary-color);
@@ -43,7 +47,7 @@
                 font-weight: 500;
             }
 
-            paper-toolbar a paper-icon-button {
+            paper-toolbar paper-icon-button {
                 color: var(--app-primary-text-color);
             }
 
@@ -74,6 +78,13 @@
                 --paper-tab-ink: var(--app-secondary-color);
             }
 
+            /* Classic HTML tag */
+
+            a {
+                color: var(--app-secondary-color);
+                text-decoration: none;
+            }
+
             hr {
                 display: block;
                 height: 1px;
@@ -81,6 +92,8 @@
                 margin: 1em 0;
                 padding: 0;
             }
+
+            /* Theme */
 
             .background-primary-text {
                 color: var(--app-background-primary-text-color);
@@ -106,6 +119,27 @@
                 color: var(--app-secondary-color);
             }
 
+            /* Button */
+
+            .primary-color-button {
+                background-color: var(--app-primary-color);
+                color: var(--app-primary-text-color);
+                --paper-button-ink-color: var(--app-primary-text-color);
+            }
+
+            .secondary-color-button {
+                background-color: var(--app-secondary-color);
+                color: var(--app-secondary-text-color);
+                --paper-button-ink-color: var(--app-secondary-text-color);
+            }
+
+            .primary-text-color-button {
+                color: var(--app-primary-text-color);
+                --paper-button-ink-color: var(--app-primary-text-color);
+            }
+
+            /* Polymer HTML tag */
+
             paper-spinner {
                 --paper-spinner-color: var(--app-secondary-color);
             }
@@ -116,6 +150,26 @@
                 color: var(--app-background-secondary-text-color);
             }
 
+            paper-input, color-select {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+                --paper-input-container-color: var(--app-background-secondary-text-color);
+            }
+
+            paper-dropdown-menu {
+                --paper-input-container-focus-color: var(--app-secondary-color);
+                --paper-input-container-input-color: var(--app-background-primary-text-color);
+            }
+
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
+                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
+                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
+            }
+
+            /* App theme */
+
+            /* Dialog */
             .bigDialog {
                 width: 800px;
                 height: 100%;
@@ -160,31 +214,6 @@
 
                 padding-bottom: 16px;
                 padding-right: 16px;
-            }
-
-            .avatar {
-                display: inline-block;
-                box-sizing: border-box;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-            }
-
-            paper-input, color-select {
-                --paper-input-container-focus-color: var(--app-secondary-color);
-                --paper-input-container-input-color: var(--app-background-primary-text-color);
-                --paper-input-container-color: var(--app-background-secondary-text-color);
-            }
-
-            paper-dropdown-menu {
-                --paper-input-container-focus-color: var(--app-secondary-color);
-                --paper-input-container-input-color: var(--app-background-primary-text-color);
-            }
-
-            paper-toggle-button {
-                --paper-toggle-button-checked-bar-color: var(--app-secondary-color);
-                --paper-toggle-button-checked-button-color:  var(--app-secondary-color);
-                --paper-toggle-button-checked-ink-color:  var(--app-secondary-color);
             }
 
 

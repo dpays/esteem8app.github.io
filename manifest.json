@@ -2,7 +2,7 @@
   "name": "ESTEEM8",
   "short_name": "ESTEEM8",
   "start_url": "/trending",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#673AB7",
   "background_color": "#673AB7",
   "icons": [

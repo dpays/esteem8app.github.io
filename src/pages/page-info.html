@@ -26,15 +26,6 @@
                 width: 100%;
             }
 
-            a {
-                color: var(--app-secondary-color);
-                text-decoration: none;
-            }
-
-            a paper-icon-button {
-                color: var(--app-primary-text-color);
-            }
-
             /* CARD */
             .mainCard {
                 max-width: 400px;
@@ -74,17 +65,23 @@
 
         <!-- TOOLBAR -->
         <paper-toolbar class="mainToolbar">
-            <a href="/">
-                <paper-icon-button icon="my-icons:arrow-back"></paper-icon-button>
-            </a>
+
+            <paper-icon-button id="goToHomeButton"
+                               on-tap="_goToHome()"
+                               icon="my-icons:arrow-back">
+            </paper-icon-button>
+
             <div class="floatingToolbar">
                 <span class="floatingToolbarTitle">
                     More information
                 </span>
             </div>
-            <a href="/trending">
-                <paper-icon-button icon="my-icons:explore"></paper-icon-button>
-            </a>
+
+            <paper-icon-button id="goToExplorePageButton"
+                               on-tap="_goToExplorePage()"
+                               icon="my-icons:explore">
+            </paper-icon-button>
+
         </paper-toolbar>
 
         <!-- CARDS -->
@@ -141,12 +138,28 @@
 
         ready: function() {
 
+            this.$.goToHomeButton.addEventListener('tap', this._goToHome.bind(this));
+            this.$.goToExplorePageButton.addEventListener('tap', this._goToExplorePage.bind(this));
+
             this._isCertificationShown = false;
         },
 
         _showCertifications: function() {
 
             this._isCertificationShown = true;
+        },
+
+        _goToHome: function() {
+
+            window.history.pushState({}, null, '/');
+            window.dispatchEvent(new CustomEvent('location-changed'));
+        },
+
+        _goToExplorePage: function() {
+
+            window.history.pushState({}, null, '/trending');
+            window.dispatchEvent(new CustomEvent('location-changed'));
         }
+
     });
 </script>
